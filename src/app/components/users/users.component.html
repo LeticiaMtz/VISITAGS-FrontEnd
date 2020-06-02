@@ -1,0 +1,109 @@
+<div class="container">
+    <h1 class="title">Crea tu cuenta para usar Alertas académicas</h1>
+    <h1 class="title">Registro de usuario</h1>
+    <div class="row">
+        
+        <div class="card  blue-grey lighten-5">
+            <div class="card-content">
+                <!-- <form #userForm ="ngForm" (ngSubmit)="addUser(userForm)"> -->
+                <form #userForm ="ngForm">
+                    <div class="row">
+                        <div class="input-field">
+                            <p>Nombre:</p>
+                            <input type="text" name="name" [(ngModel)]="userService.selectedUser.name" >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                            <p>Apellido paterno:</p>
+                            <input type="text" name="lastname" #lastname="ngModel" [(ngModel)]="userService.selectedUser.lastname" >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                            <p>Apellido materno:</p>
+                            <input type="text" name="motherlastname" #motherlastname="ngModel" [(ngModel)]="userService.selectedUser.motherlastname"  >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                            <p>Correo electrónico:</p>
+                            <input type="text" name="email" #email="ngModel" [(ngModel)]="userService.selectedUser.email" >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                            <p>Contraseña nueva:</p>
+                            <input type="password" name="password" #password="ngModel" [(ngModel)]="userService.selectedUser.password"  >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field">
+                            <p>Confirmar contraseña:</p>
+                            <input type="password" name="confirm_password" [(ngModel)]="repetPassword"  >
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="input-field">
+                            <select name="role" #role="ngModel" [(ngModel)]="userService.selectedUser.role" >
+                              <option value="" disabled selected>Selecciona tu puesto de trabajo</option>
+                              <option value="coodinator">Coordinador</option>
+                              <option  value="director">Director</option>
+                              <option value="teacher">Profesor</option>
+                            </select>
+                            <label>Choose status</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p>Si eres director indica tu dirección</p>
+                        <p>
+                            <label>
+                              <input type="checkbox"  (change)="check($event)" />
+                              <span>Especialidad</span>
+                            </label>
+                          </p>
+                    </div>
+
+                    <div class="row" >
+                        <div class="input-field">
+                            <select class="browser-default" name="role" *ngIf="checkB == true">
+                              <option value="" disabled selected>Selecciona tu especialidad</option>
+                              <option value="coodinator">Tecnologías de la información</option>
+                              <option  value="director">Mecatrónica</option>
+                              <option value="teacher">Paramédico</option>
+                              <option value="teacher">Mantenimiento</option>
+                              <option value="teacher">Procesos industriales</option>
+                              <option value="teacher">Logística</option>
+                              <option value="teacher">Energías renovables</option>
+                              <option value="teacher">Desarrollo de negocios</option>
+                              <option value="teacher">Contaduría</option>
+                              <option value="teacher">Administración</option>
+                            </select>
+                        
+                        </div>
+                    </div>
+
+                    <div class="card-action">
+                        <div class="row">
+                            
+                            <div class="input-field">
+                                
+                                <button class="btn left" [routerLink]="'/'" (click)="addUser(userForm)">Crear mi cuenta</button>
+                            </div>
+       
+
+                        </div>
+                       
+
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

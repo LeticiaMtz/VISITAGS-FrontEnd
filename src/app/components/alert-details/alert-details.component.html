@@ -1,0 +1,61 @@
+
+<!-- La alerta a comentar -->
+<h1>My alert Details  is</h1>
+<div class="row" *ngFor="let x of alert_array">
+    <div class="col s12">
+        <div class="card blue-grey darken-1" >
+          <div class="card-content white-text">
+            <span>Fecha de inicio: {{x.date|date}}</span>
+            <span #el_id>{{x._id}}</span>
+            <span class="card-title">{{x.student_name}} - {{x.matricula}} - {{x._id}}</span>
+            <p>Incidencia: {{x.incidence}}</p>
+            <p>Primer seguimiento: {{x.tracing}}</p>
+          </div>
+        </div>
+    </div>  
+    
+    
+</div>
+<!-- Caja para comentar -->
+<div class="row">
+    <div class="col s12">
+        <div class="card blue-grey darken-1" >
+          <div class="card-content white-text">
+              <form #commentForm='ngForm'>
+                <input type="hidden" name="_id" #alert="ngModel" [(ngModel)]= "alertService.selectedAlert._id">
+                   <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]= "commentService.selectedComment._id">
+                <div class="row">
+                    <div class="input-field ">
+                        <input  type="text"  name="comment" #comment="ngModel" [(ngModel)]= "commentService.selectedComment.comment">
+                        <label >Comentario</label>
+                    </div>
+                  </div>
+                  <div>
+                    <p>{{id_alert}}</p>
+                    <input type="text" value="{{id_alert}}">
+                    <button class="btn" (click)="addComment(commentForm)" ><i class="material-icons right">comment</i>Comentar</button>
+                  </div>
+              </form>
+       
+          </div>
+        </div>
+    </div>      
+</div>
+
+<!-- vista de los comentarios asociados -->
+
+<div >
+    
+</div>
+
+<div class="row" *ngFor="let c of listComment[0]">
+    <div class="col s12 m6">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">{{c.comment}}</span>
+          <p>{{c.createdAt|date}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+         

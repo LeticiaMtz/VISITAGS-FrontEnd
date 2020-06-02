@@ -1,0 +1,65 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+
+   
+    <h1>Alertas Académicas</h1>
+    <span class="menu-spacer"></span>
+    <ng-container  *ngIf="!loginService.loggedIn(); else loggenIn">
+      <!-- me regrasa al login -->
+    </ng-container>
+    <ng-template #loggenIn>
+      <div>
+        <a mat-button [routerLink]="'/main/home'"> Inicio </a>
+        <!-- <a mat-button [routerLink]="'/create-account'"> Create Account </a>
+        <a mat-button [routerLink]="'/contacts'"> Contacts </a>
+        <a mat-button [routerLink]="'/create-contact'"> Create Contact </a> -->
+        <a mat-button [routerLink]="'/main/account'">  Mi cuenta </a>
+        <a mat-button [routerLink]="'/main/create-activity'">Sobre nosotros</a>
+        <a mat-button (click)="loginService.logout()">Cerras sesión</a>
+      </div>
+      
+    </ng-template>
+    
+  </mat-toolbar-row>
+
+  <!-- <mat-toolbar-row>
+      <span style="font-size: 12px;">Welcome to academic alerts</span>
+    </mat-toolbar-row> -->
+</mat-toolbar>
+
+
+
+
+
+
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    
+    <mat-nav-list  *ngIf="arrUser[0].role == 'coodinator'">
+     <!-- *ngIf="arrUser[0].role == 'director' || arrUser[0].role == 'teacher'" -->
+      <a mat-list-item [routerLink]="'/main/alerts'">Mis alertas académicas </a>
+      <a mat-list-item [routerLink]="'/main/MyFollow'">  Mi seguimiento </a>
+      <a mat-list-item [routerLink]="'/main/GeneralFollow'"> Seguimiento general </a>
+
+
+    </mat-nav-list>
+    <mat-nav-list *ngIf="arrUser[0].role == 'director' || arrUser[0].role == 'teacher'">
+       <a mat-list-item [routerLink]="'/main/alerts'"> Mis alertas académicas </a>
+       <a mat-list-item [routerLink]="'/main/MyFollow'">   Mi seguimiento </a>
+     </mat-nav-list>
+    
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 88vh;">
+
+        <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+

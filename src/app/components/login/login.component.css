@@ -1,0 +1,15 @@
+/* .backgroud {
+    background-color: #b9bdc0;
+  } */
+.card-size{
+  width: 50%;
+}
+.btn-circle{
+  border-radius: 25px;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+  background-color: #56baed;
+}

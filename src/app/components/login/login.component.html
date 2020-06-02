@@ -1,0 +1,59 @@
+<body class="backgroud">
+    
+    <div class="container">
+        <h1 class="title center">Bienvenido a Alertas académicas</h1>
+        <h1 class="title center">Iniciar sesión</h1>
+        <div class="row">
+            <div class="card card-size ">
+                <div class="card-content  black-text">
+                    <!-- <form #userForm ="ngForm" (ngSubmit)="addUser(userForm)"> -->
+                        <div *ngIf="(primEmail.invalid && primEmail.touched) || primEmail.dirty">
+                            <small *ngIf="primEmail.errors?.required" class="text-danger">El correo electrónico es olbigatorio</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                            <small *ngIf="primEmail.errors?.pattern" class="text-danger">Por favor introduce una dirección de correo</small>
+                          </div>
+                    <form  [formGroup]="user">
+                        <div class="row">
+                            <div class="input-field">
+                                <input type="hidden" name="_id"    >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field ">
+                                <input [class.is-invalid] = "user.get('email').invalid && user.get('email').touched" type="text" name="email"   formControlName="email"  >
+                                <label >Correo electrónico</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field ">
+                                <input  type="password"   name="password"   formControlName="password"  >
+                                <label>Contraseña</label>
+                            </div>
+                        </div>
+                        <div class="card-action  ">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="input-field  ">
+                                        <p>Vamos!</p>
+                                        <button class="btn left btn-circle   blue" (click)="login()"  >Iniciar</button>
+                                    </div>
+                                    <!-- [routerLink]="'/main/home'" -->
+                                </div>
+                                <div class="col">
+                                    <div class="input-field  ">
+                                        <p>No tiene una cuenta? Puedes crear una</p>
+                                        
+                                        <button class="btn left btn-circle   blue " [routerLink]="'/users'">Crear cuenta</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
