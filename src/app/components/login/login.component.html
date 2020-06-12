@@ -1,59 +1,49 @@
-<body class="backgroud">
-    
-    <div class="container">
-        <h1 class="title center">Bienvenido a Alertas académicas</h1>
-        <h1 class="title center">Iniciar sesión</h1>
-        <div class="row">
-            <div class="card card-size ">
-                <div class="card-content  black-text">
-                    <!-- <form #userForm ="ngForm" (ngSubmit)="addUser(userForm)"> -->
-                        <div *ngIf="(primEmail.invalid && primEmail.touched) || primEmail.dirty">
-                            <small *ngIf="primEmail.errors?.required" class="text-danger">El correo electrónico es olbigatorio</small>
-                            <!--question mark(?) is a safe navigation operator-->
-                            <small *ngIf="primEmail.errors?.pattern" class="text-danger">Por favor introduce una dirección de correo</small>
-                          </div>
-                    <form  [formGroup]="user">
-                        <div class="row">
-                            <div class="input-field">
-                                <input type="hidden" name="_id"    >
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field ">
-                                <input [class.is-invalid] = "user.get('email').invalid && user.get('email').touched" type="text" name="email"   formControlName="email"  >
-                                <label >Correo electrónico</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field ">
-                                <input  type="password"   name="password"   formControlName="password"  >
-                                <label>Contraseña</label>
-                            </div>
-                        </div>
-                        <div class="card-action  ">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="input-field  ">
-                                        <p>Vamos!</p>
-                                        <button class="btn left btn-circle   blue" (click)="login()"  >Iniciar</button>
-                                    </div>
-                                    <!-- [routerLink]="'/main/home'" -->
-                                </div>
-                                <div class="col">
-                                    <div class="input-field  ">
-                                        <p>No tiene una cuenta? Puedes crear una</p>
-                                        
-                                        <button class="btn left btn-circle   blue " [routerLink]="'/users'">Crear cuenta</button>
-                                    </div>
-                                </div>
-                            </div>
-                        
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<section id="wrapper" class="login-register login-sidebar" style="background-image:url(../assets/images/utags/bg-uta-3.jpg);">
+    <div class="login-box card col-12">
+        <img src="../assets/images/utags/logo-icon.png" class="card-img-top img-responsive align-self-center mt-3" alt="utags" style="width: 40%;">
+        <h2 class="text-center">Alertas Academicas</h2>
+        <div class="card-body">
+            <form [formGroup]="user" class="form-horizontal form-material" id="loginform">
 
-                        </div>
-                        
-                    </form>
+                <div class="form-group m-t-40">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="text" placeholder="Correo Institucional" name="email" formControlName="email" [class.is-invalid]="invalidEmail" autofocus>
+                        <small *ngIf="invalidEmail" class="text-danger" >El correo no es valido</small>
+                    </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="password" placeholder="Contraseña" name="password" formControlName="password" [class.is-invalid]="invalidPassword"> 
+                        <small *ngIf="invalidPassword" class="text-danger" >La contraseña no es valida</small>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <div class="checkbox checkbox-primary pull-left p-t-0">
+                            <input formControlName="rememberMe" id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue">
+                            <label for="checkbox-signup"> Recordar cuenta </label>
+                        </div>
+                        <br><br>
+                        <a id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> ¿Olvidaste el password?</a> </div>
+                </div>
+                <hr>
+                <div class="form-group text-center m-t-20">
+                    <div class="col-xs-12">
+                        <button (click)="login()" class="btn btn-info btn-lg btn-block text-uppercase btn-rounded">Ingresar</button>
+                    </div>
+                </div>
+                <div class="form-group m-b-2">
+                    <div class="col-sm-12 text-center">
+                        ¿No tienes una cuenta? <a [routerLink]="['/register']" class="text-primary m-l-5"><b>Registrarse</b></a>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-</body>
+</section>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
