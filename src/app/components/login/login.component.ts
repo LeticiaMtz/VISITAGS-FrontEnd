@@ -20,39 +20,41 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(localStorage.getItem('email')){
+    if(localStorage.getItem('strEmail')){
       this.user.setValue({
-        email: localStorage.getItem('email'),
-        password: '',
+        strEmail: localStorage.getItem('strEmail'),
+        strPassword: '',
         rememberMe: true
       });
-      if(!this.rememberIt){
-        localStorage.removeItem('email');
-      }
+      this.rememberIt=true;
     }
+    if(!this.rememberIt){
+      localStorage.removeItem('strEmail');
+  }
+  
   }
 
   user = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.pattern("^[_A-Za-z\\+]+(\\.[_A-Za-z]+)*@utags.edu.mx$")]),
-    password: new FormControl('', [Validators.required]),
+    strEmail: new FormControl('', [Validators.required, Validators.pattern("^[_A-Za-z\\+]+(\\.[_A-Za-z]+)*@utags.edu.mx$")]),
+    strPassword: new FormControl('', [Validators.required]),
     rememberMe: new FormControl(this.rememberIt)
   });
   
   regexp = new RegExp('^[_A-Za-z\\+]+(\\.[_A-Za-z]+)*@utags.edu.mx$');
 
   get invalidEmail(){
-    return this.user.get('email').invalid && this.user.get('email').touched;
+    return this.user.get('strEmail').invalid && this.user.get('strEmail').touched;
   }
 
   get invalidPassword(){
-    return this.user.get('password').invalid && this.user.get('password').touched;
+    return this.user.get('strPassword').invalid && this.user.get('strPassword').touched;
   }
   
   get valueEmail(){
-    return this.user.get('email')
+    return this.user.get('strEmail')
   }
   get valuePassword(){
-    return this.user.get('password')
+    return this.user.get('strPassword')
   }
 
   //get valueRememberMe(){
@@ -72,7 +74,9 @@ export class LoginComponent implements OnInit {
         if(dataJson.token){
           
           if(this.user.value.rememberMe){
-            localStorage.setItem('email', this.user.value.email);
+            localStorage.setItem('strEmail', this.user.value.email);
+          }else{
+            localStorage.removeItem('strEmail');
           }
           
           Swal.fire({
