@@ -42,8 +42,6 @@ const appRoutes: Routes = [
     { path: 'GeneralFollow', component: GeneralFollowComponent, canActivate: [AuthGuard] },
     {path: 'account', component: UserSettingsComponent, canActivate: [AuthGuard]}
   ]}
-
-
 ];
 
 @NgModule({
