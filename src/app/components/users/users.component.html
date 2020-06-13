@@ -1,73 +1,124 @@
-<div class="container">
-    <h1 class="title">Crea tu cuenta para usar Alertas académicas</h1>
-    <h1 class="title">Registro de usuario</h1>
-    <div class="row">
-        
-        <div class="card  blue-grey lighten-5">
-            <div class="card-content">
-                <!-- <form #userForm ="ngForm" (ngSubmit)="addUser(userForm)"> -->
-                <form #userForm ="ngForm">
-                    <div class="row">
+<section id="wrapper" class="login-register login-sidebar" style="background-image:url(../assets/images/utags/bg-uta-3.jpg);">
+    <div class="login-box card">
+        <div class="card-body">
+            <!-- <div class="card-content"> -->
+            <!-- <form #userForm ="ngForm" (ngSubmit)="addUser(userForm)"> -->
+            <form #userForm="ngForm" class="form-horizontal form-material" id="loginform">
+                <img src="../assets/images/utags/logo-icon.png" class="card-img-top img-responsive align-self-center mt-3" alt="utags" style="width: 50%; height: 50%;">
+                <!--            <a href="javascript:void(0)" class="text-center db"><img src="assets/images/logo-text.png" alt="Home" /><br/><img src="assets/images/logo-text.png" alt="Home" /></a>-->
+                <h2 class="box-title m-t-40 m-b-0 center-align">Regístrate</h2>Crea tu cuenta aquí ingresando tus datos generales
+                <!--  <div class="row">
                         <div class="input-field">
                             <p>Nombre:</p>
-                            <input type="text" name="name" [(ngModel)]="userService.selectedUser.name" >
+                            <input type="text" name="name" [(ngModel)]="userService.selectedUser.name">
                         </div>
+                    </div> -->
+                <div class="form-group m-t-20">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="text" required="" name="strName" [(ngModel)]="user.strName" placeholder="Nombre">
                     </div>
-                    <div class="row">
+                </div>
+
+                <!--    <div class="row">
                         <div class="input-field">
                             <p>Apellido paterno:</p>
-                            <input type="text" name="lastname" #lastname="ngModel" [(ngModel)]="userService.selectedUser.lastname" >
+                            <input type="text" name="lastname" #lastname="ngModel" [(ngModel)]="userService.selectedUser.lastname">
                         </div>
+                    </div>-->
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="text" required="" name="strLastName" #lastname="ngModel" [(ngModel)]="user.strLastName" placeholder="Apellido Paterno">
                     </div>
-                    <div class="row">
+                </div>
+
+                <!--              <div class="row">
                         <div class="input-field">
                             <p>Apellido materno:</p>
-                            <input type="text" name="motherlastname" #motherlastname="ngModel" [(ngModel)]="userService.selectedUser.motherlastname"  >
+                            <input type="text" name="motherlastname" #motherlastname="ngModel" [(ngModel)]="userService.selectedUser.motherlastname">
                         </div>
                     </div>
+                    -->
+
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="text" required="" name="strMotherLastName" #motherlastname="ngModel" [(ngModel)]="user.strMotherLastName" placeholder="Apellido Materno">
+                    </div>
+                </div>
+                <!--
                     <div class="row">
                         <div class="input-field">
                             <p>Correo electrónico:</p>
-                            <input type="text" name="email" #email="ngModel" [(ngModel)]="userService.selectedUser.email" >
+                            <input type="text" name="email" #email="ngModel" [(ngModel)]="userService.selectedUser.email">
                         </div>
                     </div>
+-->
+
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="text" name="strEmail" required="" placeholder="Email" #email="ngModel" [(ngModel)]="user.strEmail">
+                    </div>
+                </div>
+                <!-- 
                     <div class="row">
                         <div class="input-field">
                             <p>Contraseña nueva:</p>
-                            <input type="password" name="password" #password="ngModel" [(ngModel)]="userService.selectedUser.password"  >
+                            <input type="password" name="password" #password="ngModel" [(ngModel)]="userService.selectedUser.password">
                         </div>
                     </div>
+                    -->
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="password" required="" name="strPassword" #password="ngModel" [(ngModel)]="user.strPassword" placeholder="Password">
+                    </div>
+                </div>
+
+                <!-- 
                     <div class="row">
                         <div class="input-field">
                             <p>Confirmar contraseña:</p>
-                            <input type="password" name="confirm_password" [(ngModel)]="repetPassword"  >
+                            <input type="password" name="confirm_password" [(ngModel)]="repetPassword">
                         </div>
                     </div>
-                    
-                    <div class="row">
-                        <div class="input-field">
-                            <select name="role" #role="ngModel" [(ngModel)]="userService.selectedUser.role" >
-                              <option value="" disabled selected>Selecciona tu puesto de trabajo</option>
-                              <option value="coodinator">Coordinador</option>
-                              <option  value="director">Director</option>
-                              <option value="teacher">Profesor</option>
-                            </select>
-                            <label>Choose status</label>
-                        </div>
+-->
+
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input class="form-control" type="password" required="" [(ngModel)]="repetPassword" name="strConfirm_Password" placeholder="Confirmar Password">
                     </div>
-                    <div class="row">
-                        <p>Si eres director indica tu dirección</p>
-                        <p>
-                            <label>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <select name="strRole" #role="ngModel" [(ngModel)]="user.strRole">
+  <option value="" disabled selected>Selecciona tu puesto de trabajo</option>
+  <option value="coodinator">Coordinador</option>
+  <option  value="director">Director</option>
+  <option value="teacher">Profesor</option>
+</select>
+                        <label>Choose status</label>
+                    </div>
+                </div>
+
+                <div class="checkbox checkbox-primary pull-left p-t-0">
+                    <input id="checkbox-signup" (change)="check($event)" type="checkbox" class="filled-in chk-col-light-blue">
+                    <label for="checkbox-signup"> Especialidad</label>
+                </div>
+                <br><br>
+
+                <!--
+                <div class="row">
+                    <p>Si eres director indica tu dirección</p> formControlName="rememberMe"
+                    <p>
+                        <label>
                               <input type="checkbox"  (change)="check($event)" />
                               <span>Especialidad</span>
                             </label>
-                          </p>
-                    </div>
-
-                    <div class="row" >
-                        <div class="input-field">
-                            <select class="browser-default" name="role" *ngIf="checkB == true">
+                    </p>
+                </div>
+-->
+                <!--
+                <div class="form-group">
+                    <div class="col-xs-12">
+                         <select class="browser-default" name="strRole" *ngIf="checkB == true">
                               <option value="" disabled selected>Selecciona tu especialidad</option>
                               <option value="coodinator">Tecnologías de la información</option>
                               <option  value="director">Mecatrónica</option>
@@ -79,31 +130,25 @@
                               <option value="teacher">Desarrollo de negocios</option>
                               <option value="teacher">Contaduría</option>
                               <option value="teacher">Administración</option>
-                            </select>
-                        
+                            </select> 
+                    </div>
+                </div> -->
+                <p></p>
+                <div class="form-group text-center m-t-20">
+                    <div class="col-xs-12">
+                        <!--   <button (click)="addUser(userForm)" class="btn btn-info btn-lg btn-block text-uppercase btn-rounded">Ingresar</button> -->
+                    </div>
+                </div>
+
+                <div class="card-action">
+                    <div class="row">
+                        <div class="icono-boton">
+                            <button class="btn left" [routerLink]="'/'" (click)="addUser(userForm)" class="btn btn-info btn-lg btn-block text-uppercase btn-rounded align-content-center">Crear mi cuenta</button>
                         </div>
                     </div>
-
-                    <div class="card-action">
-                        <div class="row">
-                            
-                            <div class="input-field">
-                                
-                                <button class="btn left" [routerLink]="'/'" (click)="addUser(userForm)">Crear mi cuenta</button>
-                            </div>
-       
-
-                        </div>
-                       
-
-                    </div>
-                    
-                </form>
-            </div>
+                </div>
+            </form>
+            <!--   </div> -->
         </div>
     </div>
-</div>
-
-
-
-
+</section>
