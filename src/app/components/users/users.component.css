@@ -6,20 +6,21 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    height: 154%;
+    height: 104%;
     width: 100%;
     padding: 10% 0;
-    position: absolute;
+    position: fixed;
 }
 
 .login-box {
     width: 400px;
     margin: 0 auto;
-    position: absolute;
 }
 
 .icono-boton {
-    right: 50px;
+    display: flex;
+    justify-content: center;
+    right: 1000px;
 }
 
 .login-box .footer {
