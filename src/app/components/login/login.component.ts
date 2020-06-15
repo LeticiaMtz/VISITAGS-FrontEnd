@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
         if(dataJson.token){
           
           if(this.user.value.rememberMe){
-            localStorage.setItem('strEmail', this.user.value.email);
+            localStorage.setItem('strEmail', this.user.value.strEmail);
           }else{
             localStorage.removeItem('strEmail');
           }
