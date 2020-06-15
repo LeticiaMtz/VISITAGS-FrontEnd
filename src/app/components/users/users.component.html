@@ -4,17 +4,23 @@
             <!-- <div class="card-content"> -->
             <!-- <form #userForm ="ngForm" (ngSubmit)="addUser(userForm)"> -->
             <form #userForm="ngForm" class="form-horizontal form-material" id="loginform">
-                <img src="../assets/images/utags/logo-icon.png" class="card-img-top img-responsive align-self-center mt-3" alt="utags" style="width: 50%; height: 50%;">
+                <div class="logo-uta-icono">
+                    <a class="text-center db  m-t-0 m-b-0">
+                        <img src="../assets/images/utags/logo-icon.png" style="width: 100px; height: 100px;" class="card-img-top img-responsive align-self-center mt-3 " />
+                    </a>
+                </div>
                 <!--            <a href="javascript:void(0)" class="text-center db"><img src="assets/images/logo-text.png" alt="Home" /><br/><img src="assets/images/logo-text.png" alt="Home" /></a>-->
-                <h2 class="box-title m-t-40 m-b-0 center-align">Regístrate</h2>Crea tu cuenta aquí ingresando tus datos generales
+                <a>
+                    <h2 class="box-title m-t-0 m-b-0 center-align text-center db">Regístrate</h2>Crea tu cuenta aquí ingresando tus datos generales
+                </a>
                 <!--  <div class="row">
                         <div class="input-field">
                             <p>Nombre:</p>
                             <input type="text" name="name" [(ngModel)]="userService.selectedUser.name">
                         </div>
                     </div> -->
-                <div class="form-group m-t-20">
-                    <div class="col-xs-12">
+                <div class="form-group m-2">
+                    <div class="col-xs-0">
                         <input class="form-control" type="text" required="" name="strName" [(ngModel)]="user.strName" placeholder="Nombre">
                     </div>
                 </div>
@@ -25,8 +31,8 @@
                             <input type="text" name="lastname" #lastname="ngModel" [(ngModel)]="userService.selectedUser.lastname">
                         </div>
                     </div>-->
-                <div class="form-group ">
-                    <div class="col-xs-12">
+                <div class="form-group m-2">
+                    <div class="col-xs-0">
                         <input class="form-control" type="text" required="" name="strLastName" #lastname="ngModel" [(ngModel)]="user.strLastName" placeholder="Apellido Paterno">
                     </div>
                 </div>
@@ -39,8 +45,8 @@
                     </div>
                     -->
 
-                <div class="form-group ">
-                    <div class="col-xs-12">
+                <div class="form-group m-2">
+                    <div class="col-xs-0">
                         <input class="form-control" type="text" required="" name="strMotherLastName" #motherlastname="ngModel" [(ngModel)]="user.strMotherLastName" placeholder="Apellido Materno">
                     </div>
                 </div>
@@ -53,8 +59,8 @@
                     </div>
 -->
 
-                <div class="form-group ">
-                    <div class="col-xs-12">
+                <div class="form-group m-2 ">
+                    <div class="col-xs-0">
                         <input class="form-control" type="text" name="strEmail" required="" placeholder="Email" #email="ngModel" [(ngModel)]="user.strEmail">
                     </div>
                 </div>
@@ -66,8 +72,8 @@
                         </div>
                     </div>
                     -->
-                <div class="form-group ">
-                    <div class="col-xs-12">
+                <div class="form-group  m-2">
+                    <div class="col-xs-0">
                         <input class="form-control" type="password" required="" name="strPassword" #password="ngModel" [(ngModel)]="user.strPassword" placeholder="Password">
                     </div>
                 </div>
@@ -81,11 +87,12 @@
                     </div>
 -->
 
-                <div class="form-group">
-                    <div class="col-xs-12">
+                <div class="form-group m-2">
+                    <div class="col-xs-0">
                         <input class="form-control" type="password" required="" [(ngModel)]="repetPassword" name="strConfirm_Password" placeholder="Confirmar Password">
                     </div>
                 </div>
+                <!--
                 <div class="form-group">
                     <div class="col-xs-12">
                         <select name="strRole" #role="ngModel" [(ngModel)]="user.strRole">
@@ -101,9 +108,7 @@
                 <div class="checkbox checkbox-primary pull-left p-t-0">
                     <input id="checkbox-signup" (change)="check($event)" type="checkbox" class="filled-in chk-col-light-blue">
                     <label for="checkbox-signup"> Especialidad</label>
-                </div>
-                <br><br>
-
+                </div> -->
                 <!--
                 <div class="row">
                     <p>Si eres director indica tu dirección</p> formControlName="rememberMe"
@@ -133,22 +138,21 @@
                             </select> 
                     </div>
                 </div> -->
-                <p></p>
-                <div class="form-group text-center m-t-20">
-                    <div class="col-xs-12">
+
+                <div class="form-group text-center m-t-0">
+                    <div class="col-xs-0">
                         <!--   <button (click)="addUser(userForm)" class="btn btn-info btn-lg btn-block text-uppercase btn-rounded">Ingresar</button> -->
                     </div>
                 </div>
 
-                <div class="card-action">
-                    <div class="row">
-                        <div class="icono-boton">
-                            <button class="btn left" [routerLink]="'/'" (click)="addUser(userForm)" class="btn btn-info btn-lg btn-block text-uppercase btn-rounded align-content-center">Crear mi cuenta</button>
-                        </div>
-                    </div>
+
+
+                <div class="icono-boton">
+                    <a class="text-center db m-t-0">
+                        <button class="btn center" [routerLink]="'/'" (click)="addUser(userForm)" class="btn btn-info btn-lg btn-block text-uppercase btn-rounded align-content-center">Crear mi cuenta</button>
+                    </a>
                 </div>
             </form>
-            <!--   </div> -->
         </div>
     </div>
 </section>

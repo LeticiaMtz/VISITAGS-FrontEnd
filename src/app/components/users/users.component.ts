@@ -50,6 +50,22 @@ user:User = new User();
 
   addUser(form: NgForm){
     console.log(this.user);
+    /*
+if(this.user.strName == null &&  this.user.strLastName == null
+   && this.user.strMotherLastName == null && this.user.strEmail == null && this.user.strPassword == null && this.repetPassword == null
+   ){
+
+    Swal.fire({
+      title: 'Error!',
+      text: 'No dejes campos vacios, no creamos tu usuario 😕',
+      icon: 'error',
+      confirmButtonText: 'Aceptar'
+    })
+
+}
+
+*/
+
     if (this.repetPassword != this.user.strPassword) {
       Swal.fire({
         title: 'Error!',
