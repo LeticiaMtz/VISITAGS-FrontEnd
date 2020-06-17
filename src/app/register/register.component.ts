@@ -1,45 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { RegisterService } from '../services/register.service';
 import { from } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import {Router } from '@angular/router'
-import { User } from '../../models/user';
+import { User } from '../models/register';
 
 
-
-
-declare let M: any;
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css'],
-  providers: [UserService]
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css'],
+  providers: [RegisterService]
 })
-export class  UsersComponent implements OnInit {
+export class  RegisterComponent implements OnInit {
   checkB:Boolean;
 user:User = new User();
   repetPassword:String;
 
   regexp = new RegExp('^[_A-Za-z\\+]+(\\.[_A-Za-z]+)*@utags.edu.mx$');
-  // user = {
-  //   name : '',
-  //   lastname: '',
-  //   motherlastname: '',
-  //   email:'',
-  //   password: '',
-  //   role: ''
-  // }
-  constructor(public userService: UserService, public router:Router) {
+
+  constructor(public registerService: RegisterService, public router:Router) {
 
    }
 
-  ngOnInit(): void {
-    
-  
-  //    var elems = document.querySelectorAll('select');
-    //  var instances = M.FormSelect.init(elems);
-    
+  ngOnInit(): void { 
   }
 
   check(event){
@@ -50,21 +35,6 @@ user:User = new User();
 
   addUser(form: NgForm){
     console.log(this.user);
-    /*
-if(this.user.strName == null &&  this.user.strLastName == null
-   && this.user.strMotherLastName == null && this.user.strEmail == null && this.user.strPassword == null && this.repetPassword == null
-   ){
-
-    Swal.fire({
-      title: 'Error!',
-      text: 'No dejes campos vacios, no creamos tu usuario 😕',
-      icon: 'error',
-      confirmButtonText: 'Aceptar'
-    })
-
-}
-
-*/
 
     if (this.repetPassword != this.user.strPassword) {
       Swal.fire({
@@ -73,10 +43,10 @@ if(this.user.strName == null &&  this.user.strLastName == null
         icon: 'error',
         confirmButtonText: 'Aceptar'
       })
-      this.router.navigate(['/users'])
+      this.router.navigate(['/register'])
     }else if (this.regexp.test(this.user.strEmail)){
      console.log(form.value);
-      this.userService.postUser(form.value)
+      this.registerService.postUser(form.value)
       .subscribe(res => {
         console.log(res);
         let data = JSON.stringify(res);
@@ -96,14 +66,7 @@ if(this.user.strName == null &&  this.user.strLastName == null
         icon: 'error',
         confirmButtonText: 'Aceptar'
       })
-      this.router.navigate(['/users'])
-      
+      this.router.navigate(['/register']) 
     }
-   
-
   }
-
-  
- 
-
 }

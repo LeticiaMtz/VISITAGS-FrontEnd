@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../services/login.service';
+import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { FormGroup, FormControl, Validators  } from '@angular/forms';
@@ -57,10 +57,6 @@ export class LoginComponent implements OnInit {
     return this.user.get('strPassword')
   }
 
-  //get valueRememberMe(){
-  //  return this.user.get('rememberMe')
-  //}
-
   login(){
     if (this.regexp.test(this.valueEmail.value)) {
       
@@ -72,13 +68,15 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', dataJson.token)
 
         if(dataJson.token){
-          
+
           if(this.user.value.rememberMe){
             localStorage.setItem('strEmail', this.user.value.strEmail);
           }else{
             localStorage.removeItem('strEmail');
           }
-          
+
+          this.router.navigate(['/pages/home']);
+
           Swal.fire({
             title: 'success',
             text: `Hola ${dataJson.UserName} bienvenido`,
@@ -87,7 +85,6 @@ export class LoginComponent implements OnInit {
             timer: 1500
           });
 
-          this.router.navigate(['/main/home']);
         }else{
 
           Swal.fire({

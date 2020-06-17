@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 // library that get data from the server
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user';
+import { User } from '../models/register';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class RegisterService {
 
   selectedUser: User;
   users: User[];

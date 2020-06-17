@@ -1,10 +1,10 @@
 import { Component, OnInit,  Input } from '@angular/core';
 import {FilesService} from '../../services/files.service';
 import {AlertService} from '../../services/alert.service';
-import {UserService} from '../../services/user.service';
+import {RegisterService} from '../../services/register.service';
 import {CommentsService} from '../../services/comments.service';
 import {Comments} from '../../models/comments';
-import {User} from '../../models/user'; 
+import {User} from '../../models/register'; 
 import { NgForm } from '@angular/forms';
 import {Alert} from '../../models/alert';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -17,7 +17,7 @@ declare let M: any;
   selector: 'app-my-follow-up',
   templateUrl: './my-follow-up.component.html',
   styleUrls: ['./my-follow-up.component.css'],
-  providers: [AlertService, UserService, CommentsService]
+  providers: [AlertService, RegisterService, CommentsService]
  
 })
 
@@ -39,7 +39,7 @@ export class MyFollowUpComponent implements OnInit {
     alert: '',
     id_alert: ''
   }
-  constructor(public router:Router,public commentService: CommentsService, public fileService:FilesService, public alertService: AlertService, public userService: UserService,private route: ActivatedRoute ) { 
+  constructor(public router:Router,public commentService: CommentsService, public fileService:FilesService, public alertService: AlertService, public registerService: RegisterService,private route: ActivatedRoute ) { 
     this.alertService.id_global;
     
   }
@@ -89,7 +89,7 @@ export class MyFollowUpComponent implements OnInit {
 
 
   getUser(){
-    this.userService.getUser()
+    this.registerService.getUser()
     .subscribe(res =>{
       console.log('el user id es:');
       
@@ -255,11 +255,4 @@ export class MyFollowUpComponent implements OnInit {
     
     })
   }
-
-
-
-
- 
-
-
 }

@@ -1,32 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../services/user.service';
+import {RegisterService} from '../../services/register.service';
 import {LoginService} from '../../services/login.service';
-import {User} from '../../models/user'; 
+import {User} from '../../models/register'; 
 import { NgForm } from '@angular/forms';
 declare let M: any;
 @Component({
   selector: 'app-user-settings',
   templateUrl: './user-settings.component.html',
   styleUrls: ['./user-settings.component.css'],
-  providers: [UserService, LoginService]
+  providers: [RegisterService, LoginService]
 })
 export class UserSettingsComponent implements OnInit {
   arrUser: Array<any> = [] as Array<JSON>;
   userId:string;
-  constructor(public userService:UserService, public loginService: LoginService ) { }
+  constructor(public registerService:RegisterService, public loginService: LoginService ) { }
   ngOnInit(): void {
     this.getUser();
   }
 
   getUser(){
-    this.userService.getUser()
+    this.registerService.getUser()
     .subscribe(res =>{
       console.log(res);
       this.userId = res['UserId'];
-      this.userService.getdataUser(this.userId)
+      this.registerService.getdataUser(this.userId)
       .subscribe(res =>{
         console.log('si se trajo las alertas');
-        this.userService.getAlertsData(res['_id'])
+        this.registerService.getAlertsData(res['_id'])
         .subscribe(res =>{
           console.log('Aqui empiezan las alertas');
           console.log(res);
@@ -47,12 +47,12 @@ export class UserSettingsComponent implements OnInit {
   }
 
   editUser(user: User){
-    this.userService.selectedUser = user;
+    this.registerService.selectedUser = user;
   }
 
   confirmEdit(form: NgForm){
     if (form.value._id) {
-      this.userService.putUser(form.value)
+      this.registerService.putUser(form.value)
       .subscribe(res => {
         console.log(res);
         this.resetForm(form);
@@ -65,7 +65,7 @@ export class UserSettingsComponent implements OnInit {
 
   deleteUser(_id:string){
     if (confirm('Are you sure you want to delete it?')) {
-      this.userService.deleteUser(_id)
+      this.registerService.deleteUser(_id)
       .subscribe(res => {
         console.log(res);
         // this.getUser();
@@ -78,7 +78,7 @@ export class UserSettingsComponent implements OnInit {
     resetForm(form?: NgForm){
       if (form) {
         form.reset();
-        this.userService.selectedUser = new User();
+        this.registerService.selectedUser = new User();
       }
     }
 }

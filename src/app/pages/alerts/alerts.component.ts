@@ -1,8 +1,8 @@
 import { Component, OnInit, ElementRef ,ViewChild } from '@angular/core';
 import {AlertService} from '../../services/alert.service';
 import {Alert} from '../../models/alert';
-import {UserService} from '../../services/user.service';
-import {User} from '../../models/user'; 
+import {RegisterService} from '../../services/register.service';
+import {User} from '../../models/register'; 
 import { NgForm } from '@angular/forms';
 import * as jspdf from 'jspdf';  
 import html2canvas from 'html2canvas';  
@@ -16,7 +16,7 @@ declare let M: any;
   selector: 'app-alerts',
   templateUrl: './alerts.component.html',
   styleUrls: ['./alerts.component.css'],
-  providers: [AlertService, UserService]
+  providers: [AlertService, RegisterService]
 })
 export class AlertsComponent implements OnInit {
   searchText; 
@@ -28,7 +28,7 @@ export class AlertsComponent implements OnInit {
   }
   userId:string;
   id_user:string;
-  constructor(public alertService: AlertService, public userService: UserService) { }
+  constructor(public alertService: AlertService, public registerService: RegisterService) { }
 
 
   ngOnInit(){
@@ -68,7 +68,7 @@ export class AlertsComponent implements OnInit {
   // }
 
   getUser(){
-    this.userService.getUser()
+    this.registerService.getUser()
     .subscribe(res =>{
       console.log('el user id es:');
       

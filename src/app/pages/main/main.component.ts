@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from '../../services/login.service';
-import {UserService} from '../../services/user.service';
-import {User} from '../../models/user'; 
+import {RegisterService} from '../../services/register.service';
+import {User} from '../../models/register'; 
 
 declare let M: any;
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],
-  providers: [UserService]
+  providers: [RegisterService]
 })
 export class MainComponent implements OnInit {
   arrUser: Array<any> = [] as Array<JSON>;
   userId:string;
-  constructor(public loginService:LoginService, public userService:UserService ) { }
+  constructor(public loginService:LoginService, public registerService:RegisterService ) { }
 
   ngOnInit(): void {
     this.getUser()
@@ -21,11 +21,11 @@ export class MainComponent implements OnInit {
   }
 
   getUser(){
-    this.userService.getUser()
+    this.registerService.getUser()
     .subscribe(res =>{
       console.log(res);
       this.userId = res['UserId'];
-      this.userService.getdataUser(this.userId)
+      this.registerService.getdataUser(this.userId)
       .subscribe(res =>{
         console.log('los values del user: ');
         
