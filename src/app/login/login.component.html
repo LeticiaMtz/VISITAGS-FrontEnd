@@ -16,7 +16,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <input class="form-control" type="password" placeholder="Contraseña" name="strPassword" formControlName="strPassword" [class.is-invalid]="invalidPassword">
+                        <input class="form-control" type="password" placeholder="Contraseña" name="strPassword" formControlName="strPassword" minlength="8" [class.is-invalid]="invalidPassword">
                         <small *ngIf="invalidPassword" class="text-danger">La contraseña no es valida</small>
                     </div>
                 </div>

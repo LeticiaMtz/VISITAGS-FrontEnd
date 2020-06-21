@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 // library that get data from the server
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/register';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,7 @@ export class RegisterService {
 
   selectedUser: User;
   users: User[];
-  readonly URL_API = 'http://localhost:3000/users';
-  readonly UserProfile = 'http://localhost:3000/users/profile'
-  readonly alerts = 'http://localhost:3000/users/data'
+  readonly URL = environment.urlGlobal;
   constructor(private http: HttpClient) { 
     this.selectedUser = new User();
   }
@@ -20,24 +19,23 @@ export class RegisterService {
   // GET Data from the server
 
 
-  getUsers() {
-    return this.http.get(this.URL_API);
+  // getUsers() {
+  //   return this.http.get(`${this.URL}/Users/obtener`).toPromise();
+  // }
+
+  // getUser(idUser: string){
+  //   return this.http.get(`${this.URL}/Users/obtener/${idUser}`).toPromise();
+  // }
+
+  postUser(User: User){
+    return this.http.post(`${this.URL}/Users/registro`, User).toPromise();
   }
 
-  getUser(){
-    return this.http.get(this.UserProfile);
-  }
-
-  getdataUser(_id :string){
-    return this.http.get(this.URL_API + `/${_id}`)
-  }
-
+/*
   getAlertsData(_id :string){
     return this.http.get(this.alerts+ `/${_id}`)
   }
-  postUser(User: User){
-    return this.http.post(this.URL_API, User);
-  }
+
 
 
   putUser(user: User){
@@ -46,4 +44,5 @@ export class RegisterService {
   deleteUser(_id: string){
     return this.http.delete(this.URL_API + `/${_id}`);
   }
+  */
 }

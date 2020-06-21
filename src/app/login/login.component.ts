@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
 
   user = new FormGroup({
     strEmail: new FormControl('', [Validators.required, Validators.pattern("^[_A-Za-z\\+]+(\\.[_A-Za-z]+)*@utags.edu.mx$")]),
-    strPassword: new FormControl('', [Validators.required]),
+    strPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
     rememberMe: new FormControl(this.rememberIt)
   });
   
@@ -65,6 +65,7 @@ export class LoginComponent implements OnInit {
         console.log(res);
         let data = JSON.stringify(res);
         let dataJson = JSON.parse(data);
+        console.log(dataJson.token);
         localStorage.setItem('token', dataJson.token)
 
         if(dataJson.token){

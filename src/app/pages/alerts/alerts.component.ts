@@ -68,39 +68,39 @@ export class AlertsComponent implements OnInit {
   // }
 
   getUser(){
-    this.registerService.getUser()
-    .subscribe(res =>{
-      console.log('el user id es:');
+    // this.registerService.getUser()
+    // .subscribe(res =>{
+    //   console.log('el user id es:');
       
-      console.log(res);
-      this.userId = res['UserId'];
-      this.alertService.getAlerts()
-      .subscribe(res=>{
-        console.log('esto solo se ve aqui');
-        console.log(typeof res);
-        const json = JSON.stringify(res)
-        const datajson = JSON.parse(json);
-        console.log(' mi json es');
-        console.log(datajson);
+    //   console.log(res);
+    //   this.userId = res['UserId'];
+    //   this.alertService.getAlerts()
+    //   .subscribe(res=>{
+    //     console.log('esto solo se ve aqui');
+    //     console.log(typeof res);
+    //     const json = JSON.stringify(res)
+    //     const datajson = JSON.parse(json);
+    //     console.log(' mi json es');
+    //     console.log(datajson);
         
-        for (let index = 0; index < datajson.length; index++) {
-          // const element = array[index];
-          if (datajson[index].id_user === this.userId) {
-            console.log('*************************');
-            console.log(datajson[index]);
-            this.listAlerts.push(datajson[index])
-            console.log('asi quedan las alertas');
+    //     for (let index = 0; index < datajson.length; index++) {
+    //       // const element = array[index];
+    //       if (datajson[index].id_user === this.userId) {
+    //         console.log('*************************');
+    //         console.log(datajson[index]);
+    //         this.listAlerts.push(datajson[index])
+    //         console.log('asi quedan las alertas');
 
-            console.log(this.listAlerts);
+    //         console.log(this.listAlerts);
             
-          }else{
-            console.log('NO ENTRE AL MALDITO IF');
+    //       }else{
+    //         console.log('NO ENTRE AL MALDITO IF');
             
-          }
-        }
+    //       }
+    //     }
 
-      })
-    });
+    //   })
+    // });
   }
 
 

@@ -19,7 +19,7 @@ export class UserSettingsComponent implements OnInit {
   }
 
   getUser(){
-    this.registerService.getUser()
+   /* this.registerService.getUser()
     .subscribe(res =>{
       console.log(res);
       this.userId = res['UserId'];
@@ -44,41 +44,42 @@ export class UserSettingsComponent implements OnInit {
         
       });
     });
+    */
   }
 
   editUser(user: User){
-    this.registerService.selectedUser = user;
+    //this.registerService.selectedUser = user;
   }
 
   confirmEdit(form: NgForm){
-    if (form.value._id) {
-      this.registerService.putUser(form.value)
-      .subscribe(res => {
-        console.log(res);
-        this.resetForm(form);
-        M.toast({html: 'Updated Successfuly'})
-        // this.getUser();
-      });
-    }
+    // if (form.value._id) {
+    //   this.registerService.putUser(form.value)
+    //   .subscribe(res => {
+    //     console.log(res);
+    //     this.resetForm(form);
+    //     M.toast({html: 'Updated Successfuly'})
+    //     // this.getUser();
+    //   });
+    // }
   }
 
 
   deleteUser(_id:string){
-    if (confirm('Are you sure you want to delete it?')) {
-      this.registerService.deleteUser(_id)
-      .subscribe(res => {
-        console.log(res);
-        // this.getUser();
-        this.loginService.logout();
-        M.toast({html: 'Deleted successfuly'})
-      });}
+    // if (confirm('Are you sure you want to delete it?')) {
+    //   this.registerService.deleteUser(_id)
+    //   .subscribe(res => {
+    //     console.log(res);
+    //     // this.getUser();
+    //     this.loginService.logout();
+    //     M.toast({html: 'Deleted successfuly'})
+    //   });}
     }
 
 
     resetForm(form?: NgForm){
-      if (form) {
-        form.reset();
-        this.registerService.selectedUser = new User();
-      }
+      // if (form) {
+      //   form.reset();
+      //   this.registerService.selectedUser = new User();
+      // }
     }
 }

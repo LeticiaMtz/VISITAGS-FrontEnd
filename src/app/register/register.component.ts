@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import {Router } from '@angular/router'
 import { User } from '../models/register';
+import { environment } from '../../environments/environment.prod';
 
 
 @Component({
@@ -47,7 +48,7 @@ user:User = new User();
     }else if (this.regexp.test(this.user.strEmail)){
      console.log(form.value);
       this.registerService.postUser(form.value)
-      .subscribe(res => {
+      .then(res => {
         console.log(res);
         let data = JSON.stringify(res);
         let dataJson = JSON.parse(data);
@@ -58,15 +59,18 @@ user:User = new User();
           icon: 'success',
           confirmButtonText: 'Aceptar'
         })
-      });
-    }else{
-      Swal.fire({
-        title: 'Error!',
-        text: 'Error el correo no cumple con las condiciones, no creamos tu usuario 😕',
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
+
+        this.router.navigate(['/login']);
       })
-      this.router.navigate(['/register']) 
+      .catch(err => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Error el correo no cumple con las condiciones, no creamos tu usuario 😕',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        })
+        this.router.navigate(['/register']) 
+      })
     }
   }
 }
