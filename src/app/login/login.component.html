@@ -1,9 +1,9 @@
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
-<section id="wrapper" class="login-register login-sidebar" style="background-image:url(../assets/images/utags/bg-uta-3.jpg);">
+<section id="wrapper" class="login-register login-sidebar" style="background-image:url(/assets/images/utags/bg-utags.jpg);">
     <div class="login-box card col-12">
-        <img src="../assets/images/utags/logo-icon.png" class="card-img-top img-responsive align-self-center mt-2" alt="utags" style="width: 40%;">
+        <img src="/assets/images/utags/logo-icon.png" class="card-img-top img-responsive align-self-center mt-2" alt="utags" style="width: 40%;">
         <h2 class="text-center">ALERTAS ACADEMICAS</h2>
         <div class="card-body">
             <form [formGroup]="user" class="form-horizontal form-material" id="loginform">
@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <div class="col-xs-12">
                         <input class="form-control" type="password" placeholder="Contraseña" name="strPassword" formControlName="strPassword" minlength="8" [class.is-invalid]="invalidPassword">
-                        <small *ngIf="invalidPassword" class="text-danger">La contraseña no es valida</small>
+                        <small *ngIf="invalidPassword" class="text-danger">La contraseña debe contener minimo 8 caracteres</small>
                     </div>
                 </div>
                 <div class="form-group row">

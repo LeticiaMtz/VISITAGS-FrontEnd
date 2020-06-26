@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../services/login.service';
-import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
 import { FormGroup, FormControl, Validators  } from '@angular/forms';
-import { ClassField } from '@angular/compiler';
+import { LoginService } from '../services/login/login.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-//let rememberIt;
+
+
+
+declare function init_plugins();
 
 @Component({
   selector: 'app-login',
@@ -16,10 +17,11 @@ export class LoginComponent implements OnInit {
 
   rememberIt: boolean;
 
-  constructor(public router: Router, public loginService: LoginService) {
-  }
+  constructor( private router: Router, private loginService: LoginService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    init_plugins();
+
     if(localStorage.getItem('strEmail')){
       this.user.setValue({
         strEmail: localStorage.getItem('strEmail'),
@@ -30,8 +32,7 @@ export class LoginComponent implements OnInit {
     }
     if(!this.rememberIt){
       localStorage.removeItem('strEmail');
-  }
-  
+    }
   }
 
   user = new FormGroup({
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
     strPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
     rememberMe: new FormControl(this.rememberIt)
   });
-  
+
   regexp = new RegExp('^[_A-Za-z\\+]+(\\.[_A-Za-z]+)*@utags.edu.mx$');
 
   get invalidEmail(){
@@ -76,7 +77,7 @@ export class LoginComponent implements OnInit {
             localStorage.removeItem('strEmail');
           }
 
-          this.router.navigate(['/home']);
+          this.router.navigate(['/dashboard']);
 
           Swal.fire({
             title: 'success',
@@ -100,7 +101,20 @@ export class LoginComponent implements OnInit {
           console.log(this.invalidPassword);
         }    
       },
-      err =>console.log(err));    
+      err => {
+
+        if (err){
+          Swal.fire({
+            title: 'Error!',
+            text: `${err.error.err.message}`,
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+        }
+        console.log(err)
+        
+      });    
+      
     }else{
 
       Swal.fire({
@@ -111,4 +125,5 @@ export class LoginComponent implements OnInit {
       });
     }
   }
+
 }
