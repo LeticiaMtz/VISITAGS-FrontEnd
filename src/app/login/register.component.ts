@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { User } from '../models/user';
 import Swal from 'sweetalert2';
 
+declare function init_plugins();
 
 @Component({
   selector: 'app-register',
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit {
   constructor(private registerService: RegisterService, private router: Router) { }
 
   ngOnInit() {
+    init_plugins();
   }
 
   regexp = new RegExp('^[_A-Za-z\\+]+(\\.[_A-Za-z]+)*@utags.edu.mx$');

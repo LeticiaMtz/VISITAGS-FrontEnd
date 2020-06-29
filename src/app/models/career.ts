@@ -1,5 +1,8 @@
-export class Career {
+export class CareerModel {
     _id?: string;
-    strName: string;
-    blnStatus: boolean;
+    strCarrera: string;
+    blnStatus: boolean; 
+    aJsnEspecialidad?: [{
+        
+    }];
 }

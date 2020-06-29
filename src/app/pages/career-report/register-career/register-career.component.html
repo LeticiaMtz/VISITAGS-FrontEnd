@@ -10,23 +10,20 @@
             <div class="form-group col-md-12">
             
                 <div>
-                    <input class="form-control form-control-sm" type="text " placeholder="Nombre de carrera" name="strName" [(ngModel)]="career.strName" required #strName="ngModel">
-                    <!-- <div class="invalid-feedback" *ngIf="strName.errors?.required">
+                    <input [class.is-invalid]="strCarrera.invalid && strCarrera.touched" class="form-control form-control-sm" type="text " placeholder="Nombre de carrera" name="strCarrera" [(ngModel)]="career.strCarrera" required #strCarrera="ngModel">
+                    <div class="invalid-feedback" *ngIf="strCarrera.errors?.required">
                         <small>
                             Es necesario ingresar un nombre.
                         </small>
-                    </div> -->
+                    </div>
                 </div>
 
                 <div class="mt-2">
-                    <select  class="custom-select form-control form-control-sm" type="text" name="blnStatus" [(ngModel)]="career.blnStatus" required #blnStatus="ngModel">
-                        <option [ngValue]="undefined" hidden>Estatus de la Carrera</option>
-                        <option [ngValue]=true>Activo</option>
+                    <select class="custom-select form-control form-control-sm" type="text" name="blnStatus" [(ngModel)]="career.blnStatus" #blnStatus="ngModel">
+                        <!--  ng-repeat="producto in vm.productos">{{producto.descripcion}} -->
+                        <option [ngValue]="undefined" hidden>Activo</option>
                         <option [ngValue]=false>Inactivo</option>
                       </select>
-                    <!-- <div class="invalid-feedback" *ngIf="blnStatus.errors?.required">
-                        Es necesario ingresar el estatus de la carrera.
-                    </div> -->
                 </div>
 
                 <div class="list-inline mt-3 text-right">

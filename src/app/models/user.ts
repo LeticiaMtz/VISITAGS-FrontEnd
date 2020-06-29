@@ -8,5 +8,5 @@ export class User {
     strPassword:string;
     idRole:string;
     strDirection:string;
-
+    strValidatePass:string;    
 }

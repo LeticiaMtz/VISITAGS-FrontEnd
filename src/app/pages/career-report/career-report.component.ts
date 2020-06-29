@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CareersService } from '../../services/careers/careers.service';
-import { Career } from '../../models/career';
-import Swal from 'sweetalert2';
-import html2canvas from 'html2canvas';
-import * as jspdf from 'jspdf';
+import { CareerModel } from '../../models/career';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ExportToPdfService } from '../../services/pdf/export-to-pdf.service';
 
 @Component({
   selector: 'app-career-report',
@@ -12,48 +11,44 @@ import * as jspdf from 'jspdf';
 })
 export class CareerReportComponent implements OnInit {
 
-  careers: Career[] = [];
+  careers: CareerModel[] = [];
   searchText: any;
   pageActual: number;
   cargando: boolean;
+  refresh: boolean = false;
   actualizar: boolean = false;
-  idAdmin: string;
+  idCareer: string;
   correoAdmin: string;
   title: string;
   regTerm: boolean = false;
+  activo: boolean = true;
+  arrayCareer = [];
 
 
-  constructor(private careerService: CareersService) { }
+  constructor(private careerService: CareersService, private route: Router, private _PdfService: ExportToPdfService) { }
 
   ngOnInit(): void {
-
-    this.careers = [
-      {
-        strName: "Matematicas",
-        blnStatus: true 
-      },
-      {
-        strName: "Español",
-        blnStatus: true
-      },
-      {
-        strName: "Ingles",
-        blnStatus: true
-      },
-      {
-        strName: "Programacion",
-        blnStatus: true
-      },
-      {
-        strName: "Base de Datos",
-        blnStatus: true
-      }
-    ]
+    this.getCareeers();
   }
   
-  actualizarCarrera(valueUpdate: boolean){
+  getCareeers(){
+    this.careerService.getCareers().then((res: any) => {
+      this.careers = res.carrera;
+      for(const c of this.careers){
+        let element = [
+          c.strCarrera
+        ];
+        this.arrayCareer.push(c);
+      }
+      console.log(this.careers);
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+
+  actualizarCarrera(valueUpdate: boolean, _id: string){
     this.actualizar = valueUpdate;
-    
+    this.idCareer = _id;
   }
 
   updateCanceled(e){
@@ -61,8 +56,31 @@ export class CareerReportComponent implements OnInit {
     this.actualizar = e;
   }
 
-  exportPDF(){
+  refreshTable(e){
+    this.refresh = e;
+    if (this.refresh){
+      this.ngOnInit();
+    }
+  }
 
+  exportPDF(){
+    let header = [
+      {
+        text: "Nombre",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      }
+    ];
+    this._PdfService.generatePdf(
+      "Reporte de Carreras",
+      header,
+      this.arrayCareer,
+      "center",
+      'landscape'
+    );
   }
 
   exportAsXLSX(){

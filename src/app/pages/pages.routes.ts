@@ -5,6 +5,7 @@ import { AuthGuard } from '../guards/auth.guard';
 
 //Alertas Academicas Pages
 import { CareerReportComponent } from './career-report/career-report.component';
+import { SpecialtyReportComponent } from './specialty-report/specialty-report.component';
 
 //AdminPro Pages
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -16,6 +17,7 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 
 
 
+
 const pagesRoutes: Routes = [
     {
         path: '',
@@ -23,6 +25,7 @@ const pagesRoutes: Routes = [
         children: [
           { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' }, canActivate: [AuthGuard] },
           { path: 'career-report', component: CareerReportComponent, data: { titulo: 'Reporte de Carreas' }, canActivate: [AuthGuard] },
+          { path: 'specialty-report/:id', component: SpecialtyReportComponent, canActivate: [AuthGuard] },
           { path: 'progress', component: ProgressComponent, data: { titulo: 'Progress' }, canActivate: [AuthGuard] },
           { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Graficas' }, canActivate: [AuthGuard] },
           { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' }, canActivate: [AuthGuard] },
