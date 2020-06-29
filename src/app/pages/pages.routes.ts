@@ -1,31 +1,39 @@
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { PagesComponent } from './pages.component';
-import { HomeComponent } from './home/home.component';
-import { AlertsComponent } from './alerts/alerts.component';
-import { AlertDetailsComponent } from './alert-details/alert-details.component';
-import { MyFollowUpComponent } from './my-follow-up/my-follow-up.component';
-import { GeneralFollowComponent } from './general-follow/general-follow.component';
-import { UserSettingsComponent } from './user-settings/user-settings.component';
-import { AuthGuard } from '../auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 
+//Alertas Academicas Pages
+import { CareerReportComponent } from './career-report/career-report.component';
+import { SpecialtyReportComponent } from './specialty-report/specialty-report.component';
+
+//AdminPro Pages
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProgressComponent } from './progress/progress.component';
+import { Graficas1Component } from './graficas1/graficas1.component';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { PromesasComponent } from './promesas/promesas.component';
+import { RxjsComponent } from './rxjs/rxjs.component';
 
 
 
 
 const pagesRoutes: Routes = [
-    { path: '', component: PagesComponent, children: [
-        { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-        { path: 'alerts', component: AlertsComponent, canActivate: [AuthGuard] },
-        { path: 'alertDetails', component: AlertDetailsComponent, canActivate: [AuthGuard] },
-        { path: 'MyFollow', component: MyFollowUpComponent, canActivate: [AuthGuard] },
-        { path: 'GeneralFollow', component: GeneralFollowComponent, canActivate: [AuthGuard] },
-        { path: 'account', component: UserSettingsComponent, canActivate: [AuthGuard] },
-        { path: '', redirectTo: '/home', pathMatch: 'full' }
-        
-    ]}
+    {
+        path: '',
+        component: PagesComponent,
+        children: [
+          { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' }, canActivate: [AuthGuard] },
+          { path: 'career-report', component: CareerReportComponent, data: { titulo: 'Reporte de Carreas' }, canActivate: [AuthGuard] },
+          { path: 'specialty-report/:id', component: SpecialtyReportComponent, canActivate: [AuthGuard] },
+          { path: 'progress', component: ProgressComponent, data: { titulo: 'Progress' }, canActivate: [AuthGuard] },
+          { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Graficas' }, canActivate: [AuthGuard] },
+          { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' }, canActivate: [AuthGuard] },
+          { path: 'rxjs', component: RxjsComponent, data: { titulo: 'RxJs' }, canActivate: [AuthGuard] },
+          { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes del Tema' }, canActivate: [AuthGuard]},
+          { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
+        ]
+    },
 ];
-
-  
 
 export const PAGES_ROUTES = RouterModule.forChild( pagesRoutes );
