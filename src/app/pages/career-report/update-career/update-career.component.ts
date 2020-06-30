@@ -4,10 +4,12 @@ import { CareerModel } from 'src/app/models/career';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 
-
-
-
-
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});
 @Component({
   selector: 'app-update-career',
   templateUrl: './update-career.component.html',
@@ -25,38 +27,37 @@ export class UpdateCareerComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCarrer();
-    console.log(this.idCareer);
   }
 
 
   updateCareer(form: NgForm){
     this.carrerService.putCareer(this.idCareer, this.career).then(res => {
-      console.log(res);
-      console.log(this.career.blnStatus);
-
-      Swal.fire({
-        position: 'top-end',
+      Toast.fire({
         icon: 'success',
-        title: 'Carrera actualizada Exitosamente',
-        showConfirmButton: false,
-        timer: 1500
-      })
+        title: `¡La carrera ${this.career.strCarrera} se actualizó exitosamente!`
+      });
 
+      form.reset();
       this.optionCancel.emit(false);
       this.refresh.emit(true);
+
     }).catch(err => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: `No fue posible actualizar la información de la carrera`
+      });
+      form.reset();
     });
   }
 
-  getCarrer(){
+  getCarrer() {
     this.carrerService.getCarrerByid(this.idCareer).then((res: any) => {
       this.career = res.cnt[0];
-      // console.log(res);
-      console.log(res.cnt[0]);
-      console.log(this.career);
     }).catch(err => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: `No fue posible obtener la información de la carrera`
+      });
     });
   }
 

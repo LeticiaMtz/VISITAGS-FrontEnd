@@ -28,25 +28,20 @@ export class RegisterCareerComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  saveCareer(form: NgForm){
+  saveCareer(form: NgForm) {
     this.careersService.postCarrer(this.career).then(res => {
-      Swal.fire({
-        position: 'top-end',
+      Toast.fire({
         icon: 'success',
-        title: 'Carrera registrada Exitosamente',
-        showConfirmButton: false,
-        timer: 1500
-      })
+        title: `¡La carrera ${this.career.strCarrera} se registró exitosamente!`
+      });
+      form.reset();
       this.refresh.emit(true);
-    }).catch(err =>{
+    }).catch(err => {
       console.log(err);
-      Swal.fire({
-        position: 'top-end',
+      Toast.fire({
         icon: 'error',
-        title: 'No se registro la carrera',
-        showConfirmButton: false,
-        timer: 1500
-      })
+        title: `No fué posible registrar la carrera`
+      });
     });
   }
 
