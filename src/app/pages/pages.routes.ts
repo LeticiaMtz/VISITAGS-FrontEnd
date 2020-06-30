@@ -25,7 +25,7 @@ const pagesRoutes: Routes = [
         children: [
           { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' }, canActivate: [AuthGuard] },
           { path: 'career-report', component: CareerReportComponent, data: { titulo: 'Reporte de Carreas' }, canActivate: [AuthGuard] },
-          { path: 'specialty-report/:id', component: SpecialtyReportComponent, canActivate: [AuthGuard] },
+          { path: 'specialty-report/:id', component: SpecialtyReportComponent, data: { titulo: 'Reporte de Especialiddes' }, canActivate: [AuthGuard] },
           { path: 'progress', component: ProgressComponent, data: { titulo: 'Progress' }, canActivate: [AuthGuard] },
           { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Graficas' }, canActivate: [AuthGuard] },
           { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' }, canActivate: [AuthGuard] },

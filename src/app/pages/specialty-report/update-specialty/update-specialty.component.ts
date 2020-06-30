@@ -5,22 +5,19 @@ import { SpecialtyModel } from '../../../models/specialty';
 import { NgForm } from '@angular/forms';
 import { CareerModel } from 'src/app/models/career';
 import Swal from 'sweetalert2';
+
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,
   timer: 3000
  });
-
-
-
-
-
 @Component({
   selector: 'app-update-specialty',
   templateUrl: './update-specialty.component.html',
   styleUrls: ['./update-specialty.component.css']
 })
+
 export class UpdateSpecialtyComponent implements OnInit {
 
   @Output() optionCancel = new EventEmitter();
@@ -33,9 +30,7 @@ export class UpdateSpecialtyComponent implements OnInit {
   specialties: SpecialtyModel[] = [];
   strEsp: string;
   blnEst: boolean;
- 
-  
-  
+
   constructor(private specialtyService: SpecialtyService, private careersService: CareersService) { }
 
   ngOnInit(): void {
@@ -53,28 +48,27 @@ export class UpdateSpecialtyComponent implements OnInit {
           this.specialty.blnStatus = element.blnStatus;
         }
      });
-     
     }).catch(err => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: `No se pudo obtener la información`
+      });
     });
   }
 
   updateSpecialty(forma: NgForm){
     this.specialtyService.putSpecialty(this.idCareer, this.idSpecialty, this.specialty).then(res => {
-      console.log(res);
-      
-      Swal.fire({
-        position: 'top-end',
+      Toast.fire({
         icon: 'success',
-        title: 'Especialidad actualizada Exitosamente',
-        showConfirmButton: false,
-        timer: 1500
-      })
-  
+        title: `¡La especialidad ${this.specialty.strEspecialidad} se actualizó exitosamente!`
+      });
       this.optionCancel.emit(false);
       this.refresh.emit(true);
     }).catch(err => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: `No fue posible actualizar la información de la especialidad`
+      });
     });
   }
 

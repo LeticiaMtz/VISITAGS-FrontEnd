@@ -2,7 +2,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CareersService } from '../../services/careers/careers.service';
 import { CareerModel } from '../../models/career';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExportToPdfService } from '../../services/pdf/export-to-pdf.service';
+import { PdfServiceService } from 'src/app/services/PDF/pdf-service.service';
+import { ExportDataService } from 'src/app/services/excel/export-to-excel.service';
 
 @Component({
   selector: 'app-career-report',
@@ -25,22 +26,22 @@ export class CareerReportComponent implements OnInit {
   arrayCareer = [];
 
 
-  constructor(private careerService: CareersService, private route: Router, private _PdfService: ExportToPdfService) { }
+  constructor(private careerService: CareersService, private route: Router, private _PdfService: PdfServiceService, private _excelService: ExportDataService) { }
 
   ngOnInit(): void {
     this.getCareeers();
+    this.title = 'Reposte de Carreras';
   }
   
   getCareeers(){
     this.careerService.getCareers().then((res: any) => {
       this.careers = res.carrera;
-      for(const c of this.careers){
+      for (const c of this.careers) {
         let element = [
-          c.strCarrera
+          c.strCarrera.replace(/\:null/gi,':""')
         ];
-        this.arrayCareer.push(c);
+        this.arrayCareer.push(element);
       }
-      console.log(this.careers);
     }).catch(err => {
       console.log(err);
     });
@@ -51,22 +52,21 @@ export class CareerReportComponent implements OnInit {
     this.idCareer = _id;
   }
 
-  updateCanceled(e){
-    console.log(e);
+  updateCanceled(e) {
     this.actualizar = e;
   }
 
-  refreshTable(e){
+  refreshTable(e) {
     this.refresh = e;
     if (this.refresh){
       this.ngOnInit();
     }
   }
 
-  exportPDF(){
+  exportPDF() {
     let header = [
       {
-        text: "Nombre",
+        text: "Nombre de la Carrera",
         style: "tableHeader",
         bold: true,
         fillColor: "#2a3e52",
@@ -75,15 +75,29 @@ export class CareerReportComponent implements OnInit {
       }
     ];
     this._PdfService.generatePdf(
-      "Reporte de Carreras",
+      this.title,
       header,
       this.arrayCareer,
-      "center",
-      'landscape'
+      "center"
     );
   }
 
-  exportAsXLSX(){
+  exportAsXLSX() {
+    if (this.careers.length !== 0) {
+      let jsonobject = JSON.stringify(this.careers);
+      jsonobject = jsonobject.replace(/strCarrera/gi, 'Nombre');
+      const jsonobject2 = JSON.parse(jsonobject);
+      const count = Object.keys(jsonobject2).length;
+      for (let i = 0; i < count; i++) {
+        delete jsonobject2[i].created_at;
+        delete jsonobject2[i].updated_at;
+        delete jsonobject2[i].blnStatus;
+        delete jsonobject2[i].aJsnEspecialidad;
+        delete jsonobject2[i]._id;
+        delete jsonobject2[i].__v;
+      }
+      this._excelService.exportAsExcelFile(jsonobject2, `${this.title}`);
+    }
 
   }
 
