@@ -25,6 +25,9 @@ import { CommonModule } from '@angular/common';
 import { SpecialtyReportComponent } from './specialty-report/specialty-report.component';
 import { RegisterSpecialtyComponent } from './specialty-report/register-specialty/register-specialty.component';
 import { UpdateSpecialtyComponent } from './specialty-report/update-specialty/update-specialty.component';
+import { StatusReportComponent } from './status-report/status-report.component';
+import { RegisterStatusComponent } from './status-report/register-status/register-status.component';
+import { UpdateStatusComponent } from './status-report/update-status/update-status.component';
 
 
 
@@ -46,7 +49,10 @@ import { UpdateSpecialtyComponent } from './specialty-report/update-specialty/up
         UpdateCareerComponent,
         SpecialtyReportComponent,
         RegisterSpecialtyComponent,
-        UpdateSpecialtyComponent
+        UpdateSpecialtyComponent,
+        StatusReportComponent,
+        RegisterStatusComponent,
+        UpdateStatusComponent,
     ],
     exports: [
         DashboardComponent,
