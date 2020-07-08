@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
-import { CareerModel } from 'src/app/models/career';
+import { SubjectModel } from '../../models/subjects';
 
- 
 @Injectable({
   providedIn: 'root'
 })
-export class CareersService {
+export class SubjectsService {
+
 
   readonly URL = environment.urlGlobal;
 
+
   constructor(private http: HttpClient) { }
+
 
   getCareers(){
     return this.http.get(`${this.URL}/carreras/obtener`).toPromise();
@@ -21,12 +23,12 @@ export class CareersService {
     return this.http.get(`${this.URL}/carreras/obtener/${idCarrera}`).toPromise();
   }
 
-  postCarrer(career: CareerModel){
-    return this.http.post(`${this.URL}/carreras/registrar`, career).toPromise();
+  postCarrer(subject:SubjectModel ){
+    return this.http.post(`${this.URL}/carreras/registrar`, subject).toPromise();
   }
 
-  putCareer(idCareer: string, career: CareerModel){
-    return this.http.put(`${this.URL}/carreras/actualizar/${idCareer}`, career).toPromise();
+  putCareer(idCareer: string, subject: SubjectModel){
+    return this.http.put(`${this.URL}/carreras/actualizar/${idCareer}`, subject).toPromise();
   }
 
 }
