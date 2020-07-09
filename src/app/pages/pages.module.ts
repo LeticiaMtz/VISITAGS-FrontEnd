@@ -28,6 +28,9 @@ import { UpdateSpecialtyComponent } from './specialty-report/update-specialty/up
 import { StatusReportComponent } from './status-report/status-report.component';
 import { RegisterStatusComponent } from './status-report/register-status/register-status.component';
 import { UpdateStatusComponent } from './status-report/update-status/update-status.component';
+import { SubjectsComponent } from './subjects/subjects.component';
+import { RegisterSubjectsComponent } from './subjects/register-subjects/register-subjects.component';
+import { UpdateSubjectsComponent } from './subjects/update-subjects/update-subjects.component';
 
 
 
@@ -53,6 +56,9 @@ import { UpdateStatusComponent } from './status-report/update-status/update-stat
         StatusReportComponent,
         RegisterStatusComponent,
         UpdateStatusComponent,
+        SubjectsComponent,
+        RegisterSubjectsComponent,
+        UpdateSubjectsComponent
     ],
     exports: [
         DashboardComponent,
