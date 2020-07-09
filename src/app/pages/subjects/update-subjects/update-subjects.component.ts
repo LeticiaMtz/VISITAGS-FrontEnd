@@ -25,22 +25,22 @@ export class UpdateSubjectsComponent implements OnInit {
   
   @Output() optionCancel = new EventEmitter();
   @Output() refresh = new EventEmitter();
-  @Input() idCareer: string;
+  @Input() idAsig: string;
 
-  career: SubjectModel = new SubjectModel();
+  sub: SubjectModel = new SubjectModel();
 
   constructor(private subjectsService: SubjectsService) { }
 
   ngOnInit(): void {
-    this.getCarrer();
+    this.getAsignatura();
   }
 
 
-  updateCareer(form: NgForm){
-    this.subjectsService.putCareer(this.idCareer, this.career).then(res => {
+  updateAsignatura(form: NgForm){
+    this.subjectsService.putAsignatura(this.idAsig, this.sub).then(res => {
       Toast.fire({
         icon: 'success',
-        title: `¡La carrera ${this.career.strCarrera} se actualizó exitosamente!`
+        title: `¡La Asignatura ${this.sub.strAsignatura} se actualizó exitosamente!`
       });
 
       form.reset();
@@ -50,19 +50,19 @@ export class UpdateSubjectsComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `No fue posible actualizar la información de la carrera`
+        title: `No fue posible actualizar la información de la asignatura`
       });
       form.reset();
     });
   }
 
-  getCarrer() {
-    this.subjectsService.getCarrerByid(this.idCareer).then((res: any) => {
-      this.career = res.cnt[0];
+  getAsignatura() {
+    this.subjectsService.getAsignaturaByid(this.idAsig).then((res: any) => {
+      this.sub = res.cnt[0];
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `No fue posible obtener la información de la carrera`
+        title: `No fue posible obtener la información de la asignatura`
       });
     });
   }

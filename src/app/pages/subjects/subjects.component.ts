@@ -4,6 +4,8 @@ import { CareersService } from 'src/app/services/careers/careers.service';
 import { Router } from '@angular/router';
 import { PdfServiceService } from 'src/app/services/PDF/pdf-service.service';
 import { ExportDataService } from 'src/app/services/excel/export-to-excel.service';
+import { SubjectModel } from 'src/app/models/subjects';
+import { SubjectsService } from '../../services/subjects/subjects.service';
 
 @Component({
   selector: 'app-subjects',
@@ -11,43 +13,44 @@ import { ExportDataService } from 'src/app/services/excel/export-to-excel.servic
   styleUrls: ['./subjects.component.css']
 })
 export class SubjectsComponent implements OnInit {
-  careers: CareerModel[] = [];
+  subs: SubjectModel[] = [];
   searchText: any;
   pageActual: number;
   cargando: boolean;
   refresh: boolean = false;
   actualizar: boolean = false;
-  idCareer: string;
+  idAsig: string;
   correoAdmin: string;
   title: string;
   regTerm: boolean = false;
   activo: boolean = true;
   arrayCareer = [];
-  constructor(private careerService: CareersService, private route: Router, private _PdfService: PdfServiceService, private _excelService: ExportDataService) { }
+  constructor(private subjectsService: SubjectsService, private route: Router, private _PdfService: PdfServiceService, private _excelService: ExportDataService) { }
 
  
   ngOnInit(): void {
-    this.getCareeers();
-    this.title = 'Reposte de Carreras';
+    this.getAsignatura();
+    this.title = 'Reposte de Asignaturas';
   }
   
-  getCareeers(){
-    this.careerService.getCareers().then((res: any) => {
-      this.careers = res.carrera;
-      for (const c of this.careers) {
+  getAsignatura(){
+    this.subjectsService.getAsignatura().then((res: any) => {
+      this.subs = res.asignatura;
+      for (const c of this.subs) {
         let element = [
-          c.strCarrera.replace(/\:null/gi,':""')
+          c.strAsignatura.replace(/\:null/gi,':""'),
+          c.strSiglas.replace(/\:null/gi,':""')
         ];
         this.arrayCareer.push(element);
-      }
+      } 
     }).catch(err => {
       console.log(err);
     });
   }
 
-  actualizarCarrera(valueUpdate: boolean, _id: string){
+  actualizarAsignatura(valueUpdate: boolean, _id: string){
     this.actualizar = valueUpdate;
-    this.idCareer = _id;
+    this.idAsig = _id;
   }
 
   updateCanceled(e) {
@@ -64,7 +67,15 @@ export class SubjectsComponent implements OnInit {
   exportPDF() {
     let header = [
       {
-        text: "Nombre de la Carrera",
+        text: "Nombre de la Asignatura",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      },
+      {
+        text: "Siglas",
         style: "tableHeader",
         bold: true,
         fillColor: "#2a3e52",
@@ -81,16 +92,15 @@ export class SubjectsComponent implements OnInit {
   }
 
   exportAsXLSX() {
-    if (this.careers.length !== 0) {
-      let jsonobject = JSON.stringify(this.careers);
-      jsonobject = jsonobject.replace(/strCarrera/gi, 'Nombre');
+    if (this.subs.length !== 0) {
+      let jsonobject = JSON.stringify(this.subs);
+      jsonobject = jsonobject.replace(/strAsignatura/gi, 'Nombre');
       const jsonobject2 = JSON.parse(jsonobject);
       const count = Object.keys(jsonobject2).length;
       for (let i = 0; i < count; i++) {
-        delete jsonobject2[i].created_at;
-        delete jsonobject2[i].updated_at;
+        delete jsonobject2[i].createdAt;
+        delete jsonobject2[i].updatedAt;
         delete jsonobject2[i].blnStatus;
-        delete jsonobject2[i].aJsnEspecialidad;
         delete jsonobject2[i]._id;
         delete jsonobject2[i].__v;
       }

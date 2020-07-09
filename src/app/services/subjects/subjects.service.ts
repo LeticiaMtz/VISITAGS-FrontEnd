@@ -15,20 +15,20 @@ export class SubjectsService {
   constructor(private http: HttpClient) { }
 
 
-  getCareers(){
-    return this.http.get(`${this.URL}/carreras/obtener`).toPromise();
+  getAsignatura(){
+    return this.http.get(`${this.URL}/asignatura/obtener`).toPromise();
   }
 
-  getCarrerByid(idCarrera: string){
-    return this.http.get(`${this.URL}/carreras/obtener/${idCarrera}`).toPromise();
+  getAsignaturaByid(idAsignatura: string){
+    return this.http.get(`${this.URL}/asignatura/obtener/${idAsignatura}`).toPromise();
   }
 
-  postCarrer(subject:SubjectModel ){
-    return this.http.post(`${this.URL}/carreras/registrar`, subject).toPromise();
+  postAsignatura(subject:SubjectModel ){
+    return this.http.post(`${this.URL}/asignatura/registrar`, subject).toPromise();
   }
 
-  putCareer(idCareer: string, subject: SubjectModel){
-    return this.http.put(`${this.URL}/carreras/actualizar/${idCareer}`, subject).toPromise();
+  putAsignatura(idAsig: string, subject: SubjectModel){
+    return this.http.put(`${this.URL}/asignatura/actualizar/${idAsig}`, subject).toPromise();
   }
 
 }

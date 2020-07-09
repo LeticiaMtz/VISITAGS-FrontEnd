@@ -1,9 +1,7 @@
 export class SubjectModel {
     _id?: string;
-    strCarrera: string;
-    strsiglas: string;
+    strAsignatura: string;
+    strSiglas: string;
     blnStatus: boolean = true; 
-    aJsnEspecialidad?: [{
-        
-    }];
+   
 }

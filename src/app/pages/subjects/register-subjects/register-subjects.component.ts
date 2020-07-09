@@ -3,6 +3,8 @@ import { CareersService } from '../../../services/careers/careers.service';
 import { CareerModel } from '../../../models/career';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { SubjectModel } from 'src/app/models/subjects';
+import { SubjectsService } from '../../../services/subjects/subjects.service';
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -19,28 +21,29 @@ export class RegisterSubjectsComponent implements OnInit {
 
  
   @Output() refresh = new EventEmitter();
-  career: CareerModel = new CareerModel();
+  sub: SubjectModel = new SubjectModel();
   isActive: boolean;
   
 
-  constructor(private careersService: CareersService) { }
+  constructor(private subjectsService: SubjectsService) { }
 
   ngOnInit(): void {
   }
 
-  saveCareer(form: NgForm) {
-    this.careersService.postCarrer(this.career).then(res => {
+  saveAgignatura(form: NgForm) {
+    this.subjectsService.postAsignatura(this.sub).then(res => {
       Toast.fire({
         icon: 'success',
-        title: `¡La carrera ${this.career.strCarrera} se registró exitosamente!`
+        title: `¡La Asignatura ${this.sub.strAsignatura} se registró exitosamente!`
       });
-      form.reset();
+      form.controls['strAsignatura'].reset();
+      form.controls['strSiglas'].reset();
       this.refresh.emit(true);
     }).catch(err => {
       console.log(err);
       Toast.fire({
         icon: 'error',
-        title: `No fué posible registrar la carrera`
+        title: `No fué posible registrar la Asignatura`
       });
     });
   }
