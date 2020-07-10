@@ -16,6 +16,7 @@ const Toast = Swal.mixin({
   templateUrl: './register-career.component.html',
   styleUrls: ['./register-career.component.css']
 })
+
 export class RegisterCareerComponent implements OnInit {
 
   @Output() refresh = new EventEmitter();
