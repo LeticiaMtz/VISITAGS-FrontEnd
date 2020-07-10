@@ -3,11 +3,11 @@
 
         <div class="col-md-4">
             <div class="container mt-4" *ngIf="!actualizar">
-                <app-register-crde (refresh)="refreshTable($event)"></app-register-crde>
+                <app-register-subjects (refresh)="refreshTable($event)"></app-register-subjects>
             </div>
 
             <div class="container mt-4" *ngIf="actualizar">
-                <app-update-crde (optionCancel)="updateCanceled($event)" (refresh)="refreshTable($event)" [idReasons]="idReasons"></app-update-crde>
+                <app-update-subjects (optionCancel)="updateCanceled($event)" (refresh)="refreshTable($event)" [idAsig]="idAsig"></app-update-subjects>
             </div>
         </div>
 
@@ -39,34 +39,34 @@
                                 <table class="table table-sm table-hover table-borderless">
                                     <thead>
                                         <tr>
-                                            <th>NOMBRE DE LA CATEGORIA</th>
+                                            <th>NOMBRE DE LA ASIGNATURA</th>
+                                            <th>NOMBRE DE LAS SIGLAS</th>
                                             <th>ESTATUS</th>
-                                            <th class="text-center"> ACCIONES</th>
+                                            <th>ACCIONES</th>
                                         </tr>
                                     </thead>
 
                                     <!-- SE MUESTRA CUANDO HAY REGISTROS -->
-                                    <tbody *ngIf="reasons.length &gt; 0 && !cargando">
-
-                                        <tr *ngFor="let reasons of reasons | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
-                                            <td>{{ reasons.strCategoria }}</td>
-                                            <td *ngIf="reasons.blnStatus === activo">Activo</td>
-                                            <td *ngIf="reasons.blnStatus !== activo">Inactivo</td>
+                                    <tbody *ngIf="subs.length &gt; 0 && !cargando">
+                                        <tr *ngFor="let sub of subs | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
+                                            <td>{{ sub.strAsignatura }}</td>
+                                            <td>{{ sub.strSiglas }}</td>
+                                            <td *ngIf="sub.blnStatus === activo">Activo</td>
+                                            <td *ngIf="sub.blnStatus !== activo">Inactivo</td>
                                             <td class=" text-center ">
                                                 <button type="button" class="btn btn-info btn-sm" id="dropdownReports" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h "></i></button>
                                                 <div class="dropdown-menu dropdown-menu-right shadow-lg " aria-labelledby="dropdownReports">
                                                     <div class="dropdown-header text-info">
                                                         <span class="text-xs text-uppercase ">opciones</span>
                                                     </div>
-                                                    <a (click)="actualizarCategoria(true, reasons._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Editar</a>
-                                                    <a type="button" [routerLink]="['/behavior', reasons._id]" class="dropdown-item drop-options-text blue"><i class="fa fa-book mr-2 "></i>Conducta</a>
+                                                    <a (click)="actualizarAsignatura(true, sub._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Actualizar</a>
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
 
                                     <!-- SE MUESTRA CUANDO NO HAY REGISTROS -->
-                                    <tbody *ngIf="reasons.length &lt;= 0 && !cargando">
+                                    <tbody *ngIf="subs.length &lt;= 0 && !cargando">
                                         <tr>
                                             <td colspan="14">
                                                 <div class="alert-dismissible text-center" style="padding: .75rem 1.25rem;">

@@ -1,5 +1,5 @@
 <div class="container">
-    <h4>Actualizar Conducta</h4>
+    <h4>Registro de Conductas</h4>
     <hr>
 </div>
 
@@ -19,7 +19,8 @@
                 </div>
 
                 <div>
-                    <input [class.is-invalid]="strClave.invalid && strClave.touched" disabled class="form-control form-control-sm mt-2" type="text " placeholder="Clave" name="strClave" [(ngModel)]="behavior.strClave" #strClave="ngModel">
+                    <input disabled [class.is-invalid]="strClave.invalid && strClave.touched" class="form-control form-control-sm mt-2" type="text " placeholder="Clave" onkeyup="this.value=this.value.toUpperCase();" name="strClave" [(ngModel)]="behavior.strClave" #strClave="ngModel">
+                    <!--disabled-->
                     <div class="invalid-feedback" *ngIf="strClave.errors?.required">
                         <small>
                             Es necesario ingresar una clave.

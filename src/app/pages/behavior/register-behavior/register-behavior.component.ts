@@ -32,16 +32,15 @@ export class RegisterBehaviorComponent implements OnInit {
       console.log(res);
       Toast.fire({
         icon: 'success',
-        title: `¡La Conducta ${this.behavior.strNombre} se registró exitosamente!`
+        title: `¡La conducta ${this.behavior.strNombre} se registró exitosamente!`
       });
       this.refresh.emit(true);
     }).catch(err => {
       console.log(err);
       Toast.fire({
         icon: 'success',
-        title: `¡La Conducta ${this.behavior.strNombre} se registró exitosamente!`
+        title: `¡La conducta ${this.behavior.strNombre} se registró exitosamente!`
       });
     });
   }
 }
-

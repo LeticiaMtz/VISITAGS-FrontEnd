@@ -26,11 +26,17 @@ import { SpecialtyReportComponent } from './specialty-report/specialty-report.co
 import { RegisterSpecialtyComponent } from './specialty-report/register-specialty/register-specialty.component';
 import { UpdateSpecialtyComponent } from './specialty-report/update-specialty/update-specialty.component';
 import { ReasonsCRDEComponent } from './reasons-crde/reasons-crde.component';
-import { RegisterCrdeComponent } from './reasons-crde/register-crde/register-crde.component';
+import { RegisterReasonsComponent } from './reasons-crde/register-crde/register-crde.component';
 import { UpdateCrdeComponent } from './reasons-crde/update-crde/update-crde.component';
 import { BehaviorComponent } from './behavior/behavior.component';
 import { RegisterBehaviorComponent } from './behavior/register-behavior/register-behavior.component';
 import { UpdateBehaviorComponent } from './behavior/update-behavior/update-behavior.component';
+import { StatusReportComponent } from './status-report/status-report.component';
+import { RegisterStatusComponent } from './status-report/register-status/register-status.component';
+import { UpdateStatusComponent } from './status-report/update-status/update-status.component';
+import { SubjectsComponent } from './subjects/subjects.component';
+import { RegisterSubjectsComponent } from './subjects/register-subjects/register-subjects.component';
+import { UpdateSubjectsComponent } from './subjects/update-subjects/update-subjects.component';
 
 
 
@@ -54,12 +60,18 @@ import { UpdateBehaviorComponent } from './behavior/update-behavior/update-behav
         RegisterSpecialtyComponent,
         UpdateSpecialtyComponent,
         ReasonsCRDEComponent,
-        RegisterCrdeComponent,
+        RegisterReasonsComponent,
         UpdateCrdeComponent,
         BehaviorComponent,
         RegisterBehaviorComponent,
         UpdateBehaviorComponent,
     
+        StatusReportComponent,
+        RegisterStatusComponent,
+        UpdateStatusComponent,
+        SubjectsComponent,
+        RegisterSubjectsComponent,
+        UpdateSubjectsComponent
     ],
     exports: [
         DashboardComponent,

@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { CareerModel } from 'src/app/models/career';
 
-
+ 
 @Injectable({
   providedIn: 'root'
 })

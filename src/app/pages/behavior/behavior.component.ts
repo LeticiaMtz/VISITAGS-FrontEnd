@@ -1,10 +1,12 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { PdfServiceService } from 'src/app/services/PDF/pdf-service.service';
+import { BehaviorService } from '../../services/behavior/behavior.service';
+import { Component, OnInit } from '@angular/core';
+import { BehaviorModel } from '../../models/behavior';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ReasonsService } from '../../services/reasons-crde/reasons-crde.service';
+import { PdfServiceService } from '../../services/PDF/pdf-service.service';
 import { ExportDataService } from 'src/app/services/excel/export-to-excel.service';
-import { BehaviorService } from 'src/app/services/behavior/behavior.service';
-import { ReasonsCrdeService } from 'src/app/services/reasons-crde/reasons-crde.service';
-import { BehaviorModel } from 'src/app/models/behavior';
+
+
 
 @Component({
   selector: 'app-behavior',
@@ -26,22 +28,21 @@ export class BehaviorComponent implements OnInit {
   title: string;
 
 
-  constructor(private behaviorService: BehaviorService, private reasonsService: ReasonsCrdeService, private activatedRoute: ActivatedRoute, private _PdfService: PdfServiceService, private _excelService: ExportDataService) { }
+  constructor(private behaviorService: BehaviorService, private reasonsService: ReasonsService, private activatedRoute: ActivatedRoute, private _PdfService: PdfServiceService, private _excelService: ExportDataService) { }
 
   ngOnInit(): void {
     this.idReasons = this.activatedRoute.snapshot.params.id; 
-    this.getConducta(this.idReasons); 
-    this.title = 'Reporte de comportamiento';
+    this.getBehavior(this.idReasons);
+    this.title = 'Reporte de Motivos';
   }
 
-  getConducta(id: string){
-    this.reasonsService.getReasonByid(id).then((res:any) => {
+  getBehavior(id: string){
+    this.reasonsService.getReasonsByid(id).then((res:any) => {
       console.log(res.cnt[0].aJsnMotivo);
       this.behavior = res.cnt[0].aJsnMotivo;
-      for (const behaviors of this.behavior) {
+      for (const behavior of this.behavior) {
         let element = [
-          behaviors.strNombre.replace(/\:null/gi,':""'),
-          behaviors.strClave.replace(/\:null/gi,':""'),
+          behavior.strNombre.replace(/\:null/gi,':""')
         ];
         this.arrayBehavior.push(element);
       }
@@ -50,7 +51,7 @@ export class BehaviorComponent implements OnInit {
     });
   }
 
-  actualizarConducta(value: boolean, _id: string){
+  actualizarBehavior(value: boolean, _id: string){
     this.actualizar = value;
     this.idBehavior = _id
   }
@@ -76,14 +77,6 @@ export class BehaviorComponent implements OnInit {
         fillColor: "#2a3e52",
         color: "#ffffff",
         size: 13,
-      },
-      {
-        text: "Clave",
-        style: "tableHeader",
-        bold: true,
-        fillColor: "#2a3e52",
-        color: "#ffffff",
-        size: 13,
       }
     ];
     this._PdfService.generatePdf(
@@ -97,7 +90,8 @@ export class BehaviorComponent implements OnInit {
   exportAsXLSX(){
     if (this.behavior.length !== 0) {
       let jsonobject = JSON.stringify(this.behavior);
-      jsonobject = jsonobject.replace(/strConducta/gi, 'Nombre');
+      jsonobject = jsonobject.replace(/strNombre/gi, 'Nombre');
+      jsonobject = jsonobject.replace(/strClave/gi, 'Clave');
       const jsonobject2 = JSON.parse(jsonobject);
       const count = Object.keys(jsonobject2).length;
       for (let i = 0; i < count; i++) {

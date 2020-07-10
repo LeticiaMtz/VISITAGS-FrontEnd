@@ -4,7 +4,7 @@ import { CareersService } from 'src/app/services/careers/careers.service';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ReasonsModel } from 'src/app/models/reasons-crde';
-import { ReasonsCrdeService } from 'src/app/services/reasons-crde/reasons-crde.service';
+import { ReasonsService } from 'src/app/services/reasons-crde/reasons-crde.service';
 
 const Toast = Swal.mixin({
   toast: true,
@@ -28,7 +28,7 @@ export class UpdateCrdeComponent implements OnInit {
 
   reasons: ReasonsModel = new ReasonsModel();
 
-  constructor(private reasonsService: ReasonsCrdeService) { }
+  constructor(private reasonsService: ReasonsService) { }
 
   ngOnInit(): void {
     this.getCategoria();
@@ -37,7 +37,7 @@ export class UpdateCrdeComponent implements OnInit {
 
   updateCategoria(form: NgForm){
     this.reasonsService.putReasons(this.idReasons, this.reasons).then(res => {
-      Swal.fire({
+      Toast.fire({
         icon: 'success',
         title: `¡La categoria ${this.reasons.strCategoria} se actualizó exitosamente!`
       });
@@ -47,7 +47,7 @@ export class UpdateCrdeComponent implements OnInit {
       this.refresh.emit(true);
 
     }).catch(err => {
-      Swal.fire({
+      Toast.fire({
         icon: 'error',
         title: `No fue posible actualizar la información de la categoria`
       });
@@ -56,10 +56,10 @@ export class UpdateCrdeComponent implements OnInit {
   }
 
   getCategoria() {
-    this.reasonsService.getReasonByid(this.idReasons).then((res: any) => {
+    this.reasonsService.getReasonsByid(this.idReasons).then((res: any) => {
       this.reasons = res.cnt[0];
     }).catch(err => {
-      Swal.fire({
+      Toast.fire({
         icon: 'error',
         title: `No fue posible obtener la información de la categoria`
       });

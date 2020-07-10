@@ -44,8 +44,9 @@
                                     <thead>
                                         <tr>
                                             <th>CONDUCTA</th>
+                                            <th>CLAVE</th>
                                             <th>ESTATUS</th>
-                                            <th>ACCIONES</th>
+                                            <th class="text-center">ACCIONES</th>
                                         </tr>
                                     </thead>
 
@@ -53,6 +54,7 @@
                                     <tbody *ngIf="behavior.length &gt; 0 && !cargando">
                                         <tr *ngFor="let behaviors of behavior | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
                                             <td>{{ behaviors.strNombre }}</td>
+                                            <td>{{ behaviors.strClave }}</td>
                                             <td *ngIf="behaviors.blnStatus === activo">Activo</td>
                                             <td *ngIf="behaviors.blnStatus !== activo">Inactivo</td>
                                             <td class=" text-center ">
@@ -62,7 +64,7 @@
                                                     <div class="dropdown-header text-info">
                                                         <span class="text-xs text-uppercase ">opciones</span>
                                                     </div>
-                                                    <a (click)="actualizarConducta(true, behaviors._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Editar</a>
+                                                    <a (click)="actualizarBehavior(true, behaviors._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Editar</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -80,9 +82,8 @@
                                     </tbody>
 
                                 </table>
-                                <div class="mt-4 float-right fadeIn ">
-                                    <pagination-controls (pageChange)="pageActual=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
-                                </div>
+
+
 
                             </div>
                         </div>

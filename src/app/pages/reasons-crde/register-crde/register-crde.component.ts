@@ -1,15 +1,14 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { ReasonsCrdeService } from 'src/app/services/reasons-crde/reasons-crde.service';
+import { ReasonsModel } from '../../../models/reasons-crde';
 import { NgForm } from '@angular/forms';
-import { ReasonsModel } from 'src/app/models/reasons-crde';
+import { ReasonsService } from '../../../services/reasons-crde/reasons-crde.service';
 import Swal from 'sweetalert2';
-
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,
   timer: 3000
-});
+ });
 
 
 @Component({
@@ -17,18 +16,19 @@ const Toast = Swal.mixin({
   templateUrl: './register-crde.component.html',
   styleUrls: ['./register-crde.component.css']
 })
-export class RegisterCrdeComponent implements OnInit {
+export class RegisterReasonsComponent implements OnInit {
 
   @Output() refresh = new EventEmitter();
   reasons: ReasonsModel = new ReasonsModel();
   isActive: boolean;
+  
 
-  constructor(private reasonsService: ReasonsCrdeService) { }
+  constructor(private reasonsService: ReasonsService) { }
 
   ngOnInit(): void {
   }
 
-  saveReason(form: NgForm) {
+  saveReasons(form: NgForm) {
     this.reasonsService.postReasons(this.reasons).then(res => {
       Toast.fire({
         icon: 'success',
@@ -40,11 +40,9 @@ export class RegisterCrdeComponent implements OnInit {
       console.log(err);
       Toast.fire({
         icon: 'error',
-        title: `No fué posible registrar la carrera`
+        title: err.error.msg
       });
     });
   }
 
 }
-
-

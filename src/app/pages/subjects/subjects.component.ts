@@ -1,57 +1,56 @@
 import { Component, OnInit } from '@angular/core';
+import { CareerModel } from 'src/app/models/career';
+import { CareersService } from 'src/app/services/careers/careers.service';
 import { Router } from '@angular/router';
 import { PdfServiceService } from 'src/app/services/PDF/pdf-service.service';
 import { ExportDataService } from 'src/app/services/excel/export-to-excel.service';
-import { ReasonsService } from 'src/app/services/reasons-crde/reasons-crde.service';
-import { ReasonsModel } from 'src/app/models/reasons-crde';
+import { SubjectModel } from 'src/app/models/subjects';
+import { SubjectsService } from '../../services/subjects/subjects.service';
 
 @Component({
-  selector: 'app-reasons-crde',
-  templateUrl: './reasons-crde.component.html',
-  styleUrls: ['./reasons-crde.component.css']
+  selector: 'app-subjects',
+  templateUrl: './subjects.component.html',
+  styleUrls: ['./subjects.component.css']
 })
-export class ReasonsCRDEComponent implements OnInit {
-
-  
-  reasons: ReasonsModel[] = [];
+export class SubjectsComponent implements OnInit {
+  subs: SubjectModel[] = [];
   searchText: any;
   pageActual: number;
   cargando: boolean;
   refresh: boolean = false;
   actualizar: boolean = false;
-  idReasons: string;
+  idAsig: string;
   correoAdmin: string;
   title: string;
   regTerm: boolean = false;
   activo: boolean = true;
-  arrayReasons = [];
+  arrayCareer = [];
+  constructor(private subjectsService: SubjectsService, private route: Router, private _PdfService: PdfServiceService, private _excelService: ExportDataService) { }
 
-
-  constructor(private ReasonsService: ReasonsService, private route: Router, private _PdfService: PdfServiceService, private _excelService: ExportDataService) { }
-
+ 
   ngOnInit(): void {
-    this.getReasons();
-    this.title = 'Reporte de Categorias';
+    this.getAsignatura();
+    this.title = 'Reposte de Asignaturas';
   }
   
-  getReasons(){
-    this.ReasonsService.getReasons().then((res: any) => {
-      this.reasons = res.crde;
-      console.log(res.crde);
-      for (const c of this.reasons) {
+  getAsignatura(){
+    this.subjectsService.getAsignatura().then((res: any) => {
+      this.subs = res.asignatura;
+      for (const c of this.subs) {
         let element = [
-          c.strCategoria.replace(/\:null/gi,':""')
+          c.strAsignatura.replace(/\:null/gi,':""'),
+          c.strSiglas.replace(/\:null/gi,':""')
         ];
-        this.arrayReasons.push(element);
-      }
+        this.arrayCareer.push(element);
+      } 
     }).catch(err => {
       console.log(err);
     });
   }
 
-  actualizarCategoria(valueUpdate: boolean, _id: string){
+  actualizarAsignatura(valueUpdate: boolean, _id: string){
     this.actualizar = valueUpdate;
-    this.idReasons = _id;
+    this.idAsig = _id;
   }
 
   updateCanceled(e) {
@@ -68,7 +67,15 @@ export class ReasonsCRDEComponent implements OnInit {
   exportPDF() {
     let header = [
       {
-        text: "Nombre de la Categoria",
+        text: "Nombre de la Asignatura",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      },
+      {
+        text: "Siglas",
         style: "tableHeader",
         bold: true,
         fillColor: "#2a3e52",
@@ -79,22 +86,21 @@ export class ReasonsCRDEComponent implements OnInit {
     this._PdfService.generatePdf(
       this.title,
       header,
-      this.arrayReasons,
+      this.arrayCareer,
       "center"
     );
   }
 
   exportAsXLSX() {
-    if (this.reasons.length !== 0) {
-      let jsonobject = JSON.stringify(this.reasons);
-      jsonobject = jsonobject.replace(/strCategoria/gi, 'Nombre');
+    if (this.subs.length !== 0) {
+      let jsonobject = JSON.stringify(this.subs);
+      jsonobject = jsonobject.replace(/strAsignatura/gi, 'Nombre');
       const jsonobject2 = JSON.parse(jsonobject);
       const count = Object.keys(jsonobject2).length;
       for (let i = 0; i < count; i++) {
         delete jsonobject2[i].createdAt;
         delete jsonobject2[i].updatedAt;
         delete jsonobject2[i].blnStatus;
-        delete jsonobject2[i].aJsnMotivo;
         delete jsonobject2[i]._id;
         delete jsonobject2[i].__v;
       }

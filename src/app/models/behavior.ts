@@ -4,4 +4,3 @@ export class BehaviorModel {
     strClave: string;
     blnStatus: boolean = true; 
 }
-
