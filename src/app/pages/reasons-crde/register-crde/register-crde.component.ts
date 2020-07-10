@@ -1,39 +1,38 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { CareerModel } from '../../../models/career';
+import { ReasonsCrdeService } from 'src/app/services/reasons-crde/reasons-crde.service';
 import { NgForm } from '@angular/forms';
-import { CareersService } from '../../../services/careers/careers.service';
+import { ReasonsModel } from 'src/app/models/reasons-crde';
 import Swal from 'sweetalert2';
+
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,
   timer: 3000
- });
+});
 
 
 @Component({
-  selector: 'app-register-career',
-  templateUrl: './register-career.component.html',
-  styleUrls: ['./register-career.component.css']
+  selector: 'app-register-crde',
+  templateUrl: './register-crde.component.html',
+  styleUrls: ['./register-crde.component.css']
 })
-
-export class RegisterCareerComponent implements OnInit {
+export class RegisterCrdeComponent implements OnInit {
 
   @Output() refresh = new EventEmitter();
-  career: CareerModel = new CareerModel();
+  reasons: ReasonsModel = new ReasonsModel();
   isActive: boolean;
-  
 
-  constructor(private careersService: CareersService) { }
+  constructor(private reasonsService: ReasonsCrdeService) { }
 
   ngOnInit(): void {
   }
 
-  saveCareer(form: NgForm) {
-    this.careersService.postCarrer(this.career).then(res => {
+  saveReason(form: NgForm) {
+    this.reasonsService.postReasons(this.reasons).then(res => {
       Toast.fire({
         icon: 'success',
-        title: `¡La carrera ${this.career.strCarrera} se registró exitosamente!`
+        title: `¡La carrera ${this.reasons.strCategoria} se registró exitosamente!`
       });
       form.reset();
       this.refresh.emit(true);
@@ -47,3 +46,5 @@ export class RegisterCareerComponent implements OnInit {
   }
 
 }
+
+

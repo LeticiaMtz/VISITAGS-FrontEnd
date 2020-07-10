@@ -25,6 +25,12 @@ import { CommonModule } from '@angular/common';
 import { SpecialtyReportComponent } from './specialty-report/specialty-report.component';
 import { RegisterSpecialtyComponent } from './specialty-report/register-specialty/register-specialty.component';
 import { UpdateSpecialtyComponent } from './specialty-report/update-specialty/update-specialty.component';
+import { ReasonsCRDEComponent } from './reasons-crde/reasons-crde.component';
+import { RegisterCrdeComponent } from './reasons-crde/register-crde/register-crde.component';
+import { UpdateCrdeComponent } from './reasons-crde/update-crde/update-crde.component';
+import { BehaviorComponent } from './behavior/behavior.component';
+import { RegisterBehaviorComponent } from './behavior/register-behavior/register-behavior.component';
+import { UpdateBehaviorComponent } from './behavior/update-behavior/update-behavior.component';
 
 
 
@@ -46,7 +52,14 @@ import { UpdateSpecialtyComponent } from './specialty-report/update-specialty/up
         UpdateCareerComponent,
         SpecialtyReportComponent,
         RegisterSpecialtyComponent,
-        UpdateSpecialtyComponent
+        UpdateSpecialtyComponent,
+        ReasonsCRDEComponent,
+        RegisterCrdeComponent,
+        UpdateCrdeComponent,
+        BehaviorComponent,
+        RegisterBehaviorComponent,
+        UpdateBehaviorComponent,
+    
     ],
     exports: [
         DashboardComponent,

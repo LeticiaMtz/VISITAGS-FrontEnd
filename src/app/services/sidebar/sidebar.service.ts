@@ -12,10 +12,12 @@ export class SidebarService {
       submenu: [
         { titulo: 'Dashboard', url: '/dashboard' },
         { titulo: 'Reporte de Carreas', url: '/career-report'},
+        { titulo: 'Motivos CRDE', url: '/reasons-crde' },
         { titulo: 'ProgressBar', url: '/progress' },
         { titulo: 'Graficas', url: '/graficas1' },
         { titulo: 'Promesas', url: '/promesas'},
         { titulo: 'Rxjs', url: '/rxjs' },
+        
       ]
     }
   ];
