@@ -62,7 +62,7 @@ export class UpdateCrdeComponent implements OnInit {
       Toast.fire({
         icon: 'error',
         title: err.error.msg
-        //`No fue posible obtener la información de la categoria`        
+              
       });
     });
   }

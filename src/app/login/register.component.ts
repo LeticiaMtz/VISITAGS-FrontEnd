@@ -2,7 +2,7 @@ import { RegisterService } from '../services/login/register.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { User } from '../models/user';
+import { User } from '../models/user.model';
 import Swal from 'sweetalert2';
 
 declare function init_plugins();
@@ -35,9 +35,10 @@ export class RegisterComponent implements OnInit {
     console.log(this.user);
 
     if (this.repetPassword != this.user.strPassword) {
+     
       Swal.fire({
         title: 'Error!',
-        text: 'Error las contraseñas no son iguales, no creamos tu usuario 😕',
+        text: 'Error las contraseñas no son iguales, no creamos tu usuario',
         icon: 'error',
         confirmButtonText: 'Aceptar'
       })
@@ -51,8 +52,8 @@ export class RegisterComponent implements OnInit {
         let dataJson = JSON.parse(data);
         localStorage.setItem('token', dataJson.token);
         Swal.fire({
-          title: 'Correct!',
-          text: 'Usuario registrado correctamente 😃',
+          title: '¡Correcto!',
+          text: 'Usuario registrado correctamente',
           icon: 'success',
           confirmButtonText: 'Aceptar'
         })
@@ -60,9 +61,10 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login']);
       })
       .catch(err => {
+        console.log(err);
         Swal.fire({
           title: 'Error!',
-          text: 'Error el correo no cumple con las condiciones, no creamos tu usuario 😕',
+          text: err.error.msg,
           icon: 'error',
           confirmButtonText: 'Aceptar'
         })

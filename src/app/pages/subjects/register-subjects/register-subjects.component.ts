@@ -3,7 +3,7 @@ import { CareersService } from '../../../services/careers/careers.service';
 import { CareerModel } from '../../../models/career';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { SubjectModel } from 'src/app/models/subjects';
+import { SubjectModel } from 'src/app/models/subjects.model';
 import { SubjectsService } from '../../../services/subjects/subjects.service';
 const Toast = Swal.mixin({
   toast: true,
@@ -40,10 +40,11 @@ export class RegisterSubjectsComponent implements OnInit {
       form.controls['strSiglas'].reset();
       this.refresh.emit(true);
     }).catch(err => {
-      console.log(err);
+    
       Toast.fire({
         icon: 'error',
-        title: `No fué posible registrar la Asignatura`
+        title: err.error.msg
+       
       });
     });
   }

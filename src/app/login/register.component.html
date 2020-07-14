@@ -31,8 +31,8 @@
 
                 <div class="form-group m-2">
                     <div class="col-xs-0">
-                        <input [ngClass]="{'is-invalid': strMotherLastName.errors?.required && forma.controls['strMotherLastName'].touched }" class="form-control" type="text" name="strMotherLastName" #motherlastname="ngModel" [(ngModel)]="user.strMotherLastName"
-                            placeholder="Apellido Materno" #strMotherLastName="ngModel">
+                        <input [ngClass]="{'is-invalid': strMotherLastName.errors?.required && forma.controls['strMotherLastName'].touched }" class="form-control" type="text" name="strMotherLastName" required="" #motherlastname="ngModel" [(ngModel)]="user.strMotherLastName"
+                            #strMotherLastName="ngModel" placeholder="Apellido Materno">
                         <div class="invalid-feedback" *ngIf="strMotherLastName.errors?.required">
                             Es necesario ingresar el apellido materno del usuario
                         </div>
@@ -56,9 +56,9 @@
                     <div class="col-xs-0">
                         <input [ngClass]="{'is-invalid': strPassword.errors?.required && forma.controls['strPassword'].touched }" minlength="8" class="form-control" type="password" name="strPassword" #password="ngModel" [(ngModel)]="user.strPassword" placeholder="Password" #strPassword="ngModel"
                             required>
-                            <div class="text-danger small mt-1" *ngIf="strPassword.errors?.minlength">
-                                Mínimo 8 caracteres.
-                            </div>
+                        <div class="text-danger small mt-1" *ngIf="strPassword.errors?.minlength">
+                            Mínimo 8 caracteres.
+                        </div>
                         <div class="invalid-feedback" *ngIf="strPassword.errors?.required">
                             Es necesario ingresar el password del usuario
                         </div>
