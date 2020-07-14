@@ -53,7 +53,7 @@ export class UpdateBehaviorComponent implements OnInit {
       Toast.fire({
         icon: 'error',
         title: err.error.msg
-        //`No se pudo obtener la información`
+    
       });
     });
   }
@@ -70,7 +70,7 @@ export class UpdateBehaviorComponent implements OnInit {
       Toast.fire({
         icon: 'error',
         title: err.error.msg
-        //`No fue posible actualizar la información de la conducta`
+      
       });
     });
   }

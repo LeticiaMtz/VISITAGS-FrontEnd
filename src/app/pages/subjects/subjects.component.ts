@@ -4,7 +4,7 @@ import { CareersService } from 'src/app/services/careers/careers.service';
 import { Router } from '@angular/router';
 import { PdfServiceService } from 'src/app/services/PDF/pdf-service.service';
 import { ExportDataService } from 'src/app/services/excel/export-to-excel.service';
-import { SubjectModel } from 'src/app/models/subjects';
+import { SubjectModel } from 'src/app/models/subjects.model';
 import { SubjectsService } from '../../services/subjects/subjects.service';
 
 @Component({
@@ -30,7 +30,7 @@ export class SubjectsComponent implements OnInit {
  
   ngOnInit(): void {
     this.getAsignatura();
-    this.title = 'Reposte de Asignaturas';
+    this.title = 'Reporte de Asignaturas';
   }
   
   getAsignatura(){

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/models/user.model';
 import { ChangePasswordService } from 'src/app/services/change-password/change-password.service';
 
 
@@ -39,18 +39,17 @@ export class SendEmailComponent implements OnInit {
     this.sendEmailService.sendemail(email).then((data:any) => {
       console.log(data);
       Swal.fire({
-        title: 'Correct!',
-        text: 'Email enviado correctamente 😃',
+        title: '¡Correcto!',
+        text: 'El email fué enviado correctamente 😃',
         icon: 'success',
-        confirmButtonText: 'Aceptar'
+        confirmButtonText: 'Ok'
      });
     }).catch((err) => {
       console.log(err);
       Swal.fire({
-        title: 'Error!',
-        text: 'El correo no existe',
+        text: err.error.msg,
         icon: 'error',
-        confirmButtonText: 'Aceptar'
+        confirmButtonText: 'Ok'
      });
     })
   }
