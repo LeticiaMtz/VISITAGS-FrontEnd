@@ -1,6 +1,6 @@
 import { BehaviorService } from '../../services/behavior/behavior.service';
 import { Component, OnInit } from '@angular/core';
-import { BehaviorModel } from '../../models/behavior';
+import { BehaviorModel } from '../../models/behavior.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReasonsService } from '../../services/reasons-crde/reasons-crde.service';
 import { PdfServiceService } from '../../services/PDF/pdf-service.service';

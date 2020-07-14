@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
-import { ReasonsModel } from 'src/app/models/reasons-crde';
+import { ReasonsModel } from 'src/app/models/reasons-crde.model';
 
 
 @Injectable({

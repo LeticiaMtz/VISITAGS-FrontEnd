@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { BehaviorModel } from '../../../models/behavior';
+import { BehaviorModel } from '../../../models/behavior.model';
 import { NgForm } from '@angular/forms';
 import { BehaviorService } from '../../../services/behavior/behavior.service';
 import Swal from 'sweetalert2';
@@ -38,8 +38,8 @@ export class RegisterBehaviorComponent implements OnInit {
     }).catch(err => {
       console.log(err);
       Toast.fire({
-        icon: 'success',
-        title: `¡La conducta ${this.behavior.strNombre} se registró exitosamente!`
+        icon: 'error',
+        title: err.error.msg
       });
     });
   }

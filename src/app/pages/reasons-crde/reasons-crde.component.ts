@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { PdfServiceService } from 'src/app/services/PDF/pdf-service.service';
 import { ExportDataService } from 'src/app/services/excel/export-to-excel.service';
 import { ReasonsService } from 'src/app/services/reasons-crde/reasons-crde.service';
-import { ReasonsModel } from 'src/app/models/reasons-crde';
+import { ReasonsModel } from 'src/app/models/reasons-crde.model';
 
 @Component({
   selector: 'app-reasons-crde',
