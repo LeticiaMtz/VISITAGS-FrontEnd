@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BehaviorService } from '../../../services/behavior/behavior.service';
 import { ReasonsService } from '../../../services/reasons-crde/reasons-crde.service';
-import { BehaviorModel } from '../../../models/behavior';
+import { BehaviorModel } from '../../../models/behavior.model';
 import { NgForm } from '@angular/forms';
-import { ReasonsModel } from 'src/app/models/reasons-crde';
+import { ReasonsModel } from 'src/app/models/reasons-crde.model';
 import Swal from 'sweetalert2';
 
 const Toast = Swal.mixin({
@@ -52,7 +52,8 @@ export class UpdateBehaviorComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `No se pudo obtener la información`
+        title: err.error.msg
+        //`No se pudo obtener la información`
       });
     });
   }
@@ -68,7 +69,8 @@ export class UpdateBehaviorComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `No fue posible actualizar la información de la conducta`
+        title: err.error.msg
+        //`No fue posible actualizar la información de la conducta`
       });
     });
   }

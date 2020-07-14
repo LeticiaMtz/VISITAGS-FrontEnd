@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { ReasonsModel } from '../../../models/reasons-crde';
+import { ReasonsModel } from '../../../models/reasons-crde.model';
 import { NgForm } from '@angular/forms';
 import { ReasonsService } from '../../../services/reasons-crde/reasons-crde.service';
 import Swal from 'sweetalert2';
@@ -32,7 +32,7 @@ export class RegisterReasonsComponent implements OnInit {
     this.reasonsService.postReasons(this.reasons).then(res => {
       Toast.fire({
         icon: 'success',
-        title: `¡La carrera ${this.reasons.strCategoria} se registró exitosamente!`
+        title: `¡La categoria ${this.reasons.strCategoria} se registró exitosamente!`
       });
       form.reset();
       this.refresh.emit(true);

@@ -3,7 +3,7 @@ import { CareerModel } from 'src/app/models/career';
 import { CareersService } from 'src/app/services/careers/careers.service';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { ReasonsModel } from 'src/app/models/reasons-crde';
+import { ReasonsModel } from 'src/app/models/reasons-crde.model';
 import { ReasonsService } from 'src/app/services/reasons-crde/reasons-crde.service';
 
 const Toast = Swal.mixin({
@@ -49,7 +49,7 @@ export class UpdateCrdeComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `No fue posible actualizar la información de la categoria`
+        title: err.error.msg
       });
       form.reset();
     });
@@ -61,7 +61,8 @@ export class UpdateCrdeComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `No fue posible obtener la información de la categoria`
+        title: err.error.msg
+        //`No fue posible obtener la información de la categoria`        
       });
     });
   }
