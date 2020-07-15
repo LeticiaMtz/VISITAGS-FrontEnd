@@ -41,7 +41,7 @@ export class RegisterCareerComponent implements OnInit {
       console.log(err);
       Toast.fire({
         icon: 'error',
-        title: `No fué posible registrar la carrera`
+        title: err.error.msg
       });
     });
   }

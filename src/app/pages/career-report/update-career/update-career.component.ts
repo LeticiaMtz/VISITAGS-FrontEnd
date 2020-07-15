@@ -44,7 +44,7 @@ export class UpdateCareerComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `No fue posible actualizar la información de la carrera`
+        title: err.error.msg
       });
       form.reset();
     });
@@ -56,7 +56,7 @@ export class UpdateCareerComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `No fue posible obtener la información de la carrera`
+        title: err.error.msg
       });
     });
   }

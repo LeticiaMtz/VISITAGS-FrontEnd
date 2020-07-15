@@ -16,6 +16,7 @@ declare function init_plugins();
 export class LoginComponent implements OnInit {
 
   rememberIt: boolean;
+  errorType: any;
 
   constructor( private router: Router, private loginService: LoginService) { }
 
@@ -80,8 +81,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/dashboard']);
 
           Swal.fire({
-            title: 'success',
-            text: `Hola ${dataJson.UserName} bienvenido`,
+            title: `Hola ${dataJson.user.strName} bienvenido`,
             icon: 'success',
             showConfirmButton: false,
             timer: 1500
@@ -90,8 +90,7 @@ export class LoginComponent implements OnInit {
         }else{
 
           Swal.fire({
-            title: 'Error!',
-            text: 'Lo sentimos no encontramos la cuenta.',
+            text: `Lo sentimos no encontramos la cuenta ${dataJson.user.strEmail}.`,
             icon: 'error',
             confirmButtonText: 'Aceptar'
           });
@@ -103,14 +102,19 @@ export class LoginComponent implements OnInit {
       },
       err => {
 
-        if (err){
-          Swal.fire({
-            title: 'Error!',
-            text: `${err.error.err.message}`,
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
-          });
+        if (err.status !== 0) {
+          this.errorType = err.error.err.message;
+        }else{
+          //Este error puede surgir si el servidor no esta ejecutandose o por un mal consumo o llamado de la API.
+          this.errorType = `${err.name}: ERROR_DE_CONEXIÓN Error al conectar con el servidor`;
         }
+
+        Swal.fire({
+          text: this.errorType,
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+
         console.log(err)
         
       });    
