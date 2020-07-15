@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import Swal from 'sweetalert2';
-import { SubjectModel } from '../../../models/subjects';
+import { SubjectModel } from '../../../models/subjects.model';
 import { NgForm } from '@angular/forms';
 import { SubjectsService } from '../../../services/subjects/subjects.service';
 
@@ -48,9 +48,11 @@ export class UpdateSubjectsComponent implements OnInit {
       this.refresh.emit(true);
 
     }).catch(err => {
+    
       Toast.fire({
         icon: 'error',
-        title: `No fue posible actualizar la información de la asignatura`
+        title: err.error.msg
+   
       });
       form.reset();
     });
@@ -62,7 +64,8 @@ export class UpdateSubjectsComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `No fue posible obtener la información de la asignatura`
+        title: err.error.msg
+       
       });
     });
   }

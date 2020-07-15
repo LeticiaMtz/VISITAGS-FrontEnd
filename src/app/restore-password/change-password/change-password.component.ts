@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChangePasswordService } from 'src/app/services/change-password/change-password.service';
 import { ChangePasswordModel } from 'src/app/models/change-password.model';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/models/user.model';
 
 declare function init_plugins();
 
