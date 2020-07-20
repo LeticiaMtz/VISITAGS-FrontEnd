@@ -38,8 +38,8 @@ export class RegisterSpecialtyComponent implements OnInit {
     }).catch(err => {
       console.log(err);
       Toast.fire({
-        icon: 'success',
-        title: `¡La especialidad ${this.specialty.strEspecialidad} se registró exitosamente!`
+        icon: 'error',
+        title: err.error.msg
       });
     });
   }

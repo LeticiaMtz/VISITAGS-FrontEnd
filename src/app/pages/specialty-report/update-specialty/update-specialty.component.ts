@@ -51,7 +51,7 @@ export class UpdateSpecialtyComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `No se pudo obtener la información`
+        title: err.error.msg
       });
     });
   }
@@ -67,7 +67,7 @@ export class UpdateSpecialtyComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `No fue posible actualizar la información de la especialidad`
+        title: err.error.msg
       });
     });
   }
