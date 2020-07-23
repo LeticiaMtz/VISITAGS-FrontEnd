@@ -3,11 +3,12 @@
 
         <div class="col-md-4">
             <div class="container mt-4" *ngIf="!actualizar">
-                <app-register-career (refresh)="refreshTable($event)"></app-register-career>
+
+                <app-register-modality (refresh)="refreshTable($event)"></app-register-modality>
             </div>
 
             <div class="container mt-4" *ngIf="actualizar">
-                <app-update-career (optionCancel)="updateCanceled($event)" (refresh)="refreshTable($event)" [idCareer]="idCareer"></app-update-career>
+                <app-update-modality (optionCancel)="updateCanceled($event)" (refresh)="refreshTable($event)" [idMod]="idMod"></app-update-modality>
             </div>
         </div>
 
@@ -39,33 +40,34 @@
                                 <table class="table table-sm table-hover table-borderless">
                                     <thead>
                                         <tr>
-                                            <th>NOMBRE DE CARRERA</th>
-                                            <th>ESTATUS</th>
+                                            <th>NOMBRE DE LA MODALIDAD</th>
+                                            <th>ACTIVO</th>
                                             <th>ACCIONES</th>
                                         </tr>
                                     </thead>
-
                                     <!-- SE MUESTRA CUANDO HAY REGISTROS -->
-                                    <tbody *ngIf="careers.length &gt; 0 && !cargando">
-                                        <tr *ngFor="let career of careers | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
-                                            <td>{{ career.strCarrera }}</td>
-                                            <td *ngIf="career.blnStatus === activo">Activo</td>
-                                            <td *ngIf="career.blnStatus !== activo">Inactivo</td>
+                                    <tbody *ngIf="mods.length &gt; 0 && !cargando">
+                                        <tr *ngFor="let mod of mods | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
+                                            <td>{{ mod.strModalidad }}</td>
+                                            <td *ngIf="mod.blnStatus === activo">Si</td>
+                                            <td *ngIf="mod.blnStatus !== activo">No</td>
                                             <td class=" text-center ">
                                                 <button type="button" class="btn btn-info btn-sm" id="dropdownReports" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h "></i></button>
                                                 <div class="dropdown-menu dropdown-menu-right shadow-lg " aria-labelledby="dropdownReports">
                                                     <div class="dropdown-header text-info">
                                                         <span class="text-xs text-uppercase ">opciones</span>
                                                     </div>
-                                                    <a (click)="actualizarCarrera(true, career._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Actualizar</a>
-                                                    <a type="button" [routerLink]="['/specialty-report', career._id]" class="dropdown-item drop-options-text blue"><i class="fa fa-book mr-2 "></i>Especialidad</a>
+
+                                                    <a (click)="actualizarModalidad(true, mod._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Editar</a>
+                                                    <a (click)="updateModalidad(mod._id)" *ngIf="mod.blnStatus === false" type="button" class="dropdown-item drop-options-text blue"><i class="fa fa-edit mr-2 "></i>Activar</a>
+                                                    <a (click)="deleteModalidad(mod._id)" *ngIf="mod.blnStatus === true" type="button" class="dropdown-item drop-options-text pdf "><i class="fa fa-edit mr-2 "  ></i>Desactivar</a>
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
 
                                     <!-- SE MUESTRA CUANDO NO HAY REGISTROS -->
-                                    <tbody *ngIf="careers.length &lt;= 0 && !cargando">
+                                    <tbody *ngIf="mods.length &lt;= 0 && !cargando">
                                         <tr>
                                             <td colspan="14">
                                                 <div class="alert-dismissible text-center" style="padding: .75rem 1.25rem;">

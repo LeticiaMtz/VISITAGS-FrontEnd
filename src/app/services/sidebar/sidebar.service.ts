@@ -15,6 +15,7 @@ export class SidebarService {
         { titulo: 'Motivos CRDE', url: '/reasons-crde' },
         { titulo: 'Catalogo de Estatus de Alertas', url: '/estatus-alerta'},
         { titulo: 'Asignaturas', url: '/subjects' },
+        { titulo: 'Modalidades', url: '/modality' },
         { titulo: 'ProgressBar', url: '/progress' },
         { titulo: 'Graficas', url: '/graficas1' },
         { titulo: 'Promesas', url: '/promesas'},

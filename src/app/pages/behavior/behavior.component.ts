@@ -33,11 +33,14 @@ export class BehaviorComponent implements OnInit {
   ngOnInit(): void {
     this.idReasons = this.activatedRoute.snapshot.params.id; 
     this.getBehavior(this.idReasons);
+    this. arrayBehavior = [];
     this.title = 'Reporte de Motivos';
   }
 
-  getBehavior(id: string){
+  getBehavior(id: string){ 
+    this.cargando = true;
     this.reasonsService.getReasonsByid(id).then((res:any) => {
+      this.cargando = false;
       console.log(res.cnt[0].aJsnMotivo);
       this.behavior = res.cnt[0].aJsnMotivo;
       for (const behavior of this.behavior) {
