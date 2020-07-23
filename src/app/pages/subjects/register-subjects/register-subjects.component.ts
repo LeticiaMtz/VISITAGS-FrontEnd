@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { SubjectModel } from 'src/app/models/subjects.model';
 import { SubjectsService } from '../../../services/subjects/subjects.service';
+
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',

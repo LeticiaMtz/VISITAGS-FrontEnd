@@ -35,11 +35,14 @@ export class StatusReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.title = 'Reporte de Estatus';
+    this.arrayEstatus = [];
     this.getEstatus();
   }
 
   getEstatus() {
+    this.cargando = true;
     this._estatusService.getAllStatus().then((data: any) => {
+      this.cargando = false;
       this.estatus = data.resp;
       for (const s of this.estatus) {
         let element = [

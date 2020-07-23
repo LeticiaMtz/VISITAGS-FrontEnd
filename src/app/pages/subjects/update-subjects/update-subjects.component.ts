@@ -5,16 +5,13 @@ import { NgForm } from '@angular/forms';
 import { SubjectsService } from '../../../services/subjects/subjects.service';
 
 
-
-
-
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,
   timer: 3000
 });
-
+ 
 @Component({
   selector: 'app-update-subjects',
   templateUrl: './update-subjects.component.html',

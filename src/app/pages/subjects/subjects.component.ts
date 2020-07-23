@@ -30,11 +30,14 @@ export class SubjectsComponent implements OnInit {
  
   ngOnInit(): void {
     this.getAsignatura();
+    this.arrayCareer = [];
     this.title = 'Reporte de Asignaturas';
   }
   
   getAsignatura(){
+    this.cargando = true;
     this.subjectsService.getAsignatura().then((res: any) => {
+      this.cargando = false;
       this.subs = res.asignatura;
       for (const c of this.subs) {
         let element = [
