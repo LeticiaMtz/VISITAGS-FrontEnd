@@ -21,6 +21,7 @@ import { BehaviorComponent } from './behavior/behavior.component';
 
 import { StatusReportComponent } from './status-report/status-report.component';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { AlertRegisterComponent } from './alert-register/alert-register.component';
 
 
 
@@ -40,6 +41,7 @@ const pagesRoutes: Routes = [
           { path: 'behavior/:id', component: BehaviorComponent, data: { titulo: 'Condutas' }, canActivate: [AuthGuard] },
           { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes del Tema' }, canActivate: [AuthGuard]},
           { path: 'estatus-alerta', component: StatusReportComponent, data: { titulo: 'Catalogo de Estatus de Alertas' }, canActivate: [AuthGuard] },
+          { path: 'registro-alerta', component: AlertRegisterComponent, data: { titulo: 'Registro de Alertas' }, canActivate: [AuthGuard] },
           { path: 'subjects', component: SubjectsComponent, data: { titulo: 'Asignaturas' }, canActivate: [AuthGuard]},
           { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ]

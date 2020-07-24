@@ -4,6 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { FilePondModule, registerPlugin } from 'ngx-filepond';
+
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+registerPlugin(FilePondPluginFileValidateType);
 
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -37,6 +41,8 @@ import { UpdateStatusComponent } from './status-report/update-status/update-stat
 import { SubjectsComponent } from './subjects/subjects.component';
 import { RegisterSubjectsComponent } from './subjects/register-subjects/register-subjects.component';
 import { UpdateSubjectsComponent } from './subjects/update-subjects/update-subjects.component';
+import { AlertRegisterComponent } from './alert-register/alert-register.component';
+
 
 
 
@@ -71,7 +77,8 @@ import { UpdateSubjectsComponent } from './subjects/update-subjects/update-subje
         UpdateStatusComponent,
         SubjectsComponent,
         RegisterSubjectsComponent,
-        UpdateSubjectsComponent
+        UpdateSubjectsComponent,
+        AlertRegisterComponent
     ],
     exports: [
         DashboardComponent,
@@ -85,7 +92,8 @@ import { UpdateSubjectsComponent } from './subjects/update-subjects/update-subje
         ChartsModule,
         CommonModule,
         Ng2SearchPipeModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        FilePondModule
     ]
 })
 

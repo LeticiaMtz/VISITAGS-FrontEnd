@@ -14,6 +14,7 @@ export class SidebarService {
         { titulo: 'Reporte de Carreas', url: '/career-report'},
         { titulo: 'Motivos CRDE', url: '/reasons-crde' },
         { titulo: 'Catalogo de Estatus de Alertas', url: '/estatus-alerta'},
+        { titulo: 'Registro de Incidencias', url: '/registro-alerta'},
         { titulo: 'Asignaturas', url: '/subjects' },
         { titulo: 'ProgressBar', url: '/progress' },
         { titulo: 'Graficas', url: '/graficas1' },

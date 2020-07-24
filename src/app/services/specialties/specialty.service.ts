@@ -17,7 +17,7 @@ export class SpecialtyService {
 
 
   getSpecialties(idCareer: string){
-    return this.http.get(`${this.URL}/especialidad/${idCareer}`).toPromise();
+    return this.http.get(`${this.URL}/especialidad/obtener/${idCareer}`).toPromise();
   }
 
   postSpecialty(idCareer: string, specialty: SpecialtyModel){
