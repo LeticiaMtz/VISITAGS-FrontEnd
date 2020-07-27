@@ -4,6 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { FilePondModule, registerPlugin } from 'ngx-filepond';
+
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+registerPlugin(FilePondPluginFileValidateType);
 
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -40,6 +44,7 @@ import { UpdateSubjectsComponent } from './subjects/update-subjects/update-subje
 import { RegisterModalityComponent } from './modality/register-modality/register-modality.component';
 import { UpdateModalityComponent } from './modality/update-modality/update-modality.component';
 import { ModalityComponent } from './modality/modality.component';
+import { AlertRegisterComponent } from './alert-register/alert-register.component';
 
 
 
@@ -68,7 +73,6 @@ import { ModalityComponent } from './modality/modality.component';
         BehaviorComponent,
         RegisterBehaviorComponent,
         UpdateBehaviorComponent,
-    
         StatusReportComponent,
         RegisterStatusComponent,
         UpdateStatusComponent,
@@ -77,8 +81,8 @@ import { ModalityComponent } from './modality/modality.component';
         UpdateSubjectsComponent,
         ModalityComponent,
         RegisterModalityComponent,
-        UpdateModalityComponent
-       
+        UpdateModalityComponent,
+        AlertRegisterComponent
     ],
     exports: [
         DashboardComponent,
@@ -92,7 +96,8 @@ import { ModalityComponent } from './modality/modality.component';
         ChartsModule,
         CommonModule,
         Ng2SearchPipeModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        FilePondModule
     ]
 })
 

@@ -14,6 +14,9 @@ export class BehaviorService {
 
   constructor(private http: HttpClient) { }
 
+  getMotivos() {
+    return this.http.get(`${this.URL}/motivosCrde/obtener`).toPromise();
+  }
 
   getBehavior(idReasons: string){
     return this.http.get(`${this.URL}/motivosCrde/${idReasons}`).toPromise();
