@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import * as FilePond from 'filepond';
 import { FilePondModule, registerPlugin } from 'ngx-filepond';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
+
+
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview);
+registerPlugin(FilePondPluginFileValidateType, FilePondPluginImageExifOrientation);
 
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';

@@ -1,8 +1,8 @@
 import { FileModel } from './file.model';
 
 export class AlertModel {
-    _id: string;
-    idPersona: string;
+    _id?: string;
+    idUser: string;
     idEstatus: string;
     strMatricula: string;
     strNombreAlumno: string;
@@ -15,13 +15,13 @@ export class AlertModel {
     idModalidad: string;
     strDescripcion: string;
     arrCrde: [{
-        idCrde: string;
+        idCrde: string
     }];
-    aJsnEvidencias: any = [{
+    aJsnEvidencias?: any = [{
         FileModel
     }];
-    aJsnSeguimiento: [{
+    aJsnSeguimiento?: [{
         SeguimientoModel
     }];
-    blnAvtivo: boolean = true;
+    blnAvtivo?: boolean = true;
 }

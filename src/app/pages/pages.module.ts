@@ -41,8 +41,10 @@ import { UpdateStatusComponent } from './status-report/update-status/update-stat
 import { SubjectsComponent } from './subjects/subjects.component';
 import { RegisterSubjectsComponent } from './subjects/register-subjects/register-subjects.component';
 import { UpdateSubjectsComponent } from './subjects/update-subjects/update-subjects.component';
+import { RegisterModalityComponent } from './modality/register-modality/register-modality.component';
+import { UpdateModalityComponent } from './modality/update-modality/update-modality.component';
+import { ModalityComponent } from './modality/modality.component';
 import { AlertRegisterComponent } from './alert-register/alert-register.component';
-
 
 
 
@@ -71,13 +73,15 @@ import { AlertRegisterComponent } from './alert-register/alert-register.componen
         BehaviorComponent,
         RegisterBehaviorComponent,
         UpdateBehaviorComponent,
-    
         StatusReportComponent,
         RegisterStatusComponent,
         UpdateStatusComponent,
         SubjectsComponent,
         RegisterSubjectsComponent,
         UpdateSubjectsComponent,
+        ModalityComponent,
+        RegisterModalityComponent,
+        UpdateModalityComponent,
         AlertRegisterComponent
     ],
     exports: [

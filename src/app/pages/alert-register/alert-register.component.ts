@@ -14,6 +14,9 @@ import { BehaviorService } from '../../services/behavior/behavior.service';
 import { BehaviorModel } from 'src/app/models/behavior.model';
 import { ReasonsService } from '../../services/reasons-crde/reasons-crde.service';
 import { ReasonsModel } from 'src/app/models/reasons-crde.model';
+import { ModalityService } from '../../services/modality/modality.service';
+import { ModalityModel } from 'src/app/models/modality.model';
+import { environment } from '../../../environments/environment.prod';
 
 declare var $: any;
 
@@ -33,12 +36,13 @@ export class AlertRegisterComponent implements OnInit {
   carreras: CareerModel[] = [];
   especialidades: SpecialtyModel[] = [];
   razones: ReasonsModel[] = [];
+  modalidades: ModalityModel[] = [];
   chooseSpeciality: boolean = false;
   asignaturas: SubjectModel[] = [];
   idPersona: string;
 
   // tslint:disable-next-line: max-line-length
-  constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService) { }
+  constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService) { }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -46,7 +50,8 @@ export class AlertRegisterComponent implements OnInit {
       }, 0);
       let token = localStorage.token;
       let tokenDecoded = jwt_decode(token);
-      this.alerta.idPersona = tokenDecoded.user._id
+      this.alerta.idUser = tokenDecoded.user._id;
+      this.alerta.idEstatus = environment.idEstatusNuevo;
     this.getAll();
   }
 
@@ -59,13 +64,41 @@ export class AlertRegisterComponent implements OnInit {
 
   seleccionarTurno(turno: string) {
     this.alerta.chrTurno = turno;
+    console.log(turno);
   }
 
   registrarAlerta(forma: NgForm) {
+
     console.log(this.alerta);
-    this.alertaService.postAlerta(this.alerta).then((data) => {
+
+    let fd = new FormData();
+
+    fd.append('idUser', this.alerta.idUser);
+    fd.append('idEstatus', this.alerta.idEstatus);
+    fd.append('strMatricula', this.alerta.strMatricula);
+    fd.append('strNombreAlumno', this.alerta.strNombreAlumno);
+    fd.append('idAsignatura', this.alerta.idAsignatura);
+    fd.append('idCarrera', this.alerta.idCarrera);
+    fd.append('idEspecialidad', this.alerta.idEspecialidad);
+    fd.append('strGrupo', this.alerta.strGrupo);
+    for (const crde of this.alerta.arrCrde) {
+      fd.append('arrCrde', crde.idCrde);
+    }
+    fd.append('chrTurno', this.alerta.chrTurno);
+    fd.append('idModalidad', this.alerta.idModalidad);
+    fd.append('strDescripcion', this.alerta.strDescripcion);
+
+    if (this.alerta.aJsnEvidencias !== null) {
+      console.log(this.alerta.aJsnEvidencias);
+
+      for ( let doc = 0; doc < this.alerta.aJsnEvidencias.length; doc++ ) {
+        fd.append('aJsnEvidencias', this.alerta.aJsnEvidencias[doc]);
+      }
+    }
+
+    this.alertaService.postAlerta(this.alerta, fd).then((data) => {
       console.log(data);
-      forma.reset();
+      // forma.reset();
     }).catch((err) => {
       console.log(err);
     });
@@ -97,7 +130,16 @@ export class AlertRegisterComponent implements OnInit {
     });
   }
 
-  getModalidades() {}
+  getModalidades() {
+    this.modalityService.getModalidades().then((modalidades: any) => {
+      this.modalidades = modalidades.modalidad;
+      setTimeout(() => {
+        $('.selectpicker').selectpicker('refresh');
+      }, 0);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
 
   getAsignaturas() {
     this.asignaturaService.getAsignatura().then((asign: any) => {

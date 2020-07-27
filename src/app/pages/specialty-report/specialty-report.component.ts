@@ -33,11 +33,14 @@ export class SpecialtyReportComponent implements OnInit {
   ngOnInit(): void {
     this.idCareer = this.activatedRoute.snapshot.params.id; 
     this.getSpecialties(this.idCareer);
+    this.arraySpeciality = [];
     this.title = 'Reporte de Especialidades';
   }
 
   getSpecialties(id: string){
+    this.cargando = true;
     this.careersService.getCarrerByid(id).then((res:any) => {
+      this.cargando = false;
       console.log(res.cnt[0].aJsnEspecialidad);
       this.specialties = res.cnt[0].aJsnEspecialidad;
       for (const speciality of this.specialties) {

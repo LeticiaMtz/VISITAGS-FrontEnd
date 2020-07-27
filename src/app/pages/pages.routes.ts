@@ -21,8 +21,8 @@ import { BehaviorComponent } from './behavior/behavior.component';
 
 import { StatusReportComponent } from './status-report/status-report.component';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { ModalityComponent } from './modality/modality.component';
 import { AlertRegisterComponent } from './alert-register/alert-register.component';
-
 
 
 const pagesRoutes: Routes = [
@@ -43,6 +43,7 @@ const pagesRoutes: Routes = [
           { path: 'estatus-alerta', component: StatusReportComponent, data: { titulo: 'Catalogo de Estatus de Alertas' }, canActivate: [AuthGuard] },
           { path: 'registro-alerta', component: AlertRegisterComponent, data: { titulo: 'Registro de Alertas' }, canActivate: [AuthGuard] },
           { path: 'subjects', component: SubjectsComponent, data: { titulo: 'Asignaturas' }, canActivate: [AuthGuard]},
+          { path: 'modality', component: ModalityComponent, data: { titulo: 'Modalidades' }, canActivate: [AuthGuard]},
           { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ]
     },

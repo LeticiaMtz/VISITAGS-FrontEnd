@@ -16,6 +16,7 @@ export class SidebarService {
         { titulo: 'Catalogo de Estatus de Alertas', url: '/estatus-alerta'},
         { titulo: 'Registro de Incidencias', url: '/registro-alerta'},
         { titulo: 'Asignaturas', url: '/subjects' },
+        { titulo: 'Modalidades', url: '/modality' },
         { titulo: 'ProgressBar', url: '/progress' },
         { titulo: 'Graficas', url: '/graficas1' },
         { titulo: 'Promesas', url: '/promesas'},

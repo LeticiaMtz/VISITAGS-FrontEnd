@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { CareersService } from '../../services/careers/careers.service';
 import { CareerModel } from '../../models/career';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,7 +11,9 @@ import { ExportDataService } from 'src/app/services/excel/export-to-excel.servic
   styleUrls: ['./career-report.component.css']
 })
 export class CareerReportComponent implements OnInit {
-
+  @Input() paquetito: any;
+  @Input() carrerModel: CareerModel[]; 
+  @Output() salida = new EventEmitter();
   careers: CareerModel[] = [];
   searchText: any;
   pageActual: number;
@@ -30,11 +32,14 @@ export class CareerReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCareeers();
-    this.title = 'Reposte de Carreras';
+    this.arrayCareer = [];
+    this.title = 'Reporte de Carreras';
   }
   
   getCareeers(){
+    this.cargando=true;
     this.careerService.getCareers().then((res: any) => {
+      this.cargando=false;
       this.careers = res.carrera;
       for (const c of this.careers) {
         let element = [
@@ -79,7 +84,9 @@ export class CareerReportComponent implements OnInit {
       header,
       this.arrayCareer,
       "center"
+      
     );
+  
   }
 
   exportAsXLSX() {

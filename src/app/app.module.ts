@@ -18,6 +18,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './services/login/token-interceptor.service';
 import { ChangePasswordComponent } from './restore-password/change-password/change-password.component';
 import { SendEmailComponent } from './restore-password/send-email/send-email.component';
+import { ModalityComponent } from './pages/modality/modality.component';
 
 
 
@@ -33,6 +34,7 @@ import { SendEmailComponent } from './restore-password/send-email/send-email.com
     LoginComponent,
     ChangePasswordComponent,
     SendEmailComponent,
+
   ],
   imports: [
     ReactiveFormsModule,

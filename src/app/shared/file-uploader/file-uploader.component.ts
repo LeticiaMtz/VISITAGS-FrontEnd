@@ -9,7 +9,6 @@ const Toast = Swal.mixin({
   timer: 3000
 });
 
-
 @Component({
   selector: 'app-file-uploader',
   templateUrl: './file-uploader.component.html',
@@ -21,20 +20,17 @@ export class FileUploaderComponent implements OnInit {
   @Output() archivosObtenidos = new EventEmitter();
   evidencias: FileModel[] = [];
   evidencia: FileModel;
+  pondOptions: any;
 
   constructor() { }
 
   ngOnInit() {
+    this.pondOptions = {
+      class: 'my-filepond',
+      multiple: true,
+      labelIdle: 'Arrasta tus documentos aqui'
+    };
   }
-
-  // tslint:disable-next-line: member-ordering
-  pondOptions = {
-    class: 'my-filepond',
-    multiple: true,
-    labelIdle: 'Arrasta tus documentos aqui',
-    acceptedFileTypes: '',
-    allowImagePreview: true
-  };
 
   // tslint:disable-next-line: member-ordering
   pondFiles = [];
@@ -45,12 +41,12 @@ export class FileUploaderComponent implements OnInit {
 
   pondHandleAddFile(event: any) {
     let archivo = event.file.source;
-    this.evidencia = {
-      strNombre: archivo.name,
-      strFileEvidencia: archivo,
-      blnActivo: true
-    };
-    this.evidencias.push(this.evidencia);
+    // this.evidencia = {
+    //   strNombre: archivo.name,
+    //   strFileEvidencia: archivo,
+    //   blnActivo: true
+    // };
+    this.evidencias.push(archivo);
     this.archivosObtenidos.emit(this.evidencias);
   }
 }

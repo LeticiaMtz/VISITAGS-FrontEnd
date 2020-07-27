@@ -12,7 +12,8 @@ export class AlertService {
 
   constructor(private http: HttpClient) { }
 
-  postAlerta( alerta: AlertModel) {
-    return this.http.post(`${this.URL}/alerts/registrar`, alerta).toPromise();
+  postAlerta( alerta: any, fd: any) {
+    console.log(alerta);
+    return this.http.post(`${this.URL}/alerts/registrar`, fd).toPromise();
   }
 }
