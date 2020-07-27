@@ -17,8 +17,18 @@ import { ReasonsModel } from 'src/app/models/reasons-crde.model';
 import { ModalityService } from '../../services/modality/modality.service';
 import { ModalityModel } from 'src/app/models/modality.model';
 import { environment } from '../../../environments/environment.prod';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { EventEmitter } from 'protractor';
 
 declare var $: any;
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});
 
 @Component({
   selector: 'app-alert-register',
@@ -42,7 +52,7 @@ export class AlertRegisterComponent implements OnInit {
   idPersona: string;
 
   // tslint:disable-next-line: max-line-length
-  constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService) { }
+  constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router) { }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -64,13 +74,9 @@ export class AlertRegisterComponent implements OnInit {
 
   seleccionarTurno(turno: string) {
     this.alerta.chrTurno = turno;
-    console.log(turno);
   }
 
   registrarAlerta(forma: NgForm) {
-
-    console.log(this.alerta);
-
     let fd = new FormData();
 
     fd.append('idUser', this.alerta.idUser);
@@ -81,16 +87,11 @@ export class AlertRegisterComponent implements OnInit {
     fd.append('idCarrera', this.alerta.idCarrera);
     fd.append('idEspecialidad', this.alerta.idEspecialidad);
     fd.append('strGrupo', this.alerta.strGrupo);
-    for (const crde of this.alerta.arrCrde) {
-      fd.append('arrCrde', crde.idCrde);
-    }
     fd.append('chrTurno', this.alerta.chrTurno);
     fd.append('idModalidad', this.alerta.idModalidad);
     fd.append('strDescripcion', this.alerta.strDescripcion);
 
     if (this.alerta.aJsnEvidencias !== null) {
-      console.log(this.alerta.aJsnEvidencias);
-
       for ( let doc = 0; doc < this.alerta.aJsnEvidencias.length; doc++ ) {
         fd.append('aJsnEvidencias', this.alerta.aJsnEvidencias[doc]);
       }
@@ -98,9 +99,20 @@ export class AlertRegisterComponent implements OnInit {
 
     this.alertaService.postAlerta(this.alerta, fd).then((data) => {
       console.log(data);
-      // forma.reset();
+      Toast.fire({
+        icon: 'success',
+        title: `¡Alerta registrada exitosamente!`
+      });
+      forma.reset();
+      this.alerta.aJsnEvidencias = [];
+      this.router.navigate(['/dashboard']);
     }).catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+      });
+      forma.reset();
+      this.alerta.aJsnEvidencias = [];
     });
   }
 

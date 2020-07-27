@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import Swal from 'sweetalert2';
 import { FileModel } from 'src/app/models/file.model';
 
@@ -22,7 +22,7 @@ export class FileUploaderComponent implements OnInit {
   evidencia: FileModel;
   pondOptions: any;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.pondOptions = {
@@ -30,6 +30,7 @@ export class FileUploaderComponent implements OnInit {
       multiple: true,
       labelIdle: 'Arrasta tus documentos aqui'
     };
+    this.pondHandleInit();
   }
 
   // tslint:disable-next-line: member-ordering
