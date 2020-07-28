@@ -122,7 +122,7 @@ export class AlertRegisterComponent implements OnInit {
 
   getCarreras() {
     this.carrerasService.getCareers().then((carrera: any) => {
-      this.carreras = carrera.carrera;
+      this.carreras = carrera.cnt;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
       }, 0);
@@ -133,7 +133,7 @@ export class AlertRegisterComponent implements OnInit {
 
   getEspecialidad(idEspecialidad: string) {
     this.especialidadService.getSpecialties(idEspecialidad).then((especialidades: any) => {
-      this.especialidades = especialidades.cont.rutas;
+      this.especialidades = especialidades.cnt.rutas;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
       }, 0);
@@ -144,7 +144,7 @@ export class AlertRegisterComponent implements OnInit {
 
   getModalidades() {
     this.modalityService.getModalidades().then((modalidades: any) => {
-      this.modalidades = modalidades.modalidad;
+      this.modalidades = modalidades.cnt;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
       }, 0);
@@ -156,7 +156,7 @@ export class AlertRegisterComponent implements OnInit {
   getAsignaturas() {
     this.asignaturaService.getAsignatura().then((asign: any) => {
       console.log(asign);
-       this.asignaturas = asign.asignatura;
+       this.asignaturas = asign.cnt;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
         }, 0);
@@ -167,7 +167,7 @@ export class AlertRegisterComponent implements OnInit {
 
   getConductasRiesgo() {
     this.reasonsService.getReasons().then((razones: any) => {
-      this.razones = razones.crde;
+      this.razones = razones.cnt;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
       }, 0);
