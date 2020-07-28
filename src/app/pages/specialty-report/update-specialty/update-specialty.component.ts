@@ -65,7 +65,7 @@ export class UpdateSpecialtyComponent implements OnInit {
       this.optionCancel.emit(false);
       this.refresh.emit(true);
     }).catch(err => {
-      Toast.fire({
+      Toast.fire({ 
         icon: 'error',
         title: err.error.msg
       });

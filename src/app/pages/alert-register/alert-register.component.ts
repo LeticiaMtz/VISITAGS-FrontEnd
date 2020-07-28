@@ -155,7 +155,8 @@ export class AlertRegisterComponent implements OnInit {
 
   getAsignaturas() {
     this.asignaturaService.getAsignatura().then((asign: any) => {
-      this.asignaturas = asign.asignatura;
+      console.log(asign);
+       this.asignaturas = asign.asignatura;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
         }, 0);

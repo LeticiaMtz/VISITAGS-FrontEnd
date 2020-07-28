@@ -41,6 +41,7 @@ export class CareerReportComponent implements OnInit {
     this.careerService.getCareers().then((res: any) => {
       this.cargando=false;
       this.careers = res.carrera;
+      this.careers = res.cnt;
       for (const c of this.careers) {
         let element = [
           c.strCarrera.replace(/\:null/gi,':""')
@@ -48,7 +49,7 @@ export class CareerReportComponent implements OnInit {
         this.arrayCareer.push(element);
       }
     }).catch(err => {
-      console.log(err);
+      console.log(err.msg);
     });
   }
 

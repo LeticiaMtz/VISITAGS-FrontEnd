@@ -52,7 +52,8 @@ export class ModalityComponent implements OnInit {
     this.cargando = true;
     this.modalityService.getModalidades().then((res: any) => {
      this.cargando = false;
-      this.mods = res.modalidad;
+     
+      this.mods = res.cnt;
       for (const c of this.mods) {
         let element = [
           c.strModalidad.replace(/\:null/gi,':""'),
@@ -60,7 +61,7 @@ export class ModalityComponent implements OnInit {
         this.arrayMod.push(element);
       } 
     }).catch(err => {
-      console.log(err);
+      console.log(err.msg);
     });
   }
 
