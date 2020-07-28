@@ -29,6 +29,7 @@ export class RegisterStatusComponent implements OnInit {
 
   saveStatus(forma: NgForm) {
     this._estatusService.postStatus(this.estatus).then((data: any) => {
+      console.log(data);
       this.registrado.emit(true);
       Toast.fire({
         icon: 'success',

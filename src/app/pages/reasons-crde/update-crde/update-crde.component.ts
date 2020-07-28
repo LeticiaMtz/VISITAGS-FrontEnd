@@ -37,6 +37,7 @@ export class UpdateCrdeComponent implements OnInit {
 
   updateCategoria(form: NgForm){
     this.reasonsService.putReasons(this.idReasons, this.reasons).then(res => {
+      console.log(res);
       Toast.fire({
         icon: 'success',
         title: `¡La categoria ${this.reasons.strCategoria} se actualizó exitosamente!`
