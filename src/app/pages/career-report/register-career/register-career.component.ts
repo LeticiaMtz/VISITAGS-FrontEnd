@@ -31,7 +31,6 @@ export class RegisterCareerComponent implements OnInit {
 
   saveCareer(form: NgForm) {
     this.careersService.postCarrer(this.career).then(res => {
-      console.log(res);
       Toast.fire({
         icon: 'success',
         title: `¡La carrera ${this.career.strCarrera} se registró exitosamente!`

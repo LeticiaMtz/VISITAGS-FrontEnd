@@ -32,7 +32,6 @@ export class UpdateCareerComponent implements OnInit {
 
   updateCareer(form: NgForm){
     this.carrerService.putCareer(this.idCareer, this.career).then(res => {
-      console.log(res);
       Toast.fire({
         icon: 'success',
         title: `¡La carrera ${this.career.strCarrera} se actualizó exitosamente!`
