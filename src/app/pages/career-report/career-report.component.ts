@@ -40,7 +40,7 @@ export class CareerReportComponent implements OnInit {
     this.cargando=true;
     this.careerService.getCareers().then((res: any) => {
       this.cargando=false;
-      this.careers = res.carrera;
+      this.careers = res.cnt;
       for (const c of this.careers) {
         let element = [
           c.strCarrera.replace(/\:null/gi,':""')
