@@ -61,7 +61,7 @@ export class AlertRegisterComponent implements OnInit {
       let token = localStorage.token;
       let tokenDecoded = jwt_decode(token);
       this.alerta.idUser = tokenDecoded.user._id;
-      this.alerta.idEstatus = environment.idEstatusNuevo;
+      this.alerta.idEstatus = environment.nuevo;
     this.getAll();
   }
 
