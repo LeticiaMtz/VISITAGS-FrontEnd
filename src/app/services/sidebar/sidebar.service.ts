@@ -17,6 +17,7 @@ export class SidebarService {
         { titulo: 'Registro de Incidencias', url: '/registro-alerta'},
         { titulo: 'Asignaturas', url: '/subjects' },
         { titulo: 'Modalidades', url: '/modality' },
+        { titulo: 'Seguimiento Alerta', url: '/Tracking-alerts' },
         { titulo: 'ProgressBar', url: '/progress' },
         { titulo: 'Graficas', url: '/graficas1' },
         { titulo: 'Promesas', url: '/promesas'},
