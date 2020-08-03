@@ -61,7 +61,7 @@ export class AlertRegisterComponent implements OnInit {
       let token = localStorage.token;
       let tokenDecoded = jwt_decode(token);
       this.alerta.idUser = tokenDecoded.user._id;
-      this.alerta.idEstatus = environment.idEstatusNuevo;
+      this.alerta.idEstatus = environment.nuevo;
     this.getAll();
   }
 
@@ -86,6 +86,13 @@ export class AlertRegisterComponent implements OnInit {
     fd.append('idAsignatura', this.alerta.idAsignatura);
     fd.append('idCarrera', this.alerta.idCarrera);
     fd.append('idEspecialidad', this.alerta.idEspecialidad);
+
+    if (this.alerta.arrCrde !== null) {
+      for (let crde = 0; crde < this.alerta.arrCrde.length; crde++) {
+        fd.append('arrCrde', this.alerta.arrCrde[crde]);
+      }
+    }
+
     fd.append('strGrupo', this.alerta.strGrupo);
     fd.append('chrTurno', this.alerta.chrTurno);
     fd.append('idModalidad', this.alerta.idModalidad);
@@ -97,14 +104,11 @@ export class AlertRegisterComponent implements OnInit {
       }
     }
 
-    this.alertaService.postAlerta(this.alerta, fd).then((data) => {
-      console.log(data);
+    this.alertaService.postAlerta(fd).then((data) => {
       Toast.fire({
         icon: 'success',
         title: `¡Alerta registrada exitosamente!`
       });
-      forma.reset();
-      this.alerta.aJsnEvidencias = [];
       this.router.navigate(['/dashboard']);
     }).catch((err) => {
       Toast.fire({
@@ -112,7 +116,6 @@ export class AlertRegisterComponent implements OnInit {
         title: err.error.msg
       });
       forma.reset();
-      this.alerta.aJsnEvidencias = [];
     });
   }
 
@@ -122,7 +125,7 @@ export class AlertRegisterComponent implements OnInit {
 
   getCarreras() {
     this.carrerasService.getCareers().then((carrera: any) => {
-      this.carreras = carrera.carrera;
+      this.carreras = carrera.cnt;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
       }, 0);
@@ -133,7 +136,7 @@ export class AlertRegisterComponent implements OnInit {
 
   getEspecialidad(idEspecialidad: string) {
     this.especialidadService.getSpecialties(idEspecialidad).then((especialidades: any) => {
-      this.especialidades = especialidades.cont.rutas;
+      this.especialidades = especialidades.cnt.rutas;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
       }, 0);
@@ -142,9 +145,13 @@ export class AlertRegisterComponent implements OnInit {
     });
   }
 
+  getCrde( idCrde: string) {
+    this.alerta.arrCrde = idCrde;
+  }
+
   getModalidades() {
     this.modalityService.getModalidades().then((modalidades: any) => {
-      this.modalidades = modalidades.modalidad;
+      this.modalidades = modalidades.cnt;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
       }, 0);
@@ -155,10 +162,10 @@ export class AlertRegisterComponent implements OnInit {
 
   getAsignaturas() {
     this.asignaturaService.getAsignatura().then((asign: any) => {
-      this.asignaturas = asign.asignatura;
+       this.asignaturas = asign.cnt;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
-        }, 0);
+      }, 0);
     }).catch((err)=> {
       console.log(err);
     });
@@ -166,7 +173,7 @@ export class AlertRegisterComponent implements OnInit {
 
   getConductasRiesgo() {
     this.reasonsService.getReasons().then((razones: any) => {
-      this.razones = razones.crde;
+      this.razones = razones.cnt;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
       }, 0);

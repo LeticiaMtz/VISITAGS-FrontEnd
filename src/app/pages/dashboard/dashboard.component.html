@@ -1,1 +1,67 @@
-<p>dashboard works!</p>
+<div class="card-deck row">
+
+    <div class="col-md-4 animacion">
+        <div class="card text-center rounded" style="height: 92%; cursor: pointer; cursor:hand; justify-content:center; color: #14B0FE; background-color: white; transform: scale(1.0);
+        -webkit-tap-highlight-color: transparent;
+        -webkit-font-smoothing: antialiased;
+        -webkit-box-shadow: 10px 13px 25px -11px rgba(157, 149, 199, 0.62);
+        -moz-box-shadow: 10px 13px 25px -11px rgba(157, 149, 199, 0.62);
+        box-shadow: 10px 13px 25px -11px rgba(157, 149, 199, 0.62);" (click)="redirigir()">
+            <i class="fa fa-plus-circle fa-5x"></i>
+            <p>Nueva Alerta</p>
+        </div>
+    </div>
+
+
+    <div class="col-md-4 animacion" *ngFor="let alert of alerts">
+        <div class="card rounded" style="transform: scale(1.0);
+        -webkit-tap-highlight-color: transparent;
+        -webkit-font-smoothing: antialiased;
+        -webkit-box-shadow: 10px 13px 25px -11px rgba(157, 149, 199, 0.62);
+        -moz-box-shadow: 10px 13px 25px -11px rgba(157, 149, 199, 0.62);
+        box-shadow: 10px 13px 25px -11px rgba(157, 149, 199, 0.62); height: 92%;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="card-text"><i class="fa fa-graduation-cap"></i>{{alert.idCarrera.strCarrera}}</p>
+                    </div>
+
+                    <div class="col-6 ">
+                        <span class="badge badge-info " *ngIf="nuevo == alert.idEstatus._id"> <i class="fa fa-star "></i> {{alert.idEstatus.strNombre}}</span>
+                        <span class="badge badge-warning " *ngIf="enProgreso == alert.idEstatus._id"> <i class="fa fa-check"></i> {{alert.idEstatus.strNombre}}</span>
+                        <span class="badge badge-danger " *ngIf="cerrado == alert.idEstatus._id"> <i class="fa fa-cog fa-spin fa fa-fw "></i> {{alert.idEstatus.strNombre}}</span>
+                        <span class="badge badge-success " *ngIf="finalizado == alert.idEstatus._id"> <i class="fa fa-cog fa-spin fa fa-fw "></i> {{alert.idEstatus.strNombre}}</span>
+                    </div>
+                </div>
+
+                <div class=row>
+                    <div class="col-6">
+
+                        <p class="card-text"><i class="fa fa-user-circle blue"></i> {{alert.strNombreAlumno}}</p>
+                    </div>
+
+                    <div class="col-6">
+                        <p class="card-text"><i class="fa fa-calendar"></i> {{alert.updatedAt | date}}</p>
+                    </div>
+                </div>
+
+                <div class=row>
+                    <div class="col-12">
+
+                        <p class="card-text "><i class="fa fa-bars"></i> <span class="badge badge-danger" data-toggle="tooltip" data-placement="top" title="" *ngFor="let crde of alert.arrCrde"> {{crde.strCategoria}}</span></p>
+                    </div>
+                </div>
+
+                <div class=row>
+                    <div class="col-12">
+                        <br>
+                        <p class="card-text">{{alert.strDescripcion}}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

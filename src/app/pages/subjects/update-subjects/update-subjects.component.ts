@@ -35,6 +35,7 @@ export class UpdateSubjectsComponent implements OnInit {
 
   updateAsignatura(form: NgForm){
     this.subjectsService.putAsignatura(this.idAsig, this.sub).then(res => {
+      console.log(res);
       Toast.fire({
         icon: 'success',
         title: `¡La Asignatura ${this.sub.strAsignatura} se actualizó exitosamente!`
@@ -57,6 +58,7 @@ export class UpdateSubjectsComponent implements OnInit {
 
   getAsignatura() {
     this.subjectsService.getAsignaturaByid(this.idAsig).then((res: any) => {
+      console.log(res);
       this.sub = res.cnt[0];
     }).catch(err => {
       Toast.fire({

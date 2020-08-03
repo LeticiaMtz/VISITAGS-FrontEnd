@@ -41,6 +41,7 @@ export class BehaviorComponent implements OnInit {
     this.cargando = true;
     this.reasonsService.getReasonsByid(id).then((res:any) => {
       this.cargando = false;
+      console.log(res);
       console.log(res.cnt[0].aJsnMotivo);
       this.behavior = res.cnt[0].aJsnMotivo;
       for (const behavior of this.behavior) {
@@ -50,7 +51,7 @@ export class BehaviorComponent implements OnInit {
         this.arrayBehavior.push(element);
       }
     }).catch(err => {
-      console.log(err);
+      console.log(err.msg);
     });
   }
 

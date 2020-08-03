@@ -25,7 +25,7 @@ export class RegisterBehaviorComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+ 
 
   saveBehavior(forma: NgForm){
     this.behaviorService.postBehavior(this.idReasons,  this.behavior).then(res => {

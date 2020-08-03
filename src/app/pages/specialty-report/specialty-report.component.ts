@@ -41,6 +41,7 @@ export class SpecialtyReportComponent implements OnInit {
     this.cargando = true;
     this.careersService.getCarrerByid(id).then((res:any) => {
       this.cargando = false;
+      console.log(res);
       console.log(res.cnt[0].aJsnEspecialidad);
       this.specialties = res.cnt[0].aJsnEspecialidad;
       for (const speciality of this.specialties) {
@@ -50,7 +51,7 @@ export class SpecialtyReportComponent implements OnInit {
         this.arraySpeciality.push(element);
       }
     }).catch(err => {
-      console.log(err);
+      console.log(err.msg);
     });
   }
 

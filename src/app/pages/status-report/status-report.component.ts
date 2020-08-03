@@ -43,7 +43,8 @@ export class StatusReportComponent implements OnInit {
     this.cargando = true;
     this._estatusService.getAllStatus().then((data: any) => {
       this.cargando = false;
-      this.estatus = data.resp;
+      console.log(data);
+      this.estatus = data.cnt;
       for (const s of this.estatus) {
         let element = [
           s.strNombre.replace(/\:null/gi,':""'),
@@ -54,7 +55,7 @@ export class StatusReportComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.resp}!`
+        title: `¡${err.msg}!`
       });
     });
   }

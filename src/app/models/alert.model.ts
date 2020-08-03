@@ -1,4 +1,6 @@
 import { FileModel } from './file.model';
+import { ReasonsModel } from './reasons-crde.model';
+
 
 export class AlertModel {
     _id?: string;
@@ -7,15 +9,15 @@ export class AlertModel {
     strMatricula: string;
     strNombreAlumno: string;
     idAsignatura: string;
-    idCarrera: string;
+    idCarrera?: string;
     idEspecialidad: string;
     strGrupo: string;
     idConductaRiesgo: string;
     chrTurno: string;
     idModalidad: string;
     strDescripcion: string;
-    arrCrde: [{
-        idCrde: string
+    arrCrde?: any = [{
+        ReasonsModel
     }];
     aJsnEvidencias?: any = [{
         FileModel

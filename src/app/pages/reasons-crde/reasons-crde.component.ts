@@ -39,8 +39,8 @@ export class ReasonsCRDEComponent implements OnInit {
     this.cargando = true;
     this.ReasonsService.getReasons().then((res: any) => {
       this.cargando = false;
-      this.reasons = res.crde;
-      console.log(res.crde);
+      this.reasons = res.cnt;
+      console.log(res.cnt);
       for (const c of this.reasons) {
         let element = [
           c.strCategoria.replace(/\:null/gi,':""')

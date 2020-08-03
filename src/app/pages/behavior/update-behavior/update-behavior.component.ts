@@ -39,6 +39,7 @@ export class UpdateBehaviorComponent implements OnInit {
 
   getBehavior(idC: string){
     this.reasonsService.getReasonsByid(idC).then((res:any) => {
+      console.log(res);
       console.log(res.cnt[0].aJsnMotivo);
       this.behaviors = res.cnt[0].aJsnMotivo;
       this.behaviors.forEach(element => {

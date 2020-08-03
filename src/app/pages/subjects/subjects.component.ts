@@ -38,7 +38,8 @@ export class SubjectsComponent implements OnInit {
     this.cargando = true;
     this.subjectsService.getAsignatura().then((res: any) => {
       this.cargando = false;
-      this.subs = res.asignatura;
+      console.log(res);
+      this.subs = res.cnt;
       for (const c of this.subs) {
         let element = [
           c.strAsignatura.replace(/\:null/gi,':""'),
@@ -47,7 +48,7 @@ export class SubjectsComponent implements OnInit {
         this.arrayCareer.push(element);
       } 
     }).catch(err => {
-      console.log(err);
+      console.log(err.msg);
     });
   }
 

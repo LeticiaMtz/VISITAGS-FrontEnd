@@ -30,8 +30,8 @@
 
                 <div class="mt-2">
                     <select [class.is-invalid]="blnStatus.invalid && blnStatus.touched" class="custom-select form-control form-control-sm" type="text" name="blnStatus" [(ngModel)]="mod.blnStatus" required #blnStatus="ngModel">
-                        <option [ngValue]="true">Si</option>
-                        <option [ngValue]="false">No</option>
+                        <option [ngValue]="true">Activo</option>
+                        <option [ngValue]="false">Inactivo</option>
                       </select>
                 </div>
 
