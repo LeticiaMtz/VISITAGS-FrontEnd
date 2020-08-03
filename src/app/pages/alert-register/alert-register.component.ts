@@ -86,6 +86,13 @@ export class AlertRegisterComponent implements OnInit {
     fd.append('idAsignatura', this.alerta.idAsignatura);
     fd.append('idCarrera', this.alerta.idCarrera);
     fd.append('idEspecialidad', this.alerta.idEspecialidad);
+
+    if (this.alerta.arrCrde !== null) {
+      for (let crde = 0; crde < this.alerta.arrCrde.length; crde++) {
+        fd.append('arrCrde', this.alerta.arrCrde[crde]);
+      }
+    }
+
     fd.append('strGrupo', this.alerta.strGrupo);
     fd.append('chrTurno', this.alerta.chrTurno);
     fd.append('idModalidad', this.alerta.idModalidad);
@@ -97,14 +104,11 @@ export class AlertRegisterComponent implements OnInit {
       }
     }
 
-    this.alertaService.postAlerta(this.alerta, fd).then((data) => {
-      console.log(data);
+    this.alertaService.postAlerta(fd).then((data) => {
       Toast.fire({
         icon: 'success',
         title: `¡Alerta registrada exitosamente!`
       });
-      forma.reset();
-      this.alerta.aJsnEvidencias = [];
       this.router.navigate(['/dashboard']);
     }).catch((err) => {
       Toast.fire({
@@ -112,7 +116,6 @@ export class AlertRegisterComponent implements OnInit {
         title: err.error.msg
       });
       forma.reset();
-      this.alerta.aJsnEvidencias = [];
     });
   }
 
@@ -142,6 +145,10 @@ export class AlertRegisterComponent implements OnInit {
     });
   }
 
+  getCrde( idCrde: string) {
+    this.alerta.arrCrde = idCrde;
+  }
+
   getModalidades() {
     this.modalityService.getModalidades().then((modalidades: any) => {
       this.modalidades = modalidades.cnt;
@@ -155,11 +162,10 @@ export class AlertRegisterComponent implements OnInit {
 
   getAsignaturas() {
     this.asignaturaService.getAsignatura().then((asign: any) => {
-      console.log(asign);
        this.asignaturas = asign.cnt;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
-        }, 0);
+      }, 0);
     }).catch((err)=> {
       console.log(err);
     });

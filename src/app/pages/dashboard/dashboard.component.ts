@@ -8,6 +8,7 @@ import { ExportDataService } from 'src/app/services/excel/export-to-excel.servic
 import { environment } from '../../../environments/environment.prod';
 import * as jwt_decode from 'jwt-decode';
 import { CareersService } from 'src/app/services/careers/careers.service';
+import { log } from 'console';
 
 @Component({
   selector: 'app-dashboard',
@@ -61,6 +62,8 @@ export class DashboardComponent implements OnInit {
     this.idPersona = this.tokenDecoded.user._id;
     this.idRol = this.tokenDecoded.user.idRole;
     this.alertService.getAlerts(this.idRol, this.idPersona).then((res: any) => {
+
+      console.log(res);
       this.cargando = false;
       this.alerts = res.cnt;
       console.log(this.alerts);
