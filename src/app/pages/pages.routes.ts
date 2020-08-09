@@ -46,7 +46,7 @@ const pagesRoutes: Routes = [
           { path: 'registro-alerta', component: AlertRegisterComponent, data: { titulo: 'Registro de Alertas' }, canActivate: [AuthGuard] },
           { path: 'subjects', component: SubjectsComponent, data: { titulo: 'Asignaturas' }, canActivate: [AuthGuard]},
           { path: 'modality', component: ModalityComponent, data: { titulo: 'Modalidades' }, canActivate: [AuthGuard]},
-          { path: 'Tracking-alerts', component: TrackingAlertsComponent, data: { titulo: 'Seguimiento Alerta' }, canActivate: [AuthGuard]},
+          { path: 'Tracking-alerts/:id', component: TrackingAlertsComponent, data: { titulo: 'Seguimiento Alerta' }, canActivate: [AuthGuard]},
           { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ]
     },

@@ -60,6 +60,7 @@ export class DashboardComponent implements OnInit {
   getAlert(){
     this.cargando = true;
     this.idPersona = this.tokenDecoded.user._id;
+    console.log(this.idPersona,'-------------');
     this.idRol = this.tokenDecoded.user.idRole;
     this.alertService.getAlerts(this.idRol, this.idPersona).then((res: any) => {
 

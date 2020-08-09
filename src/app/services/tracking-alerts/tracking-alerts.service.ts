@@ -11,4 +11,14 @@ export class TrackingAlertsService {
   url = environment.urlGlobal;
 
   constructor(private http :HttpClient) { }
+
+  getAlertTracking(idAlert: string){
+    return this.http.get(`${this.url}/Alerts/obtener/${idAlert}`).toPromise();
+  }
+
+  getPersona(idUser){
+    return this.http.get(`${this.url}/Users/obtener/${idUser}`).toPromise();
+  }
+
+  
 }
