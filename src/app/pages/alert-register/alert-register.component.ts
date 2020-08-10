@@ -50,6 +50,7 @@ export class AlertRegisterComponent implements OnInit {
   chooseSpeciality: boolean = false;
   asignaturas: SubjectModel[] = [];
   idPersona: string;
+  documentos: any; 
 
   // tslint:disable-next-line: max-line-length
   constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router) { }
@@ -97,12 +98,13 @@ export class AlertRegisterComponent implements OnInit {
     fd.append('chrTurno', this.alerta.chrTurno);
     fd.append('idModalidad', this.alerta.idModalidad);
     fd.append('strDescripcion', this.alerta.strDescripcion);
+    fd.append('strFileEvidencias', this.documentos);
 
-    if (this.alerta.aJsnEvidencias !== null) {
-      for ( let doc = 0; doc < this.alerta.aJsnEvidencias.length; doc++ ) {
-        fd.append('aJsnEvidencias', this.alerta.aJsnEvidencias[doc]);
-      }
-    }
+    // if (this.alerta.aJsnEvidencias !== null) {
+    //   for ( let doc = 0; doc < this.alerta.aJsnEvidencias.length; doc++ ) {
+    //     fd.append('aJsnEvidencias', this.alerta.aJsnEvidencias[doc]);
+    //   }
+    // }
 
     this.alertaService.postAlerta(fd).then((data) => {
       Toast.fire({
@@ -120,7 +122,7 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   getArchivos(archivos: any) {
-    this.alerta.aJsnEvidencias = archivos;
+    this.documentos = archivos;
   }
 
   getCarreras() {
