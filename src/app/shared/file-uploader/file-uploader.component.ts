@@ -48,7 +48,7 @@ export class FileUploaderComponent implements OnInit {
     //   strFileEvidencia: archivo,
     //   blnActivo: true
     // };
-    this.evidencias.push(archivo);
-    this.archivosObtenidos.emit(this.evidencias);
+    // this.evidencias.push(archivo);
+    this.archivosObtenidos.emit(archivo);
   }
 }
