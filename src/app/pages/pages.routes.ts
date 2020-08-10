@@ -8,6 +8,7 @@ import { CareerReportComponent } from './career-report/career-report.component';
 import { SpecialtyReportComponent } from './specialty-report/specialty-report.component';
 import { ReasonsCRDEComponent} from './reasons-crde/reasons-crde.component';
 
+
 //AdminPro Pages
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressComponent } from './progress/progress.component';
@@ -23,6 +24,7 @@ import { StatusReportComponent } from './status-report/status-report.component';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { ModalityComponent } from './modality/modality.component';
 import { AlertRegisterComponent } from './alert-register/alert-register.component';
+import { TrackingAlertsComponent } from './tracking-alerts/tracking-alerts.component';
 
 
 const pagesRoutes: Routes = [
@@ -44,6 +46,7 @@ const pagesRoutes: Routes = [
           { path: 'registro-alerta', component: AlertRegisterComponent, data: { titulo: 'Registro de Alertas' }, canActivate: [AuthGuard] },
           { path: 'subjects', component: SubjectsComponent, data: { titulo: 'Asignaturas' }, canActivate: [AuthGuard]},
           { path: 'modality', component: ModalityComponent, data: { titulo: 'Modalidades' }, canActivate: [AuthGuard]},
+          { path: 'Tracking-alerts/:id', component: TrackingAlertsComponent, data: { titulo: 'Seguimiento Alerta' }, canActivate: [AuthGuard]},
           { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ]
     },

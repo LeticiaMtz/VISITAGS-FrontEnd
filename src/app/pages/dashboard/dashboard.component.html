@@ -14,12 +14,12 @@
 
 
     <div class="col-md-4 animacion" *ngFor="let alert of alerts">
-        <div class="card rounded" style="transform: scale(1.0);
+        <div [routerLink]="['/Tracking-alerts', alert._id]" class="card rounded" style="transform: scale(1.0);
         -webkit-tap-highlight-color: transparent;
         -webkit-font-smoothing: antialiased;
         -webkit-box-shadow: 10px 13px 25px -11px rgba(157, 149, 199, 0.62);
         -moz-box-shadow: 10px 13px 25px -11px rgba(157, 149, 199, 0.62);
-        box-shadow: 10px 13px 25px -11px rgba(157, 149, 199, 0.62); height: 92%;">
+        box-shadow: 10px 13px 25px -11px rgba(157, 149, 199, 0.62); height: 92%; cursor: pointer;">
             <div class="card-body">
                 <div class="row">
                     <div class="col-8">
