@@ -9,4 +9,5 @@ export class TrackingAlertModel {
         FileModel
     }];
     blnAvtivo?: boolean = true;
+    createdAt: Date;
 }

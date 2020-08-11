@@ -16,7 +16,7 @@ import { ReasonsService } from '../../services/reasons-crde/reasons-crde.service
 import { ReasonsModel } from 'src/app/models/reasons-crde.model';
 import { FileModel } from '../../models/file.model';
 
-
+declare var $: any;
 
 
 
@@ -34,11 +34,11 @@ const Toast = Swal.mixin({
 })
 export class TrackingAlertsComponent implements OnInit {
 
+  
   nuevo: string = environment.nuevo;
   cerrado: string = environment.cerrado;
   finalizado: string = environment.finalizado;
   enProgreso: string = environment.seguimiento;
-
   arrTracking: TrackingAlertModel[] = [];
   arrFiles: FileModel[] = [];
   arrEstatus: AlertStatusModel[] = [];
@@ -53,23 +53,32 @@ export class TrackingAlertsComponent implements OnInit {
   idPersona: string;
   userName: string;
   idAlert: string;
+  principalStatus: string;
+  idUltimo: string;
+  isEmpty: any;
   idUser: string;
-  cargando: boolean;
   documento: any;
+  refresh: boolean = false;
+  
 
   constructor(private trackingAlertsService: TrackingAlertsService, private alertStatusService: AlertStatusService, private reasonsService: ReasonsService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      $('.selectpicker').selectpicker('refresh');
+      }, 0);
     let token = localStorage.token;
     this.idAlert = this.activatedRoute.snapshot.params.id;
     this.tokenDecoded = jwt_decode(token);
     console.log(this.idAlert,'-------------------------alerta');
     this.obtenerAlerta(this.idAlert);
     this.obtenerEstatus();
+    this.obtenerSeguimiento(this.idAlert);
   }
 
   obtenerAlerta(idAlert: string){
     this.trackingAlertsService.getAlertData(idAlert).then((res: any) => {
+      
       this.objAlert = res.cnt[0];
       console.log(this.objAlert);
       this.objUser = res.cnt[0].idUser;
@@ -86,15 +95,25 @@ export class TrackingAlertsComponent implements OnInit {
   obtenerEstatus(){
     this.alertStatusService.getAllStatus().then((res: any) => {
       this.arrEstatus = res.cnt;
+      setTimeout(() => {
+        $('.selectpicker').selectpicker('refresh');
+      }, 0);
     }).catch(err => {
       console.log(err);
     });
   }
 
-  obtenerSeguimiento(idAlert: string){
-    this.trackingAlertsService.getSeguimiento(idAlert).then((res: any) => {
-      this.arrTracking = res.cnt;
-      console.log(this.arrTracking);
+  obtenerSeguimiento(id: string){
+    this.trackingAlertsService.getSeguimiento(id).then((res: any) => {
+      this.arrTracking = res.cnt.rutas;
+      // this.idPrimero = this.arrTracking[0].strComentario;
+      this.arrTracking.sort((one, two) => (one > two ? -1 : 1));
+      if(this.arrTracking.length > 0){
+        this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus;
+      }else{
+        this.principalStatus = this.nuevo;
+      }
+      console.log(this.arrTracking,'aqui estoy-----------------------------------');
     }).catch(err => {
       console.log(err);
     });
@@ -119,9 +138,9 @@ export class TrackingAlertsComponent implements OnInit {
     this.trackingAlertsService.RegistrarSeguimiento(this.idAlert, fd).then((res: any) => {
       console.log('Parece que funciono');
       console.log(res.cnt);
+      this.ngOnInit();
     }).catch(err => {
       console.log(err);
     })
   }
-
 }

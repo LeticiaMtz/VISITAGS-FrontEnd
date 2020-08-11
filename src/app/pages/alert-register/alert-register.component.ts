@@ -141,7 +141,7 @@ export class AlertRegisterComponent implements OnInit {
       this.especialidades = especialidades.cnt.rutas;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
-      }, 0);
+        }, 0);
     }).catch((err) => {
       console.log(err);
     });
