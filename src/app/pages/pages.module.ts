@@ -11,16 +11,9 @@ registerPlugin(FilePondPluginFileValidateType);
 
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProgressComponent } from './progress/progress.component';
-import { Graficas1Component } from './graficas1/graficas1.component';
 
 import { PAGES_ROUTES } from './pages.routes';
-
-import { IncrementadorComponent } from '../components/incrementador/incrementador.component';
-import { GraficaDonaComponent } from '../components/grafica-dona/grafica-dona.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
-import { PromesasComponent } from './promesas/promesas.component';
-import { RxjsComponent } from './rxjs/rxjs.component';
 
 import { CareerReportComponent } from './career-report/career-report.component';
 import { RegisterCareerComponent } from './career-report/register-career/register-career.component';
@@ -55,13 +48,7 @@ import { TrackingAlertsComponent } from './tracking-alerts/tracking-alerts.compo
     declarations: [
         PagesComponent,
         DashboardComponent,
-        ProgressComponent,
-        Graficas1Component,
-        IncrementadorComponent,
-        GraficaDonaComponent,
         AccountSettingsComponent,
-        PromesasComponent,
-        RxjsComponent,
         CareerReportComponent,
         RegisterCareerComponent,
         UpdateCareerComponent,
@@ -88,8 +75,6 @@ import { TrackingAlertsComponent } from './tracking-alerts/tracking-alerts.compo
     ],
     exports: [
         DashboardComponent,
-        ProgressComponent,
-        Graficas1Component
     ],
     imports: [
         SharedModule,

@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card animated fadeIn fast">
     <div class="row">
 
         <div class="col-md-4">
@@ -40,7 +40,7 @@
                                     <thead>
                                         <tr>
                                             <th>NOMBRE DE LA CATEGORIA</th>
-                                            <th>ESTATUS</th>
+                                            <th class="text-center">ESTATUS</th>
                                             <th class="text-center"> ACCIONES</th>
                                         </tr>
                                     </thead>
@@ -50,15 +50,15 @@
 
                                         <tr *ngFor="let reasons of reasons | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
                                             <td>{{ reasons.strCategoria }}</td>
-                                            <td *ngIf="reasons.blnStatus === activo">Activo</td>
-                                            <td *ngIf="reasons.blnStatus !== activo">Inactivo</td>
+                                            <td *ngIf="reasons.blnStatus === activo" class="text-center">Activo</td>
+                                            <td *ngIf="reasons.blnStatus !== activo" class="text-center">Inactivo</td>
                                             <td class=" text-center ">
                                                 <button type="button" class="btn btn-info btn-sm" id="dropdownReports" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h "></i></button>
                                                 <div class="dropdown-menu dropdown-menu-right shadow-lg " aria-labelledby="dropdownReports">
                                                     <div class="dropdown-header text-info">
                                                         <span class="text-xs text-uppercase ">opciones</span>
                                                     </div>
-                                                    <a (click)="actualizarCategoria(true, reasons._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Editar</a>
+                                                    <a (click)="actualizarCategoria(true, reasons._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Actualizar</a>
                                                     <a type="button" [routerLink]="['/behavior', reasons._id]" class="dropdown-item drop-options-text blue"><i class="fa fa-book mr-2 "></i>Conducta</a>
                                                 </div>
                                             </td>
