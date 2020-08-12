@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card animated fadeIn fast">
     <div class="row">
 
         <div class="col-md-4">
@@ -40,8 +40,8 @@
                                     <thead>
                                         <tr>
                                             <th>NOMBRE DE CARRERA</th>
-                                            <th>ESTATUS</th>
-                                            <th>ACCIONES</th>
+                                            <th class="text-center">ESTATUS</th>
+                                            <th class="text-center">ACCIONES</th>
                                         </tr>
                                     </thead>
 
@@ -49,8 +49,8 @@
                                     <tbody *ngIf="careers.length &gt; 0 && !cargando">
                                         <tr *ngFor="let career of careers | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
                                             <td>{{ career.strCarrera }}</td>
-                                            <td *ngIf="career.blnStatus === activo">Activo</td>
-                                            <td *ngIf="career.blnStatus !== activo">Inactivo</td>
+                                            <td *ngIf="career.blnStatus === activo" class="text-center">Activo</td>
+                                            <td *ngIf="career.blnStatus !== activo" class="text-center">Inactivo</td>
                                             <td class=" text-center ">
                                                 <button type="button" class="btn btn-info btn-sm" id="dropdownReports" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h "></i></button>
                                                 <div class="dropdown-menu dropdown-menu-right shadow-lg " aria-labelledby="dropdownReports">

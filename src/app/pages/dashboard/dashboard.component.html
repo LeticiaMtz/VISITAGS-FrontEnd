@@ -1,6 +1,6 @@
-<div class="card-deck row">
+<div class="card-deck row animated fadeIn fast">
 
-    <div class="col-md-4 animacion">
+    <div class="col-md-4 animated fadeIn fast">
         <div class="card text-center rounded" style="height: 92%; cursor: pointer; cursor:hand; justify-content:center; color: #14B0FE; background-color: white; transform: scale(1.0);
         -webkit-tap-highlight-color: transparent;
         -webkit-font-smoothing: antialiased;
@@ -13,7 +13,7 @@
     </div>
 
 
-    <div class="col-md-4 animacion" *ngFor="let alert of alerts">
+    <div class="col-md-4 animated fadeIn fast" *ngFor="let alert of alerts">
         <div [routerLink]="['/Tracking-alerts', alert._id]" class="card rounded" style="transform: scale(1.0);
         -webkit-tap-highlight-color: transparent;
         -webkit-font-smoothing: antialiased;
