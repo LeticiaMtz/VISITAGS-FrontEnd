@@ -155,9 +155,9 @@
                                 <div class="row mt-2">
                                     <div class="col-md-12" >
                                         <div *ngFor="let archivos of data.aJsnEvidencias">
-                                            <a href="" style="font-size: x-small;">{{archivos.strFileEvidencia}}</a>
-                                        </div>
-                                        
+                                            <a (click)="descargarArchivo(archivos.strFileEvidencia)"  style="font-size: x-small;cursor: pointer;">{{archivos.strFileEvidencia}}</a>
+                    
+                                        </div>   
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +208,7 @@
         
                                 <hr>
 
-                                <app-file-uploader (archivosObtenidos)="obtenerArchivos($event)"></app-file-uploader>
+                                <app-file-uploader *ngIf="!resetImage" (archivosObtenidos)="obtenerArchivos($event)"></app-file-uploader>
                             </div>
                         </div>
                     </div>

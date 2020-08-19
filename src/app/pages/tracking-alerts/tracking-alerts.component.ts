@@ -58,6 +58,8 @@ export class TrackingAlertsComponent implements OnInit {
   idUser: string;
   documento: any;
   refresh: boolean = false;
+  resetImage = false;
+  url: string;
   
 
   constructor(private trackingAlertsService: TrackingAlertsService, private alertStatusService: AlertStatusService, private reasonsService: ReasonsService, private activatedRoute: ActivatedRoute) { }
@@ -127,6 +129,7 @@ export class TrackingAlertsComponent implements OnInit {
   }
 
   comentarAlerta(form: NgForm){
+    this.resetImage = true;
     let fd = new FormData();
     fd.append('idUser', this.tokenDecoded.user._id);
     fd.append('idEstatus', this.objTracking.idEstatus);
@@ -139,6 +142,11 @@ export class TrackingAlertsComponent implements OnInit {
     // }
 
     this.trackingAlertsService.RegistrarSeguimiento(this.idAlert, fd).then((res: any) => {
+
+      setTimeout(() => {
+        this.resetImage = false;
+      }, 0);
+  
       console.log('Parece que funciono');
       console.log(res.cnt);
       this.ngOnInit();
@@ -148,11 +156,7 @@ export class TrackingAlertsComponent implements OnInit {
     form.reset();
   }
 
-  // descargarArchivo(nameFiel: string){
-  //   this.trackingAlertsService.getFile(nameFiel).then((res:any) => {
-  //     console.log(res);
-  //   }).catch(err => {
-  //     console.log(err);
-  //   });
-  // }
+  descargarArchivo(nameFiel: string){
+    this.trackingAlertsService.getFile(nameFiel);
+  }
 }

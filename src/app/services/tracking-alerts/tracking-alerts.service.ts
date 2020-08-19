@@ -31,8 +31,6 @@ export class TrackingAlertsService {
   }
 
   getFile(fileName: string){
-    return this.http.get(`${this.url}/descargarArchivo/descarga/${fileName}`).toPromise();
+    window.open(`${this.url}/descargarArchivo/descarga/${fileName}`, '_blank');
   }
-
-  
 }
