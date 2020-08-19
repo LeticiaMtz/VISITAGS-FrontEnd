@@ -1,12 +1,6 @@
-/* .footer {
-    position: fixed;
-    padding-top: 1rem;
-    padding-bottom: .3rem;
-    text-align: center;
-    bottom: 0px;
-    width: 100%;
-  } */
-
-  .f {
-      position: fixed;
-  }
+.divScroll {
+  height: 520px;
+  width: 1000px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

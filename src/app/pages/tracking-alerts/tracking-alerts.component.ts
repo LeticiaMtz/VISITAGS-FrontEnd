@@ -34,7 +34,6 @@ const Toast = Swal.mixin({
 })
 export class TrackingAlertsComponent implements OnInit {
 
-  
   nuevo: string = environment.nuevo;
   cerrado: string = environment.cerrado;
   finalizado: string = environment.finalizado;
@@ -80,7 +79,7 @@ export class TrackingAlertsComponent implements OnInit {
     this.trackingAlertsService.getAlertData(idAlert).then((res: any) => {
       
       this.objAlert = res.cnt[0];
-      console.log(this.objAlert);
+      console.log(this.objAlert, '----------------------------aqui');
       this.objUser = res.cnt[0].idUser;
       this.objSubject = res.cnt[0].idAsignatura;
       this.objModality = res.cnt[0].idModalidad;
@@ -95,6 +94,7 @@ export class TrackingAlertsComponent implements OnInit {
   obtenerEstatus(){
     this.alertStatusService.getAllStatus().then((res: any) => {
       this.arrEstatus = res.cnt;
+      this.arrEstatus.splice(0, 1);
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
       }, 0);
@@ -105,15 +105,18 @@ export class TrackingAlertsComponent implements OnInit {
 
   obtenerSeguimiento(id: string){
     this.trackingAlertsService.getSeguimiento(id).then((res: any) => {
-      this.arrTracking = res.cnt.rutas;
-      // this.idPrimero = this.arrTracking[0].strComentario;
-      this.arrTracking.sort((one, two) => (one > two ? -1 : 1));
+      console.log(res.cnt, '-----------RESPUESTA DE SEGUIMIENTO');
+      this.arrTracking = res.cnt.aJsnSeguimiento;
       if(this.arrTracking.length > 0){
-        this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus;
-      }else{
-        this.principalStatus = this.nuevo;
+        this.arrTracking.sort((one, two) => (one > two ? -1 : 1));
+        if(this.arrTracking.length > 0){
+          this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus;
+        }else{
+          this.principalStatus = this.nuevo;
+        }
       }
-      console.log(this.arrTracking,'aqui estoy-----------------------------------');
+
+      console.log(this.arrTracking,'AQUI ESTOY----------------------------');
     }).catch(err => {
       console.log(err);
     });
@@ -125,9 +128,9 @@ export class TrackingAlertsComponent implements OnInit {
 
   comentarAlerta(form: NgForm){
     let fd = new FormData();
-
     fd.append('idUser', this.tokenDecoded.user._id);
     fd.append('idEstatus', this.objTracking.idEstatus);
+    console.log(this.objTracking.idEstatus);
     fd.append('strComentario', this.objTracking.strComentario);
     // if(this.objTracking.aJsnEvidencias !== null){
     //   for(let i = 0; i < this.objTracking.aJsnEvidencias.lenght; i++){
@@ -142,5 +145,14 @@ export class TrackingAlertsComponent implements OnInit {
     }).catch(err => {
       console.log(err);
     })
+    form.reset();
   }
+
+  // descargarArchivo(nameFiel: string){
+  //   this.trackingAlertsService.getFile(nameFiel).then((res:any) => {
+  //     console.log(res);
+  //   }).catch(err => {
+  //     console.log(err);
+  //   });
+  // }
 }
