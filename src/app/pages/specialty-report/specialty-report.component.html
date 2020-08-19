@@ -1,16 +1,16 @@
-<div class="card">
+<div class="card animated fadeIn fast">
     <div class="row">
-        
+
         <div class="col-md-4">
             <!--  -->
-            <div class="container mt-4" *ngIf="!actualizar" >
+            <div class="container mt-4" *ngIf="!actualizar">
                 <!-- <app-registrar-administrador (terminarRegistro)="registrado($event)"></app-registrar-administrador> -->
-                <app-register-specialty [idCareer]="idCareer" (refresh)="refreshTable($event)" ></app-register-specialty>
+                <app-register-specialty [idCareer]="idCareer" (refresh)="refreshTable($event)"></app-register-specialty>
             </div>
             <!-- *ngIf="actualizar" -->
-            <div class="container mt-4"  *ngIf="actualizar">
+            <div class="container mt-4" *ngIf="actualizar">
                 <!-- <app-actualizar-administrador [idAdmin]="idAdmin" [correoAdmin]="correoAdmin" (terminarActualizacion)="terminarActualizacion($event)"></app-actualizar-administrador> -->
-                <app-update-specialty  [idCareer]="idCareer" [idSpecialty]="idSpecialty" (refresh)="refreshTable($event)" (optionCancel)="updateCanceled($event)"></app-update-specialty>
+                <app-update-specialty [idCareer]="idCareer" [idSpecialty]="idSpecialty" (refresh)="refreshTable($event)" (optionCancel)="updateCanceled($event)"></app-update-specialty>
             </div>
         </div>
 
@@ -44,8 +44,8 @@
                                     <thead>
                                         <tr>
                                             <th>NOMBRE DE ESPECIALIDAD</th>
-                                            <th>ESTATUS</th>
-                                            <th>ACCIONES</th>
+                                            <th class="text-center">ESTATUS</th>
+                                            <th class="text-center">ACCIONES</th>
                                         </tr>
                                     </thead>
 
@@ -53,12 +53,12 @@
                                     <tbody *ngIf="specialties.length &gt; 0 && !cargando">
                                         <tr *ngFor="let specialty of specialties | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
                                             <td>{{ specialty.strEspecialidad }}</td>
-                                            <td *ngIf="specialty.blnStatus === activo">Activo</td>
-                                            <td *ngIf="specialty.blnStatus !== activo">Inactivo</td>
+                                            <td *ngIf="specialty.blnStatus === activo" class="text-center">Activo</td>
+                                            <td *ngIf="specialty.blnStatus !== activo" class="text-center">Inactivo</td>
                                             <td class=" text-center ">
                                                 <button type="button" class="btn btn-info btn-sm" id="dropdownReports" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h "></i></button>
                                                 <div class="dropdown-menu dropdown-menu-right shadow-lg " aria-labelledby="dropdownReports">
-                                                    
+
                                                     <div class="dropdown-header text-info">
                                                         <span class="text-xs text-uppercase ">opciones</span>
                                                     </div>
@@ -80,8 +80,8 @@
                                     </tbody>
 
                                 </table>
-                                
-                  
+
+
 
                             </div>
                         </div>
@@ -92,5 +92,3 @@
         </div>
     </div>
 </div>
-
-

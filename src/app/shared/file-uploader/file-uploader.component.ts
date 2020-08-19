@@ -21,6 +21,7 @@ export class FileUploaderComponent implements OnInit {
   evidencias: Array<any> = [];
   evidencia: FileModel;
   pondOptions: any;
+  archivo: any;
 
   constructor() {}
 
@@ -28,9 +29,27 @@ export class FileUploaderComponent implements OnInit {
     this.pondOptions = {
       class: 'my-filepond',
       multiple: true,
-      labelIdle: 'Arrasta tus documentos aqui',
-      FilePondPluginImagePreview: true
+      labelIdle: 'Arrasta tus documentos <span>aqui</span>',
+      FilePondPluginImagePreview: true,
+      server: {
+        process: (fieldName, file, metadata, load) => {
+          // simulates uploading a file
+          setTimeout(() => {
+            this.cargarArchivo();
+            load();
+          }, 500);
+        },
+        load: (source, load) => {
+          // simulates loading a file from the server
+          fetch(source).then(res => res.blob()).then(load);
+        }, revert: (uniqueFileId, load, error) => {
+          error('oh my goodness');
+          load();
+      }},
+      instantUpload: true,
+      imagePreviewTransparencyIndicator: 'grid'
     };
+
     this.pondHandleInit();
   }
 
@@ -42,13 +61,10 @@ export class FileUploaderComponent implements OnInit {
   }
 
   pondHandleAddFile(event: any) {
-    let archivo = event.file.source;
-    // this.evidencia = {
-    //   strNombre: archivo.name,
-    //   strFileEvidencia: archivo,
-    //   blnActivo: true
-    // };
-    // this.evidencias.push(archivo);
-    this.archivosObtenidos.emit(archivo);
+    this.archivo = event.file.source;
   }
+
+  cargarArchivo() {
+    this.archivosObtenidos.emit(this.archivo);
+}
 }

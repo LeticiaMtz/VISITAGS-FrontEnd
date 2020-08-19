@@ -20,7 +20,7 @@ export class RegisterService {
   }
 
   postUser(User: User){
-    return this.http.post(`${this.URL}/Users/registro`, User).toPromise();
+    return this.http.post(`${this.URL}/Users/registrar`, User).toPromise();
   }
 
 }

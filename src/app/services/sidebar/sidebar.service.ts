@@ -10,19 +10,13 @@ export class SidebarService {
       titulo: 'Principal',
       icono: 'mdi mdi-gauge',
       submenu: [
-        { titulo: 'Dashboard', url: '/dashboard' },
-        { titulo: 'Reporte de Carreas', url: '/career-report'},
-        { titulo: 'Motivos CRDE', url: '/reasons-crde' },
-        { titulo: 'Catalogo de Estatus de Alertas', url: '/estatus-alerta'},
-        { titulo: 'Registro de Incidencias', url: '/registro-alerta'},
-        { titulo: 'Asignaturas', url: '/subjects' },
-        { titulo: 'Modalidades', url: '/modality' },
-        { titulo: 'Seguimiento Alerta', url: '/Tracking-alerts' },
-        { titulo: 'ProgressBar', url: '/progress' },
-        { titulo: 'Graficas', url: '/graficas1' },
-        { titulo: 'Promesas', url: '/promesas'},
-        { titulo: 'Rxjs', url: '/rxjs' },
-      
+        { titulo: 'Mis Alertas', icono: 'fa fa-exclamation-triangle', url: '/dashboard' },
+        { titulo: 'Gestión de Carreras', icono: 'fa fa-graduation-cap', url: '/career-report'},
+        { titulo: 'Gestión de CRDE', icono: 'fa fa-exclamation-circle', url: '/reasons-crde' },
+        { titulo: 'Estatus de Alerta', icono: 'fa fa-thermometer-half', url: '/estatus-alerta'},
+        { titulo: 'Registro de Alertas', icono: 'fa fa-file', url: '/registro-alerta'},
+        { titulo: 'Gestión de Asignaturas', icono: 'fa fa-book', url: '/subjects' },
+        { titulo: 'Gestión de Modalidades', icono: 'fa fa-sun-o', url: '/modality' },
       ]
     }
   ];

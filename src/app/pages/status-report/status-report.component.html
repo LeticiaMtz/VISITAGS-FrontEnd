@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card animated fadeIn fast">
     <div class="row">
 
         <div class="col-md-4">
@@ -43,8 +43,8 @@
                                         <tr>
                                             <th>NOMBRE DEL ESTATUS</th>
                                             <th>DESCRIPCIÓN</th>
-                                            <th>ESTATUS</th>
-                                            <th>ACCIONES</th>
+                                            <th class="text-center">ESTATUS</th>
+                                            <th class="text-center">ACCIONES</th>
                                         </tr>
                                     </thead>
 
@@ -54,7 +54,7 @@
                                             <td>{{ e.strNombre }}</td>
                                             <td>{{ e.strDescripcion }}</td>
                                             <td *ngIf="e.blnActivo === activo" class="text-center">Activo</td>
-                                            <td *ngIf="e.blnActivo !== activo">Inactivo</td>
+                                            <td *ngIf="e.blnActivo !== activo" class="text-center">Inactivo</td>
                                             <td class=" text-center ">
                                                 <button [disabled]="actualizar" type="button" class="btn btn-info btn-sm" id="dropdownReports" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h "></i></button>
                                                 <div class="dropdown-menu dropdown-menu-right shadow-lg " aria-labelledby="dropdownReports">
