@@ -1,4 +1,4 @@
-import { FormGroup, FormControl, Validators  } from '@angular/forms';
+import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { LoginService } from '../services/login/login.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -61,50 +61,57 @@ export class LoginComponent implements OnInit {
 
   login(){
     if (this.regexp.test(this.valueEmail.value)) {
-      
       this.loginService.postLogin(this.user.value)
       .subscribe(res =>{
         console.log(res);
         let data = JSON.stringify(res);
         let dataJson = JSON.parse(data);
         console.log(dataJson.token);
-        localStorage.setItem('token', dataJson.token)
 
-        if(dataJson.token){
-
-          if(this.user.value.rememberMe){
-            localStorage.setItem('strEmail', this.user.value.strEmail);
-          }else{
-            localStorage.removeItem('strEmail');
-          }
-
-          this.router.navigate(['/dashboard']);
-
+        if ( dataJson.user.blnStatus === false ) {
+          this.router.navigate(['/login']);
           Swal.fire({
-            title: `Hola ${dataJson.user.strName} bienvenido`,
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 1500
-          });
-
-        }else{
-
-          Swal.fire({
-            text: `Lo sentimos no encontramos la cuenta ${dataJson.user.strEmail}.`,
+            text: `Aun no has sido aprobado por el administrador, intenta mas tarde`,
             icon: 'error',
             confirmButtonText: 'Aceptar'
           });
 
-          console.log('Algo salio mal :(');
-          console.log(this.invalidEmail);
-          console.log(this.invalidPassword);
-        }    
+        } else {
+          localStorage.setItem('token', dataJson.token);
+
+          if(dataJson.token) {
+
+            if (this.user.value.rememberMe) {
+              localStorage.setItem('strEmail', this.user.value.strEmail);
+            } else {
+              localStorage.removeItem('strEmail');
+            }
+  
+            this.router.navigate(['/dashboard']);
+  
+            Swal.fire({
+              title: `Hola ${dataJson.user.strName} bienvenido`,
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          } else {
+            Swal.fire({
+              text: `Lo sentimos no encontramos la cuenta ${dataJson.user.strEmail}.`,
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+            console.log('Algo salio mal');
+            console.log(this.invalidEmail);
+            console.log(this.invalidPassword);
+          }
+        }
       },
       err => {
 
         if (err.status !== 0) {
           this.errorType = err.error.err.message;
-        }else{
+        } else {
           //Este error puede surgir si el servidor no esta ejecutandose o por un mal consumo o llamado de la API.
           this.errorType = `${err.name}: ERROR_DE_CONEXIÓN Error al conectar con el servidor`;
         }
@@ -115,11 +122,9 @@ export class LoginComponent implements OnInit {
           confirmButtonText: 'Aceptar'
         });
 
-        console.log(err)
-        
-      });    
-      
-    }else{
+        console.log(err);
+      });
+    } else {
 
       Swal.fire({
         title: 'Error!',

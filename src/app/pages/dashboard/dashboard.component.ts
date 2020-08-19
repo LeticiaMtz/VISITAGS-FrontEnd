@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit {
       console.log(res);
       this.cargando = false;
       this.alerts = res.cnt;
-      console.log(this.alerts);
+      console.log(res.cnt);
       
     }).catch(err => {
       console.log(err.msg);

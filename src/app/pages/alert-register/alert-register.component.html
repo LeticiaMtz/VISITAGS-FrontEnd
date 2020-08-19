@@ -27,8 +27,8 @@
                         </div>
 
                         <div class="col-md-6 mt-2">
-                            <select [class.is-invalid]="idCarrera.invalid && idCarrera.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione una Carrera" name="idCarrera" [(ngModel)]="alerta.idCarrera" required #idCarrera="ngModel"
-                                (ngModelChange)="getEspecialidad($event)">
+                            <select [class.is-invalid]="idCarrera.invalid && idCarrera.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione una Carrera" data-live-search="true" data-size="4" data-dropup-auto=false name="idCarrera"
+                                [(ngModel)]="alerta.idCarrera" required #idCarrera="ngModel" (ngModelChange)="getEspecialidad($event)">
                                 <option *ngFor="let carrera of carreras" [ngValue]="carrera._id">{{carrera.strCarrera}}</option>
                             </select>
                             <div class="invalid-feedback" *ngIf="idCarrera.errors?.required">
@@ -71,8 +71,8 @@
                         </div>
 
                         <div class="col-md-12 mt-2">
-                            <select [class.is-invalid]="idAsignatura.invalid && idAsignatura.touched" class="custom-select selectpicker form-control form-control-sm" title="Seleccione una Asignatura" data-live-search="true" type="text" name="idAsignatura" [(ngModel)]="alerta.idAsignatura"
-                                required #idAsignatura="ngModel">
+                            <select [class.is-invalid]="idAsignatura.invalid && idAsignatura.touched" class="custom-select selectpicker selectpicker-down form-control form-control-sm" data-size="4" data-dropup-auto=false title="Seleccione una Asignatura" data-live-search="true"
+                                type="text" name="idAsignatura" [(ngModel)]="alerta.idAsignatura" required #idAsignatura="ngModel">
                                 <option *ngFor="let asig of asignaturas" [ngValue]="asig._id">{{asig.strAsignatura}}</option>
                             </select>
                             <div class="invalid-feedback" *ngIf="idAsignatura.errors?.required">
@@ -100,8 +100,8 @@
 
                         <div class="col-md-12 mt-2 mb-4">
 
-                            <select (ngModelChange)="getCrde($event)" [class.is-invalid]="arrCrde.invalid && arrCrde.touched" class="selectpicker form-control form-control-sm" multiple title="Seleccione las conductas de riesgo" name="arrCrde" [(ngModel)]="alerta.arrCrde" required
-                                #arrCrde="ngModel">
+                            <select (ngModelChange)="getCrde($event)" [class.is-invalid]="arrCrde.invalid && arrCrde.touched" class="selectpicker form-control form-control-sm" data-size="3" data-dropup-auto=false multiple title="Seleccione las conductas de riesgo" name="arrCrde"
+                                [(ngModel)]="alerta.arrCrde" required #arrCrde="ngModel">
                                 <option *ngFor="let razon of razones" [ngValue]="razon._id">{{razon.strCategoria}}</option>
                             </select>
                             <div class="invalid-feedback" *ngIf="arrCrde.errors?.required">
