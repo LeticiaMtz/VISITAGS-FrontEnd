@@ -31,4 +31,12 @@ export class SubjectsService {
     return this.http.put(`${this.URL}/asignatura/actualizar/${idAsig}`, subject).toPromise();
   }
 
+  deleteAsignatura(idAsig: string){
+    return this.http.delete(`${this.URL}/asignatura/eliminar/${idAsig}`).toPromise();
+  }
+
+  activoAsignatura(idAsig: string){
+    return this.http.delete(`${this.URL}/asignatura/activo/${idAsig}`).toPromise();
+  }
+
 }

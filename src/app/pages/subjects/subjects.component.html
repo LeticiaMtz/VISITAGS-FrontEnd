@@ -1,4 +1,4 @@
-<div class="card animated fadeIn fast">
+<div class="card">
     <div class="row">
 
         <div class="col-md-4">
@@ -40,9 +40,9 @@
                                     <thead>
                                         <tr>
                                             <th>NOMBRE DE LA ASIGNATURA</th>
-                                            <th>SIGLAS</th>
-                                            <th class="text-center">ESTATUS</th>
-                                            <th class="text-center">ACCIONES</th>
+                                            <th>NOMBRE DE LAS SIGLAS</th>
+                                            <th>ESTATUS</th>
+                                            <th>ACCIONES</th>
                                         </tr>
                                     </thead>
 
@@ -51,15 +51,17 @@
                                         <tr *ngFor="let sub of subs | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
                                             <td>{{ sub.strAsignatura }}</td>
                                             <td>{{ sub.strSiglas }}</td>
-                                            <td *ngIf="sub.blnStatus === activo" class="text-center">Activo</td>
-                                            <td *ngIf="sub.blnStatus !== activo" class="text-center">Inactivo</td>
+                                            <td *ngIf="sub.blnStatus === activo">Activo</td>
+                                            <td *ngIf="sub.blnStatus !== activo">Inactivo</td>
                                             <td class=" text-center ">
                                                 <button type="button" class="btn btn-info btn-sm" id="dropdownReports" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h "></i></button>
                                                 <div class="dropdown-menu dropdown-menu-right shadow-lg " aria-labelledby="dropdownReports">
                                                     <div class="dropdown-header text-info">
                                                         <span class="text-xs text-uppercase ">opciones</span>
                                                     </div>
-                                                    <a (click)="actualizarAsignatura(true, sub._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Actualizar</a>
+                                                    <a (click)="actualizarAsignatura(true, sub._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Editar</a>
+                                                    <a (click)="activoAsignatura(sub._id)" *ngIf="sub.blnStatus === false" type="button" class="dropdown-item drop-options-text blue"><i class="fa fa-check-square-o  mr-2 "></i>Activar</a>
+                                                    <a (click)="deleteAsignatura(sub._id)" *ngIf="sub.blnStatus === true" type="button" class="dropdown-item drop-options-text pdf "><i class="	fa fa-square-o mr-2 "  ></i>Desactivar</a>
                                                 </div>
                                             </td>
                                         </tr>

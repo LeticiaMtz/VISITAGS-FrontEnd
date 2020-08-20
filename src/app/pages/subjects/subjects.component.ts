@@ -6,6 +6,15 @@ import { PdfServiceService } from 'src/app/services/PDF/pdf-service.service';
 import { ExportDataService } from 'src/app/services/excel/export-to-excel.service';
 import { SubjectModel } from 'src/app/models/subjects.model';
 import { SubjectsService } from '../../services/subjects/subjects.service';
+import Swal from 'sweetalert2';
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+  });
+
 
 @Component({
   selector: 'app-subjects',
@@ -51,6 +60,45 @@ export class SubjectsComponent implements OnInit {
       console.log(err.msg);
     });
   }
+
+  deleteAsignatura(id: string){
+    this.subjectsService.deleteAsignatura(id).then((data) => {
+      this.getAsignatura();
+      Toast.fire({
+        icon: 'success',
+        title: `¡La Asignatura se actualizó exitosamente!`
+      });
+    }).catch((err) => {
+
+      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+   
+    });
+  });
+  
+  }
+
+  activoAsignatura(id: string){
+    this.subjectsService.activoAsignatura(id).then((data) => {
+      this.getAsignatura();
+      Toast.fire({
+        icon: 'success',
+        title: `¡La Asignatura se actualizó exitosamente!`
+      });
+    }).catch((err) => {
+
+      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+   
+    });
+  });
+  
+  }
+
 
   actualizarAsignatura(valueUpdate: boolean, _id: string){
     this.actualizar = valueUpdate;
