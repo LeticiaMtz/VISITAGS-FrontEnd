@@ -1,4 +1,4 @@
-<form (ngSubmit)="comentarAlerta(forma)" class="form" #forma>
+<form (ngSubmit)="comentarAlerta(forma)" class="form" novalidate="" enctype="multipart/form-data" #forma="ngForm">
     <div class="row">
         <div class="col-md-12">
             <div class="card px-2 pb-2">
@@ -29,83 +29,93 @@
         
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-5">
-                            <div class="container">
-                                <table class="table table-bordered table-sm table-hover align-items-center" style="font-size: small;">
-                                    <thead>
-                                        <tr>
-                                            <th>Datos del alumno</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Matricula</td>
-                                            <td>{{objAlert.strMatricula}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nombre</td>
-                                            <td>{{objAlert.strNombreAlumno}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Grado y Grupo</td>
-                                            <td>{{objAlert.strGrupo}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Turno</td>
-                                            <td>{{objAlert.chrTurno}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Modalidad</td>
-                                            <td>{{objModality.strModalidad}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>    
+                        <div class="col-md-12">
+                            <div id="accordion">
+                                <div class="">
+                                    <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Datos del alumno
+                                        </button>
+                                    </h5>
+                                    </div>
+                                
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <table class="table table-bordered table-sm table-hover align-items-center" style="font-size: small;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Matricula</th>
+                                                    <th>Nombre</th>
+                                                    <th>Grado y Grupo</th>
+                                                    <th>Turno</th>
+                                                    <th>Modalidad</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{objAlert.strMatricula}}</td>
+                                                    <td>{{objAlert.strNombreAlumno}}</td>
+                                                    <td>{{objAlert.strGrupo}}</td>
+                                                    <td>{{objAlert.chrTurno}}</td>
+                                                    <td>{{objModality.strModalidad}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="card-header" id="headingTwo">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Observaciones
+                                        </button>
+                                    </h5>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <div>
+                                            <p>{{objAlert.strDescripcion}}</p>
+                                        </div>
+                                        <!-- <table class="table table-bordered table-sm table-hover align-items-center"  style="font-size: small;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Observaciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td> {{objAlert.strDescripcion}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>    -->
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="card-header" id="headingThree">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Evidencias
+                                        </button>
+                                    </h5>
+                                    </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <div *ngFor="let doc of arrFiles">
+                                            <button (click)="descargarArchivoE(doc.strNombre)" class="btn btn-link mr-3" style="cursor: pointer;"><i class="fa fa-download mr-1"></i> {{doc.strNombre}} </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="container">
-                                <table class="table table-bordered table-sm table-hover align-items-center"  style="font-size: small;">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">Observaciones</th>
-                                        </tr>
-                                    </thead>
-            
-                                    <!-- SE MUESTRA CUANDO HAY REGISTROS -->
-                                    <tbody>
-                                        <tr>
-                                            <td> {{objAlert.strDescripcion}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>   
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="container">
-                                <table class="table table-bordered table-sm table-hover align-items-center" style="font-size: small;">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">Evidencias</th>
-                                        </tr>
-                                    </thead>
-            
-                                    <!-- SE MUESTRA CUANDO HAY REGISTROS--> 
-                                    <tbody class="text-center">
-                                        <tr>
-                                            <td *ngFor="let doc of arrFiles">
-                                                <a (click)="descargarArchivo(doc.strNombre)" class="stretched-link mr-3"> {{doc.strNombre}} </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
                         </div>
                     </div>
         
                     
                     <div class="row container">
-                        <div class="col-md-12">
+                        <div class="col-md-12 mt-2">
                             <span class="badge badge-danger mr-2" *ngFor="let reason of arrReasons"> {{reason.strCategoria}} </span>
                         </div>
                     </div>
@@ -157,7 +167,8 @@
                                 <div class="row mt-2">
                                     <div class="col-md-12" >
                                         <div *ngFor="let archivos of data.aJsnEvidencias">
-                                            <a (click)="descargarArchivo(archivos.strFileEvidencia)"  style="font-size: x-small;cursor: pointer;">{{archivos.strFileEvidencia}}</a>
+                                            <i class="fa fa-download mr-1"></i>
+                                            <a (click)="descargarArchivoT(archivos.strFileEvidencia)"  style="font-size: x-small;cursor: pointer;">{{archivos.strFileEvidencia}}</a>
                     
                                         </div>   
                                     </div>
@@ -185,10 +196,15 @@
         
                                 <div class="row justify-content-between">
                                     <div class="col-md-12 mt-1 ">
-                                        <textarea class="form-control form-control-sm " rows="3 " maxlength="300 " placeholder="Observaciones" name="strComentario" [(ngModel)]="objTracking.strComentario" required #strComentario="ngModel"></textarea>
+                                        <textarea [class.is-invalid]="strComentario.invalid && strComentario.touched" class="form-control form-control-sm " rows="3 " maxlength="300 " placeholder="Observaciones" name="strComentario" [(ngModel)]="objTracking.strComentario" required #strComentario="ngModel"></textarea>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="strComentario.errors?.required">
+                                        <small>
+                                            Por favor, ingrese un comentario.
+                                        </small>
                                     </div>
                                     <div class="col-6 mt-2">
-                                        <select [class.is-invalid]="idEstatus.invalid && idEstatus.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione Estatus" name="idEstatus" [(ngModel)]="objTracking.idEstatus" required #idEstatus="ngModel">
+                                        <select [class.is-invalid]="idEstatus.invalid && idEstatus.touched" class="custom-select selectpicker form-control form-control-sm" data-size="3" data-dropup-auto=false type="text" title="Seleccione Estatus" name="idEstatus" [(ngModel)]="objTracking.idEstatus" required #idEstatus="ngModel">
                                             <option *ngFor="let estatus of arrEstatus"  [ngValue]="estatus._id" > {{estatus.strNombre}} </option>
                                         </select>
                                     </div>

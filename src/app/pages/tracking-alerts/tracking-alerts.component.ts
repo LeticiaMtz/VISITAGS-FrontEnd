@@ -151,12 +151,19 @@ export class TrackingAlertsComponent implements OnInit {
       console.log(res.cnt);
       this.ngOnInit();
     }).catch(err => {
+      setTimeout(() => {
+        this.resetImage = false;
+      }, 0);
       console.log(err);
     })
     form.reset();
   }
 
-  descargarArchivo(nameFiel: string){
-    this.trackingAlertsService.getFile(nameFiel);
+  descargarArchivoT(nameFile: string){
+    this.trackingAlertsService.getFileTracking(nameFile);
+  }
+
+  descargarArchivoE(nameFile: string){
+    this.trackingAlertsService.getFileEvidence(nameFile);
   }
 }

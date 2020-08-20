@@ -30,7 +30,11 @@ export class TrackingAlertsService {
     return this.http.post(`${this.url}/seguimiento/registrar/${idAlert}`, model).toPromise();
   }
 
-  getFile(fileName: string){
-    window.open(`${this.url}/descargarArchivo/descarga/${fileName}`, '_blank');
+  getFileTracking(fileName: string){
+    window.open(`${this.url}/descargarArchivo/descargaSeguimiento/${fileName}`, '_blank');
+  }
+
+  getFileEvidence(fileName: string){
+    window.open(`${this.url}/descargarArchivo/descargaEvidencia/${fileName}`, '_blank');
   }
 }
