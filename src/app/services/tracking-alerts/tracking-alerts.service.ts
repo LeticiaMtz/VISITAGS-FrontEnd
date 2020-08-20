@@ -30,9 +30,7 @@ export class TrackingAlertsService {
     return this.http.post(`${this.url}/seguimiento/registrar/${idAlert}`, model).toPromise();
   }
 
-  // postComentar(){
-  //   return this.http
-  // }
-
-  
+  getFile(fileName: string){
+    window.open(`${this.url}/descargarArchivo/descarga/${fileName}`, '_blank');
+  }
 }

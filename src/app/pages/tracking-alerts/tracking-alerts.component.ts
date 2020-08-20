@@ -16,7 +16,7 @@ import { ReasonsService } from '../../services/reasons-crde/reasons-crde.service
 import { ReasonsModel } from 'src/app/models/reasons-crde.model';
 import { FileModel } from '../../models/file.model';
 
-
+declare var $: any;
 
 
 
@@ -38,7 +38,6 @@ export class TrackingAlertsComponent implements OnInit {
   cerrado: string = environment.cerrado;
   finalizado: string = environment.finalizado;
   enProgreso: string = environment.seguimiento;
-
   arrTracking: TrackingAlertModel[] = [];
   arrFiles: FileModel[] = [];
   arrEstatus: AlertStatusModel[] = [];
@@ -53,25 +52,36 @@ export class TrackingAlertsComponent implements OnInit {
   idPersona: string;
   userName: string;
   idAlert: string;
+  principalStatus: string;
+  idUltimo: string;
+  isEmpty: any;
   idUser: string;
-  cargando: boolean;
   documento: any;
+  refresh: boolean = false;
+  resetImage = false;
+  url: string;
+  
 
   constructor(private trackingAlertsService: TrackingAlertsService, private alertStatusService: AlertStatusService, private reasonsService: ReasonsService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      $('.selectpicker').selectpicker('refresh');
+      }, 0);
     let token = localStorage.token;
     this.idAlert = this.activatedRoute.snapshot.params.id;
     this.tokenDecoded = jwt_decode(token);
     console.log(this.idAlert,'-------------------------alerta');
     this.obtenerAlerta(this.idAlert);
     this.obtenerEstatus();
+    this.obtenerSeguimiento(this.idAlert);
   }
 
   obtenerAlerta(idAlert: string){
     this.trackingAlertsService.getAlertData(idAlert).then((res: any) => {
+      
       this.objAlert = res.cnt[0];
-      console.log(this.objAlert);
+      console.log(this.objAlert, '----------------------------aqui');
       this.objUser = res.cnt[0].idUser;
       this.objSubject = res.cnt[0].idAsignatura;
       this.objModality = res.cnt[0].idModalidad;
@@ -86,15 +96,29 @@ export class TrackingAlertsComponent implements OnInit {
   obtenerEstatus(){
     this.alertStatusService.getAllStatus().then((res: any) => {
       this.arrEstatus = res.cnt;
+      this.arrEstatus.splice(0, 1);
+      setTimeout(() => {
+        $('.selectpicker').selectpicker('refresh');
+      }, 0);
     }).catch(err => {
       console.log(err);
     });
   }
 
-  obtenerSeguimiento(idAlert: string){
-    this.trackingAlertsService.getSeguimiento(idAlert).then((res: any) => {
-      this.arrTracking = res.cnt;
-      console.log(this.arrTracking);
+  obtenerSeguimiento(id: string){
+    this.trackingAlertsService.getSeguimiento(id).then((res: any) => {
+      console.log(res.cnt, '-----------RESPUESTA DE SEGUIMIENTO');
+      this.arrTracking = res.cnt.aJsnSeguimiento;
+      if(this.arrTracking.length > 0){
+        this.arrTracking.sort((one, two) => (one > two ? -1 : 1));
+        if(this.arrTracking.length > 0){
+          this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus;
+        }else{
+          this.principalStatus = this.nuevo;
+        }
+      }
+
+      console.log(this.arrTracking,'AQUI ESTOY----------------------------');
     }).catch(err => {
       console.log(err);
     });
@@ -105,10 +129,11 @@ export class TrackingAlertsComponent implements OnInit {
   }
 
   comentarAlerta(form: NgForm){
+    this.resetImage = true;
     let fd = new FormData();
-
     fd.append('idUser', this.tokenDecoded.user._id);
     fd.append('idEstatus', this.objTracking.idEstatus);
+    console.log(this.objTracking.idEstatus);
     fd.append('strComentario', this.objTracking.strComentario);
     // if(this.objTracking.aJsnEvidencias !== null){
     //   for(let i = 0; i < this.objTracking.aJsnEvidencias.lenght; i++){
@@ -117,11 +142,21 @@ export class TrackingAlertsComponent implements OnInit {
     // }
 
     this.trackingAlertsService.RegistrarSeguimiento(this.idAlert, fd).then((res: any) => {
+
+      setTimeout(() => {
+        this.resetImage = false;
+      }, 0);
+  
       console.log('Parece que funciono');
       console.log(res.cnt);
+      this.ngOnInit();
     }).catch(err => {
       console.log(err);
     })
+    form.reset();
   }
 
+  descargarArchivo(nameFiel: string){
+    this.trackingAlertsService.getFile(nameFiel);
+  }
 }

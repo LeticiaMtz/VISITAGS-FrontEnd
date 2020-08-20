@@ -1,0 +1,6 @@
+.divScroll {
+  height: 520px;
+  width: 1000px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
