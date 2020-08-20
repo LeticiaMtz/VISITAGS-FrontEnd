@@ -93,7 +93,9 @@
                                     <!-- SE MUESTRA CUANDO HAY REGISTROS--> 
                                     <tbody class="text-center">
                                         <tr>
-                                            <td><a class="stretched-link mr-3" *ngFor="let doc of arrFiles"> {{doc.strNombre}} </a></td>
+                                            <td *ngFor="let doc of arrFiles">
+                                                <a (click)="descargarArchivo(doc.strNombre)" class="stretched-link mr-3"> {{doc.strNombre}} </a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
