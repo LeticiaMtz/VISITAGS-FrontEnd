@@ -20,6 +20,7 @@ import { SubjectsComponent } from './subjects/subjects.component';
 import { ModalityComponent } from './modality/modality.component';
 import { AlertRegisterComponent } from './alert-register/alert-register.component';
 import { TrackingAlertsComponent } from './tracking-alerts/tracking-alerts.component';
+import { UserManagementComponent } from './user-management/user-management.component';
 
 
 const pagesRoutes: Routes = [
@@ -38,6 +39,7 @@ const pagesRoutes: Routes = [
           { path: 'subjects', component: SubjectsComponent, data: { titulo: 'Gestión de Asignaturas' }, canActivate: [AuthGuard]},
           { path: 'modality', component: ModalityComponent, data: { titulo: 'Gestión de Modalidades' }, canActivate: [AuthGuard]},
           { path: 'Tracking-alerts/:id', component: TrackingAlertsComponent, data: { titulo: 'Seguimiento Alerta' }, canActivate: [AuthGuard]},
+          { path: 'user-management', component: UserManagementComponent, data: { titulo:  'Gestion de Usuarios'  }, canActivate: [AuthGuard]},         
           { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ]
     },
