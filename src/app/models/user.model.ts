@@ -1,4 +1,4 @@
-export class User {
+export class User  {
 
     _id: string;
     strName: string;
@@ -8,5 +8,12 @@ export class User {
     strPassword:string;
     idRole:string;
     strDirection:string;
-    strValidatePass:string;    
+    strValidatePass:string; 
+    blnStatus: boolean = true; 
+    arrEspecialidadPermiso?: [{
+      
+      
+    }];
+    updatedAt: Date;
+    cratedAt: Date;
 }

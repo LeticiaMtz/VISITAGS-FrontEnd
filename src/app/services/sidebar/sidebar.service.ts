@@ -17,6 +17,7 @@ export class SidebarService {
         { titulo: 'Registro de Alertas', icono: 'fa fa-file', url: '/registro-alerta'},
         { titulo: 'Gestión de Asignaturas', icono: 'fa fa-book', url: '/subjects' },
         { titulo: 'Gestión de Modalidades', icono: 'fa fa-sun-o', url: '/modality' },
+        { titulo: 'Gestión de Usuarios', icono: 'fa fa-user-o', url: '/user-management' },
       ]
     }
   ];

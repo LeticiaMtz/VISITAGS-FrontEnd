@@ -39,6 +39,7 @@ import { UpdateModalityComponent } from './modality/update-modality/update-modal
 import { ModalityComponent } from './modality/modality.component';
 import { AlertRegisterComponent } from './alert-register/alert-register.component';
 import { TrackingAlertsComponent } from './tracking-alerts/tracking-alerts.component';
+import { UserManagementComponent } from './user-management/user-management.component';
 
 
 
@@ -71,7 +72,8 @@ import { TrackingAlertsComponent } from './tracking-alerts/tracking-alerts.compo
         RegisterModalityComponent,
         UpdateModalityComponent,
         AlertRegisterComponent,
-        TrackingAlertsComponent
+        TrackingAlertsComponent,
+        UserManagementComponent
     ],
     exports: [
         DashboardComponent,
