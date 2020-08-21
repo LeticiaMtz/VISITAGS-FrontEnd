@@ -64,10 +64,18 @@ export class DashboardComponent implements OnInit {
     this.idRol = this.tokenDecoded.user.idRole;
     this.alertService.getAlerts(this.idRol, this.idPersona).then((res: any) => {
 
-      console.log(res);
+      console.log(res.cnt,"CNT");
       this.cargando = false;
-      this.alerts = res.cnt;
-      console.log(res.cnt);
+      /* if(res.cnt.length>1){
+        console.log("Condiciones")
+        console.log(res.cnt[0], "Posicion 0")
+        this.alerts = res.cnt[0];
+      }else{ */
+
+        this.alerts = res.cnt;
+      /* } */
+      console.log(res)
+      console.log(res.cnt.length);
       
     }).catch(err => {
       console.log(err.msg);
