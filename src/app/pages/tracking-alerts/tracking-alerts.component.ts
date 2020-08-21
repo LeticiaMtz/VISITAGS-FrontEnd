@@ -71,7 +71,6 @@ export class TrackingAlertsComponent implements OnInit {
     let token = localStorage.token;
     this.idAlert = this.activatedRoute.snapshot.params.id;
     this.tokenDecoded = jwt_decode(token);
-    console.log(this.idAlert,'-------------------------alerta');
     this.obtenerAlerta(this.idAlert);
     this.obtenerEstatus();
     this.obtenerSeguimiento(this.idAlert);
@@ -81,7 +80,6 @@ export class TrackingAlertsComponent implements OnInit {
     this.trackingAlertsService.getAlertData(idAlert).then((res: any) => {
       
       this.objAlert = res.cnt[0];
-      console.log(this.objAlert, '----------------------------aqui');
       this.objUser = res.cnt[0].idUser;
       this.objSubject = res.cnt[0].idAsignatura;
       this.objModality = res.cnt[0].idModalidad;
@@ -107,7 +105,6 @@ export class TrackingAlertsComponent implements OnInit {
 
   obtenerSeguimiento(id: string){
     this.trackingAlertsService.getSeguimiento(id).then((res: any) => {
-      console.log(res.cnt, '-----------RESPUESTA DE SEGUIMIENTO');
       this.arrTracking = res.cnt.aJsnSeguimiento;
       if(this.arrTracking.length > 0){
         this.arrTracking.sort((one, two) => (one > two ? -1 : 1));
@@ -117,8 +114,6 @@ export class TrackingAlertsComponent implements OnInit {
           this.principalStatus = this.nuevo;
         }
       }
-
-      console.log(this.arrTracking,'AQUI ESTOY----------------------------');
     }).catch(err => {
       console.log(err);
     });
@@ -151,12 +146,19 @@ export class TrackingAlertsComponent implements OnInit {
       console.log(res.cnt);
       this.ngOnInit();
     }).catch(err => {
+      setTimeout(() => {
+        this.resetImage = false;
+      }, 0);
       console.log(err);
     })
     form.reset();
   }
 
-  descargarArchivo(nameFiel: string){
-    this.trackingAlertsService.getFile(nameFiel);
+  descargarArchivoT(nameFile: string){
+    this.trackingAlertsService.getFileTracking(nameFile);
+  }
+
+  descargarArchivoE(nameFile: string){
+    this.trackingAlertsService.getFileEvidence(nameFile);
   }
 }
