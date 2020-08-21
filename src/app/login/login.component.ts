@@ -68,15 +68,15 @@ export class LoginComponent implements OnInit {
         let dataJson = JSON.parse(data);
         console.log(dataJson.token);
 
-        if ( dataJson.user.blnStatus === false ) {
-          this.router.navigate(['/login']);
-          Swal.fire({
-            text: `Aun no has sido aprobado por el administrador, intenta mas tarde`,
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
-          });
+        // if ( dataJson.user.blnStatus === false ) {
+        //   this.router.navigate(['/login']);
+        //   Swal.fire({
+        //     text: `Aun no has sido aprobado por el administrador, intenta mas tarde`,
+        //     icon: 'error',
+        //     confirmButtonText: 'Aceptar'
+        //   });
 
-        } else {
+        // } else {
           localStorage.setItem('token', dataJson.token);
 
           if(dataJson.token) {
@@ -88,16 +88,16 @@ export class LoginComponent implements OnInit {
             }
   
             this.router.navigate(['/dashboard']);
-  
+            console.log(dataJson);
             Swal.fire({
-              title: `Hola ${dataJson.user.strName} bienvenido`,
+              title: `Hola ${dataJson.cnt.strName} bienvenido`,
               icon: 'success',
               showConfirmButton: false,
               timer: 1500
             });
           } else {
             Swal.fire({
-              text: `Lo sentimos no encontramos la cuenta ${dataJson.user.strEmail}.`,
+              text: `Lo sentimos no encontramos la cuenta ${dataJson.cnt.strEmail}.`,
               icon: 'error',
               confirmButtonText: 'Aceptar'
             });
@@ -105,12 +105,16 @@ export class LoginComponent implements OnInit {
             console.log(this.invalidEmail);
             console.log(this.invalidPassword);
           }
-        }
-      },
+        },
       err => {
 
+
         if (err.status !== 0) {
-          this.errorType = err.error.err.message;
+          
+      
+          this.errorType = err.error.msg;
+          console.log(this.errorType);
+          
         } else {
           //Este error puede surgir si el servidor no esta ejecutandose o por un mal consumo o llamado de la API.
           this.errorType = `${err.name}: ERROR_DE_CONEXIÓN Error al conectar con el servidor`;

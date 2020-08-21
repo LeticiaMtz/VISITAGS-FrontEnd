@@ -60,6 +60,8 @@
                                                     </div>
                                                     <a (click)="actualizarCategoria(true, reasons._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Actualizar</a>
                                                     <a type="button" [routerLink]="['/behavior', reasons._id]" class="dropdown-item drop-options-text blue"><i class="fa fa-book mr-2 "></i>Conducta</a>
+                                                    <a (click)="updateCategoria(reasons._id)" *ngIf="reasons.blnStatus === false" type="button" class="dropdown-item drop-options-text blue"><i class="fa fa-check  mr-2 "></i>Activar</a>
+                                                    <a (click)="deleteCategoria(reasons._id)" *ngIf="reasons.blnStatus === true" type="button" class="dropdown-item drop-options-text pdf "><i class="	fa fa-ban mr-2 "  ></i>Desactivar</a>
                                                 </div>
                                             </td>
                                         </tr>

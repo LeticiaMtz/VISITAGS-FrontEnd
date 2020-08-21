@@ -4,6 +4,14 @@ import { CareerModel } from '../../models/career';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PdfServiceService } from 'src/app/services/PDF/pdf-service.service';
 import { ExportDataService } from 'src/app/services/excel/export-to-excel.service';
+import Swal from 'sweetalert2';
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+ });
 
 @Component({
   selector: 'app-career-report',
@@ -26,6 +34,8 @@ export class CareerReportComponent implements OnInit {
   regTerm: boolean = false;
   activo: boolean = true;
   arrayCareer = [];
+
+  carrer: CareerModel = new CareerModel();
 
 
   constructor(private careerService: CareersService, private route: Router, private _PdfService: PdfServiceService, private _excelService: ExportDataService) { }
@@ -106,6 +116,45 @@ export class CareerReportComponent implements OnInit {
       this._excelService.exportAsExcelFile(jsonobject2, `${this.title}`);
     }
 
+  }
+
+  
+  updateCarrer(id:string){
+    this.careerService.putCareer(id, this.carrer).then((res) => {
+      console.log(this.carrer);
+      
+      this.getCareeers();
+      
+      Toast.fire({
+        icon: 'success',
+        title: `¡La Carrera se actualizó exitosamente!`
+      });
+    }).catch(err => {
+    
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+   
+      });
+    });
+  }
+  deleteCarrer(id: string){
+    this.careerService.deleteCareers(id).then((data) => {
+      this.getCareeers();
+      Toast.fire({
+        icon: 'success',
+        title: `¡La Carrera se actualizó exitosamente!`
+      });
+    }).catch((err) => {
+
+      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+   
+    });
+  });
+  
   }
 
 }

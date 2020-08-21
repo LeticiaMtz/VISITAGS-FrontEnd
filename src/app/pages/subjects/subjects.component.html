@@ -59,9 +59,9 @@
                                                     <div class="dropdown-header text-info">
                                                         <span class="text-xs text-uppercase ">opciones</span>
                                                     </div>
-                                                    <a (click)="actualizarAsignatura(true, sub._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Editar</a>
+                                                    <a (click)="actualizarAsignatura(true, sub._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Actualizar</a>
                                                     <a (click)="activoAsignatura(sub._id)" *ngIf="sub.blnStatus === false" type="button" class="dropdown-item drop-options-text blue"><i class="fa fa-check-square-o  mr-2 "></i>Activar</a>
-                                                    <a (click)="deleteAsignatura(sub._id)" *ngIf="sub.blnStatus === true" type="button" class="dropdown-item drop-options-text pdf "><i class="	fa fa-square-o mr-2 "  ></i>Desactivar</a>
+                                                    <a (click)="deleteAsignatura(sub._id)" *ngIf="sub.blnStatus === true" type="button" class="dropdown-item drop-options-text pdf "><i class="	fa fa-ban mr-2 "  ></i>Desactivar</a>
                                                 </div>
                                             </td>
                                         </tr>

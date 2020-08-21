@@ -29,4 +29,8 @@ export class CareersService {
     return this.http.put(`${this.URL}/carreras/actualizar/${idCareer}`, career).toPromise();
   }
 
+  deleteCareers(idCareer: string){
+    return this.http.delete(`${this.URL}/carreras/eliminar/${idCareer}`).toPromise();
+  }
+
 }
