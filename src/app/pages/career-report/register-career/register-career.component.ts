@@ -35,7 +35,7 @@ export class RegisterCareerComponent implements OnInit {
         icon: 'success',
         title: `¡La carrera ${this.career.strCarrera} se registró exitosamente!`
       });
-      form.reset();
+      form.controls['strCarrera'].reset();
       this.refresh.emit(true);
     }).catch(err => {
       console.log(err);

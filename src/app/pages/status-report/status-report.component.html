@@ -62,6 +62,8 @@
                                                         <span class="text-xs text-uppercase ">opciones</span>
                                                     </div>
                                                     <a (click)="actualizarEstatus(true, e._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Actualizar</a>
+                                                    <a (click)="updateStatus(e._id)" *ngIf="e.blnActivo === false" type="button" class="dropdown-item drop-options-text blue"><i class="fa fa-check  mr-2 "></i>Activar</a>
+                                                    <a (click)="deleteStatus(e._id)" *ngIf="e.blnActivo === true" type="button" class="dropdown-item drop-options-text pdf "><i class="	fa fa-ban mr-2 "  ></i>Desactivar</a>
                                                 </div>
                                             </td>
                                         </tr>

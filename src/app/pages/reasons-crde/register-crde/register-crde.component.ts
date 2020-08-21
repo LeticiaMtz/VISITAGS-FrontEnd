@@ -34,13 +34,14 @@ export class RegisterReasonsComponent implements OnInit {
         icon: 'success',
         title: `¡La categoria ${this.reasons.strCategoria} se registró exitosamente!`
       });
-      form.reset();
+      form.controls['strCategoria'].reset();
       this.refresh.emit(true);
     }).catch(err => {
       console.log(err);
       Toast.fire({
         icon: 'error',
         title: err.error.msg
+        
       });
     });
   }

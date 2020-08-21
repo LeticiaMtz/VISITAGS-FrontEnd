@@ -27,4 +27,8 @@ export class AlertStatusService {
   putStatus(id: string, data: AlertStatusModel) {
     return this.http.put(`${this.url}/estatus/actualizar/${id}`, data).toPromise();
   }
+
+  deleteStatus(idEstatus: string){
+    return this.http.delete(`${this.url}/estatus/eliminar/${idEstatus}`).toPromise();
+  }
 }

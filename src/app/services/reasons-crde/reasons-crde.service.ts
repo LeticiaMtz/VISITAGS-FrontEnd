@@ -29,5 +29,8 @@ export class ReasonsService {
     return this.http.put(`${this.URL}/crde/actualizar/${idReasons}`, reasons).toPromise();
   }
 
-}
+  deleteReasons(idReasons: string){
+    return this.http.delete(`${this.URL}/crde/eliminar/${idReasons}`).toPromise();
+  }
 
+}

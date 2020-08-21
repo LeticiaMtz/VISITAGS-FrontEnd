@@ -4,6 +4,14 @@ import { PdfServiceService } from 'src/app/services/PDF/pdf-service.service';
 import { ExportDataService } from 'src/app/services/excel/export-to-excel.service';
 import { ReasonsService } from 'src/app/services/reasons-crde/reasons-crde.service';
 import { ReasonsModel } from 'src/app/models/reasons-crde.model';
+import Swal from 'sweetalert2';
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+ });
 
 @Component({
   selector: 'app-reasons-crde',
@@ -25,6 +33,8 @@ export class ReasonsCRDEComponent implements OnInit {
   regTerm: boolean = false;
   activo: boolean = true;
   arrayReasons = [];
+
+  cat: ReasonsModel = new ReasonsModel();
 
 
   constructor(private ReasonsService: ReasonsService, private route: Router, private _PdfService: PdfServiceService, private _excelService: ExportDataService) { }
@@ -104,6 +114,42 @@ export class ReasonsCRDEComponent implements OnInit {
       this._excelService.exportAsExcelFile(jsonobject2, `${this.title}`);
     }
 
+  }
+
+  updateCategoria(id:string){
+    this.ReasonsService.putReasons(id, this.cat).then((res) => {
+      this.getReasons();
+      
+      Toast.fire({
+        icon: 'success',
+        title: `¡La categoria crde se actualizó exitosamente!`
+      });
+    }).catch(err => {
+    
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+   
+      });
+    });
+  }
+  deleteCategoria(id: string){
+    this.ReasonsService.deleteReasons(id).then((data) => {
+      this.getReasons();
+      Toast.fire({
+        icon: 'success',
+        title: `¡La categoria crde se actualizó exitosamente!`
+      });
+    }).catch((err) => {
+
+      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+   
+    });
+  });
+  
   }
 
 }

@@ -29,6 +29,7 @@ export class StatusReportComponent implements OnInit {
   regTerm: boolean = false;
   activo: boolean = true;
   arrayEstatus = [];
+  es: AlertStatusModel = new AlertStatusModel();
 
 
   constructor( private _estatusService: AlertStatusService, private _PdfService: PdfServiceService, private _excelService: ExportDataService) { }
@@ -122,6 +123,42 @@ export class StatusReportComponent implements OnInit {
       this.arrayEstatus,
       "center"
     );
+  }
+
+  updateStatus(id:string){
+    this._estatusService.putStatus(id, this.es).then((res) => {
+      this.getEstatus();
+      
+      Toast.fire({
+        icon: 'success',
+        title: `¡El estatus se actualizó exitosamente!`
+      });
+    }).catch(err => {
+    
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+   
+      });
+    });
+  }
+  deleteStatus(id: string){
+    this._estatusService.deleteStatus(id).then((data) => {
+      this.getEstatus();
+      Toast.fire({
+        icon: 'success',
+        title: `¡El estatus se actualizó exitosamente!`
+      });
+    }).catch((err) => {
+
+      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+   
+    });
+  });
+  
   }
 
 }
