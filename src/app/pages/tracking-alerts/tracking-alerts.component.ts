@@ -140,6 +140,7 @@ export class TrackingAlertsComponent implements OnInit {
 
       setTimeout(() => {
         this.resetImage = false;
+        this.documento = '';
       }, 0);
   
       console.log('Parece que funciono');
