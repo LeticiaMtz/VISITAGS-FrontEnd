@@ -16,6 +16,10 @@ export class AlertStatusService {
     return this.http.get(`${this.url}/estatus/obtener`).toPromise();
   }
 
+  getAllStatusByRol(idRol: string) {
+    return this.http.get(`${this.url}/estatus/obtenerEstatus/${idRol}`).toPromise();
+  }
+
   getStatusId(id: string) {
     return this.http.get(`${this.url}/estatus/obtener/${id}`).toPromise();
   }

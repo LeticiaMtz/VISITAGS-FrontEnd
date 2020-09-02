@@ -1,4 +1,4 @@
-<form (ngSubmit)="comentarAlerta(forma)" class="form" novalidate="" enctype="multipart/form-data" #forma="ngForm">
+<form (ngSubmit)="comentarAlerta(forma)" class="form" id="bootstrapSelectForm" novalidate="" enctype="multipart/form-data" #forma="ngForm">
     <div class="row">
         <div class="col-md-12">
             <div class="card px-2 pb-2">
@@ -14,9 +14,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="row justify-content-end">
-                            <span class="badge badge-info" *ngIf="nuevo !== principalStatus && enProgreso !== principalStatus && cerrado !== principalStatus && finalizado !== principalStatus">Nuevo</span>
+                            <span class="badge badge-info" *ngIf="nuevo !== principalStatus && enProgreso !== principalStatus && cerrado !== principalStatus && finalizado !== principalStatus">OTRO</span>
                             <span class="badge badge-info" *ngIf="nuevo == principalStatus">Nuevo</span>
-                            <span class="badge badge-danger" *ngIf="cerrado == principalStatus">Cerrado</span>
+                            <span class="badge badge-danger" *ngIf="cerrado == principalStatus">Cancelada</span>
                             <span class="badge badge-warning" *ngIf="enProgreso == principalStatus">Proceso</span>
                             <span class="badge badge-success" *ngIf="finalizado == principalStatus">Finalizado</span>
                         </div>
@@ -149,9 +149,10 @@
                                     <div class="col-md-6">
                                         <div class="row justify-content-end">
                                             <span class="badge badge-info" *ngIf="nuevo == data.idEstatus">Nuevo</span>
-                                            <span class="badge badge-danger" *ngIf="cerrado == data.idEstatus">Cerrado</span>
+                                            <span class="badge badge-danger" *ngIf="cerrado == data.idEstatus">Cancelada</span>
                                             <span class="badge badge-warning" *ngIf="enProgreso == data.idEstatus">Proceso</span>
                                             <span class="badge badge-success" *ngIf="finalizado == data.idEstatus">Finalizado</span>
+                                            <span class="badge badge-info" *ngIf="nuevo !== data.idEstatus && enProgreso !== data.idEstatus && cerrado !== data.idEstatus && finalizado !== data.idEstatus">OTRO</span>
                                         </div>
                                         <div class="row justify-content-end mt-1">
                                             <i class="fa fa-calendar mr-2"></i>
@@ -208,14 +209,17 @@
                                             <option *ngFor="let estatus of arrEstatus"  [ngValue]="estatus._id" > {{estatus.strNombre}} </option>
                                         </select>
                                     </div>
-                                    <div class="invalid-feedback" *ngIf="idEstatus.errors?.required">
+                                    <!-- <div [hidden]="idEstatus.valid || idEstatus.pristine"  class="invalid-feedback">
+                                        Por favor, seleccione una opción.
+                                    </div> -->
+                                    <!-- <div class="invalid-feedback" *ngIf="idEstatus.errors?.required">
                                         <small>
                                             Por favor, seleccione una opción.
                                         </small>
-                                    </div>
+                                    </div> -->
         
                                     <div class="col-5 mt-2">
-                                        <button [disabled]="forma.invalid" type="submit" class="btn btn-sm btn-outline-success btn-block float-right">Enviar</button>
+                                        <button type="submit" class="btn btn-sm btn-outline-success btn-block float-right">Enviar</button>
                                     </div>
                                 </div>
                             </div>
