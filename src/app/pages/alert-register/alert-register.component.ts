@@ -175,7 +175,6 @@ export class AlertRegisterComponent implements OnInit {
         for (const motivo of razon.aJsnMotivo) {
           this.motivos.push(motivo);
         }
-        console.log(this.motivos);
       }
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
