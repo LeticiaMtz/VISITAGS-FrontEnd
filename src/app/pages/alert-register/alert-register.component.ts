@@ -79,41 +79,50 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   registrarAlerta(forma: NgForm) {
-    let fd = new FormData();
 
-    fd.append('idUser', this.alerta.idUser);
-    fd.append('idEstatus', this.alerta.idEstatus);
-    fd.append('strMatricula', this.alerta.strMatricula);
-    fd.append('strNombreAlumno', this.alerta.strNombreAlumno);
-    fd.append('idAsignatura', this.alerta.idAsignatura);
-    fd.append('idCarrera', this.alerta.idCarrera);
-    fd.append('idEspecialidad', this.alerta.idEspecialidad);
-
-    if (this.alerta.arrCrde !== null) {
-      for (let crde = 0; crde < this.alerta.arrCrde.length; crde++) {
-        fd.append('arrCrde', this.alerta.arrCrde[crde]);
-      }
-    }
-
-    fd.append('strGrupo', this.alerta.strGrupo);
-    fd.append('chrTurno', this.alerta.chrTurno);
-    fd.append('idModalidad', this.alerta.idModalidad);
-    fd.append('strDescripcion', this.alerta.strDescripcion);
-    fd.append('strFileEvidencias', this.documentos);
-
-    this.alertaService.postAlerta(fd).then((data) => {
-      Toast.fire({
-        icon: 'success',
-        title: `¡Alerta registrada exitosamente!`
-      });
-      this.router.navigate(['/dashboard']);
-    }).catch((err) => {
+    if ( forma.invalid ) {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: 'Uno o mas campos estan vacíos'
       });
-      forma.reset();
-    });
+      return false;
+    } else {
+      let fd = new FormData();
+
+      fd.append('idUser', this.alerta.idUser);
+      fd.append('idEstatus', this.alerta.idEstatus);
+      fd.append('strMatricula', this.alerta.strMatricula);
+      fd.append('strNombreAlumno', this.alerta.strNombreAlumno);
+      fd.append('idAsignatura', this.alerta.idAsignatura);
+      fd.append('idCarrera', this.alerta.idCarrera);
+      fd.append('idEspecialidad', this.alerta.idEspecialidad);
+
+      if (this.alerta.arrCrde !== null) {
+        for (let crde = 0; crde < this.alerta.arrCrde.length; crde++) {
+          fd.append('arrCrde', this.alerta.arrCrde[crde]);
+        }
+      }
+
+      fd.append('strGrupo', this.alerta.strGrupo);
+      fd.append('chrTurno', this.alerta.chrTurno);
+      fd.append('idModalidad', this.alerta.idModalidad);
+      fd.append('strDescripcion', this.alerta.strDescripcion);
+      fd.append('strFileEvidencias', this.documentos);
+
+      this.alertaService.postAlerta(fd).then((data) => {
+        Toast.fire({
+          icon: 'success',
+          title: `¡Alerta registrada exitosamente!`
+        });
+        this.router.navigate(['/dashboard']);
+      }).catch((err) => {
+        Toast.fire({
+          icon: 'error',
+          title: err.error.msg
+        });
+        forma.reset();
+      });
+    }
   }
 
   getArchivos(archivos: any) {
