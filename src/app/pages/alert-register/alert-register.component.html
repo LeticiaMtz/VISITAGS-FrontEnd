@@ -102,7 +102,7 @@
 
                             <select (ngModelChange)="getCrde($event)" [class.is-invalid]="arrCrde.invalid && arrCrde.touched" class="selectpicker form-control form-control-sm" data-size="3" data-dropup-auto=false multiple title="Seleccione las conductas de riesgo" name="arrCrde"
                                 [(ngModel)]="alerta.arrCrde" required #arrCrde="ngModel">
-                                <option *ngFor="let m of motivos">{{m.strNombre}}</option>
+                                <option *ngFor="let m of motivos" [ngValue]="m._id">{{m.strNombre}}</option>
                             </select>
                             <div class="invalid-feedback" *ngIf="arrCrde.errors?.required">
                                 <small>
