@@ -428,7 +428,7 @@ export class UserManagementComponent implements OnInit {
           "Apellido Paterno": j.strLastName,
           "Apellido Materno": j.strMotherLastName,
           //  "correo": j.strEmail,
-          "Especialidades": JSON.stringify(espe)
+          "Especialidades": JSON.stringify(espe).replace("[", " ").replace("]", "")
         };
 
         console.log(espe)
