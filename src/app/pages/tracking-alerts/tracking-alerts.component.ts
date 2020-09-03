@@ -52,6 +52,7 @@ export class TrackingAlertsComponent implements OnInit {
   idPersona: string;
   userName: string;
   idAlert: string;
+  idRol: string;
   principalStatus: string;
   idUltimo: string;
   isEmpty: any;
@@ -70,6 +71,7 @@ export class TrackingAlertsComponent implements OnInit {
       }, 0);
     let token = localStorage.token;
     this.idAlert = this.activatedRoute.snapshot.params.id;
+    this.idRol = this.activatedRoute.snapshot.params.idR;
     this.tokenDecoded = jwt_decode(token);
     this.obtenerAlerta(this.idAlert);
     this.obtenerEstatus();
@@ -78,7 +80,6 @@ export class TrackingAlertsComponent implements OnInit {
 
   obtenerAlerta(idAlert: string){
     this.trackingAlertsService.getAlertData(idAlert).then((res: any) => {
-      
       this.objAlert = res.cnt[0];
       this.objUser = res.cnt[0].idUser;
       this.objSubject = res.cnt[0].idAsignatura;
@@ -92,9 +93,8 @@ export class TrackingAlertsComponent implements OnInit {
   }
 
   obtenerEstatus(){
-    this.alertStatusService.getAllStatus().then((res: any) => {
+    this.alertStatusService.getAllStatusByRol(this.idRol).then((res: any) => {
       this.arrEstatus = res.cnt;
-      this.arrEstatus.splice(0, 1);
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
       }, 0);
@@ -107,9 +107,9 @@ export class TrackingAlertsComponent implements OnInit {
     this.trackingAlertsService.getSeguimiento(id).then((res: any) => {
       this.arrTracking = res.cnt.aJsnSeguimiento;
       if(this.arrTracking.length > 0){
-        this.arrTracking.sort((one, two) => (one > two ? -1 : 1));
+        this.arrTracking.sort((one, two) => (one > two ? -1 : 1));//Ordena comentarios de mas viejo a nuevo
         if(this.arrTracking.length > 0){
-          this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus;
+          this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus;//La alerta obtiene el estatus de el último comentario 
         }else{
           this.principalStatus = this.nuevo;
         }
