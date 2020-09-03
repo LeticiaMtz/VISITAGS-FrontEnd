@@ -61,6 +61,8 @@ export class TrackingAlertsComponent implements OnInit {
   refresh: boolean = false;
   resetImage = false;
   url: string;
+  objPriEstatus: AlertModel = new AlertModel();
+  EstatusActualizado: string; 
   
 
   constructor(private trackingAlertsService: TrackingAlertsService, private alertStatusService: AlertStatusService, private reasonsService: ReasonsService, private activatedRoute: ActivatedRoute) { }
@@ -127,6 +129,8 @@ export class TrackingAlertsComponent implements OnInit {
     this.resetImage = true;
     let fd = new FormData();
     fd.append('idUser', this.tokenDecoded.user._id);
+    this.EstatusActualizado = this.objTracking.idEstatus;
+    // console.log(data, 'DATA');
     fd.append('idEstatus', this.objTracking.idEstatus);
     console.log(this.objTracking.idEstatus);
     fd.append('strComentario', this.objTracking.strComentario);
@@ -146,6 +150,14 @@ export class TrackingAlertsComponent implements OnInit {
       console.log('Parece que funciono');
       console.log(res.cnt);
       this.ngOnInit();
+      this.objPriEstatus.idEstatus = this.EstatusActualizado;
+   
+      this.trackingAlertsService.actualizarEstatus(this.idAlert, this.objPriEstatus).then((res: any)=>{
+        console.log(res, 'STATUS');
+      }).catch(err =>{
+        console.log(err, 'ERROR')
+      })
+  
     }).catch(err => {
       setTimeout(() => {
         this.resetImage = false;

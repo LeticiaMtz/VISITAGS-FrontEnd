@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
-// import { AlertModel } from '../../models/alert.model';
+import { AlertModel } from 'src/app/models/alert.model';
 // import { TrackingAlertModel } from '../../models/tracking.model';
 // import { ReasonsModel } from '../../models/reasons-crde.model';
 
@@ -36,5 +36,8 @@ export class TrackingAlertsService {
 
   getFileEvidence(fileName: string){
     window.open(`${this.url}/descargarArchivo/descargaEvidencia/${fileName}`, '_blank');
+  }
+  actualizarEstatus(idAlert: string, modality: AlertModel){
+    return this.http.put(`${this.url}/alerts/actualizarEstatus/${idAlert}`, modality).toPromise();
   }
 }
