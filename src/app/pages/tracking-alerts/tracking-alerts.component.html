@@ -198,21 +198,23 @@
                                 <div class="row justify-content-between">
                                     <div class="col-md-12 mt-1 ">
                                         <textarea [class.is-invalid]="strComentario.invalid && strComentario.touched" class="form-control form-control-sm " rows="3 " maxlength="300 " placeholder="Observaciones" name="strComentario" [(ngModel)]="objTracking.strComentario" required #strComentario="ngModel"></textarea>
+                                        <div class="invalid-feedback" *ngIf="strComentario.errors?.required">
+                                            <small>
+                                                Por favor, ingrese un comentario.
+                                            </small>
+                                        </div>
                                     </div>
-                                    <div class="invalid-feedback" *ngIf="strComentario.errors?.required">
-                                        <small>
-                                            Por favor, ingrese un comentario.
-                                        </small>
-                                    </div>
+
                                     <div class="col-6 mt-2">
-                                        <select [class.is-invalid]="idEstatus.invalid && idEstatus.touched" class="custom-select selectpicker form-control form-control-sm" data-size="3" data-dropup-auto=false type="text" title="Seleccione Estatus" name="idEstatus" [(ngModel)]="objTracking.idEstatus" required #idEstatus="ngModel">
-                                            <option *ngFor="let estatus of arrEstatus"  [ngValue]="estatus._id" > {{estatus.strNombre}} </option>
+                                        <select  [class.is-invalid]="idEstatus.invalid && idEstatus.touched" class="custom-select form-control form-control-sm" type="text" name="idEstatus" [(ngModel)]="objTracking.idEstatus" required #idEstatus="ngModel">
+                                            <option [ngValue]="undefined" hidden>Seleccione Estatus</option>
+                                            <option *ngFor="let estatus of arrEstatus"  [ngValue]="estatus._id"> {{estatus.strNombre}} </option>
                                         </select>
-                                    </div>
-                                    <div class="invalid-feedback" *ngIf="idEstatus.errors?.required">
-                                        <small>
-                                            Por favor, seleccione una opción.
-                                        </small>
+                                        <div class="invalid-feedback" *ngIf="idEstatus.errors?.required">
+                                            <small>
+                                                Por favor, seleccione una opción.
+                                            </small>
+                                        </div>
                                     </div>
         
                                     <div class="col-5 mt-2">
