@@ -50,10 +50,11 @@ export class AlertRegisterComponent implements OnInit {
   chooseSpeciality: boolean = false;
   asignaturas: SubjectModel[] = [];
   idPersona: string;
-  documentos: any; 
+  documentos: any;
+  motivos: any[] = [];
 
   // tslint:disable-next-line: max-line-length
-  constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router) { }
+  constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, ) { }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -99,12 +100,6 @@ export class AlertRegisterComponent implements OnInit {
     fd.append('idModalidad', this.alerta.idModalidad);
     fd.append('strDescripcion', this.alerta.strDescripcion);
     fd.append('strFileEvidencias', this.documentos);
-
-    // if (this.alerta.aJsnEvidencias !== null) {
-    //   for ( let doc = 0; doc < this.alerta.aJsnEvidencias.length; doc++ ) {
-    //     fd.append('aJsnEvidencias', this.alerta.aJsnEvidencias[doc]);
-    //   }
-    // }
 
     this.alertaService.postAlerta(fd).then((data) => {
       Toast.fire({
@@ -176,6 +171,12 @@ export class AlertRegisterComponent implements OnInit {
   getConductasRiesgo() {
     this.reasonsService.getReasons().then((razones: any) => {
       this.razones = razones.cnt;
+      for (const razon of this.razones) {
+        for (const motivo of razon.aJsnMotivo) {
+          this.motivos.push(motivo);
+        }
+        console.log(this.motivos);
+      }
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
       }, 0);
