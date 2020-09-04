@@ -28,9 +28,9 @@
 
                     <div class="col-4">
                         <span class="badge badge-info float-right" style="font-size: small" *ngIf="nuevo == alert.idEstatus._id"> <i class="fa fa-star"></i> {{alert.idEstatus.strNombre}}</span>
-                        <span class="badge badge-warning " style="font-size: small" *ngIf="enProgreso == alert.idEstatus._id"> <i class="fa fa-check"></i> {{alert.idEstatus.strNombre}}</span>
-                        <span class="badge badge-danger " style="font-size: small" *ngIf="cerrado == alert.idEstatus._id"> <i class="fa fa-cog fa-spin fa fa-fw "></i> {{alert.idEstatus.strNombre}}</span>
-                        <span class="badge badge-success " style="font-size: small" *ngIf="finalizado == alert.idEstatus._id"> <i class="fa fa-cog fa-spin fa fa-fw "></i> {{alert.idEstatus.strNombre}}</span>
+                        <span class="badge badge-warning " style="font-size: small" *ngIf="enProgreso == alert.idEstatus._id"> <i class="fa fa-cog fa-spin fa fa-fw"></i> {{alert.idEstatus.strNombre}}</span>
+                        <span class="badge badge-danger " style="font-size: small" *ngIf="cerrado == alert.idEstatus._id"> <i class="fa fa-times "></i> {{alert.idEstatus.strNombre}}</span>
+                        <span class="badge badge-success " style="font-size: small" *ngIf="finalizado == alert.idEstatus._id"> <i class="fa fa-check"></i> {{alert.idEstatus.strNombre}}</span>
 
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                 <div class=row>
                     <div class="col-12">
 
-                        <p class="card-text mb-2" style="font-size:medium"><i class="fa fa-bars" style="margin-right: 5px;"></i> <span class="badge badge-danger" style="margin-right: 2px; padding-left: 2px;" data-toggle="tooltip" data-placement="top" title="" *ngFor="let crde of alert.arrCrde"> {{crde.strCategoria}}</span></p>
+                        <p class="card-text mb-2" style="font-size:medium"><i class="fa fa-bars" style="margin-right: 5px;"></i> <span class="badge badge-danger" style="margin-right: 2px; padding-left: 2px;" data-toggle="tooltip" data-placement="bottom" title="{{motivo.aJsnMotivo[0].strNombre}}" *ngFor="let motivo of alert.arrMotivo"> </span></p>
                     </div>
                 </div>
 
