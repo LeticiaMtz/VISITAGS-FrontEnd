@@ -63,6 +63,7 @@ export class TrackingAlertsComponent implements OnInit {
   url: string;
   objPriEstatus: AlertModel = new AlertModel();
   EstatusActualizado: string; 
+  surName: string = '';
   
 
   constructor(private trackingAlertsService: TrackingAlertsService, private alertStatusService: AlertStatusService, private reasonsService: ReasonsService, private activatedRoute: ActivatedRoute) { }
@@ -88,7 +89,10 @@ export class TrackingAlertsComponent implements OnInit {
       this.objModality = res.cnt[0].idModalidad;
       this.arrReasons = res.cnt[0].arrCrde;
       this.arrFiles = res.cnt[0].aJsnEvidencias;
-      this.userName = `${this.objUser.strName} ${this.objUser.strLastName} ${this.objUser.strMotherLastName}`;
+      if (this.objUser.strMotherLastName == "undefined"){
+        this.surName = this.objUser.strMotherLastName;
+      }
+      this.userName = `${this.objUser.strName} ${this.objUser.strLastName} ${this.surName}`;
     }).catch(err => {
       console.log(err);
     });
@@ -109,12 +113,10 @@ export class TrackingAlertsComponent implements OnInit {
     this.trackingAlertsService.getSeguimiento(id).then((res: any) => {
       this.arrTracking = res.cnt.aJsnSeguimiento;
       if(this.arrTracking.length > 0){
-        this.arrTracking.sort((one, two) => (one > two ? -1 : 1));//Ordena comentarios de mas viejo a nuevo
-        if(this.arrTracking.length > 0){
-          this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus;//La alerta obtiene el estatus de el último comentario 
-        }else{
-          this.principalStatus = this.nuevo;
-        }
+        this.arrTracking.sort((one, two) => (one > two ? -1 : 1));//Ordena comentarios de mas viejo a nuevo.
+        this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus;//La alerta obtiene el estatus de el último comentario.
+      }else{
+        this.principalStatus = this.nuevo;
       }
     }).catch(err => {
       console.log(err);
