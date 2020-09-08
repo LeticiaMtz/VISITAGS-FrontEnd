@@ -165,6 +165,7 @@ export class TrackingAlertsComponent implements OnInit {
       console.log(err);
     })
     form.reset();
+    form.controls.idEstatus.setValue(undefined);
   }
 
   descargarArchivoT(nameFile: string){
