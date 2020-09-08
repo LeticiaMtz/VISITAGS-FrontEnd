@@ -18,7 +18,8 @@
                         </div>
 
                         <div class="col-md-6 mt-2">
-                            <input [class.is-invalid]="strNombreAlumno.invalid && strNombreAlumno.touched" class="form-control form-control-sm" type="text" placeholder="Nombre del Estudiante" name="strNombreAlumno" [(ngModel)]="alerta.strNombreAlumno" required #strNombreAlumno="ngModel">
+                            <input [class.is-invalid]="strNombreAlumno.invalid && strNombreAlumno.touched" class="form-control form-control-sm" type="text" placeholder="Nombre del Estudiante" name="strNombreAlumno" [(ngModel)]="alerta.strNombreAlumno" required #strNombreAlumno="ngModel"
+                                [required]="true">
                             <div class="invalid-feedback" *ngIf="strNombreAlumno.errors?.required">
                                 <small>
                                     Es necesario ingresar el nombre del alumno.
@@ -27,7 +28,7 @@
                         </div>
 
                         <div class="col-md-6 mt-2">
-                            <select [class.is-invalid]="idCarrera.invalid && idCarrera.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione una Carrera" data-live-search="true" data-size="4" data-dropup-auto=false name="idCarrera"
+                            <!-- <select [class.is-invalid]="idCarrera.invalid && idCarrera.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione una Carrera" data-live-search="true" data-size="4" data-dropup-auto=false name="idCarrera"
                                 [(ngModel)]="alerta.idCarrera" required #idCarrera="ngModel" (ngModelChange)="getEspecialidad($event)">
                                 <option *ngFor="let carrera of carreras" [ngValue]="carrera._id">{{carrera.strCarrera}}</option>
                             </select>
@@ -35,11 +36,14 @@
                                 <small>
                                     Por favor, seleccione una opción.
                                 </small>
-                            </div>
+                            </div> -->
+
+                            <app-bootstrap-select (ngModelChange)="getEspecialidad($event)" [ngForm]="forma" [name]="'idCarrera'" [datos]="carreras" (model)="alerta.idCarrera = $event" [titulo]="'Seleccione una Carrera'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una carrera"
+                                [required]="true"></app-bootstrap-select>
                         </div>
 
                         <div class="col-md-6 mt-2">
-                            <select [disabled]="chooseSpeciality" [class.is-invalid]="idEspecialidad.invalid && idEspecialidad.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione una Especialidad" name="idEspecialidad" [(ngModel)]="alerta.idEspecialidad"
+                            <!-- <select [disabled]="chooseSpeciality" [class.is-invalid]="idEspecialidad.invalid && idEspecialidad.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione una Especialidad" name="idEspecialidad" [(ngModel)]="alerta.idEspecialidad"
                                 required #idEspecialidad="ngModel">
                                 <option *ngFor="let esp of especialidades" [ngValue]="esp._id">{{esp.strEspecialidad}}</option>
                             </select>
@@ -47,18 +51,24 @@
                                 <small>
                                     Por favor, seleccione una opción.
                                 </small>
-                            </div>
+                            </div> -->
+
+                            <app-bootstrap-select [ngForm]="forma" [name]="'idEspecialidad'" [datos]="especialidades" (model)="alerta.idEspecialidad = $event" [titulo]="'Seleccione una Especialidad'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una especialidad"
+                                [required]="true"></app-bootstrap-select>
                         </div>
 
                         <div class="col-md-6 mt-2">
-                            <select [class.is-invalid]="idModalidad.invalid && idModalidad.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione una modalidad" name="idModalidad" [(ngModel)]="alerta.idModalidad" required #idModalidad="ngModel">
+                            <!-- <select [class.is-invalid]="idModalidad.invalid && idModalidad.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione una modalidad" name="idModalidad" [(ngModel)]="alerta.idModalidad" required #idModalidad="ngModel">
                                 <option *ngFor="let modalidad of modalidades" [ngValue]="modalidad._id">{{modalidad.strModalidad}}</option>
                             </select>
                             <div class="invalid-feedback" *ngIf="idModalidad.errors?.required">
                                 <small>
                                     Por favor, seleccione una opción.
                                 </small>
-                            </div>
+                            </div> -->
+
+                            <app-bootstrap-select [ngForm]="forma" [name]="'idModalidad'" [datos]="modalidades" (model)="alerta.idModalidad = $event" [titulo]="'Seleccione una Modalidad'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una modalidad"
+                                [required]="true"></app-bootstrap-select>
                         </div>
 
                         <div class="col-md-6 mt-2">
@@ -71,7 +81,7 @@
                         </div>
 
                         <div class="col-md-12 mt-2">
-                            <select [class.is-invalid]="idAsignatura.invalid && idAsignatura.touched" class="custom-select selectpicker selectpicker-down form-control form-control-sm" data-size="4" data-dropup-auto=false title="Seleccione una Asignatura" data-live-search="true"
+                            <!-- <select [class.is-invalid]="idAsignatura.invalid && idAsignatura.touched" class="custom-select selectpicker selectpicker-down form-control form-control-sm" data-size="4" data-dropup-auto=false title="Seleccione una Asignatura" data-live-search="true"
                                 type="text" name="idAsignatura" [(ngModel)]="alerta.idAsignatura" required #idAsignatura="ngModel">
                                 <option *ngFor="let asig of asignaturas" [ngValue]="asig._id">{{asig.strAsignatura}}</option>
                             </select>
@@ -79,7 +89,10 @@
                                 <small>
                                     Por favor, seleccione una opción.
                                 </small>
-                            </div>
+                            </div> -->
+
+                            <app-bootstrap-select [ngForm]="forma" [name]="'idAsignatura'" [datos]="asignaturas" (model)="alerta.idAsignatura = $event" [titulo]="'Seleccione una Asignatura'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una asignatura"
+                                [required]="true"></app-bootstrap-select>
                         </div>
 
                         <div class="col-md-12 mt-2">
@@ -100,7 +113,7 @@
 
                         <div class="col-md-12 mt-2 mb-4">
 
-                            <select (ngModelChange)="getCrde($event)" [class.is-invalid]="arrCrde.invalid && arrCrde.touched" class="selectpicker form-control form-control-sm" data-size="3" data-dropup-auto=false multiple title="Seleccione las conductas de riesgo" name="arrCrde"
+                            <!-- <select (ngModelChange)="getCrde($event)" [class.is-invalid]="arrCrde.invalid && arrCrde.touched" class="selectpicker form-control form-control-sm" data-size="3" data-dropup-auto=false multiple title="Seleccione las conductas de riesgo" name="arrCrde"
                                 [(ngModel)]="alerta.arrCrde" required #arrCrde="ngModel">
                                 <option *ngFor="let m of motivos" [ngValue]="m._id">{{m.strNombre}}</option>
                             </select>
@@ -108,7 +121,11 @@
                                 <small>
                                     Por favor, seleccione una opción.
                                 </small>
-                            </div>
+                            </div> -->
+
+                            <app-bootstrap-select [ngForm]="forma" [name]="'arrCrde'" [datos]="motivos" (model)="alerta.arrCrde = $event" [titulo]="'Seleccione los motivos'" [multiple]="true" [dataLiveSearch]="false" mensajeValidacion="Es necesario seleccinar al menos un motivo"
+                                [required]="true"></app-bootstrap-select>
+
                         </div>
                     </div>
                 </div>
@@ -118,7 +135,7 @@
                             <button class="btn btn-block btn-sm btn-outline-danger">Cancelar</button>
                         </div>
                         <div class="col-6 mt-1">
-                            <button [disabled]="forma.invalid" type="submit " class="btn btn-block btn-sm btn-outline-info ">Registrar</button>
+                            <button type="submit " class="btn btn-block btn-sm btn-outline-info ">Registrar</button>
                         </div>
                     </div>
                 </div>
@@ -130,8 +147,13 @@
                     <hr>
 
                     <div class="row">
-                        <div class="col-md-12 mt-2">
-                            <textarea name="strDescripcion" class="form-control form-control-sm" rows="3" maxlength="300" placeholder="Detalles" [(ngModel)]="alerta.strDescripcion" required #strDescripcion="ngModel"></textarea>
+                        <div class="col-md-12 mt-2 ">
+                            <textarea [class.is-invalid]="strDescripcion.invalid && strDescripcion.touched" class="form-control form-control-sm " rows="3 " maxlength="300 " placeholder="Detalles de la Alerta" name="strDescripcion" [(ngModel)]="alerta.strDescripcion" required #strDescripcion="ngModel"></textarea>
+                            <div class="invalid-feedback" *ngIf="strDescripcion.errors?.required">
+                                <small>
+                                    Por favor, ingrese los detalles.
+                                </small>
+                            </div>
                         </div>
                     </div>
 
