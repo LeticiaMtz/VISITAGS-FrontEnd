@@ -2660,7 +2660,7 @@ Form addons page
   clear: both;
   font-weight: 400;
   line-height: 1.42857143;
-  color: #67757c;
+  /* color: #67757c; */
   white-space: nowrap; }
   .bootstrap-select .dropdown-menu li a:hover, .bootstrap-select .dropdown-menu li a:focus {
     color: #398bf7;
