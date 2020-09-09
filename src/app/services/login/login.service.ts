@@ -10,6 +10,7 @@ export class LoginService {
 
   selectedLogin: Login;
   logins: Login[];
+  usrToken: string;
   readonly URL_API = 'http://localhost:3000/api/Users/login';
 
   constructor(private http: HttpClient, private router: Router) { 
@@ -34,7 +35,12 @@ export class LoginService {
 
   logout(){
     localStorage.removeItem('token');
-    this.router.navigate(['/'])
+    // this.router.navigate(['/'])
+  }
+
+  isAuthenticated(): boolean{
+    this.usrToken = localStorage.getItem('token');
+    return this.usrToken !== null && this.usrToken !== undefined;
   }
 
 }
