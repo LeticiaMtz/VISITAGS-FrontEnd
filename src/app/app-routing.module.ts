@@ -12,8 +12,8 @@ import { NoAuthGuard } from './guards/no-auth.guard';
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] },
-  { path: 'sendemail', component: SendEmailComponent },
-  { path: 'reset-password/:token', component: ChangePasswordComponent},
+  { path: 'sendemail', component: SendEmailComponent, canActivate: [NoAuthGuard] },
+  { path: 'reset-password/:token', component: ChangePasswordComponent, canActivate: [NoAuthGuard]},
   { path: '**', component: NopagefoundComponent }
 ];
 
