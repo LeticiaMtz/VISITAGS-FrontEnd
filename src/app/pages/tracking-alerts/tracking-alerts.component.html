@@ -15,10 +15,10 @@
                     <div class="col-md-6">
                         <div class="row justify-content-end">
                             <span class="badge badge-info" *ngIf="nuevo !== principalStatus && enProgreso !== principalStatus && cerrado !== principalStatus && finalizado !== principalStatus">OTRO</span>
-                            <span class="badge badge-info" *ngIf="nuevo == principalStatus">Nuevo</span>
-                            <span class="badge badge-danger" *ngIf="cerrado == principalStatus">Cancelada</span>
-                            <span class="badge badge-warning" *ngIf="enProgreso == principalStatus">En Proceso</span>
-                            <span class="badge badge-success" *ngIf="finalizado == principalStatus">Finalizado</span>
+                            <span class="badge badge-info" *ngIf="nuevo == principalStatus"><i class="fa fa-star"></i> Nueva</span>
+                            <span class="badge badge-danger" *ngIf="cerrado == principalStatus"><i class="fa fa-times"></i> Cancelada</span>
+                            <span class="badge badge-warning" *ngIf="enProgreso == principalStatus"><i class="fa fa-cog fa-spin fa fa-fw"></i> En Proceso</span>
+                            <span class="badge badge-success" *ngIf="finalizado == principalStatus"><i class="fa fa-check"></i> Finalizado</span>
                         </div>
                         <div class="row justify-content-end mt-1">
                             <i class="fa fa-calendar mr-2"></i>
@@ -148,10 +148,10 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="row justify-content-end">
-                                            <span class="badge badge-info" *ngIf="nuevo == data.idEstatus">Nuevo</span>
-                                            <span class="badge badge-danger" *ngIf="cerrado == data.idEstatus">Cancelada</span>
-                                            <span class="badge badge-warning" *ngIf="enProgreso == data.idEstatus">En Proceso</span>
-                                            <span class="badge badge-success" *ngIf="finalizado == data.idEstatus">Finalizado</span>
+                                            <span class="badge badge-info" *ngIf="nuevo == data.idEstatus"><i class="fa fa-star"></i> Nueva</span>
+                                            <span class="badge badge-danger" *ngIf="cerrado == data.idEstatus"><i class="fa fa-times"></i> Cancelada</span>
+                                            <span class="badge badge-warning" *ngIf="enProgreso == data.idEstatus"><i class="fa fa-cog fa-spin fa fa-fw"></i> En Proceso</span>
+                                            <span class="badge badge-success" *ngIf="finalizado == data.idEstatus"><i class="fa fa-check"></i> Finalizado</span>
                                             <span class="badge badge-info" *ngIf="nuevo !== data.idEstatus && enProgreso !== data.idEstatus && cerrado !== data.idEstatus && finalizado !== data.idEstatus">OTRO</span>
                                         </div>
                                         <div class="row justify-content-end mt-1">

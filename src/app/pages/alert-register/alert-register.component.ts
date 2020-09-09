@@ -27,7 +27,7 @@ const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,
-  timer: 3000
+  timer: 4000
 });
 
 @Component({
@@ -43,12 +43,12 @@ export class AlertRegisterComponent implements OnInit {
   archivo: File;
   evidencias: FileModel[] = [];
   evidencia: FileModel;
-  carreras: CareerModel[] = [];
-  especialidades: SpecialtyModel[] = [];
+  carreras: any[] = [];
+  especialidades: any[] = [];
   razones: ReasonsModel[] = [];
-  modalidades: ModalityModel[] = [];
+  modalidades: any[] = [];
   chooseSpeciality: boolean = false;
-  asignaturas: SubjectModel[] = [];
+  asignaturas: any[] = [];
   idPersona: string;
   documentos: any;
   motivos: any[] = [];
@@ -57,9 +57,6 @@ export class AlertRegisterComponent implements OnInit {
   constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, ) { }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      $('.selectpicker').selectpicker('refresh');
-      }, 0);
       let token = localStorage.token;
       let tokenDecoded = jwt_decode(token);
       this.alerta.idUser = tokenDecoded.user._id;
@@ -79,41 +76,50 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   registrarAlerta(forma: NgForm) {
-    let fd = new FormData();
 
-    fd.append('idUser', this.alerta.idUser);
-    fd.append('idEstatus', this.alerta.idEstatus);
-    fd.append('strMatricula', this.alerta.strMatricula);
-    fd.append('strNombreAlumno', this.alerta.strNombreAlumno);
-    fd.append('idAsignatura', this.alerta.idAsignatura);
-    fd.append('idCarrera', this.alerta.idCarrera);
-    fd.append('idEspecialidad', this.alerta.idEspecialidad);
-
-    if (this.alerta.arrCrde !== null) {
-      for (let crde = 0; crde < this.alerta.arrCrde.length; crde++) {
-        fd.append('arrCrde', this.alerta.arrCrde[crde]);
-      }
-    }
-
-    fd.append('strGrupo', this.alerta.strGrupo);
-    fd.append('chrTurno', this.alerta.chrTurno);
-    fd.append('idModalidad', this.alerta.idModalidad);
-    fd.append('strDescripcion', this.alerta.strDescripcion);
-    fd.append('strFileEvidencias', this.documentos);
-
-    this.alertaService.postAlerta(fd).then((data) => {
-      Toast.fire({
-        icon: 'success',
-        title: `¡Alerta registrada exitosamente!`
-      });
-      this.router.navigate(['/dashboard']);
-    }).catch((err) => {
+    if ( forma.invalid ) {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: 'No es posible registrar una alerta con uno o mas campos vacíos'
       });
-      forma.reset();
-    });
+      return false;
+    } else {
+      let fd = new FormData();
+
+      fd.append('idUser', this.alerta.idUser);
+      fd.append('idEstatus', this.alerta.idEstatus);
+      fd.append('strMatricula', this.alerta.strMatricula);
+      fd.append('strNombreAlumno', this.alerta.strNombreAlumno);
+      fd.append('idAsignatura', this.alerta.idAsignatura);
+      fd.append('idCarrera', this.alerta.idCarrera);
+      fd.append('idEspecialidad', this.alerta.idEspecialidad);
+
+      if (this.alerta.arrCrde !== null) {
+        for (let crde = 0; crde < this.alerta.arrCrde.length; crde++) {
+          fd.append('arrCrde', this.alerta.arrCrde[crde]);
+        }
+      }
+
+      fd.append('strGrupo', this.alerta.strGrupo);
+      fd.append('chrTurno', this.alerta.chrTurno);
+      fd.append('idModalidad', this.alerta.idModalidad);
+      fd.append('strDescripcion', this.alerta.strDescripcion);
+      fd.append('strFileEvidencias', this.documentos);
+
+      this.alertaService.postAlerta(fd).then((data) => {
+        Toast.fire({
+          icon: 'success',
+          title: `¡Alerta registrada exitosamente!`
+        });
+        this.router.navigate(['/dashboard']);
+      }).catch((err) => {
+        Toast.fire({
+          icon: 'error',
+          title: err.error.msg
+        });
+        forma.reset();
+      });
+    }
   }
 
   getArchivos(archivos: any) {
@@ -121,22 +127,33 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   getCarreras() {
-    this.carrerasService.getCareers().then((carrera: any) => {
-      this.carreras = carrera.cnt;
-      setTimeout(() => {
-        $('.selectpicker').selectpicker('refresh');
-      }, 0);
+    this.carrerasService.getCareers().then((carreras: any) => {
+
+      for (const carrera of carreras.cnt) {
+        this.carreras.push({
+          _id: carrera._id,
+          strNombre: carrera.strCarrera
+        });
+      }
     }).catch((err) => {
       console.log(err);
     });
   }
 
   getEspecialidad(idEspecialidad: string) {
+
+    console.log(idEspecialidad);
     this.especialidadService.getSpecialties(idEspecialidad).then((especialidades: any) => {
-      this.especialidades = especialidades.cnt.rutas;
-      setTimeout(() => {
-        $('.selectpicker').selectpicker('refresh');
-        }, 0);
+
+      for (const especials of especialidades.cnt.rutas) {
+
+        console.log('Hola');
+        console.log(especials);
+        this.especialidades.push({
+          strNombre: especials.strEspecialidad,
+          _id: especials._id
+        });
+      }
     }).catch((err) => {
       console.log(err);
     });
@@ -148,10 +165,14 @@ export class AlertRegisterComponent implements OnInit {
 
   getModalidades() {
     this.modalityService.getModalidades().then((modalidades: any) => {
-      this.modalidades = modalidades.cnt;
-      setTimeout(() => {
-        $('.selectpicker').selectpicker('refresh');
-      }, 0);
+
+      for (const modalidad of  modalidades.cnt) {
+        this.modalidades.push({
+          _id: modalidad._id,
+          strNombre: modalidad.strModalidad
+        });
+      }
+
     }).catch((err) => {
       console.log(err);
     })
@@ -159,10 +180,13 @@ export class AlertRegisterComponent implements OnInit {
 
   getAsignaturas() {
     this.asignaturaService.getAsignatura().then((asign: any) => {
-       this.asignaturas = asign.cnt;
-      setTimeout(() => {
-        $('.selectpicker').selectpicker('refresh');
-      }, 0);
+
+       for (const asignatura of  asign.cnt) {
+        this.asignaturas.push({
+          _id: asignatura._id,
+          strNombre: asignatura.strAsignatura
+        });
+      }
     }).catch((err)=> {
       console.log(err);
     });
@@ -171,17 +195,16 @@ export class AlertRegisterComponent implements OnInit {
   getConductasRiesgo() {
     this.reasonsService.getReasons().then((razones: any) => {
       this.razones = razones.cnt;
+      console.log(this.razones);
       for (const razon of this.razones) {
         for (const motivo of razon.aJsnMotivo) {
           this.motivos.push(motivo);
         }
       }
-      setTimeout(() => {
-        $('.selectpicker').selectpicker('refresh');
-      }, 0);
     }).catch((err) => {
       console.log(err);
     });
+    console.log(this.motivos);
   }
 
 }
