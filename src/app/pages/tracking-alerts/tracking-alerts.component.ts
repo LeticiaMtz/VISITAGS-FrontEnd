@@ -128,7 +128,15 @@ export class TrackingAlertsComponent implements OnInit {
   }
 
   comentarAlerta(form: NgForm){
-    this.resetImage = true;
+
+    if(form.invalid){
+      Toast.fire({
+        icon: 'error',
+        title: 'No es posible comentar la alerta, hay campos vacíos'
+      });
+      return false;
+    }else{
+      this.resetImage = true;
     let fd = new FormData();
     fd.append('idUser', this.tokenDecoded.user._id);
     this.EstatusActualizado = this.objTracking.idEstatus;
@@ -168,6 +176,7 @@ export class TrackingAlertsComponent implements OnInit {
     })
     form.reset();
     form.controls.idEstatus.setValue(undefined);
+    }
   }
 
   descargarArchivoT(nameFile: string){
