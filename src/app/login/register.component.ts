@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
 
   addUser(form: NgForm){
     console.log(this.user);
-
+  
     if (this.repetPassword != this.user.strPassword) {
      
       Swal.fire({
@@ -71,6 +71,18 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/register']) 
       })
     }
+    else if(!this.regexp.test(this.user.strEmail))
+    {
+      Swal.fire({
+        title: 'Error!',
+        text: `El correo ${this.user.strEmail} no es valido`,
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      })
+      
+    }
+    
+    
   }
 
 }
