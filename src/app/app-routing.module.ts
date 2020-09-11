@@ -5,14 +5,15 @@ import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { RegisterComponent } from './login/register.component';
 import { SendEmailComponent } from './restore-password/send-email/send-email.component';
 import { ChangePasswordComponent } from './restore-password/change-password/change-password.component';
+import { NoAuthGuard } from './guards/no-auth.guard';
 
 
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'sendemail', component: SendEmailComponent },
-  { path: 'reset-password/:token', component: ChangePasswordComponent},
+  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] },
+  { path: 'sendemail', component: SendEmailComponent, canActivate: [NoAuthGuard] },
+  { path: 'reset-password/:token', component: ChangePasswordComponent, canActivate: [NoAuthGuard]},
   { path: '**', component: NopagefoundComponent }
 ];
 
