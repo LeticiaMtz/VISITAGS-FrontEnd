@@ -48,9 +48,9 @@ export class RegisterComponent implements OnInit {
       this.registerService.postUser(form.value)
       .then(res => {
         console.log(res);
-        let data = JSON.stringify(res);
-        let dataJson = JSON.parse(data);
-        localStorage.setItem('token', dataJson.token);
+        // let data = JSON.stringify(res);
+        // let dataJson = JSON.parse(data);
+        // localStorage.setItem('token', dataJson.token);
         Swal.fire({
           title: '¡Correcto!',
           text: 'Usuario registrado correctamente',

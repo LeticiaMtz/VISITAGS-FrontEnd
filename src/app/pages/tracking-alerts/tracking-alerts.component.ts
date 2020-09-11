@@ -72,7 +72,7 @@ export class TrackingAlertsComponent implements OnInit {
     setTimeout(() => {
       $('.selectpicker').selectpicker('refresh');
       }, 0);
-    let token = localStorage.token;
+    let token = localStorage.aa_token;
     this.idAlert = this.activatedRoute.snapshot.params.id;
     this.idRol = this.activatedRoute.snapshot.params.idR;
     this.tokenDecoded = jwt_decode(token);

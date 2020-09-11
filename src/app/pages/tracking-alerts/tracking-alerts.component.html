@@ -116,7 +116,7 @@
 
                     <div class="row container">
                         <div class="col-md-12 mt-2">
-                            <span class="badge badge-danger mr-2" *ngFor="let reason of arrReasons"> {{reason.strCategoria}} </span>
+                            <span class="badge badge-danger mr-2" data-toggle="tooltip" data-placement="right" title="{{reason.strNombre}}" *ngFor="let reason of arrReasons"> {{reason.strClave}} </span>
                         </div>
                     </div>
 

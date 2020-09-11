@@ -17,7 +17,7 @@ export class SidebarComponent implements OnInit {
   constructor( public _sidebarService: SidebarService) { }
 
   ngOnInit() {
-    const tokenDecoded = jwt_decode(localStorage.getItem('token'));
+    const tokenDecoded = jwt_decode(localStorage.getItem('aa_token'));
     this.rol = tokenDecoded.user.idRole;
     // console.log(this.rol);
 

@@ -40,7 +40,7 @@ export class SendEmailComponent implements OnInit {
       console.log(data);
       Swal.fire({
         title: '¡Correcto!',
-        text: 'El email fué enviado correctamente 😃',
+        text: 'El email fué enviado correctamente',
         icon: 'success',
         confirmButtonText: 'Ok'
      });

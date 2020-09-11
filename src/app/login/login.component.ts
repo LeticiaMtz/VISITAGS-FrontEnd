@@ -23,16 +23,16 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     init_plugins();
 
-    if(localStorage.getItem('strEmail')){
+    if(localStorage.getItem('aa_strEmail')){
       this.user.setValue({
-        strEmail: localStorage.getItem('strEmail'),
+        strEmail: localStorage.getItem('aa_strEmail'),
         strPassword: '',
         rememberMe: true
       });
       this.rememberIt=true;
     }
     if(!this.rememberIt){
-      localStorage.removeItem('strEmail');
+      localStorage.removeItem('aa_strEmail');
     }
   }
 
@@ -77,14 +77,14 @@ export class LoginComponent implements OnInit {
         //   });
 
         // } else {
-          localStorage.setItem('token', dataJson.token);
+          localStorage.setItem('aa_token', dataJson.token);
 
           if(dataJson.token) {
 
             if (this.user.value.rememberMe) {
-              localStorage.setItem('strEmail', this.user.value.strEmail);
+              localStorage.setItem('aa_strEmail', this.user.value.strEmail);
             } else {
-              localStorage.removeItem('strEmail');
+              localStorage.removeItem('aa_strEmail');
             }
   
             this.router.navigate(['/dashboard']);

@@ -57,7 +57,7 @@ export class AlertRegisterComponent implements OnInit {
   constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, ) { }
 
   ngOnInit(): void {
-      let token = localStorage.token;
+      let token = localStorage.aa_token;
       let tokenDecoded = jwt_decode(token);
       this.alerta.idUser = tokenDecoded.user._id;
       this.alerta.idEstatus = environment.nuevo;
