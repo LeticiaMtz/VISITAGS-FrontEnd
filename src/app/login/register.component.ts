@@ -33,8 +33,17 @@ export class RegisterComponent implements OnInit {
 
   addUser(form: NgForm){
     console.log(this.user);
-  
-    if (this.repetPassword != this.user.strPassword) {
+    
+    if(form.invalid){
+      console.log(form);
+      Swal.fire({
+        title: 'Error!',
+        text: `Faltan campos por llenar en el formulario`,
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      })
+    }
+    else if (this.repetPassword != this.user.strPassword) {
      
       Swal.fire({
         title: 'Error!',
