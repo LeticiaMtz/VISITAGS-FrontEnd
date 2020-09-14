@@ -1,0 +1,121 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body container">
+                <div class="row">
+                    <div class="col-12">
+                        Filtros
+                        <hr style="margin-top: 0px;">
+                    </div>
+
+                    <div class="col-12 col-md-4 mt-2">
+                        <select class="custom-select selectpicker selectpicker-down form-control" data-size="4" data-dropup-auto=false title="Carreras" type="text" data-live-search="true" name="idCarrera" [(ngModel)]="alerta.idCarrera" #idCarrera="ngModel" (ngModelChange)="getEspecialidades($event)">
+                            <option *ngFor="let carrera of carreras" [ngValue]="carrera._id">{{carrera.strCarrera}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-4 mt-2">
+                        <select class="custom-select selectpicker selectpicker-down form-control" data-size="4" data-dropup-auto=false title="Especialidades" type="text" data-live-search="true" name="idEspecialidad" [(ngModel)]="alerta.idEspecialidad" #idEspecialidad="ngModel"
+                            (ngModelChange)="getAlertas()">
+                            <option *ngFor="let esp of especialidades" [ngValue]="esp._id">{{esp.strEspecialidad}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-4 mt-2">
+                        <select class="custom-select selectpicker selectpicker-down form-control" data-size="4" data-dropup-auto=false title="Asignaturas" type="text" data-live-search="true" name="idAsignatura" [(ngModel)]="alerta.idAsignatura" #idAsignatura="ngModel" (ngModelChange)="getAlertas()">
+                            <option *ngFor="let asig of asignaturas" [ngValue]="asig._id">{{asig.strNombre}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-3 mt-2">
+                        <select class="custom-select selectpicker selectpicker-down form-control" data-size="4" data-dropup-auto=false title="Profesores" type="text" data-live-search="true" name="idEstatus" [(ngModel)]="alerta.idEstatus" #idEstatus="ngModel" (ngModelChange)="getAlertas()">
+                            <option *ngFor="let prof of profesores" [ngValue]="prof._id">{{prof.strName}} {{prof.strLastName}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-3 mt-2">
+                        <select class="custom-select selectpicker selectpicker-down form-control" data-size="4" data-dropup-auto=false title="Estatus" type="text" data-live-search="true" name="idUser" [(ngModel)]="alerta.idUser" #idUser="ngModel" (ngModelChange)="getAlertas()">
+                            <option *ngFor="let estatus of arrEstatus" [ngValue]="estatus._id">{{estatus.strNombre}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-3 mt-2">
+                        <select class="custom-select selectpicker selectpicker-down form-control" data-size="4" data-dropup-auto=false title="Estatus" type="text" data-live-search="true">
+                            <option *ngFor="let alerta of alertas">{{alerta._id}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-3 mt-2">
+                        <div class="form-group m-0 p-0">
+                            <input class="form-control form-control-sm selectpicker btn-outline-secondary m-0" type="date" placeholder="Fecha de Matriculación" name="dteFechaNacimiento" [(ngModel)]="alerta.createdAt" #dteFechaNacimiento="ngModel" (ngModelChange)="getAlertas()">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-3 mt-2">
+                        <div class="form-group m-0 p-0">
+                            <input class="form-control form-control-sm selectpicker btn-outline-secondary m-0" type="date" placeholder="Fecha de Matriculación" name="dteFechaNacimiento" [(ngModel)]="alerta.createdAt" #dteFechaNacimiento="ngModel" (ngModelChange)="getAlertas()">
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-md-8 mt-4">
+                        <input [(ngModel)]="searchText" type="text" name="searchText" class="form-control form-control-sm btn-outline-secondary ops mt-2 p-1" placeholder=" Buscar...">
+                    </div>
+
+                    <div class="col-md-1 mt-1 text-right mt-4">
+                        <div>
+                            <button type="button" class="btn btn-info btn-sm mt-2" id="dropdownReports" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h "></i></button>
+                            <div class="dropdown-menu dropdown-menu-right shadow-lg " aria-labelledby="dropdownReports">
+                                <div class="dropdown-header text-info "><span class="text-xs text-uppercase ">EXPORTAR</span>
+                                </div>
+                                <a type="button" class="dropdown-item drop-options-text pdf " (click)="exportPDF()"><i class="fa fa-file-pdf-o mr-2 "></i>PDF</a>
+                                <a type="button" class="dropdown-item drop-options-text excel" (click)="exportAsXLSX()"><i class="fa fa-file-excel-o mr-2 "></i>Excel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container small mt-4">
+                    <div class="row fadeIn">
+                        <div class="col-12">
+                            <table id="PDFTable" class="table table table-responsive" [ngClass]="{'table-hover': (!cargando && alertas.length &gt; 0) }">
+                                <thead>
+                                    <tr>
+                                        <th>ALUMNO</th>
+                                        <th>CARRERA</th>
+                                        <th>ESPECIALIDAD</th>
+                                        <th>ASIGNATURA</th>
+                                        <th>PROFESOR</th>
+                                        <th>FECHA</th>
+                                        <th>ESTATUS</th>
+                                        <th>VER</th>
+                                    </tr>
+                                </thead>
+
+                                <!-- SE MUESTRA CUANDO HAY REGISTROS -->
+                                <tbody *ngIf="alertas.length &gt; 0 && !cargando">
+                                    <tr *ngFor="let alerta of alertas | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
+                                        <td>{{alerta.strNombreAlumno}}</td>
+                                        <td>{{alerta.idCarrera.strCarrera}}</td>
+                                        <td>{{alerta.idEspecialidad.strEspecialidad}}</td>
+                                        <td>{{alerta.idAsignatura.strAsignatura}}</td>
+                                        <td>{{alerta.idUser.strName}}</td>
+                                        <td>{{alerta.idEstatus.strNombre}}</td>
+                                        <td>{{alerta.createdAt}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-info"><i class="fa fa-eye"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="mt-4 float-right fadeIn ">
+                                <pagination-controls (pageChange)="pageActual=$event " previousLabel="Anterior " nextLabel="Siguiente "></pagination-controls>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

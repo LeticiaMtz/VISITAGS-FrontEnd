@@ -40,6 +40,7 @@ import { ModalityComponent } from './modality/modality.component';
 import { AlertRegisterComponent } from './alert-register/alert-register.component';
 import { TrackingAlertsComponent } from './tracking-alerts/tracking-alerts.component';
 import { UserManagementComponent } from './user-management/user-management.component';
+import { AlertMonitorComponent } from './alert-monitor/alert-monitor.component';
 
 
 
@@ -73,7 +74,8 @@ import { UserManagementComponent } from './user-management/user-management.compo
         UpdateModalityComponent,
         AlertRegisterComponent,
         TrackingAlertsComponent,
-        UserManagementComponent
+        UserManagementComponent,
+        AlertMonitorComponent
     ],
     exports: [
         DashboardComponent,
