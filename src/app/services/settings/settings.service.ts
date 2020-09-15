@@ -16,13 +16,13 @@ export class SettingsService {
   }
 
   guardarAjustes() {
-    localStorage.setItem('ajustes', JSON.stringify( this.ajustes ));
+    localStorage.setItem('aa_ajustes', JSON.stringify( this.ajustes ));
   }
 
   cargarAjustes() {
-    if ( localStorage.getItem('ajustes')) {
+    if ( localStorage.getItem('aa_ajustes')) {
 
-      this.ajustes = JSON.parse(localStorage.getItem('ajustes'));
+      this.ajustes = JSON.parse(localStorage.getItem('aa_ajustes'));
       this.aplicarTema( this.ajustes.theme );
 
     } else {
