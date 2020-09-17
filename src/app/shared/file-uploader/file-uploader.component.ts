@@ -61,10 +61,12 @@ export class FileUploaderComponent implements OnInit {
   }
 
   pondHandleAddFile(event: any) {
-    this.archivo = event.file.source;
+    // this.archivo = event.file.source;
+    this.archivosObtenidos.emit(event.file.source);
+
   }
 
   cargarArchivo() {
-    this.archivosObtenidos.emit(this.archivo);
+    // this.archivosObtenidos.emit(this.archivo);
 }
 }

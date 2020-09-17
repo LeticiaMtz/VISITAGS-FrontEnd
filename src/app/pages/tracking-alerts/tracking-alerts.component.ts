@@ -57,7 +57,7 @@ export class TrackingAlertsComponent implements OnInit {
   idUltimo: string;
   isEmpty: any;
   idUser: string;
-  documento: any;
+  documento: any =[];
   refresh: boolean = false;
   resetImage = false;
   url: string;
@@ -124,7 +124,8 @@ export class TrackingAlertsComponent implements OnInit {
   }
 
   obtenerArchivos(archivos: any) {
-    this.documento = archivos;
+    this.documento.push(archivos)
+    // this.documento = archivos;
   }
 
   comentarAlerta(form: NgForm){
@@ -142,11 +143,14 @@ export class TrackingAlertsComponent implements OnInit {
     this.EstatusActualizado = this.objTracking.idEstatus;
     // console.log(data, 'DATA');
     fd.append('idEstatus', this.objTracking.idEstatus);
-    console.log(this.objTracking.idEstatus);
     fd.append('strComentario', this.objTracking.strComentario);
     // if(this.objTracking.aJsnEvidencias !== null){
     //   for(let i = 0; i < this.objTracking.aJsnEvidencias.lenght; i++){
-        fd.append('strFileEvidencia', this.documento);
+      console.log(this.documento, 'documento-------');
+      
+      for(let i = 0; i < this.documento.length; i++){
+        fd.append('strFileEvidencia', this.documento[i]);
+      }
     //   }
     // }
 
@@ -157,8 +161,7 @@ export class TrackingAlertsComponent implements OnInit {
         this.documento = '';
       }, 0);
   
-      console.log('Parece que funciono');
-      console.log(res.cnt);
+
       this.ngOnInit();
       this.objPriEstatus.idEstatus = this.EstatusActualizado;
    
