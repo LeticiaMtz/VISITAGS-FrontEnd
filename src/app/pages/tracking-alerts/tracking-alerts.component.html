@@ -104,7 +104,7 @@
                                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                                         <div class="card-body">
                                             <div *ngFor="let doc of arrFiles">
-                                                <button (click)="descargarArchivoE(doc.strNombre)" class="btn btn-link mr-3" style="cursor: pointer;"><i class="fa fa-download mr-1"></i> {{doc.strNombre}} </button>
+                                                <button type="button" (click)="descargarArchivoE(doc.strNombre)" class="btn btn-link mr-3" style="cursor: pointer;"><i class="fa fa-download mr-1"></i> {{doc.strNombre}} </button>
                                             </div>
                                         </div>
                                     </div>
