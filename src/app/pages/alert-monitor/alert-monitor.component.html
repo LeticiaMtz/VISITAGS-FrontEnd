@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row animated fadeIn fast">
     <div class="col-md-12">
         <div class="card">
             <div class="card-body container">
@@ -9,55 +9,48 @@
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
-                        <select class="custom-select selectpicker selectpicker-down form-control" data-size="4" data-dropup-auto=false title="Carreras" type="text" data-live-search="true" name="idCarrera" [(ngModel)]="alerta.idCarrera" #idCarrera="ngModel" (ngModelChange)="getEspecialidades($event)">
+                        <select class="custom-select selectpicker selectpicker-down form-control btn-outline-secondary ops" data-size="4" data-dropup-auto=false title="Carreras" type="text" data-live-search="true" name="idCarrera" [(ngModel)]="alerta.idCarrera" #idCarrera="ngModel"
+                            (ngModelChange)="getEspecialidades($event)">
                             <option *ngFor="let carrera of carreras" [ngValue]="carrera._id">{{carrera.strCarrera}}</option>
                         </select>
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
-                        <select class="custom-select selectpicker selectpicker-down form-control" data-size="4" data-dropup-auto=false title="Especialidades" type="text" data-live-search="true" name="idEspecialidad" [(ngModel)]="alerta.idEspecialidad" #idEspecialidad="ngModel"
-                            (ngModelChange)="getAlertas()">
+                        <select class="custom-select selectpicker selectpicker-down form-control btn-outline-secondary ops" data-size="4" data-dropup-auto=false title="Especialidades" type="text" data-live-search="true" name="idEspecialidad" [(ngModel)]="alerta.idEspecialidad"
+                            #idEspecialidad="ngModel" (ngModelChange)="getAlertas()">
                             <option *ngFor="let esp of especialidades" [ngValue]="esp._id">{{esp.strEspecialidad}}</option>
                         </select>
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
-                        <select class="custom-select selectpicker selectpicker-down form-control" data-size="4" data-dropup-auto=false title="Asignaturas" type="text" data-live-search="true" name="idAsignatura" [(ngModel)]="alerta.idAsignatura" #idAsignatura="ngModel" (ngModelChange)="getAlertas()">
+                        <select class="custom-select selectpicker selectpicker-down form-control btn-outline-secondary ops" data-size="4" data-dropup-auto=false title="Asignaturas" type="text" data-live-search="true" name="idAsignatura" [(ngModel)]="alerta.idAsignatura" #idAsignatura="ngModel"
+                            (ngModelChange)="getAlertas()">
                             <option *ngFor="let asig of asignaturas" [ngValue]="asig._id">{{asig.strNombre}}</option>
                         </select>
                     </div>
 
-                    <div class="col-12 col-md-3 mt-2">
-                        <select class="custom-select selectpicker selectpicker-down form-control" data-size="4" data-dropup-auto=false title="Profesores" type="text" data-live-search="true" name="idEstatus" [(ngModel)]="alerta.idEstatus" #idEstatus="ngModel" (ngModelChange)="getAlertas()">
+                    <div class="col-12 col-md-4 mt-2">
+                        <select class="custom-select selectpicker selectpicker-down form-control btn-outline-secondary ops" data-size="4" data-dropup-auto=false title="Profesores" type="text" data-live-search="true" name="idUser" [(ngModel)]="alerta.idUser" #idEstatus="ngModel"
+                            (ngModelChange)="getAlertas()">
                             <option *ngFor="let prof of profesores" [ngValue]="prof._id">{{prof.strName}} {{prof.strLastName}}</option>
                         </select>
                     </div>
 
-                    <div class="col-12 col-md-3 mt-2">
-                        <select class="custom-select selectpicker selectpicker-down form-control" data-size="4" data-dropup-auto=false title="Estatus" type="text" data-live-search="true" name="idUser" [(ngModel)]="alerta.idUser" #idUser="ngModel" (ngModelChange)="getAlertas()">
+                    <div class="col-12 col-md-4 mt-2">
+                        <select class="form-control custom-select selectpicker btn-outline-secondary" data-size="4" data-dropup-auto=false title="Estatus" type="text" data-live-search="true" name="idEstatus" [(ngModel)]="alerta.idEstatus" #idEstatus="ngModel" (ngModelChange)="getAlertas()">
                             <option *ngFor="let estatus of arrEstatus" [ngValue]="estatus._id">{{estatus.strNombre}}</option>
                         </select>
                     </div>
 
-                    <div class="col-12 col-md-3 mt-2">
-                        <select class="custom-select selectpicker selectpicker-down form-control" data-size="4" data-dropup-auto=false title="Estatus" type="text" data-live-search="true">
-                            <option *ngFor="let alerta of alertas">{{alerta._id}}</option>
-                        </select>
-                    </div>
-
-                    <div class="col-12 col-md-3 mt-2">
-                        <div class="form-group m-0 p-0">
-                            <input class="form-control form-control-sm selectpicker btn-outline-secondary m-0" type="date" placeholder="Fecha de Matriculación" name="dteFechaNacimiento" [(ngModel)]="alerta.createdAt" #dteFechaNacimiento="ngModel" (ngModelChange)="getAlertas()">
+                    <div class="col-12 col-md-4 mt-2">
+                        <div class="input-group input-daterange">
+                            <input type="date" class="form-control form-control-sm btn-outline-secondary" name="createdAt" [(ngModel)]="alerta.createdAt" #createdAt="ngModel" (ngModelChange)="getAlertas()">
+                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                            <input type="date" class="form-control form-control-sm btn-outline-secondary ops" name="createdAt1" [(ngModel)]="alerta.createdAt1" #createdAt1="ngModel" (ngModelChange)="getAlertas()">
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-3 mt-2">
-                        <div class="form-group m-0 p-0">
-                            <input class="form-control form-control-sm selectpicker btn-outline-secondary m-0" type="date" placeholder="Fecha de Matriculación" name="dteFechaNacimiento" [(ngModel)]="alerta.createdAt" #dteFechaNacimiento="ngModel" (ngModelChange)="getAlertas()">
-                        </div>
-                    </div>
-
-                    <div class="col-8 col-md-8 mt-4">
+                    <div class="col-8 col-md-10 mt-4">
                         <input [(ngModel)]="searchText" type="text" name="searchText" class="form-control form-control-sm btn-outline-secondary ops mt-2 p-1" placeholder=" Buscar...">
                     </div>
 
@@ -77,7 +70,7 @@
                 <div class="container small mt-4">
                     <div class="row fadeIn">
                         <div class="col-12">
-                            <table id="PDFTable" class="table table table-responsive" [ngClass]="{'table-hover': (!cargando && alertas.length &gt; 0) }">
+                            <table id="PDFTable" class="table table-sm table-responsive" [ngClass]="{'table-hover': (!cargando && alertas.length &gt; 0) }">
                                 <thead>
                                     <tr>
                                         <th>ALUMNO</th>
@@ -87,26 +80,49 @@
                                         <th>PROFESOR</th>
                                         <th>FECHA</th>
                                         <th>ESTATUS</th>
-                                        <th>VER</th>
+                                        <th>SEGUIMIENTO</th>
                                     </tr>
                                 </thead>
 
                                 <!-- SE MUESTRA CUANDO HAY REGISTROS -->
-                                <tbody *ngIf="alertas.length &gt; 0 && !cargando">
-                                    <tr *ngFor="let alerta of alertas | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
+                                <tbody *ngIf="alertas.length > 0 && !cargando">
+                                    <tr class="animated fadeIn fast" *ngFor="let alerta of alertas | filter:searchText | paginate:{itemsPerPage: 25, currentPage: pageActual}">
                                         <td>{{alerta.strNombreAlumno}}</td>
                                         <td>{{alerta.idCarrera.strCarrera}}</td>
-                                        <td>{{alerta.idEspecialidad.strEspecialidad}}</td>
+                                        <td>{{alerta.idEspecialidad}}</td>
                                         <td>{{alerta.idAsignatura.strAsignatura}}</td>
                                         <td>{{alerta.idUser.strName}}</td>
                                         <td>{{alerta.idEstatus.strNombre}}</td>
-                                        <td>{{alerta.createdAt}}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info"><i class="fa fa-eye"></i></button>
+                                        <td>{{alerta.createdAt | date}}</td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-sm btn-info" (click)="verAlerta(alerta._id)"><i class="fa fa-eye"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                                <!-- SE MUESTRA CUANDO NO SE HA SELECCIONADO NINGUN FILTRO -->
+                                <tbody *ngIf="alertas.length == 0 && filtro == false">
+                                    <tr>
+                                        <td colspan="14">
+                                            <div class="alert-dismissible text-center" style="padding: .75rem 1.25rem;">
+                                                <h5 style="height: 100%;width: 100%;"><strong><i class="fa fa-filter" aria-hidden="true"></i> ¡Seleccione un filtro para encontrar resiltados!</strong></h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                                <!-- SE MUESTRA CUANDO NO HAY REGISTROS QUE COINCIDAN CON LOS FILTROS -->
+                                <tbody *ngIf="alertas.length == 0 && filtro == true">
+                                    <tr>
+                                        <td colspan="14">
+                                            <div class="alert-dismissible text-center" style="padding: .75rem 1.25rem;">
+                                                <h5 style="height: 100%;width: 100%;"><strong><i class="fa fa-sad-cry" aria-hidden="true"></i> ¡No hay registros con esas especificaciones!</strong></h5>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+
                             <div class="mt-4 float-right fadeIn ">
                                 <pagination-controls (pageChange)="pageActual=$event " previousLabel="Anterior " nextLabel="Siguiente "></pagination-controls>
                             </div>

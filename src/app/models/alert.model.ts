@@ -27,4 +27,5 @@ export class AlertModel {
     }];
     blnAvtivo?: boolean = true;
     createdAt: Date;
+    createdAt1?: Date;
 }
