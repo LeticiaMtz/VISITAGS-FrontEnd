@@ -50,7 +50,7 @@ export class UpdateStatusComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.resp}!`
+        title: `¡${err.error.msg}!`
       });
     });
   }
