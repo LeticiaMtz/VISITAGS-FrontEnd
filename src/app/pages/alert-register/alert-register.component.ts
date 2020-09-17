@@ -50,7 +50,7 @@ export class AlertRegisterComponent implements OnInit {
   chooseSpeciality: boolean = false;
   asignaturas: any[] = [];
   idPersona: string;
-  documentos: any;
+  documentos: any[] = [];
   motivos: any[] = [];
 
   // tslint:disable-next-line: max-line-length
@@ -104,7 +104,10 @@ export class AlertRegisterComponent implements OnInit {
       fd.append('chrTurno', this.alerta.chrTurno);
       fd.append('idModalidad', this.alerta.idModalidad);
       fd.append('strDescripcion', this.alerta.strDescripcion);
-      fd.append('strFileEvidencias', this.documentos);
+      // fd.append('strFileEvidencias', this.documentos);
+      for(let i = 0; i < this.documentos.length; i++){
+        fd.append('strFileEvidencia', this.documentos[i]);
+      }
 
       this.alertaService.postAlerta(fd).then((data) => {
         Toast.fire({
@@ -123,7 +126,7 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   getArchivos(archivos: any) {
-    this.documentos = archivos;
+    this.documentos.push(archivos)
   }
 
   getCarreras() {
