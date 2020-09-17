@@ -22,7 +22,7 @@ export class LoginService {
   }
 
   loggedIn(){
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('aa_token')) {
       return true
     }else{
       return false
@@ -30,16 +30,16 @@ export class LoginService {
   }
 
   getToken(){
-    return localStorage.getItem('token');
+    return localStorage.getItem('aa_token');
   }
 
   logout(){
-    localStorage.removeItem('token');
+    localStorage.removeItem('aa_token');
     // this.router.navigate(['/'])
   }
 
   isAuthenticated(): boolean{
-    this.usrToken = localStorage.getItem('token');
+    this.usrToken = localStorage.getItem('aa_token');
     return this.usrToken !== null && this.usrToken !== undefined;
   }
 

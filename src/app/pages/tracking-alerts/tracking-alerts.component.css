@@ -1,6 +1,6 @@
 .divScroll {
-  height: 520px;
-  width: 1000px;
+  max-height: 520px;
+  max-width: 1000px;
   overflow-y: scroll;
   overflow-x: hidden;
 }

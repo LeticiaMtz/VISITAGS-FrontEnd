@@ -50,14 +50,14 @@ export class AlertRegisterComponent implements OnInit {
   chooseSpeciality: boolean = false;
   asignaturas: any[] = [];
   idPersona: string;
-  documentos: any;
+  documentos: any[] = [];
   motivos: any[] = [];
 
   // tslint:disable-next-line: max-line-length
   constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, ) { }
 
   ngOnInit(): void {
-      let token = localStorage.token;
+      let token = localStorage.aa_token;
       let tokenDecoded = jwt_decode(token);
       this.alerta.idUser = tokenDecoded.user._id;
       this.alerta.idEstatus = environment.nuevo;
@@ -104,7 +104,10 @@ export class AlertRegisterComponent implements OnInit {
       fd.append('chrTurno', this.alerta.chrTurno);
       fd.append('idModalidad', this.alerta.idModalidad);
       fd.append('strDescripcion', this.alerta.strDescripcion);
-      fd.append('strFileEvidencias', this.documentos);
+      // fd.append('strFileEvidencias', this.documentos);
+      for(let i = 0; i < this.documentos.length; i++){
+        fd.append('strFileEvidencia', this.documentos[i]);
+      }
 
       this.alertaService.postAlerta(fd).then((data) => {
         Toast.fire({
@@ -123,7 +126,7 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   getArchivos(archivos: any) {
-    this.documentos = archivos;
+    this.documentos.push(archivos)
   }
 
   getCarreras() {

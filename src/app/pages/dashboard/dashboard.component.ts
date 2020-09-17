@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.title = 'Reporte de Alertas';
-    this.token = localStorage.token;
+    this.token = localStorage.aa_token;
     this.tokenDecoded = jwt_decode(this.token)
     console.log(this.tokenDecoded);
     console.log(this.tokenDecoded.user._id);

@@ -2,6 +2,7 @@ import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { LoginService } from '../services/login/login.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as CryptoJS from 'crypto-js';
 import Swal from 'sweetalert2';
 
 
@@ -14,8 +15,10 @@ declare function init_plugins();
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  
   rememberIt: boolean;
+  passDesenc: string;
+  passEnc: string;
   errorType: any;
 
   constructor( private router: Router, private loginService: LoginService) { }
@@ -23,16 +26,20 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     init_plugins();
 
-    if(localStorage.getItem('strEmail')){
+    if(localStorage.getItem('aa_strEmail') && localStorage.getItem('aa_strPassword')){
+      let desencPass = localStorage.getItem('aa_strPassword');
+      let bytes = CryptoJS.AES.decrypt(desencPass, 'secretKey');
+      this.passDesenc = bytes.toString(CryptoJS.enc.Utf8);
       this.user.setValue({
-        strEmail: localStorage.getItem('strEmail'),
-        strPassword: '',
+        strEmail: localStorage.getItem('aa_strEmail'),
+        strPassword: this.passDesenc,
         rememberMe: true
       });
       this.rememberIt=true;
     }
     if(!this.rememberIt){
-      localStorage.removeItem('strEmail');
+      localStorage.removeItem('aa_strEmail');
+      localStorage.removeItem('aa_strPassword');
     }
   }
 
@@ -68,23 +75,18 @@ export class LoginComponent implements OnInit {
         let dataJson = JSON.parse(data);
         console.log(dataJson.token);
 
-        // if ( dataJson.user.blnStatus === false ) {
-        //   this.router.navigate(['/login']);
-        //   Swal.fire({
-        //     text: `Aun no has sido aprobado por el administrador, intenta mas tarde`,
-        //     icon: 'error',
-        //     confirmButtonText: 'Aceptar'
-        //   });
-
-        // } else {
-          localStorage.setItem('token', dataJson.token);
+          localStorage.setItem('aa_token', dataJson.token);
 
           if(dataJson.token) {
 
             if (this.user.value.rememberMe) {
-              localStorage.setItem('strEmail', this.user.value.strEmail);
+              localStorage.setItem('aa_strEmail', this.user.value.strEmail);
+              let pass = this.user.value.strPassword;
+              this.passEnc = CryptoJS.AES.encrypt(pass, 'secretKey').toString();
+              localStorage.setItem('aa_strPassword', this.passEnc);
             } else {
-              localStorage.removeItem('strEmail');
+              localStorage.removeItem('aa_strEmail');
+              localStorage.removeItem('aa_strPassword');
             }
   
             this.router.navigate(['/dashboard']);
