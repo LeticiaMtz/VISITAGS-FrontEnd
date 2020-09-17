@@ -79,6 +79,7 @@ export class TrackingAlertsComponent implements OnInit {
     this.obtenerAlerta(this.idAlert);
     this.obtenerEstatus();
     this.obtenerSeguimiento(this.idAlert);
+    this.documento = [];
   }
 
   obtenerAlerta(idAlert: string){
@@ -167,6 +168,7 @@ export class TrackingAlertsComponent implements OnInit {
    
       this.trackingAlertsService.actualizarEstatus(this.idAlert, this.objPriEstatus).then((res: any)=>{
         console.log(res, 'STATUS');
+        this.ngOnInit();
       }).catch(err =>{
         console.log(err, 'ERROR')
       })
