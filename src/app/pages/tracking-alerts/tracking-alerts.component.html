@@ -116,7 +116,7 @@
 
                     <div class="row container">
                         <div class="col-md-12 mt-2">
-                            <span class="badge badge-danger mr-2" *ngFor="let reason of arrReasons"> {{reason.strCategoria}} </span>
+                            <span class="badge badge-danger mr-2" *ngFor="let reason of arrReasons"> {{reason.strClave}} </span>
                         </div>
                     </div>
 
@@ -167,10 +167,8 @@
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-12">
-                                        <div *ngFor="let archivos of data.aJsnEvidencias">
-                                            <i class="fa fa-download mr-1"></i>
-                                            <a (click)="descargarArchivoT(archivos.strFileEvidencia)" style="font-size: x-small;cursor: pointer;">{{archivos.strFileEvidencia}}</a>
-
+                                        <div>
+                                            <a *ngFor="let archivos of data.aJsnEvidencias" (click)="descargarArchivoT(archivos.strFileEvidencia)" class="mr-3" style="font-size: x-small;cursor: pointer;"><i class="fa fa-download"></i> {{archivos.strFileEvidencia}}</a>
                                         </div>
                                     </div>
                                 </div>
