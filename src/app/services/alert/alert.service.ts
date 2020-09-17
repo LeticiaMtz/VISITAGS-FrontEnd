@@ -19,4 +19,9 @@ export class AlertService {
   getAlerts(idRol: string, idUser: string){
     return this.http.get(`${this.URL}/alerts/obtenerAlertas/${idRol}/${idUser}`).toPromise();
   }
+
+  getMonitorAlerts(idCarrera: string, idEspecialidad: string, idUser: string, idAsignatura: string, idEstatus: string, createdAt: Date, createdAt1: Date) {
+    return this.http.get(`${this.URL}/alerts/obtenerAlertasMonitor/${idCarrera}/${idEspecialidad}/${idUser}/${idAsignatura}/${idEstatus}/${createdAt}/${createdAt1}`).toPromise();
+    // /${createdAt}/${createdAt1}
+  }
 }

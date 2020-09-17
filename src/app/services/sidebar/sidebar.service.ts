@@ -31,6 +31,7 @@ rol = environment.roles;
       { titulo: 'Registro de Alertas', icono: 'fa fa-file', url: '/registro-alerta', roles: [this.rol.administrador, this.rol.coordinador, this.rol.director, this.rol.profesor]},
       { titulo: 'Mis Alertas', icono: 'fa fa-exclamation-triangle', url: '/dashboard', roles: [this.rol.administrador, this.rol.coordinador, this.rol.director, this.rol.profesor] },
       { titulo: 'Monitor de Seguimiento', icono: 'fa fa-desktop', roles: [] },
+      { titulo: 'Monitor de Alertas', icono: 'fa fa-line-chart', url: '/monitor-alertas', roles: [this.rol.administrador, this.rol.coordinador, this.rol.director, this.rol.profesor] },
     ]
   },
     {
