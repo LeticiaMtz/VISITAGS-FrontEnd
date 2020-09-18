@@ -90,7 +90,7 @@ export class TrackingAlertsComponent implements OnInit {
       this.objModality = res.cnt[0].idModalidad;
       this.arrReasons = res.cnt[0].arrCrde;
       this.arrFiles = res.cnt[0].aJsnEvidencias;
-      if (this.objUser.strMotherLastName == "undefined"){
+      if (this.objUser.strMotherLastName ){
         this.surName = this.objUser.strMotherLastName;
       }
       this.userName = `${this.objUser.strName} ${this.objUser.strLastName} ${this.surName}`;
