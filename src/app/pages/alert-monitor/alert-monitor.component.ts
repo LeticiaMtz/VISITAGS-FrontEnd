@@ -14,6 +14,8 @@ import { PdfServiceService } from '../../services/PDF/pdf-service.service';
 import * as jwt_decode from 'jwt-decode';
 import { ExportDataService } from 'src/app/services/excel/export-to-excel.service';
 import Swal from 'sweetalert2';
+import { SpecialtyModel } from 'src/app/models/specialty';
+import * as moment from 'moment';
 
 declare var $: any;
 
@@ -54,8 +56,14 @@ export class AlertMonitorComponent implements OnInit {
   tokenDecoded: any;
   title: string = 'Reporte Alertas';
   filtro: boolean = false;
+  specialities: SpecialtyModel[] = [];
+  alerts: any[] = [];
+  strEspecialidad: string;
+  especi: SpecialtyModel[] = [];
+  idSpecialty: string;
+  specialty: SpecialtyModel = new SpecialtyModel();
 
-  constructor( private router: Router, private _carrerasService: CareersService, private _alertService: AlertService, private _espService: SpecialtyService, private _asigService: SubjectsService, private _userService: UserManagementService, private _estatusService: AlertStatusService, private _PdfService: PdfServiceService, private excelService: ExportDataService) { }
+  constructor( private router: Router, private _carrerasService: CareersService, private _alertService: AlertService, private _espService: SpecialtyService, private _asigService: SubjectsService, private _userService: UserManagementService, private _estatusService: AlertStatusService, private _PdfService: PdfServiceService, private excelService: ExportDataService, private _specialityService: SpecialtyService) { }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -67,6 +75,7 @@ export class AlertMonitorComponent implements OnInit {
     this.getAsignaturas();
     this.getProfesores();
     this.getEstatus();
+
   }
 
   getCarreras() {
@@ -122,23 +131,36 @@ export class AlertMonitorComponent implements OnInit {
 
   getAlertas() {
     this._alertService.getMonitorAlerts(this.alerta.idCarrera, this.alerta.idEspecialidad, this.alerta.idUser, this.alerta.idAsignatura, this.alerta.idEstatus, this.alerta.createdAt, this.alerta.createdAt1).then((data: any) => {
-      console.log(this.alerta.createdAt);
-      console.log(this.alerta.createdAt1);
       this.alertas = data.cnt;
       this.filtro = true;
       this.cargando = false;
+      this.arrAlerta = [];
 
-      for (const alerta of this.alertas) {
-        let element = [
-          alerta.strNombreAlumno,
-          alerta.idCarrera.strCarrera,
-          alerta.idEspecialidad,
-          alerta.idAsignatura.strAsignatura,
-          alerta.idUser.strName,
-          alerta.createdAt,
-          alerta.idEstatus.strNombre
-        ];
-        this.arrAlerta.push(element);
+      for (const alert of this.alertas) {
+        this._carrerasService.getCarrerByid(alert.idCarrera['_id']).then((data: any) => {
+          this.especi = data.cnt[0].aJsnEspecialidad;
+          console.log(this.especi);
+          
+          this.especi.forEach(element => {
+            if (element._id === alert.idEspecialidad){
+              console.log(element._id);
+              this.specialty.strEspecialidad = element.strEspecialidad;
+              console.log(this.specialty.strEspecialidad);
+            }
+           });
+          let element = [
+            alert.strNombreAlumno,
+            alert.idCarrera['strCarrera'],
+            this.specialty.strEspecialidad,
+            alert.idAsignatura['strAsignatura'],
+            alert.idUser['strName'],
+            this.getFecha(alert.createdAt),
+            alert.idEstatus['strNombre']
+          ];
+          this.arrAlerta.push(element);
+        }).catch((err) => {
+          console.log(err);
+        });
       }
       console.log('ArrAlertas PDF', this.arrAlerta);
     }).catch((err) => {
@@ -239,37 +261,31 @@ export class AlertMonitorComponent implements OnInit {
   }
 
   exportAsXLSX() {
-    console.log('Excel');
+    let jsnInfo = {};
+    const jsnObject = [];
     
     if (this.alertas.length !== 0) {
-      let jsonobject = JSON.stringify(this.alertas);
-      // jsonobject = jsonobject.replace(/idCarrera/gi, 'Carrera');
-      jsonobject = jsonobject.replace(/strMatricula/gi, 'Matricula');
-      jsonobject = jsonobject.replace(/strNombreAlumno/gi, 'Alumno');
-      jsonobject = jsonobject.replace(/idEspecialidad/gi, 'Especialidad');
-      jsonobject = jsonobject.replace(/strGrupo/gi, 'Grupo');
-      jsonobject = jsonobject.replace(/idModalidad/gi, 'Modalidad');
-      jsonobject = jsonobject.replace(/strDescrpcion/gi, 'Descripción');
-      const jsonobject2 = JSON.parse(jsonobject);
-      const count = Object.keys(jsonobject2).length;
-      for (let i = 0; i < count; i++) {
-        delete jsonobject2[i].createdAt;
-        delete jsonobject2[i].updatedAt;
-        delete jsonobject2[i].blnStatus;
-        delete jsonobject2[i].idAsignatura;
-        delete jsonobject2[i].arrMotivo;
-        delete jsonobject2[i].idUser;
-        delete jsonobject2[i].idEstatus;
-        delete jsonobject2[i].idCarrera;
-        delete jsonobject2[i].chrTurno;
-        delete jsonobject2[i].aJsnEvidencias;
-        delete jsonobject2[i].aJsnSeguimiento;
-        delete jsonobject2[i].arrCrde;
-        delete jsonobject2[i]._id;
-        delete jsonobject2[i].__v;
+
+      for (const alerta of this.alertas) {
+        jsnInfo = {};
+        jsnInfo = {
+          Alumno: alerta.strNombreAlumno,
+          Carrera: alerta.idCarrera['strCarrera'],
+          // Especialidad: alerta.idE,
+          Asignatura: alerta.idAsignatura['strAsignatura'],
+          Profesor: alerta.idUser['strName'],
+          Fecha: this.getFecha(alerta.createdAt),
+          Estatus: alerta.idEstatus['strNombre']
+        };
+        if (jsnInfo !== '') {
+          jsnObject.push(jsnInfo);
+        }
       }
-      this.excelService.exportAsExcelFile(jsonobject2, `${this.title}`);
+        this.excelService.exportAsExcelFile(jsnObject, `${this.title}`);
+    }
+    }
+
+    getFecha(value){
+      return value ? moment(value).format('DD/MM/YYYY') : '';
     }
   }
-
-}
