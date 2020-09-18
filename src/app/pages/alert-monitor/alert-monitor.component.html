@@ -89,11 +89,11 @@
                                     <tr class="animated fadeIn fast" *ngFor="let alerta of alertas | filter:searchText | paginate:{itemsPerPage: 25, currentPage: pageActual}">
                                         <td>{{alerta.strNombreAlumno}}</td>
                                         <td>{{alerta.idCarrera.strCarrera}}</td>
-                                        <td>{{alerta.idEspecialidad}}</td>
+                                        <td>{{specialty.strEspecialidad}}</td>
                                         <td>{{alerta.idAsignatura.strAsignatura}}</td>
                                         <td>{{alerta.idUser.strName}}</td>
-                                        <td>{{alerta.idEstatus.strNombre}}</td>
                                         <td>{{alerta.createdAt | date}}</td>
+                                        <td>{{alerta.idEstatus.strNombre}}</td>
                                         <td class="text-center">
                                             <button type="button" class="btn btn-sm btn-info" (click)="verAlerta(alerta._id)"><i class="fa fa-eye"></i></button>
                                         </td>
