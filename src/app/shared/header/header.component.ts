@@ -1,5 +1,10 @@
+import { UserManagementService } from '../../services/user-manegement/user-management.service';
 import { Component, OnInit } from '@angular/core';
+import { User } from '../../models/user.model';
 import { Router } from '@angular/router';
+import * as jwt_decode from 'jwt-decode';
+
+
 
 @Component({
   selector: 'app-header',
@@ -8,14 +13,35 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  objUser: User = new User();
+  tokenDecoded: any;
+  userEmail: string;
+  userName: string;
+  surName: string = '';
+  userId: any;
+
+  constructor(private router: Router, private user: UserManagementService) { }
 
   ngOnInit() {
+    let token = localStorage.aa_token;
+    this.tokenDecoded = jwt_decode(token);
+    this.userId = this.tokenDecoded.user._id;
+    this.getUser(this.userId);
   }
 
   logout(){
     localStorage.removeItem('aa_token');
     this.router.navigate(['/login']);
+  }
+
+  getUser(id){
+    this.user.getUsuariosByid(id).then((res:any)=>{
+      this.objUser = res.cnt[0];
+      this.userName = `${this.objUser.strName} ${this.objUser.strLastName}`;
+      this.userEmail = this.objUser.strEmail;
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
 }

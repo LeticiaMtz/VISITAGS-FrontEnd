@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { UserManagementService } from '../../services/user-manegement/user-management.service';
 import { SidebarService } from 'src/app/services/service.index';
+import { Component, OnInit } from '@angular/core';
+import { User } from '../../models/user.model';
 import * as jwt_decode from 'jwt-decode';
+
 
 @Component({
   selector: 'app-sidebar',
@@ -9,17 +12,22 @@ import * as jwt_decode from 'jwt-decode';
 })
 export class SidebarComponent implements OnInit {
 
+  objUser: User = new User();
   menu: any;
   arrFinal: any[] = [];
   rol: any;
+  userId: any;
+  userName: string;
+  surName: string = '';
   dashboard = {icono: '', roles: '', titulo: '', url: ''};
 
-  constructor( public _sidebarService: SidebarService) { }
+  constructor( public _sidebarService: SidebarService, private user: UserManagementService) { }
 
   ngOnInit() {
     const tokenDecoded = jwt_decode(localStorage.getItem('aa_token'));
     this.rol = tokenDecoded.user.idRole;
-    // console.log(this.rol);
+    this.userId = tokenDecoded.user._id;
+    this.getUser(this.userId);
 
     let m = {};
     for (let menu of this._sidebarService.menu) {
@@ -56,4 +64,12 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  getUser(id){
+    this.user.getUsuariosByid(id).then((res:any)=>{
+      this.objUser = res.cnt[0];
+      this.userName = `${this.objUser.strName} ${this.objUser.strLastName}`;
+    }).catch(err => {
+      console.log(err);
+    });
+  }
 }
