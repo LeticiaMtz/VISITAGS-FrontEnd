@@ -69,7 +69,7 @@ export class AlertMonitorComponent implements OnInit {
     setTimeout(() => {
       $('.selectpicker').selectpicker('refresh');
     }, 0);
-    this.token = localStorage.token;
+    this.token = localStorage.aa_token;
     this.tokenDecoded = jwt_decode(this.token);
     this.getCarreras();
     this.getAsignaturas();
@@ -168,6 +168,7 @@ export class AlertMonitorComponent implements OnInit {
         icon: 'error',
         title: err.error.msg
       });
+      this.alertas = [];
     });
   }
 
