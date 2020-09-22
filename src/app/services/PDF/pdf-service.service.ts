@@ -71,7 +71,7 @@ export class PdfServiceService {
     };
 
     let finalDate = fecha.toLocaleDateString("es-ES", options);
-    const tokenDecoded = jwt_decode(localStorage.getItem("token"));
+    const tokenDecoded = jwt_decode(localStorage.getItem("aa_token"));
     let usuario =
       tokenDecoded.user.strName;
       tokenDecoded.user.strLastName;
