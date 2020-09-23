@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertModel } from '../../models/alert.model';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, NgForm, ReactiveFormsModule, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { FileModel } from '../../models/file.model';
 import { CareersService } from 'src/app/services/careers/careers.service';
 import { CareerModel } from '../../models/career';
@@ -20,6 +20,7 @@ import { environment } from '../../../environments/environment.prod';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { EventEmitter } from 'protractor';
+
 
 declare var $: any;
 
@@ -52,17 +53,37 @@ export class AlertRegisterComponent implements OnInit {
   idPersona: string;
   documentos: any[] = [];
   motivos: any[] = [];
+  formaAlumno: FormGroup;
 
   // tslint:disable-next-line: max-line-length
-  constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, ) { }
+  constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-      let token = localStorage.aa_token;
-      let tokenDecoded = jwt_decode(token);
-      this.alerta.idUser = tokenDecoded.user._id;
-      this.alerta.idEstatus = environment.nuevo;
+    let token = localStorage.aa_token;
+    let tokenDecoded = jwt_decode(token);
+    this.alerta.idUser = tokenDecoded.user._id;
+    this.alerta.idEstatus = environment.nuevo;
     this.getAll();
+
+    this.formaAlumno = new FormGroup({
+      alumnos: new FormArray([])
+    });
   }
+
+  addAlumno() {
+    (this.formaAlumno.controls['alumnos'] as FormArray).push(new FormGroup({
+      'strMatricula': new FormControl('', Validators.required),
+      'strNombre': new FormControl('', Validators.required)
+    }));
+
+    console.log(this.formaAlumno.controls['alumnos']);
+  }
+
+  deleteAlumno(index: number) {
+    (this.formaAlumno.controls['alumnos'] as FormArray).removeAt(index);
+  }
+
+
 
   getAll() {
     this.getCarreras();
