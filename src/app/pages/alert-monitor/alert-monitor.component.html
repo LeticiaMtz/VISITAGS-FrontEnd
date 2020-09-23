@@ -73,11 +73,14 @@
                             <table id="PDFTable" class="table table-sm table-responsive" [ngClass]="{'table-hover': (!cargando && alertas.length &gt; 0) }">
                                 <thead>
                                     <tr>
+                                        <th>MATRICULA</th>
                                         <th>ALUMNO</th>
                                         <th>CARRERA</th>
                                         <th>ESPECIALIDAD</th>
                                         <th>ASIGNATURA</th>
+                                        <th>GRADO/GRUPO</th>
                                         <th>PROFESOR</th>
+                                        <th>MOTIVO</th>
                                         <th>FECHA</th>
                                         <th>ESTATUS</th>
                                         <th>SEGUIMIENTO</th>
@@ -86,17 +89,23 @@
 
                                 <!-- SE MUESTRA CUANDO HAY REGISTROS -->
                                 <tbody *ngIf="alertas.length > 0 && !cargando">
-                                    <tr class="animated fadeIn fast" *ngFor="let alerta of alertas | filter:searchText | paginate:{itemsPerPage: 25, currentPage: pageActual}">
+                                    <tr class="animated fadeIn fast" *ngFor="let alerta of alertas | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
+                                       
+                                        <td>{{alerta.strMatricula}}</td>
                                         <td>{{alerta.strNombreAlumno}}</td>
                                         <td>{{alerta.idCarrera.strCarrera}}</td>
                                         <td>{{specialty.strEspecialidad}}</td>
                                         <td>{{alerta.idAsignatura.strAsignatura}}</td>
+                                        <td>{{alerta.strGrupo}}</td>
                                         <td>{{alerta.idUser.strName}}</td>
+                                        <small *ngFor="let motivo of alerta.arrCrde" style="font-size: small;" ><td>{{motivo.strNombre}}</td></small>
                                         <td>{{alerta.createdAt | date}}</td>
                                         <td>{{alerta.idEstatus.strNombre}}</td>
+                                    
                                         <td class="text-center">
                                             <button type="button" class="btn btn-sm btn-info" (click)="verAlerta(alerta._id)"><i class="fa fa-eye"></i></button>
                                         </td>
+                                 
                                     </tr>
                                 </tbody>
 

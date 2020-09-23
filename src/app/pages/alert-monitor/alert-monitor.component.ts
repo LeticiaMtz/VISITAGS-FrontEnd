@@ -16,6 +16,8 @@ import { ExportDataService } from 'src/app/services/excel/export-to-excel.servic
 import Swal from 'sweetalert2';
 import { SpecialtyModel } from 'src/app/models/specialty';
 import * as moment from 'moment';
+import { BehaviorModel } from '../../models/behavior.model';
+import { element } from 'protractor';
 
 declare var $: any;
 
@@ -62,6 +64,7 @@ export class AlertMonitorComponent implements OnInit {
   especi: SpecialtyModel[] = [];
   idSpecialty: string;
   specialty: SpecialtyModel = new SpecialtyModel();
+  
 
   constructor( private router: Router, private _carrerasService: CareersService, private _alertService: AlertService, private _espService: SpecialtyService, private _asigService: SubjectsService, private _userService: UserManagementService, private _estatusService: AlertStatusService, private _PdfService: PdfServiceService, private excelService: ExportDataService, private _specialityService: SpecialtyService) { }
 
@@ -137,6 +140,7 @@ export class AlertMonitorComponent implements OnInit {
       this.arrAlerta = [];
 
       for (const alert of this.alertas) {
+
         this._carrerasService.getCarrerByid(alert.idCarrera['_id']).then((data: any) => {
           this.especi = data.cnt[0].aJsnEspecialidad;
           console.log(this.especi);
@@ -147,13 +151,17 @@ export class AlertMonitorComponent implements OnInit {
               this.specialty.strEspecialidad = element.strEspecialidad;
               console.log(this.specialty.strEspecialidad);
             }
-           });
+          });
+
           let element = [
+            alert.strMatricula,
             alert.strNombreAlumno,
             alert.idCarrera['strCarrera'],
             this.specialty.strEspecialidad,
             alert.idAsignatura['strAsignatura'],
+            alert.strGrupo,
             alert.idUser['strName'],
+            alert.arrCrde.map(motivo => motivo.strNombre),
             this.getFecha(alert.createdAt),
             alert.idEstatus['strNombre']
           ];
@@ -191,6 +199,14 @@ export class AlertMonitorComponent implements OnInit {
   exportPDF() {
     let header = [
       {
+        text: "Matricula",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      },
+      {
         text: "Alumno",
         style: "tableHeader",
         bold: true,
@@ -226,7 +242,23 @@ export class AlertMonitorComponent implements OnInit {
         size: 13,
       },
       {
+        text: "Grado/Grupo",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      },
+      {
         text: "Profesor",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      },
+      {
+        text: "Motivos",
         style: "tableHeader",
         bold: true,
         fillColor: "#2a3e52",
@@ -264,23 +296,34 @@ export class AlertMonitorComponent implements OnInit {
   exportAsXLSX() {
     let jsnInfo = {};
     const jsnObject = [];
-    
+  
     if (this.alertas.length !== 0) {
 
       for (const alerta of this.alertas) {
+
+        let motivo = '';
+        for (const iterator of alerta.arrCrde) {
+          motivo += iterator.strNombre + ', ';
+        }
+
         jsnInfo = {};
         jsnInfo = {
+          Matricula: alerta.strMatricula,
           Alumno: alerta.strNombreAlumno,
           Carrera: alerta.idCarrera['strCarrera'],
-          // Especialidad: alerta.idE,
+          Especialidad: alerta.idEspecialidad,
           Asignatura: alerta.idAsignatura['strAsignatura'],
+          Grupo: alerta.strGrupo,
           Profesor: alerta.idUser['strName'],
+          Motivo: motivo,
           Fecha: this.getFecha(alerta.createdAt),
           Estatus: alerta.idEstatus['strNombre']
         };
+
         if (jsnInfo !== '') {
           jsnObject.push(jsnInfo);
         }
+
       }
         this.excelService.exportAsExcelFile(jsnObject, `${this.title}`);
     }
