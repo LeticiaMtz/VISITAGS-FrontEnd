@@ -184,11 +184,20 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form #formaAlumno="ngForm" (ngSubmit)="addAlumno()">
-                    <div class="container">
-                        <div class="row mt-2">
+                <form #formaAlumno="ngForm">
+                    <div class="container p-20">
+
+                        <div class="row" *ngIf="arrAlumnos.length == 0">
+                            <div class="col-md-12">
+                                <div class="container text-center">
+                                    <h4>No hay Alumnos Agregados. <strong class="text-info" (click)="addAlumno(formaAlumno)">Agregar Uno</strong></h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2" *ngFor="let alumno of arrAlumnos; let i = index;">
                             <div class="col-sm-4">
-                                <input [class.is-invalid]="strMatricula.invalid && strMatricula.touched" class="form-control form-control-sm" type="text" placeholder="Matricula" [(ngModel)]="alerta.strMatricula" required #strMatricula="ngModel">
+                                <input [class.is-invalid]="strMatricula.invalid && strMatricula.touched" class="form-control form-control-sm" type="number" name="strMatricula{{i}}" placeholder="Matricula" [(ngModel)]="alumno.strMatricula" required #strMatricula="ngModel">
                                 <div class="invalid-feedback" *ngIf="strMatricula.errors?.required">
                                     <small>
                                         Es necesario ingresar una matricula.
@@ -196,18 +205,22 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-8">
-                                <input [class.is-invalid]="strNombreAlumno.invalid && strNombreAlumno.touched" class="form-control form-control-sm" type="text" placeholder="Nombre del Alumno" [(ngModel)]="alerta.strNombreAlumno" required #strNombreAlumno="ngModel">
+                            <div class="col-sm-7">
+                                <input [class.is-invalid]="strNombreAlumno.invalid && strNombreAlumno.touched" class="form-control form-control-sm" type="text" name="strNombreAlumno{{i}}" placeholder="Nombre del Alumno" [(ngModel)]="alumno.strNombreAlumno" required #strNombreAlumno="ngModel">
                                 <div class="invalid-feedback" *ngIf="strNombreAlumno.errors?.required">
                                     <small>
                                         Es necesario ingresar el nombre del alumno.
                                     </small>
                                 </div>
                             </div>
+
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-outline-danger btn-sm btn-block" (click)="eliminarAlumno(i)"><i class="fa fa-minus"></i></button>
+                            </div>
                         </div>
-                        <div class="row mt-2">
+                        <div class="row mt-4">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-outline-info btn-sm btn-block"><i class="fa fa-plus"></i></button>
+                                <button type="button" class="btn btn-outline-success btn-sm btn-block" (click)="addAlumno(formaAlumno)"><i class="fa fa-plus"></i> Agregar Alumno</button>
                             </div>
                         </div>
                     </div>
