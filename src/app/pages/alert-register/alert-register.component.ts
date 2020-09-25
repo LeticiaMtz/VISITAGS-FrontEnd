@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertModel } from '../../models/alert.model';
-import { FormBuilder, NgForm } from '@angular/forms';
+import { FormArray, FormBuilder, NgForm } from '@angular/forms';
 import { FileModel } from '../../models/file.model';
 import { CareersService } from 'src/app/services/careers/careers.service';
 import { CareerModel } from '../../models/career';
@@ -20,6 +20,8 @@ import { environment } from '../../../environments/environment.prod';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { EventEmitter } from 'protractor';
+import { UserManagementService } from '../../services/user-manegement/user-management.service';
+import { User } from 'src/app/models/user.model';
 
 
 declare var $: any;
@@ -54,12 +56,16 @@ export class AlertRegisterComponent implements OnInit {
   documentos: any[] = [];
   motivos: any[] = [];
   arrAlumnos: any[] = [];
+  arrColaboradores: any[] = [];
+  personas: any[] = [];
 
   // tslint:disable-next-line: max-line-length
-  constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router ) { }
+  constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, private _userService: UserManagementService ) { }
 
   ngOnInit(): void {
     this.arrAlumnos.push({ strMatricula: '', strNombreAlumno: ''});
+    this.arrColaboradores.push({_id: ''});
+    console.log(this.arrColaboradores.length);
     let token = localStorage.aa_token;
     let tokenDecoded = jwt_decode(token);
     this.alerta.idUser = tokenDecoded.user._id;
@@ -74,11 +80,11 @@ export class AlertRegisterComponent implements OnInit {
         title: 'Algunos campos no fueron llenados'
       });
     } else {
+      this.arrAlumnos.push({ strMatricula: '', strNombreAlumno: '' });
       Toast.fire({
         icon: 'success',
         title: `¡Nuevos Campos Creados!`
       });
-      this.arrAlumnos.push({ strMatricula: '', strNombreAlumno: '' });
     }
   }
 
@@ -90,11 +96,58 @@ export class AlertRegisterComponent implements OnInit {
     });
   }
 
+  addColaborador(formaColaborador: NgForm) {
+    console.log(formaColaborador);
+    if (formaColaborador.invalid) {
+      Toast.fire({
+        icon: 'warning',
+        title: 'No se ha seleccionado un colaborador'
+      });
+    } else {
+      this.arrColaboradores.push({_id: ''});
+      Toast.fire({
+        icon: 'success',
+        title: `¡Nuevos Campos Creados!`
+      });
+      console.log(this.arrColaboradores);
+    }
+  }
+
+  eliminarColaborador(index: number,formaColaborador: NgForm) {
+    console.log(index,formaColaborador.controls);
+    this.arrColaboradores.splice(index, 1);
+    console.log(this.arrColaboradores);
+    formaColaborador.onReset();
+    Toast.fire({
+      icon: 'warning',
+      title: `¡El campo fué eliminado!`
+    });
+  }
+
   getAll() {
     this.getCarreras();
     this.getModalidades();
     this.getAsignaturas();
     this.getConductasRiesgo();
+    this.getPersonas();
+  }
+
+  getPersonas() {
+    this._userService.getUsuarios().then((data: any) => {
+      
+      for (const persona of data.cnt) {
+        this.personas.push({
+          _id: persona._id,
+          strNombre: `${persona.strName} ${persona.strLastName}`
+        });
+      }
+      console.log(this.personas);
+    }).catch((err) => {
+      Toast.fire({
+        icon: 'warning',
+        title: `¡${err.msg}!`
+      });
+    });
   }
 
   seleccionarTurno(turno: string) {

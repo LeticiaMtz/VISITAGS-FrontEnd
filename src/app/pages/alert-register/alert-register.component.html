@@ -190,7 +190,7 @@
                         <div class="row" *ngIf="arrAlumnos.length == 0">
                             <div class="col-md-12">
                                 <div class="container text-center">
-                                    <h4>No hay Alumnos Agregados. <strong class="text-info" (click)="addAlumno(formaAlumno)">Agregar Uno</strong></h4>
+                                    <h4>No hay Alumnos Agregados. <strong class="text-info" style="cursor: pointer;" (click)="addAlumno(formaAlumno)">Agregar Uno <i class="fa fa-plus-circle"></i></strong></h4>
                                 </div>
                             </div>
                         </div>
@@ -247,20 +247,39 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-10">
+                    <form #formaColaboradores="ngForm">
+                        <div class="container p-20">
 
+                            <div class="row" *ngIf="arrColaboradores.length == 0">
+                                <div class="col-md-12">
+                                    <div class="container text-center">
+                                        <h4>No Hay Colaboradores Agregados. <strong class="text-info" style="cursor: pointer;" (click)="addColaborador(formaColaboradores)">Agregar Uno <i class="fa fa-plus-circle"></i></strong></h4>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-2">
 
+                            <div class="row mt-2" *ngFor="let colaborador of arrColaboradores; let ind = index;">
+                                <div class="col-md-11">
+                                    <app-bootstrap-select [ngForm]="formaColaboradores" [name]="'_id'+ind" [datos]="personas" (model)="colaborador.strName = $event" [titulo]="'Seleccione un Colaborador'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar un colaborador"
+                                        [required]="true"></app-bootstrap-select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-outline-danger btn-sm btn-block" (click)="eliminarColaborador(ind, formaColaboradores)"><i class="fa fa-minus"></i></button>
+                                </div>
                             </div>
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-outline-success btn-sm btn-block" (click)="addColaborador(formaColaboradores)"><i class="fa fa-plus"></i> Nuevo Colaborador</button>
+                                </div>
+                            </div>
+
                         </div>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info btn-block" data-dismiss="modal"><i class="fa fa-send mr-2"></i> Invitar</button>
+                <!-- <i class="fa fa-send mr-2"></i> -->
+                <button type="button" class="btn btn-info btn-block" data-dismiss="modal">¡Listo!</button>
             </div>
         </div>
     </div>
