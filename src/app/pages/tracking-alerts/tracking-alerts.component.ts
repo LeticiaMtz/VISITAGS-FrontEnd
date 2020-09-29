@@ -89,6 +89,7 @@ export class TrackingAlertsComponent implements OnInit {
     this.documento = [];
     this.arrColaboradores.push({_id: ''});
     this.getPersonas();
+    this.objTracking.idEstatus = this.enProgreso
 
 
   }
