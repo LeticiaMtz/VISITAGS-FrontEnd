@@ -18,6 +18,7 @@ import { SpecialtyModel } from 'src/app/models/specialty';
 import * as moment from 'moment';
 import { BehaviorModel } from '../../models/behavior.model';
 import { element } from 'protractor';
+import { environment } from 'src/environments/environment.prod';
 
 declare var $: any;
 
@@ -34,6 +35,11 @@ const Toast = Swal.mixin({
   styleUrls: ['./alert-monitor.component.css']
 })
 export class AlertMonitorComponent implements OnInit {
+
+  nuevo: string = environment.nuevo;
+  enProgreso: string = environment.seguimiento;
+  cerrado: string = environment.cerrado;
+  finalizado: string = environment.finalizado;
 
   carreras: any[] = [];
   especialidades: any[] = [];

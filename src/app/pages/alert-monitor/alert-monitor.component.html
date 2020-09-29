@@ -98,10 +98,15 @@
                                         <td>{{alerta.idAsignatura.strAsignatura}}</td>
                                         <td>{{alerta.strGrupo}}</td>
                                         <td>{{alerta.idUser.strName}}</td>
-                                        <small *ngFor="let motivo of alerta.arrCrde" style="font-size: small;" ><td>{{motivo.strNombre}}</td></small>
+                                        <td><span class="badge badge-danger" *ngFor="let motivo of alerta.arrCrde">{{motivo.strNombre}}</span></td>
                                         <td>{{alerta.createdAt | date}}</td>
-                                        <td>{{alerta.idEstatus.strNombre}}</td>
-                                    
+                                        <td> 
+                                            <span class="badge badge-info" *ngIf="nuevo == alerta.idEstatus._id"> <i class="fa fa-star"></i> {{alerta.idEstatus.strNombre}}</span>
+                                            <span class="badge badge-warning" *ngIf="enProgreso == alerta.idEstatus._id"><i class="fa fa-cog fa-spin fa fa-fw"></i> {{alerta.idEstatus.strNombre}}</span>
+                                            <span class="badge badge-danger" *ngIf="cerrado == alerta.idEstatus._id"> <i class="fa fa-times"></i> {{alerta.idEstatus.strNombre}}</span>
+                                            <span class="badge badge-success" *ngIf="finalizado == alerta.idEstatus._id"> <i class="fa fa-check"></i> {{alerta.idEstatus.strNombre}}</span>
+                                        </td>
+                                       
                                         <td class="text-center">
                                             <button type="button" class="btn btn-sm btn-info" (click)="verAlerta(alerta._id)"><i class="fa fa-eye"></i></button>
                                         </td>
