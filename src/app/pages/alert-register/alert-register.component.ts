@@ -171,12 +171,12 @@ export class AlertRegisterComponent implements OnInit {
       });
       return false;
     } else {
-
+      console.log(this.arrColaboradores);
       for (const colaborador of this.arrColaboradores) {
-        let id = colaborador._id[0];
+        let id = colaborador._id[];
         this.arrColabFInal.push(id);
       }
-  
+
       console.log(this.arrColabFInal);
 
       let fd = new FormData();
