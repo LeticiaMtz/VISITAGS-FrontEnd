@@ -7,4 +7,5 @@ export class SeguimientoModel {
     aJsnEvidencias: any = [{
         FileModel
     }];
+    arrInvitados?: any[];
 }

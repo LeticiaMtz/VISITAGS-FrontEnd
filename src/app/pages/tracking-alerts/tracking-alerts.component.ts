@@ -68,6 +68,7 @@ export class TrackingAlertsComponent implements OnInit {
   surName: string = '';
   agregar: boolean = false;
   arrColaboradores: any[] = [];
+  arrColabFinal: any[] = [];
   personas: any[] = [];
   
   
@@ -150,16 +151,30 @@ export class TrackingAlertsComponent implements OnInit {
       });
       return false;
     }else{
+
+      console.log(this.arrColaboradores);
+
+      for (const colaborador of this.arrColaboradores) {
+        let id = colaborador._id[0];
+        this.arrColabFinal.push(id);
+      }
+
+      console.log(this.arrColabFinal);
+
       this.resetImage = true;
-    let fd = new FormData();
-    fd.append('idUser', this.tokenDecoded.user._id);
-    this.EstatusActualizado = this.objTracking.idEstatus;
-    // console.log(data, 'DATA');
-    fd.append('idEstatus', this.objTracking.idEstatus);
-    fd.append('strComentario', this.objTracking.strComentario);
-    // if(this.objTracking.aJsnEvidencias !== null){
-    //   for(let i = 0; i < this.objTracking.aJsnEvidencias.lenght; i++){
+      let fd = new FormData();
+      fd.append('idUser', this.tokenDecoded.user._id);
+      this.EstatusActualizado = this.objTracking.idEstatus;
+      // console.log(data, 'DATA');
+      fd.append('idEstatus', this.objTracking.idEstatus);
+      fd.append('strComentario', this.objTracking.strComentario);
+      // if(this.objTracking.aJsnEvidencias !== null){
+      //   for(let i = 0; i < this.objTracking.aJsnEvidencias.lenght; i++){
       console.log(this.documento, 'documento-------');
+
+      for (let colaborador = 0; colaborador < this.arrColabFinal.length; colaborador++) {
+        fd.append('arrInvitados', this.arrColabFinal[colaborador]);
+      }
       
       for(let i = 0; i < this.documento.length; i++){
         fd.append('strFileEvidencia', this.documento[i]);
@@ -217,7 +232,8 @@ export class TrackingAlertsComponent implements OnInit {
 
   addColaborador(formaColaborador: NgForm) {
     this.ngAfterViewInit();
-    if (formaColaborador.invalid) {
+    if (formaColaborador.invalid) 
+    {
       Toast.fire({
         icon: 'warning',
         title: 'No se ha seleccionado un colaborador'
