@@ -173,7 +173,7 @@ export class AlertRegisterComponent implements OnInit {
     } else {
       console.log(this.arrColaboradores);
       for (const colaborador of this.arrColaboradores) {
-        let id = colaborador._id[];
+        let id = colaborador._id;
         this.arrColabFInal.push(id);
       }
 
