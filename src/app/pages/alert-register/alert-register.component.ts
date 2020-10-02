@@ -59,6 +59,7 @@ export class AlertRegisterComponent implements OnInit {
   arrColaboradores: any[] = [];
   arrColabFInal: any[] = [];
   personas: any[] = [];
+  arrAlertas: any[] = [];
 
   // tslint:disable-next-line: max-line-length
   constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, private _userService: UserManagementService, private cdr: ChangeDetectorRef ) { }
@@ -171,13 +172,11 @@ export class AlertRegisterComponent implements OnInit {
       });
       return false;
     } else {
-      console.log(this.arrColaboradores);
+
       for (const colaborador of this.arrColaboradores) {
-        let id = colaborador._id;
+        let id = colaborador._id[0];
         this.arrColabFInal.push(id);
       }
-
-      console.log(this.arrColabFInal);
 
       let fd = new FormData();
 
@@ -196,25 +195,22 @@ export class AlertRegisterComponent implements OnInit {
           }
         }
 
-        if (this.arrColabFInal !== null) {
-          for (let invitado = 0; invitado < this.arrColabFInal.length; invitado++) {
-            fd.append('arrInvitados', this.arrColabFInal[invitado]);
-          }
-        }
-
         fd.append('strGrupo', this.alerta.strGrupo);
         fd.append('chrTurno', this.alerta.chrTurno);
         fd.append('idModalidad', this.alerta.idModalidad);
         fd.append('strDescripcion', this.alerta.strDescripcion);
-        // fd.append('strFileEvidencias', this.documentos);
+
         for (let i = 0; i < this.documentos.length; i++) {
           fd.append('strFileEvidencia', this.documentos[i]);
         }
+        this.arrAlertas.push(fd);
       }
 
-      this.alertaService.postAlerta(fd).then((data: any) => {
+      console.log(this.arrAlertas)
+      console.log(this.arrColabFInal);
+      
 
-        console.log(data);
+      this.alertaService.postAlerta(this.arrAlertas, this.arrColabFInal).then((data: any) => {
 
         Toast.fire({
           icon: 'success',
@@ -225,10 +221,10 @@ export class AlertRegisterComponent implements OnInit {
           icon: 'error',
           title: err.error.msg
         });
-        // forma.reset();
+        forma.reset();
       });
 
-      // this.router.navigate(['/dashboard']);
+      this.router.navigate(['/dashboard']);
     }
   }
 
