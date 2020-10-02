@@ -97,9 +97,10 @@
                     </div>
                 </div>
 
+                <!-- cambiar la clave por el nombre de la razon de riesgo -->
                 <div class="row mx-3 my-3">
                     <div class="col-md-12">
-                        <span class="badge badge-danger" data-toggle="tooltip" data-placement="right" title="{{reason.strClave}}" *ngFor="let reason of arrReasons"> {{reason.strNombre}} </span>
+                        <span class="badge badge-danger" data-toggle="tooltip" data-placement="right" title="{{reason.strNombre}}" style="margin-right: 5px;" *ngFor="let reason of arrReasons">{{reason.strNombre}}</span>
                     </div>
                 </div>
             </div>
@@ -175,10 +176,10 @@
                                     </div>
                                 </div>
 
-                                <div class="col-6 mt-2">
+                                <div class="col-4 mt-2">
                                     <select [class.is-invalid]="idEstatus.invalid && idEstatus.touched" class="custom-select form-control form-control-sm" type="text" name="idEstatus" [(ngModel)]="objTracking.idEstatus" required #idEstatus="ngModel">
                                             <option [ngValue]="undefined" disabled selected hidden>Seleccione Estatus</option>
-                                            <option *ngFor="let estatus of arrEstatus"  [ngValue]="estatus._id"> {{estatus.strNombre}} </option>
+                                            <option *ngFor="let estatus of arrEstatus" [ngValue]="estatus._id"> {{estatus.strNombre}} </option>
                                         </select>
                                     <div class="invalid-feedback" *ngIf="idEstatus.errors?.required">
                                         <small>
@@ -187,8 +188,17 @@
                                     </div>
                                 </div>
 
-                                <div class="col-5 mt-2">
-                                    <button type="submit" class="btn btn-outline-info btn-sm btn-block float-right">Comentar</button>
+                                <!-- Button trigger modal -->
+                                <div class="col-4 mt-2">
+                                    <button type="button" class="btn btn-outline-info btn-sm btn-block float-right" data-toggle="modal" data-target="#colaborador-modal">
+                                        <!-- <i class="fa fa-user-plus mr-2"></i> -->
+                                        Invitar Colaborador
+                                    </button>
+                                </div>
+
+
+                                <div class="col-4 mt-2">
+                                    <button type="submit" class="btn btn-outline-success btn-sm btn-block float-right">Comentar</button>
                                 </div>
                             </div>
                         </div>
@@ -207,3 +217,56 @@
         </div>
     </div>
 </form>
+
+
+<!-- Modal Colaboradores-->
+<div class="modal fade" id="colaborador-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#1BA2C6 ;">
+                <h5 class="modal-title text" id="staticBackdropLabel" style="color:white;"><i class="fa fa-user-plus"></i> Invitar Colaboradores</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <div class="container">
+                        <span aria-hidden="true">&times;</span>
+                    </div>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form #formaColaboradores="ngForm">
+                        <div class="container p-20">
+
+                            <div class="row" *ngIf="arrColaboradores.length == 0">
+                                <div class="col-md-12">
+                                    <div class="container text-center">
+                                        <h4 style="text-align:left;">No Hay Colaboradores Agregados. <strong class="text-info" style="cursor: pointer;" (click)="addColaborador(formaColaboradores)">Agregar Uno <i class="fa fa-plus-circle"></i></strong></h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2" *ngFor="let colaborador of arrColaboradores; let ind = index;">
+                                <div class="col-md-11">
+                                    <app-bootstrap-select [ngForm]="formaColaboradores" [name]="'_id'+ind" [datos]="personas" (model)="colaborador._id = $event" [titulo]="'Seleccione un Colaborador'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar un colaborador"
+                                        [required]="true"></app-bootstrap-select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-danger btn-sm btn-block" (click)="eliminarColaborador(formaColaboradores, ind)"><i class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-outline-success btn-sm" (click)="addColaborador(formaColaboradores)"><i class="fa fa-plus"></i> Nuevo Colaborador</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <i class="fa fa-send mr-2"></i> -->
+                <button type="button" class="btn btn-info " data-dismiss="modal">¡Listo!</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -15,6 +15,8 @@ import { NgForm } from '@angular/forms';
 import { ReasonsService } from '../../services/reasons-crde/reasons-crde.service';
 import { ReasonsModel } from 'src/app/models/reasons-crde.model';
 import { FileModel } from '../../models/file.model';
+import { ChangeDetectorRef } from '@angular/core';
+import { UserManagementService } from '../../services/user-manegement/user-management.service';
 
 declare var $: any;
 
@@ -64,9 +66,15 @@ export class TrackingAlertsComponent implements OnInit {
   objPriEstatus: AlertModel = new AlertModel();
   EstatusActualizado: string; 
   surName: string = '';
+  agregar: boolean = false;
+  arrColaboradores: any[] = [];
+  arrColabFinal: any[] = [];
+  personas: any[] = [];
+  
+  
   
 
-  constructor(private trackingAlertsService: TrackingAlertsService, private alertStatusService: AlertStatusService, private reasonsService: ReasonsService, private activatedRoute: ActivatedRoute) { }
+  constructor(private trackingAlertsService: TrackingAlertsService, private alertStatusService: AlertStatusService, private reasonsService: ReasonsService, private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef,  private _userService: UserManagementService) { }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -80,6 +88,11 @@ export class TrackingAlertsComponent implements OnInit {
     this.obtenerEstatus();
     this.obtenerSeguimiento(this.idAlert);
     this.documento = [];
+    this.arrColaboradores.push({_id: ''});
+    this.getPersonas();
+    this.objTracking.idEstatus = this.enProgreso
+
+
   }
 
   obtenerAlerta(idAlert: string){
@@ -138,16 +151,30 @@ export class TrackingAlertsComponent implements OnInit {
       });
       return false;
     }else{
+
+      console.log(this.arrColaboradores);
+
+      for (const colaborador of this.arrColaboradores) {
+        let id = colaborador._id[0];
+        this.arrColabFinal.push(id);
+      }
+
+      console.log(this.arrColabFinal);
+
       this.resetImage = true;
-    let fd = new FormData();
-    fd.append('idUser', this.tokenDecoded.user._id);
-    this.EstatusActualizado = this.objTracking.idEstatus;
-    // console.log(data, 'DATA');
-    fd.append('idEstatus', this.objTracking.idEstatus);
-    fd.append('strComentario', this.objTracking.strComentario);
-    // if(this.objTracking.aJsnEvidencias !== null){
-    //   for(let i = 0; i < this.objTracking.aJsnEvidencias.lenght; i++){
+      let fd = new FormData();
+      fd.append('idUser', this.tokenDecoded.user._id);
+      this.EstatusActualizado = this.objTracking.idEstatus;
+      // console.log(data, 'DATA');
+      fd.append('idEstatus', this.objTracking.idEstatus);
+      fd.append('strComentario', this.objTracking.strComentario);
+      // if(this.objTracking.aJsnEvidencias !== null){
+      //   for(let i = 0; i < this.objTracking.aJsnEvidencias.lenght; i++){
       console.log(this.documento, 'documento-------');
+
+      for (let colaborador = 0; colaborador < this.arrColabFinal.length; colaborador++) {
+        fd.append('arrInvitados', this.arrColabFinal[colaborador]);
+      }
       
       for(let i = 0; i < this.documento.length; i++){
         fd.append('strFileEvidencia', this.documento[i]);
@@ -191,4 +218,62 @@ export class TrackingAlertsComponent implements OnInit {
   descargarArchivoE(nameFile: string){
     this.trackingAlertsService.getFileEvidence(nameFile);
   }
+
+  eliminarColaborador(formaColaborador: NgForm,index: number) {
+    formaColaborador.form.removeControl( `_id${index}`);
+    this.arrColaboradores.splice(index, 1);
+    Toast.fire({
+      icon: 'warning',
+      title: `¡El campo fué eliminado!`
+    });
+    this.ngAfterViewInit();
+    this.getPersonas();
+  }
+
+  addColaborador(formaColaborador: NgForm) {
+    this.ngAfterViewInit();
+    if (formaColaborador.invalid) 
+    {
+      Toast.fire({
+        icon: 'warning',
+        title: 'No se ha seleccionado un colaborador'
+      });
+    } else {
+      this.arrColaboradores.push({_id: ''});
+      Toast.fire({
+        icon: 'success',
+        title: `¡Nuevos Campos Creados!`
+      });
+      
+    }
+  }
+
+  ngAfterViewInit() {
+    this.ngAfterContentChecked(); 
+   }
+  
+   ngAfterContentChecked(): void {
+     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+     //Add 'implements AfterViewInit' to the class.
+     this.cdr.detectChanges();
+   }
+
+   getPersonas() {
+    this._userService.getUsuarios().then((data: any) => {
+      for (const persona of data.cnt) {
+        this.personas.push({
+          _id: persona._id,
+          strNombre: `${persona.strName} ${persona.strLastName}`
+        });
+      }
+      console.log(this.personas);
+    }).catch((err) => {
+      Toast.fire({
+        icon: 'warning',
+        title: `¡${err.msg}!`
+      });
+    });
+  }
+
+
 }
