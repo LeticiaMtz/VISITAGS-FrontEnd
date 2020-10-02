@@ -173,44 +173,54 @@ export class AlertRegisterComponent implements OnInit {
       return false;
     } else {
 
-      for (const colaborador of this.arrColaboradores) {
-        let id = colaborador._id[0];
-        this.arrColabFInal.push(id);
-      }
-
       let fd = new FormData();
 
-      for (const alumno of this.arrAlumnos) {
-        fd.append('idUser', this.alerta.idUser);
-        fd.append('idEstatus', this.alerta.idEstatus);
-        fd.append('strMatricula', alumno.strMatricula);
-        fd.append('strNombreAlumno', alumno.strNombreAlumno);
-        fd.append('idAsignatura', this.alerta.idAsignatura);
-        fd.append('idCarrera', this.alerta.idCarrera);
-        fd.append('idEspecialidad', this.alerta.idEspecialidad);
+      fd.append('idUser', this.alerta.idUser);
+      fd.append('idEstatus', this.alerta.idEstatus);
+      fd.append('idAsignatura', this.alerta.idAsignatura);
+      fd.append('idCarrera', this.alerta.idCarrera);
+      fd.append('idEspecialidad', this.alerta.idEspecialidad);
+      fd.append('strGrupo', this.alerta.strGrupo);
+      fd.append('chrTurno', this.alerta.chrTurno);
+      fd.append('idModalidad', this.alerta.idModalidad);
+      fd.append('strDescripcion', this.alerta.strDescripcion);
 
-        if (this.alerta.arrCrde !== null) {
-          for (let crde = 0; crde < this.alerta.arrCrde.length; crde++) {
-            fd.append('arrCrde', this.alerta.arrCrde[crde]);
-          }
+      let crdes = '';
+
+      if (this.alerta.arrCrde !== null) {
+        for (let crde = 0; crde < this.alerta.arrCrde.length; crde++) {
+          crdes +=  this.alerta.arrCrde[crde] + ',';
         }
+      }
 
-        fd.append('strGrupo', this.alerta.strGrupo);
-        fd.append('chrTurno', this.alerta.chrTurno);
-        fd.append('idModalidad', this.alerta.idModalidad);
-        fd.append('strDescripcion', this.alerta.strDescripcion);
+      fd.append('arrCrde', crdes.slice(0,-1));
+
+      let colaboradores = '';
+
+      for (const colaborador of this.arrColaboradores) {
+        let id = colaborador._id[0];
+        colaboradores += id + ',';
+      }
+
+      fd.append('arrInvitados', colaboradores.slice(0,-1));
+
+      let matriculas = '';
+      let nombresAlumnos = '';
+
+      for (const alumno of this.arrAlumnos) {
+
+        matriculas += alumno.strMatricula + ',';
+        nombresAlumnos += alumno.strNombreAlumno + ',';
 
         for (let i = 0; i < this.documentos.length; i++) {
           fd.append('strFileEvidencia', this.documentos[i]);
         }
-        this.arrAlertas.push(fd);
       }
 
-      console.log(this.arrAlertas)
-      console.log(this.arrColabFInal);
-      
+      fd.append('strMatricula', matriculas.slice(0,-1));
+      fd.append('strNombreAlumno', nombresAlumnos.slice(0,-1));
 
-      this.alertaService.postAlerta(this.arrAlertas, this.arrColabFInal).then((data: any) => {
+      this.alertaService.postAlerta(fd).then((data: any) => {
 
         Toast.fire({
           icon: 'success',
