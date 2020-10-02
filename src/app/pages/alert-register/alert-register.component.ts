@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AlertModel } from '../../models/alert.model';
-import { NgForm } from '@angular/forms';
+import { FormArray, FormBuilder, NgForm } from '@angular/forms';
 import { FileModel } from '../../models/file.model';
 import { CareersService } from 'src/app/services/careers/careers.service';
 import { CareerModel } from '../../models/career';
@@ -20,6 +20,9 @@ import { environment } from '../../../environments/environment.prod';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { EventEmitter } from 'protractor';
+import { UserManagementService } from '../../services/user-manegement/user-management.service';
+import { User } from 'src/app/models/user.model';
+
 
 declare var $: any;
 
@@ -52,16 +55,84 @@ export class AlertRegisterComponent implements OnInit {
   idPersona: string;
   documentos: any[] = [];
   motivos: any[] = [];
+  arrAlumnos: any[] = [];
+  arrColaboradores: any[] = [];
+  arrColabFInal: any[] = [];
+  personas: any[] = [];
+  arrAlertas: any[] = [];
 
   // tslint:disable-next-line: max-line-length
-  constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, ) { }
+  constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, private _userService: UserManagementService, private cdr: ChangeDetectorRef ) { }
 
   ngOnInit(): void {
-      let token = localStorage.aa_token;
-      let tokenDecoded = jwt_decode(token);
-      this.alerta.idUser = tokenDecoded.user._id;
-      this.alerta.idEstatus = environment.nuevo;
+    this.ngAfterViewInit();
+    this.arrAlumnos.push({ strMatricula: '', strNombreAlumno: ''});
+    this.arrColaboradores.push({_id: ''});
+    let token = localStorage.aa_token;
+    let tokenDecoded = jwt_decode(token);
+    this.alerta.idUser = tokenDecoded.user._id;
+    this.alerta.idEstatus = environment.nuevo;
     this.getAll();
+  }
+
+  ngAfterViewInit() {
+   this.ngAfterContentChecked(); 
+  }
+
+  ngAfterContentChecked(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.cdr.detectChanges();
+  }
+
+  addAlumno(formaAlumno: NgForm) {
+    this.ngAfterViewInit();
+    if (formaAlumno.invalid) {
+      Toast.fire({
+        icon: 'warning',
+        title: 'Algunos campos no fueron llenados'
+      });
+    } else {
+      this.arrAlumnos.push({ strMatricula: '', strNombreAlumno: '' });
+      Toast.fire({
+        icon: 'success',
+        title: `¡Nuevos Campos Creados!`
+      });
+    }
+  }
+
+  eliminarAlumno(index: number) {
+    this.arrAlumnos.splice(index, 1);
+    Toast.fire({
+      icon: 'warning',
+      title: `¡El campo fué eliminado!`
+    });
+  }
+
+  addColaborador(formaColaborador: NgForm, evento: any) {
+    this.ngAfterViewInit();
+    if (formaColaborador.invalid) {
+      Toast.fire({
+        icon: 'warning',
+        title: 'No se ha seleccionado un colaborador'
+      });
+    } else {
+      this.arrColaboradores.push({_id: ''});
+      Toast.fire({
+        icon: 'success',
+        title: `¡Nuevos Campos Creados!`
+      });
+    }
+  }
+
+  eliminarColaborador(formaColaborador: NgForm,index: number) {
+    formaColaborador.form.removeControl( `_id${index}`);
+    this.arrColaboradores.splice(index, 1);
+    Toast.fire({
+      icon: 'warning',
+      title: `¡El campo fué eliminado!`
+    });
+    this.ngAfterViewInit();
   }
 
   getAll() {
@@ -69,6 +140,23 @@ export class AlertRegisterComponent implements OnInit {
     this.getModalidades();
     this.getAsignaturas();
     this.getConductasRiesgo();
+    this.getPersonas();
+  }
+
+  getPersonas() {
+    this._userService.getUsuarios().then((data: any) => {
+      for (const persona of data.cnt) {
+        this.personas.push({
+          _id: persona._id,
+          strNombre: `${persona.strName} ${persona.strLastName}`
+        });
+      }
+    }).catch((err) => {
+      Toast.fire({
+        icon: 'warning',
+        title: `¡${err.msg}!`
+      });
+    });
   }
 
   seleccionarTurno(turno: string) {
@@ -84,37 +172,60 @@ export class AlertRegisterComponent implements OnInit {
       });
       return false;
     } else {
+
       let fd = new FormData();
 
       fd.append('idUser', this.alerta.idUser);
       fd.append('idEstatus', this.alerta.idEstatus);
-      fd.append('strMatricula', this.alerta.strMatricula);
-      fd.append('strNombreAlumno', this.alerta.strNombreAlumno);
       fd.append('idAsignatura', this.alerta.idAsignatura);
       fd.append('idCarrera', this.alerta.idCarrera);
       fd.append('idEspecialidad', this.alerta.idEspecialidad);
-
-      if (this.alerta.arrCrde !== null) {
-        for (let crde = 0; crde < this.alerta.arrCrde.length; crde++) {
-          fd.append('arrCrde', this.alerta.arrCrde[crde]);
-        }
-      }
-
       fd.append('strGrupo', this.alerta.strGrupo);
       fd.append('chrTurno', this.alerta.chrTurno);
       fd.append('idModalidad', this.alerta.idModalidad);
       fd.append('strDescripcion', this.alerta.strDescripcion);
-      // fd.append('strFileEvidencias', this.documentos);
-      for(let i = 0; i < this.documentos.length; i++){
-        fd.append('strFileEvidencia', this.documentos[i]);
+
+      let crdes = '';
+
+      if (this.alerta.arrCrde !== null) {
+        for (let crde = 0; crde < this.alerta.arrCrde.length; crde++) {
+          crdes +=  this.alerta.arrCrde[crde] + ',';
+        }
       }
 
-      this.alertaService.postAlerta(fd).then((data) => {
+      fd.append('arrCrde', crdes.slice(0,-1));
+
+      let colaboradores = '';
+
+      for (const colaborador of this.arrColaboradores) {
+        let id = colaborador._id[0];
+        colaboradores += id + ',';
+      }
+
+      fd.append('arrInvitados', colaboradores.slice(0,-1));
+
+      let matriculas = '';
+      let nombresAlumnos = '';
+
+      for (const alumno of this.arrAlumnos) {
+
+        matriculas += alumno.strMatricula + ',';
+        nombresAlumnos += alumno.strNombreAlumno + ',';
+
+        for (let i = 0; i < this.documentos.length; i++) {
+          fd.append('strFileEvidencia', this.documentos[i]);
+        }
+      }
+
+      fd.append('strMatricula', matriculas.slice(0,-1));
+      fd.append('strNombreAlumno', nombresAlumnos.slice(0,-1));
+
+      this.alertaService.postAlerta(fd).then((data: any) => {
+
         Toast.fire({
           icon: 'success',
-          title: `¡Alerta registrada exitosamente!`
+          title: data.msg
         });
-        this.router.navigate(['/dashboard']);
       }).catch((err) => {
         Toast.fire({
           icon: 'error',
@@ -122,11 +233,13 @@ export class AlertRegisterComponent implements OnInit {
         });
         forma.reset();
       });
+
+      this.router.navigate(['/dashboard']);
     }
   }
 
   getArchivos(archivos: any) {
-    this.documentos.push(archivos)
+    this.documentos.push(archivos);
   }
 
   getCarreras() {
@@ -144,14 +257,9 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   getEspecialidad(idEspecialidad: string) {
-
-    console.log(idEspecialidad);
     this.especialidadService.getSpecialties(idEspecialidad).then((especialidades: any) => {
 
       for (const especials of especialidades.cnt.rutas) {
-
-        console.log('Hola');
-        console.log(especials);
         this.especialidades.push({
           strNombre: especials.strEspecialidad,
           _id: especials._id
@@ -207,7 +315,6 @@ export class AlertRegisterComponent implements OnInit {
     }).catch((err) => {
       console.log(err);
     });
-    console.log(this.motivos);
   }
 
 }

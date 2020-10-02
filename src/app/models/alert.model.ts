@@ -1,5 +1,6 @@
 import { FileModel } from './file.model';
 import { ReasonsModel } from './reasons-crde.model';
+import { User } from './user.model';
 
 
 export class AlertModel {
@@ -19,6 +20,7 @@ export class AlertModel {
     arrCrde?: any = [{
         ReasonsModel
     }];
+    arrInvitados?: any [];
     aJsnEvidencias?: any = [{
         FileModel
     }];
