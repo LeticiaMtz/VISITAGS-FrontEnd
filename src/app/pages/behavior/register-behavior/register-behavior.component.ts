@@ -34,6 +34,8 @@ export class RegisterBehaviorComponent implements OnInit {
         icon: 'success',
         title: `¡La conducta ${this.behavior.strNombre} se registró exitosamente!`
       });
+      forma.reset();
+      forma.controls['blnStatus'].setValue(true);
       this.refresh.emit(true);
     }).catch(err => {
       console.log(err);
