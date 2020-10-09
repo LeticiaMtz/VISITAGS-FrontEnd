@@ -35,7 +35,8 @@ export class RegisterModalityComponent implements OnInit {
         icon: 'success',
         title: `¡La Modalidad ${this.mod.strModalidad} se registró exitosamente!`
       });
-      form.controls['strModalidad'].reset(); 
+      form.reset();
+      form.controls['blnStatus'].setValue(true); 
     
       this.refresh.emit(true);
     }).catch(err => {

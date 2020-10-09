@@ -38,8 +38,8 @@ export class RegisterSubjectsComponent implements OnInit {
         icon: 'success',
         title: `¡La Asignatura ${this.sub.strAsignatura} se registró exitosamente!`
       });
-      form.controls['strAsignatura'].reset();
-      form.controls['strSiglas'].reset();
+      form.reset();
+      form.controls['blnStatus'].setValue(true);
       this.refresh.emit(true);
     }).catch(err => {
     
