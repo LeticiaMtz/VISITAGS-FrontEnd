@@ -34,6 +34,8 @@ export class RegisterSpecialtyComponent implements OnInit {
         icon: 'success',
         title: `¡La especialidad ${this.specialty.strEspecialidad} se registró exitosamente!`
       });
+      forma.reset();
+      forma.controls['blnStatus'].setValue(true);
       this.refresh.emit(true);
     }).catch(err => {
       console.log(err);
