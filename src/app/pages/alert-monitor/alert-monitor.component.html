@@ -9,35 +9,35 @@
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
-                        <select class="custom-select selectpicker selectpicker-down form-control btn-outline-secondary ops" data-size="4" data-dropup-auto=false title="Carreras" type="text" data-live-search="true" name="idCarrera" [(ngModel)]="alerta.idCarrera" #idCarrera="ngModel"
+                        <select class="custom-select selectpicker selectpicker-down form-control btn-outline-light ops" data-size="4" data-dropup-auto=false title="Carreras" type="text" data-live-search="true" name="idCarrera" [(ngModel)]="alerta.idCarrera" #idCarrera="ngModel"
                             (ngModelChange)="getEspecialidades($event)">
                             <option *ngFor="let carrera of carreras" [ngValue]="carrera._id">{{carrera.strCarrera}}</option>
                         </select>
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
-                        <select class="custom-select selectpicker selectpicker-down form-control btn-outline-secondary ops" data-size="4" data-dropup-auto=false title="Especialidades" type="text" data-live-search="true" name="idEspecialidad" [(ngModel)]="alerta.idEspecialidad"
-                            #idEspecialidad="ngModel" (ngModelChange)="getAlertas()">
+                        <select class="custom-select selectpicker selectpicker-down form-control btn-outline-light ops" data-size="4" data-dropup-auto=false title="Especialidades" type="text" data-live-search="true" name="idEspecialidad" [(ngModel)]="alerta.idEspecialidad" #idEspecialidad="ngModel"
+                            (ngModelChange)="getAlertas()">
                             <option *ngFor="let esp of especialidades" [ngValue]="esp._id">{{esp.strEspecialidad}}</option>
                         </select>
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
-                        <select class="custom-select selectpicker selectpicker-down form-control btn-outline-secondary ops" data-size="4" data-dropup-auto=false title="Asignaturas" type="text" data-live-search="true" name="idAsignatura" [(ngModel)]="alerta.idAsignatura" #idAsignatura="ngModel"
+                        <select class="custom-select selectpicker selectpicker-down form-control btn-outline-light ops" data-size="4" data-dropup-auto=false title="Asignaturas" type="text" data-live-search="true" name="idAsignatura" [(ngModel)]="alerta.idAsignatura" #idAsignatura="ngModel"
                             (ngModelChange)="getAlertas()">
                             <option *ngFor="let asig of asignaturas" [ngValue]="asig._id">{{asig.strNombre}}</option>
                         </select>
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
-                        <select class="custom-select selectpicker selectpicker-down form-control btn-outline-secondary ops" data-size="4" data-dropup-auto=false title="Profesores" type="text" data-live-search="true" name="idUser" [(ngModel)]="alerta.idUser" #idEstatus="ngModel"
+                        <select class="custom-select selectpicker selectpicker-down form-control btn-outline-light ops" data-size="4" data-dropup-auto=false title="Profesores" type="text" data-live-search="true" name="idUser" [(ngModel)]="alerta.idUser" #idEstatus="ngModel"
                             (ngModelChange)="getAlertas()">
                             <option *ngFor="let prof of profesores" [ngValue]="prof._id">{{prof.strName}} {{prof.strLastName}}</option>
                         </select>
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
-                        <select class="form-control custom-select selectpicker btn-outline-secondary" data-size="4" data-dropup-auto=false title="Estatus" type="text" data-live-search="true" name="idEstatus" [(ngModel)]="alerta.idEstatus" #idEstatus="ngModel" (ngModelChange)="getAlertas()">
+                        <select class="form-control custom-select selectpicker btn-outline-light" data-size="4" data-dropup-auto=false title="Estatus" type="text" data-live-search="true" name="idEstatus" [(ngModel)]="alerta.idEstatus" #idEstatus="ngModel" (ngModelChange)="getAlertas()">
                             <option *ngFor="let estatus of arrEstatus" [ngValue]="estatus._id">{{estatus.strNombre}}</option>
                         </select>
                     </div>
@@ -90,7 +90,7 @@
                                 <!-- SE MUESTRA CUANDO HAY REGISTROS -->
                                 <tbody *ngIf="alertas.length > 0 && !cargando">
                                     <tr class="animated fadeIn fast" *ngFor="let alerta of alertas | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
-                                       
+
                                         <td>{{alerta.strMatricula}}</td>
                                         <td>{{alerta.strNombreAlumno}}</td>
                                         <td>{{alerta.idCarrera.strCarrera}}</td>
@@ -100,17 +100,17 @@
                                         <td>{{alerta.idUser.strName}}</td>
                                         <td><span class="badge badge-danger" *ngFor="let motivo of alerta.arrCrde">{{motivo.strNombre}}</span></td>
                                         <td>{{alerta.createdAt | date}}</td>
-                                        <td> 
+                                        <td>
                                             <span class="badge badge-info" *ngIf="nuevo == alerta.idEstatus._id"> <i class="fa fa-star"></i> {{alerta.idEstatus.strNombre}}</span>
                                             <span class="badge badge-warning" *ngIf="enProgreso == alerta.idEstatus._id"><i class="fa fa-cog fa-spin fa fa-fw"></i> {{alerta.idEstatus.strNombre}}</span>
                                             <span class="badge badge-danger" *ngIf="cerrado == alerta.idEstatus._id"> <i class="fa fa-times"></i> {{alerta.idEstatus.strNombre}}</span>
                                             <span class="badge badge-success" *ngIf="finalizado == alerta.idEstatus._id"> <i class="fa fa-check"></i> {{alerta.idEstatus.strNombre}}</span>
                                         </td>
-                                       
+
                                         <td class="text-center">
                                             <button type="button" class="btn btn-sm btn-info" (click)="verAlerta(alerta._id)"><i class="fa fa-eye"></i></button>
                                         </td>
-                                 
+
                                     </tr>
                                 </tbody>
 
@@ -119,7 +119,7 @@
                                     <tr>
                                         <td colspan="14">
                                             <div class="alert-dismissible text-center" style="padding: .75rem 1.25rem;">
-                                                <h5 style="height: 100%;width: 100%;"><strong><i class="fa fa-filter" aria-hidden="true"></i> ¡Seleccione un filtro para encontrar resiltados!</strong></h5>
+                                                <h5 style="height: 100%;width: 100%;"><strong><i class="fa fa-filter" aria-hidden="true"></i> ¡Seleccione un filtro para encontrar resultados!</strong></h5>
                                             </div>
                                         </td>
                                     </tr>
