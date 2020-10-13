@@ -26,18 +26,19 @@ export class TrackingAlertsService {
     return this.http.get(`${this.url}/seguimiento/obtener/${idAlert}`).toPromise();
   }
 
-  RegistrarSeguimiento(idAlert: string, model: any){
-    return this.http.post(`${this.url}/seguimiento/registrar/${idAlert}`, model).toPromise();
+  RegistrarSeguimiento(idAlerta: string, comentario: FormData) {
+    return this.http.post(`${this.url}/seguimiento?idAlerta=${idAlerta}`, comentario).toPromise();
   }
 
-  getFileTracking(fileName: string){
+  getFileTracking(fileName: string) {
     window.open(`${this.url}/descargarArchivo/descargaSeguimiento/${fileName}`, '_blank');
   }
 
-  getFileEvidence(fileName: string){
+  getFileEvidence(fileName: string) {
     window.open(`${this.url}/descargarArchivo/descargaEvidencia/${fileName}`, '_blank');
   }
-  actualizarEstatus(idAlert: string, modality: AlertModel){
+
+  actualizarEstatus(idAlert: string, modality: AlertModel) {
     return this.http.put(`${this.url}/alerts/actualizarEstatus/${idAlert}`, modality).toPromise();
   }
 }

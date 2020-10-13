@@ -34,7 +34,8 @@ export class RegisterReasonsComponent implements OnInit {
         icon: 'success',
         title: `¡La categoria ${this.reasons.strCategoria} se registró exitosamente!`
       });
-      form.controls['strCategoria'].reset();
+      form.reset();
+      form.controls['blnStatus'].setValue(true);
       this.refresh.emit(true);
     }).catch(err => {
       console.log(err);
