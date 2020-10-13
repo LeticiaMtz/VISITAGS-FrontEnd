@@ -1,5 +1,5 @@
 import { TrackingAlertsService } from '../../services/tracking-alerts/tracking-alerts.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as jwt_decode from 'jwt-decode';
 import Swal from 'sweetalert2';
@@ -36,6 +36,8 @@ const Toast = Swal.mixin({
 })
 export class TrackingAlertsComponent implements OnInit {
 
+  @ViewChild('comentarios') content: ElementRef;
+  @ViewChild('formaColaboradores') formaColaboradores: NgForm;
   nuevo: string = environment.nuevo;
   cerrado: string = environment.cerrado;
   finalizado: string = environment.finalizado;
@@ -59,20 +61,17 @@ export class TrackingAlertsComponent implements OnInit {
   idUltimo: string;
   isEmpty: any;
   idUser: string;
-  documento: any =[];
+  documento: any[] = [];
   refresh: boolean = false;
   resetImage = false;
   url: string;
   objPriEstatus: AlertModel = new AlertModel();
-  EstatusActualizado: string; 
+  EstatusActualizado: string;
   surName: string = '';
   agregar: boolean = false;
   arrColaboradores: any[] = [];
   arrColabFinal: any[] = [];
   personas: any[] = [];
-  
-  
-  
 
   constructor(private trackingAlertsService: TrackingAlertsService, private alertStatusService: AlertStatusService, private reasonsService: ReasonsService, private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef,  private _userService: UserManagementService) { }
 
@@ -90,20 +89,20 @@ export class TrackingAlertsComponent implements OnInit {
     this.documento = [];
     this.arrColaboradores.push({_id: ''});
     this.getPersonas();
-    this.objTracking.idEstatus = this.enProgreso
-
-
+    this.objTracking.idEstatus = this.enProgreso;
+    this.bottom();
   }
 
-  obtenerAlerta(idAlert: string){
+  obtenerAlerta(idAlert: string) {
     this.trackingAlertsService.getAlertData(idAlert).then((res: any) => {
+      console.log(res);
       this.objAlert = res.cnt[0];
       this.objUser = res.cnt[0].idUser;
       this.objSubject = res.cnt[0].idAsignatura;
       this.objModality = res.cnt[0].idModalidad;
       this.arrReasons = res.cnt[0].arrCrde;
       this.arrFiles = res.cnt[0].aJsnEvidencias;
-      if (this.objUser.strMotherLastName ){
+      if (this.objUser.strMotherLastName ) {
         this.surName = this.objUser.strMotherLastName;
       }
       this.userName = `${this.objUser.strName} ${this.objUser.strLastName} ${this.surName}`;
@@ -112,7 +111,7 @@ export class TrackingAlertsComponent implements OnInit {
     });
   }
 
-  obtenerEstatus(){
+  obtenerEstatus() {
     this.alertStatusService.getAllStatusByRol(this.idRol).then((res: any) => {
       this.arrEstatus = res.cnt;
       setTimeout(() => {
@@ -123,13 +122,13 @@ export class TrackingAlertsComponent implements OnInit {
     });
   }
 
-  obtenerSeguimiento(id: string){
+  obtenerSeguimiento(id: string) {
     this.trackingAlertsService.getSeguimiento(id).then((res: any) => {
       this.arrTracking = res.cnt.aJsnSeguimiento;
-      if(this.arrTracking.length > 0){
-        this.arrTracking.sort((one, two) => (one > two ? -1 : 1));//Ordena comentarios de mas viejo a nuevo.
-        this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus;//La alerta obtiene el estatus de el último comentario.
-      }else{
+      if (this.arrTracking.length > 0) {
+        this.arrTracking.sort((one, two) => (one > two ? -1 : 1)); //Ordena comentarios de mas viejo a nuevo.
+        this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus; //La alerta obtiene el estatus de el último comentario.
+      } else {
         this.principalStatus = this.nuevo;
       }
     }).catch(err => {
@@ -138,88 +137,91 @@ export class TrackingAlertsComponent implements OnInit {
   }
 
   obtenerArchivos(archivos: any) {
-    this.documento.push(archivos)
+    this.documento.push(archivos);
     // this.documento = archivos;
   }
 
-  comentarAlerta(form: NgForm){
+  comentarAlerta(form: NgForm) {
 
-    if(form.invalid){
+    if (form.invalid) {
       Toast.fire({
         icon: 'error',
         title: 'No es posible comentar la alerta, hay campos vacíos'
       });
       return false;
-    }else{
-
-      console.log(this.arrColaboradores);
+    } else {
+      let fd = new FormData();
+      let colaboradores = '';
 
       for (const colaborador of this.arrColaboradores) {
         let id = colaborador._id[0];
-        this.arrColabFinal.push(id);
+        if (id) {
+          colaboradores += id + ',';
+        }
       }
 
-      console.log(this.arrColabFinal);
-
-      this.resetImage = true;
-      let fd = new FormData();
-      fd.append('idUser', this.tokenDecoded.user._id);
       this.EstatusActualizado = this.objTracking.idEstatus;
-      // console.log(data, 'DATA');
+      this.resetImage = true;
+
+      fd.append('idUser', this.tokenDecoded.user._id);
       fd.append('idEstatus', this.objTracking.idEstatus);
       fd.append('strComentario', this.objTracking.strComentario);
-      // if(this.objTracking.aJsnEvidencias !== null){
-      //   for(let i = 0; i < this.objTracking.aJsnEvidencias.lenght; i++){
-      console.log(this.documento, 'documento-------');
+      fd.append('arrInvitados', colaboradores.slice(0, -1));
 
-      for (let colaborador = 0; colaborador < this.arrColabFinal.length; colaborador++) {
-        fd.append('arrInvitados', this.arrColabFinal[colaborador]);
-      }
-      
-      for(let i = 0; i < this.documento.length; i++){
+      for (let i = 0; i < this.documento.length; i++) {
         fd.append('strFileEvidencia', this.documento[i]);
       }
-    //   }
-    // }
 
-    this.trackingAlertsService.RegistrarSeguimiento(this.idAlert, fd).then((res: any) => {
+      this.trackingAlertsService.RegistrarSeguimiento(this.idAlert, fd).then((res: any) => {
 
-      setTimeout(() => {
-        this.resetImage = false;
-        this.documento = '';
-      }, 0);
-  
+        setTimeout(() => {
+          this.resetImage = false;
+          this.documento = [];
+        }, 0);
 
-      this.ngOnInit();
-      this.objPriEstatus.idEstatus = this.EstatusActualizado;
-   
-      this.trackingAlertsService.actualizarEstatus(this.idAlert, this.objPriEstatus).then((res: any)=>{
-        console.log(res, 'STATUS');
         this.ngOnInit();
-      }).catch(err =>{
-        console.log(err, 'ERROR')
-      })
-  
-    }).catch(err => {
-      setTimeout(() => {
-        this.resetImage = false;
-      }, 0);
-      console.log(err);
-    })
-    form.reset();
-    form.controls.idEstatus.setValue(undefined);
+        this.objPriEstatus.idEstatus = this.EstatusActualizado;
+
+        this.trackingAlertsService.actualizarEstatus(this.idAlert, this.objPriEstatus).then(( res: any) => {
+          console.log(res, 'STATUS');
+          this.ngOnInit();
+          this.bottom();
+        }).catch(err => {
+          console.log(err, 'ERROR');
+        });
+      }).catch(err => {
+        setTimeout(() => {
+          this.resetImage = false;
+        }, 0);
+        Toast.fire({
+          icon: 'error',
+          title: err.error.msg
+        });
+      });
+      form.reset();
+      form.controls.idEstatus.setValue(undefined);
     }
   }
 
-  descargarArchivoT(nameFile: string){
+  ngAfterViewChecked(): void {
+    //Called after every check of the component's view. Applies to components only.
+    //Add 'implements AfterViewChecked' to the class.
+    this.bottom();
+  }
+
+  bottom() {
+    this.content.nativeElement.scrollTop = this.content.nativeElement.scrollHeight;
+  }
+
+  descargarArchivoT(nameFile: string) {
     this.trackingAlertsService.getFileTracking(nameFile);
   }
 
-  descargarArchivoE(nameFile: string){
+  descargarArchivoE(nameFile: string) {
     this.trackingAlertsService.getFileEvidence(nameFile);
   }
 
-  eliminarColaborador(formaColaborador: NgForm,index: number) {
+  eliminarColaborador(formaColaborador: NgForm, index: number) {
     formaColaborador.form.removeControl( `_id${index}`);
     this.arrColaboradores.splice(index, 1);
     Toast.fire({
@@ -232,8 +234,7 @@ export class TrackingAlertsComponent implements OnInit {
 
   addColaborador(formaColaborador: NgForm) {
     this.ngAfterViewInit();
-    if (formaColaborador.invalid) 
-    {
+    if (formaColaborador.invalid) {
       Toast.fire({
         icon: 'warning',
         title: 'No se ha seleccionado un colaborador'
@@ -244,14 +245,13 @@ export class TrackingAlertsComponent implements OnInit {
         icon: 'success',
         title: `¡Nuevos Campos Creados!`
       });
-      
     }
   }
 
   ngAfterViewInit() {
-    this.ngAfterContentChecked(); 
+    this.ngAfterContentChecked();
    }
-  
+
    ngAfterContentChecked(): void {
      //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
      //Add 'implements AfterViewInit' to the class.
@@ -266,7 +266,6 @@ export class TrackingAlertsComponent implements OnInit {
           strNombre: `${persona.strName} ${persona.strLastName}`
         });
       }
-      console.log(this.personas);
     }).catch((err) => {
       Toast.fire({
         icon: 'warning',
@@ -274,6 +273,4 @@ export class TrackingAlertsComponent implements OnInit {
       });
     });
   }
-
-
 }
