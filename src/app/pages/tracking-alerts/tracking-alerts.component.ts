@@ -1,5 +1,5 @@
 import { TrackingAlertsService } from '../../services/tracking-alerts/tracking-alerts.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as jwt_decode from 'jwt-decode';
 import Swal from 'sweetalert2';
@@ -36,6 +36,7 @@ const Toast = Swal.mixin({
 })
 export class TrackingAlertsComponent implements OnInit {
 
+  @ViewChild('comentarios') content: ElementRef;
   nuevo: string = environment.nuevo;
   cerrado: string = environment.cerrado;
   finalizado: string = environment.finalizado;
@@ -64,7 +65,7 @@ export class TrackingAlertsComponent implements OnInit {
   resetImage = false;
   url: string;
   objPriEstatus: AlertModel = new AlertModel();
-  EstatusActualizado: string; 
+  EstatusActualizado: string;
   surName: string = '';
   agregar: boolean = false;
   arrColaboradores: any[] = [];
@@ -88,12 +89,12 @@ export class TrackingAlertsComponent implements OnInit {
     this.arrColaboradores.push({_id: ''});
     this.getPersonas();
     this.objTracking.idEstatus = this.enProgreso;
-
-
+    this.bottom();
   }
 
-  obtenerAlerta(idAlert: string){
+  obtenerAlerta(idAlert: string) {
     this.trackingAlertsService.getAlertData(idAlert).then((res: any) => {
+      console.log(res);
       this.objAlert = res.cnt[0];
       this.objUser = res.cnt[0].idUser;
       this.objSubject = res.cnt[0].idAsignatura;
@@ -123,10 +124,10 @@ export class TrackingAlertsComponent implements OnInit {
   obtenerSeguimiento(id: string) {
     this.trackingAlertsService.getSeguimiento(id).then((res: any) => {
       this.arrTracking = res.cnt.aJsnSeguimiento;
-      if(this.arrTracking.length > 0){
-        this.arrTracking.sort((one, two) => (one > two ? -1 : 1));//Ordena comentarios de mas viejo a nuevo.
-        this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus;//La alerta obtiene el estatus de el último comentario.
-      }else{
+      if (this.arrTracking.length > 0) {
+        this.arrTracking.sort((one, two) => (one > two ? -1 : 1)); //Ordena comentarios de mas viejo a nuevo.
+        this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus; //La alerta obtiene el estatus de el último comentario.
+      } else {
         this.principalStatus = this.nuevo;
       }
     }).catch(err => {
@@ -186,6 +187,7 @@ export class TrackingAlertsComponent implements OnInit {
         this.trackingAlertsService.actualizarEstatus(this.idAlert, this.objPriEstatus).then(( res: any) => {
           console.log(res, 'STATUS');
           this.ngOnInit();
+          this.bottom();
         }).catch(err => {
           console.log(err, 'ERROR');
         });
@@ -203,22 +205,25 @@ export class TrackingAlertsComponent implements OnInit {
     }
   }
 
+  ngAfterViewChecked(): void {
+    //Called after every check of the component's view. Applies to components only.
+    //Add 'implements AfterViewChecked' to the class.
+    this.bottom();
+  }
 
+  bottom() {
+    this.content.nativeElement.scrollTop = this.content.nativeElement.scrollHeight;
+  }
 
-
-
-
-    
-
-  descargarArchivoT(nameFile: string){
+  descargarArchivoT(nameFile: string) {
     this.trackingAlertsService.getFileTracking(nameFile);
   }
 
-  descargarArchivoE(nameFile: string){
+  descargarArchivoE(nameFile: string) {
     this.trackingAlertsService.getFileEvidence(nameFile);
   }
 
-  eliminarColaborador(formaColaborador: NgForm,index: number) {
+  eliminarColaborador(formaColaborador: NgForm, index: number) {
     formaColaborador.form.removeControl( `_id${index}`);
     this.arrColaboradores.splice(index, 1);
     Toast.fire({
@@ -242,14 +247,13 @@ export class TrackingAlertsComponent implements OnInit {
         icon: 'success',
         title: `¡Nuevos Campos Creados!`
       });
-      
     }
   }
 
   ngAfterViewInit() {
-    this.ngAfterContentChecked(); 
+    this.ngAfterContentChecked();
    }
-  
+
    ngAfterContentChecked(): void {
      //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
      //Add 'implements AfterViewInit' to the class.
@@ -271,6 +275,4 @@ export class TrackingAlertsComponent implements OnInit {
       });
     });
   }
-
-
 }
