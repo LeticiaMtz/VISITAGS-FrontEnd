@@ -37,6 +37,7 @@ const Toast = Swal.mixin({
 export class TrackingAlertsComponent implements OnInit {
 
   @ViewChild('comentarios') content: ElementRef;
+  @ViewChild('formaColaboradores') formaColaboradores: NgForm;
   nuevo: string = environment.nuevo;
   cerrado: string = environment.cerrado;
   finalizado: string = environment.finalizado;
@@ -154,12 +155,9 @@ export class TrackingAlertsComponent implements OnInit {
 
       for (const colaborador of this.arrColaboradores) {
         let id = colaborador._id[0];
-        this.arrColabFinal.push(id);
-      }
-
-      for (const colaborador of this.arrColaboradores) {
-        let id = colaborador._id[0];
-        colaboradores += id + ',';
+        if (id) {
+          colaboradores += id + ',';
+        }
       }
 
       this.EstatusActualizado = this.objTracking.idEstatus;
