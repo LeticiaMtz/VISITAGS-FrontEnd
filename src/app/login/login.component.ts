@@ -15,7 +15,7 @@ declare function init_plugins();
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  
+
   rememberIt: boolean;
   passDesenc: string;
   passEnc: string;
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     init_plugins();
 
-    if(localStorage.getItem('aa_strEmail') && localStorage.getItem('aa_strPassword')){
+    if (localStorage.getItem('aa_strEmail') && localStorage.getItem('aa_strPassword')){
       let desencPass = localStorage.getItem('aa_strPassword');
       let bytes = CryptoJS.AES.decrypt(desencPass, 'secretKey');
       this.passDesenc = bytes.toString(CryptoJS.enc.Utf8);
@@ -51,14 +51,14 @@ export class LoginComponent implements OnInit {
 
   regexp = new RegExp('^[_A-Za-z\\+]+(\\.[_A-Za-z]+)*@utags.edu.mx$');
 
-  get invalidEmail(){
+  get invalidEmail() {
     return this.user.get('strEmail').invalid && this.user.get('strEmail').touched;
   }
 
-  get invalidPassword(){
+  get invalidPassword() {
     return this.user.get('strPassword').invalid && this.user.get('strPassword').touched;
   }
-  
+
   get valueEmail(){
     return this.user.get('strEmail')
   }

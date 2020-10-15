@@ -19,7 +19,7 @@ import { TokenInterceptorService } from './services/login/token-interceptor.serv
 import { ChangePasswordComponent } from './restore-password/change-password/change-password.component';
 import { SendEmailComponent } from './restore-password/send-email/send-email.component';
 import { ModalityComponent } from './pages/modality/modality.component';
-
+import { ObtenerUrlComponent } from './obtener-url/obtener-url.component';
 
 
 
@@ -34,6 +34,7 @@ import { ModalityComponent } from './pages/modality/modality.component';
     LoginComponent,
     ChangePasswordComponent,
     SendEmailComponent,
+    ObtenerUrlComponent,
 
   ],
   imports: [
