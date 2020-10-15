@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 import Swal from 'sweetalert2';
+import * as jwt_decode from 'jwt-decode';
 
 
 
@@ -75,40 +76,46 @@ export class LoginComponent implements OnInit {
         let dataJson = JSON.parse(data);
         console.log(dataJson.token);
 
-          localStorage.setItem('aa_token', dataJson.token);
+        localStorage.setItem('aa_token', dataJson.token);
 
-          if(dataJson.token) {
+        if(dataJson.token) {
 
-            if (this.user.value.rememberMe) {
-              localStorage.setItem('aa_strEmail', this.user.value.strEmail);
-              let pass = this.user.value.strPassword;
-              this.passEnc = CryptoJS.AES.encrypt(pass, 'secretKey').toString();
-              localStorage.setItem('aa_strPassword', this.passEnc);
-            } else {
-              localStorage.removeItem('aa_strEmail');
-              localStorage.removeItem('aa_strPassword');
-            }
-  
-            this.router.navigate(['/dashboard']);
-            console.log(dataJson);
-            Swal.fire({
-              title: `Hola ${dataJson.cnt.strName} bienvenido`,
-              icon: 'success',
-              showConfirmButton: false,
-              timer: 1500
-            });
+          if (this.user.value.rememberMe) {
+            localStorage.setItem('aa_strEmail', this.user.value.strEmail);
+            let pass = this.user.value.strPassword;
+            this.passEnc = CryptoJS.AES.encrypt(pass, 'secretKey').toString();
+            localStorage.setItem('aa_strPassword', this.passEnc);
           } else {
-            Swal.fire({
-              text: `Lo sentimos no encontramos la cuenta ${dataJson.cnt.strEmail}.`,
-              icon: 'error',
-              confirmButtonText: 'Aceptar'
-            });
-            console.log('Algo salio mal');
-            console.log(this.invalidEmail);
-            console.log(this.invalidPassword);
+            localStorage.removeItem('aa_strEmail');
+            localStorage.removeItem('aa_strPassword');
           }
-        },
-      err => {
+
+          if(localStorage.getItem('aa_rutaTemporal')) {
+            let user = jwt_decode(localStorage.getItem('aa_token'));
+            let idUser = user.user._id;
+            this.router.navigateByUrl(`${localStorage.getItem('aa_rutaTemporal')}/${idUser}`);
+          } else {
+            this.router.navigate(['/dashboard']);
+          }
+          console.log(dataJson);
+          Swal.fire({
+            title: `Hola ${dataJson.cnt.strName} bienvenido`,
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          Swal.fire({
+            text: `Lo sentimos no encontramos la cuenta ${dataJson.cnt.strEmail}.`,
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+          console.log('Algo salio mal');
+          console.log(this.invalidEmail);
+          console.log(this.invalidPassword);
+        }
+      },
+    err => {
 
 
         if (err.status !== 0) {

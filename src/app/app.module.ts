@@ -15,7 +15,7 @@ import { RegisterComponent } from './login/register.component';
 import { ServiceModule } from './services/service.module';
 import { AuthGuard } from './guards/auth.guard';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptorService } from './services/login/token-interceptor.service';
+import { AuthInterceptorService } from './services/login/token-interceptor.service';
 import { ChangePasswordComponent } from './restore-password/change-password/change-password.component';
 import { SendEmailComponent } from './restore-password/send-email/send-email.component';
 import { ModalityComponent } from './pages/modality/modality.component';
@@ -47,7 +47,7 @@ import { ObtenerUrlComponent } from './obtener-url/obtener-url.component';
     FormsModule,
     FilePondModule
   ],
-  providers: [AuthGuard, {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true}],
+  providers: [AuthGuard, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
 import { ActivatedRoute, Router } from '@angular/router';
 
+declare function init_plugins();
+
 @Component({
   selector: 'app-obtener-url',
   templateUrl: './obtener-url.component.html',
@@ -9,16 +11,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ObtenerUrlComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) { 
+    init_plugins();
+  }
 
   ngOnInit(): void {
-    let ruta = jwt_decode(this.activatedRoute.snapshot.tokenRuta);
+    let ruta = jwt_decode(this.activatedRoute.snapshot.params.token);
 
-    if (!localStorage.getItem(ruta)) {
+    console.log(ruta);
+
+    if (!localStorage.getItem('aa_token')) {
       this.router.navigate(['/login']);
       localStorage.setItem('aa_rutaTemporal', ruta.url);
     } else {
-      this.router.navigateByUrl(ruta.url);
+      let usuario = jwt_decode(localStorage.getItem('aa_token'));
+      let idUser = usuario.user._id;
+      this.router.navigateByUrl(`${ruta.url}/${idUser}`);
     }
   }
 

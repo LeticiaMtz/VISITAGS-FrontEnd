@@ -10,7 +10,7 @@ import { ObtenerUrlComponent } from './obtener-url/obtener-url.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
-  { path: 'obtener-url', component: ObtenerUrlComponent, canActivate: [NoAuthGuard] },
+  { path: 'obtener-url/:token', component: ObtenerUrlComponent},
   { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] },
   { path: 'sendemail', component: SendEmailComponent, canActivate: [NoAuthGuard] },
   { path: 'reset-password/:token', component: ChangePasswordComponent, canActivate: [NoAuthGuard]},
