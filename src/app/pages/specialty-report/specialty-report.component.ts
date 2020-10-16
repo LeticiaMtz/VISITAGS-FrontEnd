@@ -5,8 +5,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CareersService } from '../../services/careers/careers.service';
 import { PdfServiceService } from '../../services/PDF/pdf-service.service';
 import { ExportDataService } from 'src/app/services/excel/export-to-excel.service';
+import Swal from 'sweetalert2';
 
-
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});
 
 @Component({
   selector: 'app-specialty-report',
@@ -40,8 +46,6 @@ export class SpecialtyReportComponent implements OnInit {
     this.cargando = true;
     this.careersService.getCarrerByid(id).then((res:any) => {
       this.cargando = false;
-      console.log(res);
-      console.log(res.cnt[0].aJsnEspecialidad);
       this.specialties = res.cnt[0].aJsnEspecialidad;
       for (const speciality of this.specialties) {
         let element = [
@@ -50,7 +54,10 @@ export class SpecialtyReportComponent implements OnInit {
         this.arraySpeciality.push(element);
       }
     }).catch(err => {
-      console.log(err.msg);
+      Toast.fire({
+        icon: 'error',
+        title: err.msg
+      });
     });
   }
 

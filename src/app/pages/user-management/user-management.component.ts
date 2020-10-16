@@ -83,9 +83,6 @@ export class UserManagementComponent implements OnInit {
     }, 0);
 
     this.status = '';
-    console.log('object');
-    console.log(this.role);
-
     this.getUsuarios();
     this.getRoles();
 
@@ -101,21 +98,15 @@ export class UserManagementComponent implements OnInit {
     })
   }
   getCarrerasByUser() {
-
-    console.log('especialidades');
     this.carreraService.getCareers().then((res: any) => {
       var count = 0;
       this.carreras = res['cnt'];
       this.carreras.forEach(carrera => {
-        console.log('tamaño del arreglo ' + carrera.aJsnEspecialidad.length);
-        console.log('tamaño del arreglo ' + this.arrEspecialidadPermiso.length);
         var i = 0;
         for (let carreras of carrera.aJsnEspecialidad) {
           for (let ids of this.arrEspecialidadPermiso) {
             if (carreras['_id'] == ids) {
               i++;
-              console.log(i);
-              console.log(carreras);
               carreras.check = true;
             }
             if (i == carrera.aJsnEspecialidad.length) {
@@ -130,16 +121,12 @@ export class UserManagementComponent implements OnInit {
 
   changetodos(carrera: CareerModel) {
     if (this.idUser != undefined) {
-    console.log("carrera");
-    console.log(this.usuarios);
     let espe = [];
 
     if (carrera.check == true) {
         carrera.check = false;
         carrera.aJsnEspecialidad.forEach(especialidad => {
           let index: number = this.arrEspecialidadPermiso.indexOf(especialidad._id);
-          console.log("index");
-          console.log(index);
           if (index !== -1) {
             this.arrEspecialidadPermiso.splice(index, 1);
             especialidad.check = false;
@@ -147,7 +134,6 @@ export class UserManagementComponent implements OnInit {
               for (const carrera of this.carreras) {
                 for (const subcategorias of carrera.aJsnEspecialidad) {
                   if (subcategorias._id == arrperm) {
-                    console.log(subcategorias.strEspecialidad);
                     espe.push(subcategorias.strEspecialidad);
                   }
                 }
@@ -162,8 +148,6 @@ export class UserManagementComponent implements OnInit {
     
             });
             this.usermanagementService.putUsuarioEspecialidad(this.idUser, this.arrEspecialidadPermiso);
-            console.log("putos usuarios")
-            console.log(this.usuarios)
           }
         });
       } else {
@@ -171,7 +155,6 @@ export class UserManagementComponent implements OnInit {
           for (const carrera of this.carreras) {
             for (const subcategorias of carrera.aJsnEspecialidad) {
               if (subcategorias._id == arrperm) {
-                console.log(subcategorias.strEspecialidad);
                 espe.push(subcategorias.strEspecialidad);
               }
             }
@@ -180,24 +163,20 @@ export class UserManagementComponent implements OnInit {
         carrera.check = true;
         carrera.aJsnEspecialidad.forEach(especialidad => {
           especialidad.check = true;
-          console.log(this.arrEspecialidadPermiso.filter(esp => esp == especialidad._id));
           if (this.arrEspecialidadPermiso.filter(esp => esp == especialidad._id).length == 0) {
             this.arrEspecialidadPermiso.push(especialidad._id);
-          espe.push(especialidad.strEspecialidad);
+            espe.push(especialidad.strEspecialidad);
           }
         });
-     
+
         const updae = this.arrayUser.map(item => item[0]).indexOf(this.name);
         this.arrayUser[updae][3] = espe; 
-        
+
         const excelUsu = this.usuarios.map(item => item.strName).indexOf(this.name);
         this.usuarios[excelUsu].arrEspecialidadPermiso = [{}];
         this.arrEspecialidadPermiso.forEach(per =>{
-          this.usuarios[excelUsu].arrEspecialidadPermiso.push(per); 
-
-        })
-        console.log("putos usuarios")
-        console.log(this.usuarios)   
+          this.usuarios[excelUsu].arrEspecialidadPermiso.push(per);
+        });
 
         this.usermanagementService.putUsuarioEspecialidad(this.idUser, this.arrEspecialidadPermiso);
 
@@ -210,16 +189,12 @@ export class UserManagementComponent implements OnInit {
 
 
   changeCheck(especialidad: SpecialtyModel) {
-    console.log(especialidad._id);
     if (this.idUser != undefined) {
       let espe = [];
     
       if (especialidad.check == true) {
         especialidad.check = false;
-        console.log('arr completo');
-        console.log(this.arrEspecialidadPermiso);
         this.arrEspecialidadPermiso.filter(esp => esp !== especialidad._id);
-        console.log('arr eliminar elemt ');
         const index: number = this.arrEspecialidadPermiso.indexOf(especialidad._id);
         if (index !== -1) {
           this.arrEspecialidadPermiso.splice(index, 1);
@@ -228,7 +203,6 @@ export class UserManagementComponent implements OnInit {
           for (const carrera of this.carreras) {
             for (const subcategorias of carrera.aJsnEspecialidad) {
               if (subcategorias._id == arrperm) {
-                console.log(subcategorias.strEspecialidad);
                 espe.push(subcategorias.strEspecialidad);
               }
             }
@@ -238,13 +212,10 @@ export class UserManagementComponent implements OnInit {
         const updae = this.arrayUser.map(item => item[0]).indexOf(this.name);
         this.arrayUser[updae][3] = espe; 
         const excelUsu = this.usuarios.map(item => item.strName).indexOf(this.name);
-            this.usuarios[excelUsu].arrEspecialidadPermiso = [{}];
-            this.arrEspecialidadPermiso.forEach(per =>{
-              this.usuarios[excelUsu].arrEspecialidadPermiso.push(per); 
-    
-            });
-        console.log(this.arrayUser)  
-        console.log(this.arrEspecialidadPermiso);
+        this.usuarios[excelUsu].arrEspecialidadPermiso = [{}];
+        this.arrEspecialidadPermiso.forEach(per =>{
+          this.usuarios[excelUsu].arrEspecialidadPermiso.push(per);
+        });
         this.usermanagementService.putUsuarioEspecialidad(this.idUser, this.arrEspecialidadPermiso);
 
       } else {
@@ -253,25 +224,20 @@ export class UserManagementComponent implements OnInit {
           for (const carrera of this.carreras) {
             for (const subcategorias of carrera.aJsnEspecialidad) {
               if (subcategorias._id == arrperm) {
-                console.log(subcategorias.strEspecialidad);
                 espe.push(subcategorias.strEspecialidad);
               }
             }
-    
+          }
         }
-      }
         especialidad.check = true;
         const updae = this.arrayUser.map(item => item[0]).indexOf(this.name);
         this.arrayUser[updae][3] = espe; 
         const excelUsu = this.usuarios.map(item => item.strName).indexOf(this.name);
-            this.usuarios[excelUsu].arrEspecialidadPermiso = [{}];
-            this.arrEspecialidadPermiso.forEach(per =>{
-              this.usuarios[excelUsu].arrEspecialidadPermiso.push(per); 
-    
-            });
-        console.log(this.usuarios)  
+        this.usuarios[excelUsu].arrEspecialidadPermiso = [{}];
+        this.arrEspecialidadPermiso.forEach(per =>{
+          this.usuarios[excelUsu].arrEspecialidadPermiso.push(per);
+        });
         this.usermanagementService.putUsuarioEspecialidad(this.idUser, this.arrEspecialidadPermiso);
-
       }
     }
   }
@@ -344,7 +310,6 @@ export class UserManagementComponent implements OnInit {
 
   exportPDF() {
     var data = [this.arrayUser];
-    console.log(data);
     data = [];
     let header = [
       {
@@ -409,20 +374,16 @@ export class UserManagementComponent implements OnInit {
       const count = Object.keys(jsonobject2).length;
 
       for (const j of jsonobject2) {
-        console.log(j.strName);
-        console.log(j.arrEspecialidadPermiso);
         for (const especialidad of j.arrEspecialidadPermiso) {
-          console.log(especialidad)
           for (const carrera of this.carreras) {
-              for (const subcategorias of carrera.aJsnEspecialidad) {
-                if (subcategorias._id == especialidad) {
-                  //console.log(subcategorias.strEspecialidad);
-                  espe.push(subcategorias.strEspecialidad);
-                }
+            for (const subcategorias of carrera.aJsnEspecialidad) {
+              if (subcategorias._id == especialidad) {
+                espe.push(subcategorias.strEspecialidad);
               }
-            
+            }
           }
         }
+
         let element = {
           "Nombre": j.strName,
           "Apellido Paterno": j.strLastName,
@@ -431,12 +392,10 @@ export class UserManagementComponent implements OnInit {
           "Especialidades": JSON.stringify(espe).replace("[", " ").replace("]", "")
         };
 
-        console.log(espe)
       await  users.push(element);
         espe = [];
 
       }
-      console.log(users);
 
      await this._excelService.exportAsExcelFile(users, `${this.title}`);
     }
@@ -450,14 +409,9 @@ export class UserManagementComponent implements OnInit {
   }
 
   getUsuario(idUsuario: string) {
-    console.log(idUsuario);
     this.claveUsuario = idUsuario;
     this.userService.getUsuariosByid(idUsuario).then((data: any) => {
 
-
-      console.log('suario seleccionado');
-      console.log(data.cnt[0]['strName']);
-      console.log(data.cnt[0]['arrEspecialidadPermiso']);
       this.name = data.cnt[0]['strName'];
       this.strLastName = data.cnt[0]['strLastName'];
       this.strMotherLastName = data.cnt[0]['strMotherLastName'];
@@ -466,14 +420,11 @@ export class UserManagementComponent implements OnInit {
       this.role = data.cnt[0].idRole.strRole;
       this.user = data.cnt[0];
       this.status = `${data.cnt[0]['blnStatus']}`;
-      console.log(this.idUser, 'el id user');
-      console.log('id');
-      console.log(this.role + 'sa');
       this.getCarrerasByUser();
 
     }).then((err) => {
       console.log(err);
-    })
+    });
   }
 
 
@@ -490,20 +441,15 @@ export class UserManagementComponent implements OnInit {
       }, 0);
       this.cargando = false;
       this.usuarios = res.cnt;
-      console.log("todos los usuarios");
-      console.log(this.usuarios);
       for (const c of this.usuarios) {
-        //console.log('----------------');
         let espe = [];
 
-        console.log(c.strName);
         if(c.arrEspecialidadPermiso.length > 0){
           for (const especialidad of c.arrEspecialidadPermiso) {
             for (const carrera of this.carreras) {
               for (const especialidadC of carrera.aJsnEspecialidad) {
                 for (const subcategorias of carrera.aJsnEspecialidad) {
                   if (subcategorias._id == especialidad) {
-                    //console.log(subcategorias.strEspecialidad);
                     espe.push(subcategorias.strEspecialidad);
                     // this.ngOnInit();
                   }
@@ -521,28 +467,24 @@ export class UserManagementComponent implements OnInit {
           espe.length > 0 ? espe : []
 
         ];
-        console.log(element, "elemet");
         this.arrayUser.push(element);
         espe = [];
       }
     }).catch(err => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+      });
     });
   }
 
 
   getRole(idRol: string) {
-    console.log(idRol);
     this.rolesService.getRolByid(idRol).then((data: any) => {
-      console.log('ESTOY AQUI');
-      // this.roles = data.cnt[0].idRole.id;
       this.role = data.cnt[0]._id;
-      console.log(data.cnt[0]._id + "Este es el id del Rol");
-      console.log(this.roles);
-      // this.role = data.cnt[0].idRole.strRole;
     }).then((err) => {
       console.log(err);
-    })
+    });
   }
 
 
@@ -550,8 +492,6 @@ export class UserManagementComponent implements OnInit {
   getRoles() {
     this.cargando = true;
     this.rolesService.getRoles().then((res: any) => {
-      console.log(res.cnt[0].strRole.IdRole);
-      // this.role = data.cnt[0].idRole.strRole;
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
       }, 0);
@@ -565,13 +505,15 @@ export class UserManagementComponent implements OnInit {
       }
 
     }).catch(err => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+      });
     });
   }
 
 
   updateUsuarios(form: NgForm) {
-    console.log(this.user);
     this.userService.putUsuarios(this.idUser, this.user).then(res => {
       Toast.fire({
         icon: 'success',
@@ -610,21 +552,11 @@ export class UserManagementComponent implements OnInit {
   // }
 
   statusChange(status) {
-    console.log(status, 'statuss', this.status);
     if (status == 'Activo') {
       this.user.blnStatus = true;
     } else {
       this.user.blnStatus = false;
     }
   }
-  // Addspecialidad(){
-  //   // console.log('OMAIGA!!!!');
-  //   this.usermanagementService.putUsuarioEspecialidad(this.idUser,this.user).then(res=>{
-  //     this.arrEspecialidadPermiso;
-
-  //     console.log(res);
-  //   });
-  // }
-
 
 }

@@ -47,7 +47,6 @@ export class SubjectsComponent implements OnInit {
     this.cargando = true;
     this.subjectsService.getAsignatura().then((res: any) => {
       this.cargando = false;
-      console.log(res);
       this.subs = res.cnt;
       for (const c of this.subs) {
         let element = [
@@ -57,7 +56,10 @@ export class SubjectsComponent implements OnInit {
         this.arrayCareer.push(element);
       } 
     }).catch(err => {
-      console.log(err.msg);
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+      });
     });
   }
 
@@ -69,15 +71,11 @@ export class SubjectsComponent implements OnInit {
         title: `¡La Asignatura se actualizó exitosamente!`
       });
     }).catch((err) => {
-
-      console.log(err);
       Toast.fire({
         icon: 'error',
         title: err.error.msg
-   
+      });
     });
-  });
-  
   }
 
   activoAsignatura(id: string){
@@ -88,15 +86,11 @@ export class SubjectsComponent implements OnInit {
         title: `¡La Asignatura se actualizó exitosamente!`
       });
     }).catch((err) => {
-
-      console.log(err);
       Toast.fire({
         icon: 'error',
         title: err.error.msg
-   
+      });
     });
-  });
-  
   }
 
 

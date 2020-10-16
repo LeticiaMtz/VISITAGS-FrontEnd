@@ -8,6 +8,13 @@ import { User } from 'src/app/models/user.model';
 
 declare function init_plugins();
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 4000
+});
+
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
@@ -21,35 +28,30 @@ export class ChangePasswordComponent implements OnInit {
   token: string;
   regexp = new RegExp('^[_A-Za-z\\+]+(\\.[_A-Za-z]+)*@utags.edu.mx$');
   password:ChangePasswordModel= new ChangePasswordModel();
- 
-        
+
   constructor( private activatedRoute: ActivatedRoute, private changePasswordService: ChangePasswordService,  public router:Router) { }
- 
+
   ngOnInit(): void {
     init_plugins();
     this.token = this.activatedRoute.snapshot.params.token;
   }
-  check(event){
-    console.log(event.explicitOriginalTarget.checked);
-    this.checkB = event.explicitOriginalTarget.checked
- 
-  }
- 
-  changePassword(form: NgForm){
- 
- 
-    
-   this.changePasswordService.changepassword(this.token,this.password).then((data:any) =>{
-     Swal.fire({
-        text: 'Contraseña actualizada corractamente',
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-      });
-      this.router.navigate(['/login']);
-   })
-   .catch(err=>{
-     console.log(err);
-   }) 
+  check(event) {
+    this.checkB = event.explicitOriginalTarget.checked;
   }
 
+  changePassword(form: NgForm) {
+   this.changePasswordService.changepassword(this.token, this.password).then((data: any) => {
+    Swal.fire({
+      text: 'Contraseña actualizada corractamente',
+      icon: 'success',
+      confirmButtonText: 'Aceptar'
+    });
+    this.router.navigate(['/login']);
+   }).catch(err => {
+    Toast.fire({
+      icon: 'warning',
+      title: `¡${err.msg}!`
+    });
+   });
+  }
 }

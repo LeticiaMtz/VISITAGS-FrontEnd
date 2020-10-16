@@ -57,7 +57,7 @@ export class FileUploaderComponent implements OnInit {
   pondFiles = [];
 
   pondHandleInit() {
-    console.log('FilePond has initialised', this.myPond);
+    // console.log('FilePond has initialised', this.myPond);
   }
 
   pondHandleAddFile(event: any) {
@@ -68,5 +68,5 @@ export class FileUploaderComponent implements OnInit {
 
   cargarArchivo() {
     // this.archivosObtenidos.emit(this.archivo);
-}
+  }
 }

@@ -8,7 +8,14 @@ import { ExportDataService } from 'src/app/services/excel/export-to-excel.servic
 import { environment } from '../../../environments/environment.prod';
 import * as jwt_decode from 'jwt-decode';
 import { CareersService } from 'src/app/services/careers/careers.service';
-import { log } from 'console';
+import Swal from 'sweetalert2';
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});
 
 @Component({
   selector: 'app-dashboard',
@@ -41,16 +48,12 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.title = 'Reporte de Alertas';
     this.token = localStorage.aa_token;
-    this.tokenDecoded = jwt_decode(this.token)
-    console.log(this.tokenDecoded);
-    console.log(this.tokenDecoded.user._id);
-    console.log(this.tokenDecoded.user.idRole);
+    this.tokenDecoded = jwt_decode(this.token);
     this.getAlert();
     // nuevo: string = environment.nuevo;
     // enProgreso: string = environment.seguimiento;
     // cerrado: string = environment.cerrado;
     // finalizado: string = environment.finalizado;
-    
   }
 
   redirigir() {
@@ -60,25 +63,20 @@ export class DashboardComponent implements OnInit {
   getAlert(){
     this.cargando = true;
     this.idPersona = this.tokenDecoded.user._id;
-    console.log(this.idPersona,'-------------');
     this.idRol = this.tokenDecoded.user.idRole;
     this.alertService.getAlerts(this.idRol, this.idPersona).then((res: any) => {
-
-      console.log(res.cnt,"CNT");
       this.cargando = false;
       /* if(res.cnt.length>1){
-        console.log("Condiciones")
-        console.log(res.cnt[0], "Posicion 0")
         this.alerts = res.cnt[0];
       }else{ */
 
         this.alerts = res.cnt;
       /* } */
-      console.log(res)
-      console.log(res.cnt.length);
-      
     }).catch(err => {
-      console.log(err.msg);
+      Toast.fire({
+        icon: 'error',
+        title: `¡${err.msg}!`
+      });
     });
   }
 

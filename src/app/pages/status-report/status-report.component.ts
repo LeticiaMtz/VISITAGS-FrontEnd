@@ -44,7 +44,6 @@ export class StatusReportComponent implements OnInit {
     this.cargando = true;
     this._estatusService.getAllStatus().then((data: any) => {
       this.cargando = false;
-      console.log(data);
       this.estatus = data.cnt;
       for (const s of this.estatus) {
         let element = [
@@ -150,15 +149,11 @@ export class StatusReportComponent implements OnInit {
         title: `¡El estatus se actualizó exitosamente!`
       });
     }).catch((err) => {
-
-      console.log(err);
       Toast.fire({
         icon: 'error',
         title: err.error.msg
-   
+      });
     });
-  });
-  
   }
 
 }

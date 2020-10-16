@@ -95,7 +95,6 @@ export class TrackingAlertsComponent implements OnInit {
 
   obtenerAlerta(idAlert: string) {
     this.trackingAlertsService.getAlertData(idAlert).then((res: any) => {
-      console.log(res);
       this.objAlert = res.cnt[0];
       this.objUser = res.cnt[0].idUser;
       this.objSubject = res.cnt[0].idAsignatura;
@@ -107,7 +106,10 @@ export class TrackingAlertsComponent implements OnInit {
       }
       this.userName = `${this.objUser.strName} ${this.objUser.strLastName} ${this.surName}`;
     }).catch(err => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+      });
     });
   }
 
@@ -118,7 +120,10 @@ export class TrackingAlertsComponent implements OnInit {
         $('.selectpicker').selectpicker('refresh');
       }, 0);
     }).catch(err => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+      });
     });
   }
 
@@ -132,7 +137,10 @@ export class TrackingAlertsComponent implements OnInit {
         this.principalStatus = this.nuevo;
       }
     }).catch(err => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+      });
     });
   }
 

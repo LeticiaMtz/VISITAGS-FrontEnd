@@ -39,11 +39,9 @@ export class UpdateSpecialtyComponent implements OnInit {
 
   getSpecialties(idC: string){
     this.careersService.getCarrerByid(idC).then((res:any) => {
-      console.log(res.cnt[0].aJsnEspecialidad);
       this.specialties = res.cnt[0].aJsnEspecialidad;
       this.specialties.forEach(element => {
         if (element._id === this.idSpecialty){
-          console.log(element._id);
           this.specialty.strEspecialidad = element.strEspecialidad;
           this.specialty.blnStatus = element.blnStatus;
         }

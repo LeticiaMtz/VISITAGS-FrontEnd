@@ -29,7 +29,6 @@ export class RegisterBehaviorComponent implements OnInit {
 
   saveBehavior(forma: NgForm){
     this.behaviorService.postBehavior(this.idReasons,  this.behavior).then(res => {
-      console.log(res);
       Toast.fire({
         icon: 'success',
         title: `¡La conducta ${this.behavior.strNombre} se registró exitosamente!`
@@ -38,7 +37,6 @@ export class RegisterBehaviorComponent implements OnInit {
       forma.controls['blnStatus'].setValue(true);
       this.refresh.emit(true);
     }).catch(err => {
-      console.log(err);
       Toast.fire({
         icon: 'error',
         title: err.error.msg

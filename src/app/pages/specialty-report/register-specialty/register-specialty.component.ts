@@ -29,7 +29,6 @@ export class RegisterSpecialtyComponent implements OnInit {
 
   saveSpecialty(forma: NgForm){
     this.specialtyService.postSpecialty(this.idCareer,  this.specialty).then(res => {
-      console.log(res);
       Toast.fire({
         icon: 'success',
         title: `¡La especialidad ${this.specialty.strEspecialidad} se registró exitosamente!`
@@ -38,7 +37,6 @@ export class RegisterSpecialtyComponent implements OnInit {
       forma.controls['blnStatus'].setValue(true);
       this.refresh.emit(true);
     }).catch(err => {
-      console.log(err);
       Toast.fire({
         icon: 'error',
         title: err.error.msg

@@ -94,12 +94,14 @@ export class AlertMonitorComponent implements OnInit {
       }, 0);
       this.carreras = carreras.cnt;
     }).catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: 'warning',
+        title: `¡${err.error.msg}!`
+      });
     });
   }
 
   getEspecialidades(idCarrera: string) {
-    console.log(idCarrera);
     this._espService.getSpecialties(idCarrera).then((data: any) => {
       setTimeout(() => {
         $('.selectpicker').selectpicker('refresh');
@@ -107,7 +109,10 @@ export class AlertMonitorComponent implements OnInit {
       this.especialidades = data.cnt.rutas;
       this.getAlertas();
     }).catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: 'warning',
+        title: `¡${err.error.msg}!`
+      });
     });
   }
 
@@ -123,7 +128,10 @@ export class AlertMonitorComponent implements OnInit {
         });
       }
     }).catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: 'warning',
+        title: `¡${err.error.msg}!`
+      });
     });
   }
 
@@ -134,7 +142,10 @@ export class AlertMonitorComponent implements OnInit {
       }, 0);
       this.profesores = data.cnt;
     }).catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: 'warning',
+        title: `¡${err.error.msg}!`
+      });
     });
   }
 
@@ -149,13 +160,9 @@ export class AlertMonitorComponent implements OnInit {
 
         this._carrerasService.getCarrerByid(alert.idCarrera['_id']).then((data: any) => {
           this.especi = data.cnt[0].aJsnEspecialidad;
-          console.log(this.especi);
-          
           this.especi.forEach(element => {
             if (element._id === alert.idEspecialidad){
-              console.log(element._id);
               this.specialty.strEspecialidad = element.strEspecialidad;
-              console.log(this.specialty.strEspecialidad);
             }
           });
 
@@ -173,10 +180,12 @@ export class AlertMonitorComponent implements OnInit {
           ];
           this.arrAlerta.push(element);
         }).catch((err) => {
-          console.log(err);
+          Toast.fire({
+            icon: 'warning',
+            title: `¡${err.error.msg}!`
+          });
         });
       }
-      console.log('ArrAlertas PDF', this.arrAlerta);
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
@@ -193,7 +202,10 @@ export class AlertMonitorComponent implements OnInit {
       }, 0);
       this.arrEstatus = data.cnt;
     }).catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: 'warning',
+        title: `¡${err.error.msg}!`
+      });
     });
   }
 

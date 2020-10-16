@@ -3,6 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
 import { Router } from '@angular/router';
 import * as jwt_decode from 'jwt-decode';
+import Swal from 'sweetalert2';
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 4000
+});
 
 @Component({
   selector: 'app-header',
@@ -33,12 +41,16 @@ export class HeaderComponent implements OnInit {
   }
 
   getUser(id){
-    this.user.getUsuariosByid(id).then((res:any)=>{
+    this.user.getUsuariosByid(id).then((res:any) => {
       this.objUser = res.cnt[0];
       this.userName = `${this.objUser.strName} ${this.objUser.strLastName}`;
       this.userEmail = this.objUser.strEmail;
     }).catch(err => {
       console.log(err);
+      Toast.fire({
+        icon: 'warning',
+        title: `¡${err.msg}!`
+      });
     });
   }
 
