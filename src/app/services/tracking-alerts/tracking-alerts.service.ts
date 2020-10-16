@@ -27,7 +27,7 @@ export class TrackingAlertsService {
   }
 
   RegistrarSeguimiento(idAlerta: string, comentario: FormData) {
-    return this.http.post(`${this.url}/seguimiento?idAlerta=${idAlerta}`, comentario).toPromise();
+    return this.http.post(`${this.url}/seguimiento/?idAlerta=${idAlerta}`, comentario).toPromise();
   }
 
   getFileTracking(fileName: string) {
@@ -36,9 +36,5 @@ export class TrackingAlertsService {
 
   getFileEvidence(fileName: string) {
     window.open(`${this.url}/descargarArchivo/descargaEvidencia/${fileName}`, '_blank');
-  }
-
-  actualizarEstatus(idAlert: string, modality: AlertModel) {
-    return this.http.put(`${this.url}/alerts/actualizarEstatus/${idAlert}`, modality).toPromise();
   }
 }
