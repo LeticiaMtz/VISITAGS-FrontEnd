@@ -30,7 +30,6 @@ export class UpdateStatusComponent implements OnInit {
 
   getEstatusId(id: string) {
     this._estatusService.getStatusId(id).then((data: any) => {
-      console.log(data);
       this.estatus = data.cnt[0];
     }).catch((err) => {
       Toast.fire({

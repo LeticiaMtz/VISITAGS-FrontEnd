@@ -11,7 +11,7 @@ const Toast = Swal.mixin({
   position: 'top-end',
   showConfirmButton: false,
   timer: 3000
- });
+});
 
 @Component({
   selector: 'app-reasons-crde',
@@ -50,7 +50,6 @@ export class ReasonsCRDEComponent implements OnInit {
     this.ReasonsService.getReasons().then((res: any) => {
       this.cargando = false;
       this.reasons = res.cnt;
-      console.log(res.cnt);
       for (const c of this.reasons) {
         let element = [
           c.strCategoria.replace(/\:null/gi,':""')
@@ -58,7 +57,10 @@ export class ReasonsCRDEComponent implements OnInit {
         this.arrayReasons.push(element);
       }
     }).catch(err => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error.msg
+      });
     });
   }
 
@@ -141,15 +143,10 @@ export class ReasonsCRDEComponent implements OnInit {
         title: `¡La categoria crde se actualizó exitosamente!`
       });
     }).catch((err) => {
-
-      console.log(err);
       Toast.fire({
         icon: 'error',
         title: err.error.msg
-   
+      });
     });
-  });
-  
   }
-
 }

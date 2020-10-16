@@ -39,12 +39,9 @@ export class UpdateBehaviorComponent implements OnInit {
 
   getBehavior(idC: string){
     this.reasonsService.getReasonsByid(idC).then((res:any) => {
-      console.log(res);
-      console.log(res.cnt[0].aJsnMotivo);
       this.behaviors = res.cnt[0].aJsnMotivo;
       this.behaviors.forEach(element => {
-        if (element._id === this.idBehavior){
-          console.log(element._id);
+        if (element._id === this.idBehavior) {
           this.behavior.strNombre = element.strNombre;
           this.behavior.strClave= element.strClave;
           this.behavior.blnStatus = element.blnStatus;
@@ -54,7 +51,6 @@ export class UpdateBehaviorComponent implements OnInit {
       Toast.fire({
         icon: 'error',
         title: err.error.msg
-    
       });
     });
   }

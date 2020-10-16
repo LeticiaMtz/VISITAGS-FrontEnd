@@ -21,7 +21,6 @@ export class UserManagementService {
   }
 
   getUsuariosByid(idUsers: string){
-    console.log(`${this.URL}/Users/obtener/${idUsers}`);
     return this.http.get(`${this.URL}/Users/obtener/${idUsers}`).toPromise();
   }
 
@@ -32,7 +31,6 @@ export class UserManagementService {
 
   
   putUsuarioEspecialidad(idUsers: string, especilidad: any[]){
-    console.log(especilidad);
     let aJsnEspecialidad = {
       "aJsnEspecialidad": especilidad 
       

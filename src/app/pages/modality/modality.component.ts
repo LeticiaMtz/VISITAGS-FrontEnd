@@ -61,7 +61,10 @@ export class ModalityComponent implements OnInit {
         this.arrayMod.push(element);
       } 
     }).catch(err => {
-      console.log(err.msg);
+      Toast.fire({
+        icon: 'error',
+        title: err.msg
+      });
     });
   }
 
@@ -92,8 +95,6 @@ export class ModalityComponent implements OnInit {
         title: `¡La Modalidad se actualizó exitosamente!`
       });
     }).catch((err) => {
-
-      console.log(err);
       Toast.fire({
         icon: 'error',
         title: err.error.msg

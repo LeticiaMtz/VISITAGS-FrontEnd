@@ -234,7 +234,9 @@ export class AlertRegisterComponent implements OnInit {
         forma.reset();
       });
 
-      this.router.navigate(['/dashboard']);
+      setTimeout(() => {
+        this.router.navigate(['/dashboard']);
+      }, 500);
     }
   }
 
@@ -252,7 +254,10 @@ export class AlertRegisterComponent implements OnInit {
         });
       }
     }).catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: `¡${err.msg}!`
+      });
     });
   }
 
@@ -266,7 +271,10 @@ export class AlertRegisterComponent implements OnInit {
         });
       }
     }).catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: `¡${err.msg}!`
+      });
     });
   }
 
@@ -285,8 +293,11 @@ export class AlertRegisterComponent implements OnInit {
       }
 
     }).catch((err) => {
-      console.log(err);
-    })
+      Toast.fire({
+        icon: 'error',
+        title: `¡${err.msg}!`
+      });
+    });
   }
 
   getAsignaturas() {
@@ -299,21 +310,26 @@ export class AlertRegisterComponent implements OnInit {
         });
       }
     }).catch((err)=> {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: `¡${err.msg}!`
+      });
     });
   }
 
   getConductasRiesgo() {
     this.reasonsService.getReasons().then((razones: any) => {
       this.razones = razones.cnt;
-      console.log(this.razones);
       for (const razon of this.razones) {
         for (const motivo of razon.aJsnMotivo) {
           this.motivos.push(motivo);
         }
       }
     }).catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: `¡${err.msg}!`
+      });
     });
   }
 

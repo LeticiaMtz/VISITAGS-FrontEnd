@@ -3,7 +3,14 @@ import { SidebarService } from 'src/app/services/service.index';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
 import * as jwt_decode from 'jwt-decode';
+import Swal from 'sweetalert2';
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 4000
+});
 
 @Component({
   selector: 'app-sidebar',
@@ -44,8 +51,6 @@ export class SidebarComponent implements OnInit {
               sub.push(subm);
             }
         }
-        console.log(sub);
-        console.log(sub.length);
         m = {
           titulo: menu.titulo,
           icono: menu.icono,
@@ -70,6 +75,10 @@ export class SidebarComponent implements OnInit {
       this.userName = `${this.objUser.strName} ${this.objUser.strLastName}`;
     }).catch(err => {
       console.log(err);
+      Toast.fire({
+        icon: 'warning',
+        title: `¡${err.msg}!`
+      });
     });
   }
 }

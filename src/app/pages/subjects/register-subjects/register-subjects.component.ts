@@ -33,7 +33,6 @@ export class RegisterSubjectsComponent implements OnInit {
 
   saveAgignatura(form: NgForm) {
     this.subjectsService.postAsignatura(this.sub).then(res => {
-      console.log(res);
       Toast.fire({
         icon: 'success',
         title: `¡La Asignatura ${this.sub.strAsignatura} se registró exitosamente!`

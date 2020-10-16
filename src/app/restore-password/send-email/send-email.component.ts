@@ -16,42 +16,35 @@ declare function init_plugins();
 export class SendEmailComponent implements OnInit {
 
   [x: string]: any;
-  checkB:Boolean;
-  user:User = new User();
-    repetPassword:String;  
- 
+  checkB: Boolean;
+  user: User = new User();
+    repetPassword: string;
+
     regexp = new RegExp('^[_A-Za-z\\+]+(\\.[_A-Za-z]+)*@utags.edu.mx$');
   constructor(public router:Router, private sendEmailService: ChangePasswordService) { }
- 
+
   ngOnInit(): void {
     init_plugins();
   }
- 
-  check(event){
-    console.log(event.explicitOriginalTarget.checked);
-    this.checkB = event.explicitOriginalTarget.checked
-   }
- 
-   User(form: NgForm, email: string) {
-  
 
-       
-    this.sendEmailService.sendemail(email).then((data:any) => {
-      console.log(data);
+  check(event){
+    this.checkB = event.explicitOriginalTarget.checked;
+  }
+
+  User(form: NgForm, email: string) {
+    this.sendEmailService.sendemail(email).then((data: any) => {
       Swal.fire({
         title: '¡Correcto!',
         text: 'El email fué enviado correctamente',
         icon: 'success',
         confirmButtonText: 'Ok'
-     });
+      });
     }).catch((err) => {
-      console.log(err);
       Swal.fire({
         text: err.error.msg,
         icon: 'error',
         confirmButtonText: 'Ok'
-     });
-    })
+      });
+    });
   }
-
 }

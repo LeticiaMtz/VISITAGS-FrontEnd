@@ -33,10 +33,10 @@ export class BootstrapSelectComponent implements OnInit {
       this.refrescarSelect();
     }
   }
-  
+
   @Output() model = new EventEmitter();
   @Output() ngModelChange = new EventEmitter();
-  
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -52,13 +52,13 @@ export class BootstrapSelectComponent implements OnInit {
 
   funcion(): void {
     this.ngForm.controls[this.name].markAsTouched();
-    if(this.ngForm.controls[this.name].touched && this.ngForm.controls[this.name].invalid) {
+    if (this.ngForm.controls[this.name].touched && this.ngForm.controls[this.name].invalid) {
       this.getButton().classList.add('invalido');
       this.refrescarSelect();
     }
   }
 
-  retornarValor(event): void{
+  retornarValor(event): void {
 
     this.getButton().classList.remove('invalido');
     this.refrescarSelect();
@@ -72,7 +72,7 @@ export class BootstrapSelectComponent implements OnInit {
       }, 0);
   }
 
-  getButton(){
+  getButton() {
     const select = document.querySelectorAll(`[ng-reflect-name="${this.name}"]`)[0];
     const padre = select.closest('div');
     return  padre.getElementsByTagName('button')[0];
@@ -83,6 +83,6 @@ interface Select {
   _id: string;
   strNombre: string;
   strIcon?: string;
-  strSubtext?: string
+  strSubtext?: string;
 }
 

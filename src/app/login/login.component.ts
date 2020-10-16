@@ -71,10 +71,8 @@ export class LoginComponent implements OnInit {
     if (this.regexp.test(this.valueEmail.value)) {
       this.loginService.postLogin(this.user.value)
       .subscribe(res =>{
-        console.log(res);
         let data = JSON.stringify(res);
         let dataJson = JSON.parse(data);
-        console.log(dataJson.token);
 
         localStorage.setItem('aa_token', dataJson.token);
 
@@ -97,7 +95,6 @@ export class LoginComponent implements OnInit {
           } else {
             this.router.navigate(['/dashboard']);
           }
-          console.log(dataJson);
           Swal.fire({
             title: `Hola ${dataJson.cnt.strName} bienvenido`,
             icon: 'success',
@@ -110,20 +107,13 @@ export class LoginComponent implements OnInit {
             icon: 'error',
             confirmButtonText: 'Aceptar'
           });
-          console.log('Algo salio mal');
-          console.log(this.invalidEmail);
-          console.log(this.invalidPassword);
         }
       },
     err => {
 
 
         if (err.status !== 0) {
-          
-      
           this.errorType = err.error.msg;
-          console.log(this.errorType);
-          
         } else {
           //Este error puede surgir si el servidor no esta ejecutandose o por un mal consumo o llamado de la API.
           this.errorType = `${err.name}: ERROR_DE_CONEXIÓN Error al conectar con el servidor`;
@@ -134,8 +124,6 @@ export class LoginComponent implements OnInit {
           icon: 'error',
           confirmButtonText: 'Aceptar'
         });
-
-        console.log(err);
       });
     } else {
 

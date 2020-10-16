@@ -45,8 +45,8 @@ export class CareerReportComponent implements OnInit {
     this.arrayCareer = [];
     this.title = 'Reporte de Carreras';
   }
-  
-  getCareeers(){
+
+  getCareeers() {
     this.cargando=true;
     this.careerService.getCareers().then((res: any) => {
       this.cargando=false;
@@ -58,7 +58,10 @@ export class CareerReportComponent implements OnInit {
         this.arrayCareer.push(element);
       }
     }).catch(err => {
-      console.log(err);
+      Toast.fire({
+        icon: 'warning',
+        title: `¡${err.msg}!`
+      });
     });
   }
 
@@ -121,20 +124,15 @@ export class CareerReportComponent implements OnInit {
   
   updateCarrer(id:string){
     this.careerService.putCareer(id, this.carrer).then((res) => {
-      console.log(this.carrer);
-      
       this.getCareeers();
-      
       Toast.fire({
         icon: 'success',
         title: `¡La Carrera se actualizó exitosamente!`
       });
     }).catch(err => {
-    
       Toast.fire({
         icon: 'error',
         title: err.error.msg
-   
       });
     });
   }
@@ -146,15 +144,11 @@ export class CareerReportComponent implements OnInit {
         title: `¡La Carrera se actualizó exitosamente!`
       });
     }).catch((err) => {
-
-      console.log(err);
       Toast.fire({
         icon: 'error',
         title: err.error.msg
-   
     });
   });
-  
   }
 
 }
