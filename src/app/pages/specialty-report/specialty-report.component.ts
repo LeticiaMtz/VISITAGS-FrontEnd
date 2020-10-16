@@ -27,11 +27,10 @@ export class SpecialtyReportComponent implements OnInit {
   arraySpeciality = [];
   title: string;
 
-
   constructor(private specialtyService: SpecialtyService, private careersService: CareersService, private activatedRoute: ActivatedRoute, private _PdfService: PdfServiceService, private _excelService: ExportDataService) { }
 
   ngOnInit(): void {
-    this.idCareer = this.activatedRoute.snapshot.params.id; 
+    this.idCareer = this.activatedRoute.snapshot.params.id;
     this.getSpecialties(this.idCareer);
     this.arraySpeciality = [];
     this.title = 'Reporte de Especialidades';
@@ -69,6 +68,23 @@ export class SpecialtyReportComponent implements OnInit {
 
   updateCanceled(e){
     this.actualizar = e;
+  }
+
+  activarEspecialidad(idEspecialidad: string) {
+    console.log(idEspecialidad);
+    this.specialtyService.cambiarEstatus(this.idCareer, idEspecialidad).then((resp: any) => {
+      console.log(resp.cnt);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
+  desactivarEspecialidad(idEspecialidad: string) {
+    this.specialtyService.cambiarEstatus(this.idCareer, idEspecialidad).then((resp: any) => {
+      console.log(resp.cnt);
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 
 

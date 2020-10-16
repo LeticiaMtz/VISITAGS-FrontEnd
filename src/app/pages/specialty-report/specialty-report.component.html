@@ -63,6 +63,8 @@
                                                         <span class="text-xs text-uppercase ">opciones</span>
                                                     </div>
                                                     <a (click)="actualizarEspecialidad(true, specialty._id)" type="button" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Actualizar</a>
+                                                    <a (click)="activarEspecialidad(specialty._id)" *ngIf="specialty.blnStatus === false" type="button" class="dropdown-item drop-options-text blue"><i class="fa fa-check  mr-2 "></i>Activar</a>
+                                                    <a (click)="desactivarEspecialidad(specialty._id)" *ngIf="specialty.blnStatus === true" type="button" class="dropdown-item drop-options-text pdf "><i class="fa fa-ban mr-2 "  ></i>Desactivar</a>
                                                 </div>
                                             </td>
                                         </tr>
