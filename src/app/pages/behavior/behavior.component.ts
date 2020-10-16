@@ -5,8 +5,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReasonsService } from '../../services/reasons-crde/reasons-crde.service';
 import { PdfServiceService } from '../../services/PDF/pdf-service.service';
 import { ExportDataService } from 'src/app/services/excel/export-to-excel.service';
+import Swal from 'sweetalert2';
 
-
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+ });
 
 @Component({
   selector: 'app-behavior',
