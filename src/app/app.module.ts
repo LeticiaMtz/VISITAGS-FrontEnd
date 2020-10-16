@@ -18,14 +18,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './services/login/token-interceptor.service';
 import { ChangePasswordComponent } from './restore-password/change-password/change-password.component';
 import { SendEmailComponent } from './restore-password/send-email/send-email.component';
-import { ModalityComponent } from './pages/modality/modality.component';
 import { ObtenerUrlComponent } from './obtener-url/obtener-url.component';
-
-
-
-
-
-
 
 @NgModule({
   declarations: [
