@@ -27,4 +27,8 @@ export class SpecialtyService {
   putSpecialty(idCareer: string, idSpecialty: string, specialty: SpecialtyModel){
     return this.http.put(`${this.URL}/especialidad/actualizar/${idCareer}/${idSpecialty}`, specialty).toPromise();
   }
+
+  cambiarEstatus(idCarrera: string, idEspecialidad: string) {
+    return this.http.delete(`${this.URL}/especialidad//eliminar/${idCarrera}/${idEspecialidad}`).toPromise();
+  }
 }

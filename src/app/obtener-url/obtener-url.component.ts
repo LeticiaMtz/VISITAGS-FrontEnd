@@ -11,14 +11,12 @@ declare function init_plugins();
 })
 export class ObtenerUrlComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) { 
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
     init_plugins();
   }
 
   ngOnInit(): void {
     let ruta = jwt_decode(this.activatedRoute.snapshot.params.token);
-
-    console.log(ruta);
 
     if (!localStorage.getItem('aa_token')) {
       this.router.navigate(['/login']);
@@ -27,6 +25,7 @@ export class ObtenerUrlComponent implements OnInit {
       let usuario = jwt_decode(localStorage.getItem('aa_token'));
       let idUser = usuario.user._id;
       this.router.navigateByUrl(`${ruta.url}/${idUser}`);
+      init_plugins();
     }
   }
 

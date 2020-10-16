@@ -4,8 +4,6 @@ import { User } from '../../models/user.model';
 import { Router } from '@angular/router';
 import * as jwt_decode from 'jwt-decode';
 
-
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

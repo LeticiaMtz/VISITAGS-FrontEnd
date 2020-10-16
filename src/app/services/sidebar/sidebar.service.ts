@@ -36,7 +36,7 @@ rol = environment.roles;
   },
     {
       titulo: 'Catalogos',
-      icono: 'mdi mdi-gauge',
+      icono: 'mdi mdi-folder-multiple-outline',
       submenu: [
 
         { titulo: 'Gestión de Carreras', icono: 'fa fa-graduation-cap', url: '/career-report', roles: [this.rol.administrador]},

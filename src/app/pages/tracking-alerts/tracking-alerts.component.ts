@@ -20,8 +20,6 @@ import { UserManagementService } from '../../services/user-manegement/user-manag
 
 declare var $: any;
 
-
-
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -74,7 +72,7 @@ export class TrackingAlertsComponent implements OnInit {
   personas: any[] = [];
 
   constructor(private trackingAlertsService: TrackingAlertsService, private alertStatusService: AlertStatusService, private reasonsService: ReasonsService, private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef,  private _userService: UserManagementService) { 
-    localStorage.removeItem('aa_rutaTemporal')
+    localStorage.removeItem('aa_rutaTemporal');
   }
 
   ngOnInit(): void {
