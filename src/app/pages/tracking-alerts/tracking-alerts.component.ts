@@ -180,15 +180,7 @@ export class TrackingAlertsComponent implements OnInit {
         }, 0);
 
         this.ngOnInit();
-        this.objPriEstatus.idEstatus = this.EstatusActualizado;
 
-        this.trackingAlertsService.actualizarEstatus(this.idAlert, this.objPriEstatus).then(( res: any) => {
-          console.log(res, 'STATUS');
-          this.ngOnInit();
-          this.bottom();
-        }).catch(err => {
-          console.log(err, 'ERROR');
-        });
       }).catch(err => {
         setTimeout(() => {
           this.resetImage = false;
