@@ -182,6 +182,8 @@ export class TrackingAlertsComponent implements OnInit {
 
       this.trackingAlertsService.RegistrarSeguimiento(this.idAlert, fd).then((res: any) => {
 
+        this.arrColaboradores = [];
+        this.personas = [];
         setTimeout(() => {
           this.resetImage = false;
           this.documento = [];
