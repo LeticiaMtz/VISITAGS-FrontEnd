@@ -101,6 +101,7 @@ export class TrackingAlertsComponent implements OnInit {
       this.objModality = res.cnt[0].idModalidad;
       this.arrReasons = res.cnt[0].arrCrde;
       this.arrFiles = res.cnt[0].aJsnEvidencias;
+      this.principalStatus = res.cnt[0].idEstatus._id;
       if (this.objUser.strMotherLastName ) {
         this.surName = this.objUser.strMotherLastName;
       }
@@ -132,10 +133,11 @@ export class TrackingAlertsComponent implements OnInit {
       this.arrTracking = res.cnt.aJsnSeguimiento;
       if (this.arrTracking.length > 0) {
         this.arrTracking.sort((one, two) => (one > two ? -1 : 1)); //Ordena comentarios de mas viejo a nuevo.
-        this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus; //La alerta obtiene el estatus de el último comentario.
+        //this.principalStatus = this.arrTracking[this.arrTracking.length-1].idEstatus; //La alerta obtiene el estatus de el último comentario.
       } else {
-        this.principalStatus = this.nuevo;
+        //this.principalStatus = this.nuevo;
       }
+      console.log(res);
     }).catch(err => {
       Toast.fire({
         icon: 'error',

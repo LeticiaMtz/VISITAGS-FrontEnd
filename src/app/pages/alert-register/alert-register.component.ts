@@ -56,7 +56,7 @@ export class AlertRegisterComponent implements OnInit {
   documentos: any[] = [];
   motivos: any[] = [];
   arrAlumnos: any[] = [];
-  arrColaboradores:  any[] = [];
+  arrColaboradores: any[] = [];
   arrColabFInal: any[] = [];
   personas: any[] = [];
   arrAlertas: any[] = [];
@@ -67,7 +67,7 @@ export class AlertRegisterComponent implements OnInit {
   ngOnInit(): void {
     this.ngAfterViewInit();
     this.arrAlumnos.push({ strMatricula: '', strNombreAlumno: ''});
-    // this.arrColaboradores.push({_id: ''});
+    this.arrColaboradores.push({_id: ''});
     let token = localStorage.aa_token;
     let tokenDecoded = jwt_decode(token);
     this.alerta.idUser = tokenDecoded.user._id;
@@ -199,10 +199,9 @@ export class AlertRegisterComponent implements OnInit {
       
       for (const colaborador of this.arrColaboradores) {
         let id = colaborador._id[0];
-        colaboradores += id + ',';
+        if (id !== '' && typeof id !== 'undefined') colaboradores += id + ',';
       }
-      
-      fd.append('arrInvitados', colaboradores.slice(0,-1));
+      if(colaboradores !== '' && typeof colaboradores !== 'undefined' && colaboradores.length > 23) fd.append('arrInvitados', colaboradores.slice(0,-1));
 
       let matriculas = '';
       let nombresAlumnos = '';

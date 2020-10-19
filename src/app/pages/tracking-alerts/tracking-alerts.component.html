@@ -132,7 +132,7 @@
                                 <span class="badge badge-info" *ngIf="nuevo !== data.idEstatus && enProgreso !== data.idEstatus && cerrado !== data.idEstatus && finalizado !== data.idEstatus">OTRO</span>
                             </div>
                             <div class="row justify-content-end mt-1">
-                                <i class="fa fa-calendar "></i>
+                                <i class="fa fa-calendar "></i>&nbsp;
                                 <small style="font-size: 2;"> {{data.createdAt | date}} </small>
                             </div>
                         </div>
@@ -144,8 +144,8 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-12">
-                            <button *ngFor="let archivos of data.aJsnEvidencias" (click)="descargarArchivoT(archivos.strFileEvidencia)" class="btn btn-link" style="font-size: x-small; cursor: pointer;">
-                                &nbsp;&nbsp;&nbsp;<i class="fa fa-download"></i> {{archivos.strFileEvidencia}}
+                            <button *ngFor="let archivos of data.aJsnEvidencias" (click)="descargarArchivoE(archivos.strNombre)" class="btn btn-link" style="font-size: x-small; cursor: pointer;">
+                                &nbsp;&nbsp;&nbsp;<i class="fa fa-download"></i> {{archivos.strNombre}}
                             </button>
                         </div>
                     </div>
@@ -223,8 +223,8 @@
 <div class="modal fade" id="colaborador-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header" style="background-color:#1BA2C6 ;">
-                <h5 class="modal-title text" id="staticBackdropLabel" style="color:white;"><i class="fa fa-user-plus"></i> Invitar Colaboradores</h5>
+            <div class="modal-header">
+                <h5 class="modal-title text-info" id="staticBackdropLabel"><i class="fa fa-user-plus"></i> Invitar Colaboradores</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <div class="container">
                         <span aria-hidden="true">&times;</span>
@@ -250,12 +250,12 @@
                                         [required]="true"></app-bootstrap-select>
                                 </div>
                                 <div class="col-md-1">
-                                    <button type="button" class="btn btn-danger btn-sm btn-block" (click)="eliminarColaborador(formaColaboradores, ind)"><i class="fa fa-minus"></i></button>
+                                    <button type="button" class="btn btn-sm btn-block btn-outline-danger" (click)="eliminarColaborador(formaColaboradores, ind)"><i class="fa fa-minus"></i></button>
                                 </div>
                             </div>
                             <div class="row mt-4">
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-outline-success btn-sm" (click)="addColaborador(formaColaboradores)"><i class="fa fa-plus"></i> Nuevo Colaborador</button>
+                                    <button type="button" class="btn btn-outline-success btn-sm btn-block" (click)="addColaborador(formaColaboradores)"><i class="fa fa-plus"></i> Nuevo Colaborador</button>
                                 </div>
                             </div>
 
@@ -265,7 +265,7 @@
             </div>
             <div class="modal-footer">
                 <!-- <i class="fa fa-send mr-2"></i> -->
-                <button type="button" class="btn btn-info " data-dismiss="modal">¡Listo!</button>
+                <button type="button" class="btn btn-info btn-block" data-dismiss="modal">¡Listo!</button>
             </div>
         </div>
     </div>
