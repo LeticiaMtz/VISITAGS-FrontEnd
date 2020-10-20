@@ -53,35 +53,29 @@
                                 <!--Labels y sus validaciones-->
 
                                 <div class="animated fadeIn fast mt-3" *ngIf="seleccionado == true">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label style="font-weight:  bolder;">Nombre completo:</label>
-                                            </div>
-
-                                            <div class=" col-sm-6 text-center">
-                                                <label style="margin-left: 50px;">{{user.strName}} {{user.strLastName}} {{user.strMotherLastName}} </label>
-                                            </div>
+                                    <div class="container row">
+                                        <div class="col-sm-12">
+                                            <label style="font-weight:  bolder;">Nombre completo:</label>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-sm-5">
-                                                <label style="font-weight:  bolder;">Correo:</label>
-                                            </div>
-
-                                            <div class="col-sm-7 text-center">
-                                                <label style="text-align:left; margin-left: 50px;">{{user.strEmail}}</label>
-                                            </div>
+                                        <div class=" col-sm-12 text-center">
+                                            <label style="margin-left: 50px;">{{user.strName}} {{user.strLastName}} {{user.strMotherLastName}} </label>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label style="font-weight:  bolder;">Ultimo acceso:</label>
-                                            </div>
+                                        <div class="col-sm-12">
+                                            <label style="font-weight:  bolder;">Correo:</label>
+                                        </div>
 
-                                            <div class="col-sm-6 text-center">
-                                                <label style="margin-left: 50px;">{{user.updatedAt | date }}</label>
-                                            </div>
+                                        <div class="col-sm-12 text-center">
+                                            <label style="text-align:left; margin-left: 50px;">{{user.strEmail}}</label>
+                                        </div>
+
+                                        <div class="col-sm-12">
+                                            <label style="font-weight:  bolder;">Ultimo acceso:</label>
+                                        </div>
+
+                                        <div class="col-sm-12 text-center">
+                                            <label style="margin-left: 50px;">{{user.updatedAt | date }}</label>
                                         </div>
                                     </div>
                                 </div>
