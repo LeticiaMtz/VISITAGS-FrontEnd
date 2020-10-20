@@ -18,6 +18,7 @@ export class FileUploaderComponent implements OnInit {
 
   @ViewChild('myPond') myPond: any;
   @Output() archivosObtenidos = new EventEmitter();
+  @Output() archivoEliminado = new EventEmitter();
   evidencias: Array<any> = [];
   evidencia: FileModel;
   pondOptions: any;
@@ -35,7 +36,6 @@ export class FileUploaderComponent implements OnInit {
         process: (fieldName, file, metadata, load) => {
           // simulates uploading a file
           setTimeout(() => {
-            this.cargarArchivo();
             load();
           }, 500);
         },
@@ -61,12 +61,10 @@ export class FileUploaderComponent implements OnInit {
   }
 
   pondHandleAddFile(event: any) {
-    // this.archivo = event.file.source;
     this.archivosObtenidos.emit(event.file.source);
-
   }
 
-  cargarArchivo() {
-    // this.archivosObtenidos.emit(this.archivo);
+  fnRemove() {
+    this.archivoEliminado.emit(true);
   }
 }

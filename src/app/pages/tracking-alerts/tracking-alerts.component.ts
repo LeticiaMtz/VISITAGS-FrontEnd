@@ -172,6 +172,10 @@ export class TrackingAlertsComponent implements OnInit {
     // this.documento = archivos;
   }
 
+  eliminarArchivo(valor: any) {
+    this.documento = [];
+  }
+
   comentarAlerta(form: NgForm) {
     if (form.invalid) {
       Toast.fire({

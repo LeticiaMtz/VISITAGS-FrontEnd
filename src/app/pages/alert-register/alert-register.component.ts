@@ -243,6 +243,10 @@ export class AlertRegisterComponent implements OnInit {
     this.documentos.push(archivos);
   }
 
+  eliminarArchivo() {
+    this.documentos = [];
+  }
+
   getCarreras() {
     this.carrerasService.getCareers().then((carreras: any) => {
 
