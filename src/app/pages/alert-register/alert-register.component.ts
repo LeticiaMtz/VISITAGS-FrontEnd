@@ -243,6 +243,10 @@ export class AlertRegisterComponent implements OnInit {
     this.documentos.push(archivos);
   }
 
+  eliminarArchivo() {
+    this.documentos = [];
+  }
+
   getCarreras() {
     this.carrerasService.getCareers().then((carreras: any) => {
 
@@ -261,8 +265,10 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   getEspecialidad(idEspecialidad: string) {
-    this.especialidadService.getSpecialties(idEspecialidad).then((especialidades: any) => {
+    console.log(idEspecialidad);
+    this.especialidades = [];
 
+    this.especialidadService.getSpecialties(idEspecialidad).then((especialidades: any) => {
       for (const especials of especialidades.cnt.rutas) {
         this.especialidades.push({
           strNombre: especials.strEspecialidad,

@@ -51,6 +51,7 @@ export class UserManagementComponent implements OnInit {
   arrayUser = [];
   carreras: CareerModel[] = [];
   userManag: User = new User();
+  seleccionado: boolean = false;
 
   check = true;
 
@@ -409,6 +410,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   getUsuario(idUsuario: string) {
+    this.seleccionado = true;
     this.claveUsuario = idUsuario;
     this.userService.getUsuariosByid(idUsuario).then((data: any) => {
 

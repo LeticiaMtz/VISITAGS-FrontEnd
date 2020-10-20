@@ -4,11 +4,12 @@
             <div class="card-body container">
                 <div class="row">
                     <div class="col-12">
-                        Filtros
+                        <h4><i class="fa fa-filter mr-2"></i>Filtros</h4>
                         <hr style="margin-top: 0px;">
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
+                        <label class="small"><strong>Por Carrera</strong></label>
                         <select class="custom-select selectpicker selectpicker-down form-control btn-outline-light ops" data-size="4" data-dropup-auto=false title="Carreras" type="text" data-live-search="true" name="idCarrera" [(ngModel)]="alerta.idCarrera" #idCarrera="ngModel"
                             (ngModelChange)="getEspecialidades($event)">
                             <option *ngFor="let carrera of carreras" [ngValue]="carrera._id">{{carrera.strCarrera}}</option>
@@ -16,6 +17,7 @@
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
+                        <label class="small"><strong>Por Especialidad</strong></label>
                         <select class="custom-select selectpicker selectpicker-down form-control btn-outline-light ops" data-size="4" data-dropup-auto=false title="Especialidades" type="text" data-live-search="true" name="idEspecialidad" [(ngModel)]="alerta.idEspecialidad" #idEspecialidad="ngModel"
                             (ngModelChange)="getAlertas()">
                             <option *ngFor="let esp of especialidades" [ngValue]="esp._id">{{esp.strEspecialidad}}</option>
@@ -23,6 +25,7 @@
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
+                        <label class="small"><strong>Por Asignatura</strong></label>
                         <select class="custom-select selectpicker selectpicker-down form-control btn-outline-light ops" data-size="4" data-dropup-auto=false title="Asignaturas" type="text" data-live-search="true" name="idAsignatura" [(ngModel)]="alerta.idAsignatura" #idAsignatura="ngModel"
                             (ngModelChange)="getAlertas()">
                             <option *ngFor="let asig of asignaturas" [ngValue]="asig._id">{{asig.strNombre}}</option>
@@ -30,6 +33,7 @@
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
+                        <label class="small"><strong>Por Profesor</strong></label>
                         <select class="custom-select selectpicker selectpicker-down form-control btn-outline-light ops" data-size="4" data-dropup-auto=false title="Profesores" type="text" data-live-search="true" name="idUser" [(ngModel)]="alerta.idUser" #idEstatus="ngModel"
                             (ngModelChange)="getAlertas()">
                             <option *ngFor="let prof of profesores" [ngValue]="prof._id">{{prof.strName}} {{prof.strLastName}}</option>
@@ -37,12 +41,14 @@
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
+                        <label class="small"><strong>Por Estatus</strong></label>
                         <select class="form-control custom-select selectpicker btn-outline-light" data-size="4" data-dropup-auto=false title="Estatus" type="text" data-live-search="true" name="idEstatus" [(ngModel)]="alerta.idEstatus" #idEstatus="ngModel" (ngModelChange)="getAlertas()">
                             <option *ngFor="let estatus of arrEstatus" [ngValue]="estatus._id">{{estatus.strNombre}}</option>
                         </select>
                     </div>
 
                     <div class="col-12 col-md-4 mt-2">
+                        <label class="small"><strong>Por Fecha</strong></label>
                         <div class="input-group input-daterange">
                             <input type="date" class="form-control form-control-sm btn-outline-secondary" name="createdAt" [(ngModel)]="alerta.createdAt" #createdAt="ngModel" (ngModelChange)="getAlertas()">
                             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>

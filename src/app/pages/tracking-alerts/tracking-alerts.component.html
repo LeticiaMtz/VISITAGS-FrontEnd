@@ -144,7 +144,7 @@
                     </div>
                     <div class="row mt-1">
                         <div class="col-12">
-                            <button *ngFor="let archivos of data.aJsnEvidencias" (click)="descargarArchivoE(archivos.strNombre)" class="btn btn-link" style="font-size: x-small; cursor: pointer;">
+                            <button type="button" *ngFor="let archivos of data.aJsnEvidencias" (click)="descargarArchivoE(archivos.strNombre)" class="btn btn-link" style="font-size: x-small; cursor: pointer;">
                                 &nbsp;&nbsp;&nbsp;<i class="fa fa-download"></i> {{archivos.strNombre}}
                             </button>
                         </div>
@@ -209,7 +209,7 @@
 
                             <hr>
 
-                            <app-file-uploader *ngIf="!resetImage" (archivosObtenidos)="obtenerArchivos($event)"></app-file-uploader>
+                            <app-file-uploader *ngIf="!resetImage" (archivosObtenidos)="obtenerArchivos($event)" (archivoEliminado)="eliminarArchivo($event)"></app-file-uploader>
                         </div>
                     </div>
                 </div>

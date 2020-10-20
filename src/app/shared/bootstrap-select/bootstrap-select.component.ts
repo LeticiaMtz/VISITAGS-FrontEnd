@@ -30,6 +30,7 @@ export class BootstrapSelectComponent implements OnInit {
   @Input() set datos(value: any[]) {
     if ( value ) {
       this.arrDatos = value;
+      this.modelo = undefined;
       this.refrescarSelect();
     }
   }
