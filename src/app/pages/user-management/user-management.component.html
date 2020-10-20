@@ -8,125 +8,99 @@
             </div>
 
             <div class="container">
-                <h4>Datos del usuario</h4>
-                <hr>
-            </div>
+                <div class="animated fadeIn fast">
+                    <h4><i class="fa fa-user mr-2"></i> Datos del usuario</h4>
+                    <hr>
+                </div>
 
-            <form (ngSubmit)="updateUsuarios(forma)" #forma="ngForm" novalidate="" enctype="multipart/form-data">
-                <div class=" container form-group-sm small">
+                <form (ngSubmit)="updateUsuarios(forma)" #forma="ngForm" novalidate="" enctype="multipart/form-data">
+                    <div class="form-group-sm small">
 
-                    <div class="row">
-                        <div class="form-group col-md-12">
+                        <div class="row">
+                            <div class="form-group col-md-12">
 
-                            <div class=" mt-2">
-                                <select class="custom-select selectpicker form-control form-control-sm" data-live-search="true" title="Buscar usuario" type="text" name="strName" [(ngModel)]="user.strName" required #strName="ngModel" (ngModelChange)="getUsuario($event)">
+                                <div class=" mt-2">
+                                    <label class=""><strong>Nombre del Usuario</strong></label>
+                                    <select class="custom-select selectpicker form-control form-control-sm" data-live-search="true" title="Buscar usuario" type="text" name="strName" [(ngModel)]="user.strName" required #strName="ngModel" (ngModelChange)="getUsuario($event)">
                                     <option *ngFor="let usuario of usuarios"  [ngValue]="usuario._id" >{{usuario.strName}} {{usuario.strLastName}} {{usuario.strMotherLastName}}</option>
                                     
                                 </select>
-                                <div class="invalid-feedback" *ngIf="strName.errors?.required">
-                                    <small>
+                                    <div class="invalid-feedback" *ngIf="strName.errors?.required">
+                                        <small>
                                         Por favor, seleccione una opción.
                                     </small>
+                                    </div>
                                 </div>
-                            </div>
 
-
-
-
-                            <div class=" mt-2">
-                                <select class="custom-select form-control form-control-sm" name="idRole" type="text" title="Seleccione un rol" name="idRole" [(ngModel)]="user.idRole" required (ngModelChange)="getRole($event)" #idRole="ngModel">
+                                <div class=" mt-2">
+                                    <label class=""><strong>Rol del Usuario</strong></label>
+                                    <select class="custom-select form-control form-control-sm" name="idRole" type="text" title="Seleccione un rol" name="idRole" [(ngModel)]="user.idRole" required (ngModelChange)="getRole($event)" #idRole="ngModel">
                                     <option [ngValue]="user.idRole" disabled selected hidden>{{role == ''? 'Seleccionar rol': role}}</option>  
                                     <option *ngFor="let rol of roles" [ngValue]="rol._id" [selected]="role == rol._id">{{rol.strRole}}</option> 
                                   </select>
 
-                            </div>
-
-                            <!-- <div class=" mt-2">
-                                <select [class.is-invalid]="idRole.invalid && idRole.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione un rol" name="idRole" [(ngModel)]="user.idRole" required #idRole="ngModel">
-                                <option *ngFor="let rol of role" [ngValue]="rol._id">{{rol.strRole}}</option>
-                                </select>
-                                <div class="invalid-feedback" *ngIf="idRole.errors?.required">
-                                    <small>
-                                        Por favor, seleccione una opción.
-                                    </small>
                                 </div>
-                            </div> -->
 
-
-                            <div class="mt-2">
-                                <select class="custom-select form-control form-control-sm" type="text" name="blnStatus" [(ngModel)]="status" #blnActivo="ngModel" (ngModelChange)="statusChange($event)" title="Seleccionar estatus">
+                                <div class="mt-2">
+                                    <label class=""><strong>Estatus</strong></label>
+                                    <select class="custom-select form-control form-control-sm" type="text" name="blnStatus" [(ngModel)]="status" #blnActivo="ngModel" (ngModelChange)="statusChange($event)" title="Seleccionar estatus">
                                     <option [ngValue]="status" disabled selected hidden>{{status == ''? 'Seleccionar estatus': status=='true' || status == 'Activo'? 'Activo':'Inactivo'}}</option>
                                     <option  [selected]="status == 'true'">Activo</option>
                                     <option [selected]="status == 'false' ">Inactivo</option> 
                                   </select>
-                            </div>
+                                </div>
 
-                            <!--Labels y sus validaciones-->
+                                <!--Labels y sus validaciones-->
 
-                            <div class=" mt-2">
-                                <label style="font-weight:  bolder;">Nombre completo</label>
-                            </div>
+                                <div class="animated fadeIn fast mt-3" *ngIf="seleccionado == true">
+                                    <div class="container row">
+                                        <div class="col-sm-12">
+                                            <label style="font-weight:  bolder;">Nombre completo:</label>
+                                        </div>
 
-                            <div class=" mt-1">
-                                <label style="margin-left: 50px;">{{user.strName}} {{user.strLastName}} {{user.strMotherLastName}} </label>
+                                        <div class=" col-sm-12 text-center">
+                                            <label style="margin-left: 50px;">{{user.strName}} {{user.strLastName}} {{user.strMotherLastName}} </label>
+                                        </div>
 
-                                <!-- <select [class.is-invalid]="idEstatus.invalid && idEstatus.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione un estatus" name="idEstatus" [(ngModel)]="userManag.idEstatus" required #idEstatus="ngModel"> -->
-                                <!-- <option *ngFor="let esp of especialidades" [ngValue]="esp._id">{{esp.strEspecialidad}}</option> -->
-                                <!-- </select> -->
+                                        <div class="col-sm-12">
+                                            <label style="font-weight:  bolder;">Correo:</label>
+                                        </div>
 
-                            </div>
+                                        <div class="col-sm-12 text-center">
+                                            <label style="text-align:left; margin-left: 50px;">{{user.strEmail}}</label>
+                                        </div>
 
+                                        <div class="col-sm-12">
+                                            <label style="font-weight:  bolder;">Ultimo acceso:</label>
+                                        </div>
 
-                            <div class=" mt-2">
-                                <label style="font-weight:  bolder;">Correo</label>
-                                <!-- <select [class.is-invalid]="idEstatus.invalid && idEstatus.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione un estatus" name="idEstatus" [(ngModel)]="userManag.idEstatus" required #idEstatus="ngModel"> -->
-
-                                <!-- <option *ngFor="let esp of especialidades" [ngValue]="esp._id">{{esp.strEspecialidad}}</option> -->
-                                <!-- </select> -->
-
-                            </div>
-
-                            <div class=" mt-1">
-                                <label style="text-align:left; margin-left: 50px;">{{user.strEmail}}</label>
-                                <!-- <select [class.is-invalid]="idEstatus.invalid && idEstatus.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione un estatus" name="idEstatus" [(ngModel)]="userManag.idEstatus" required #idEstatus="ngModel"> -->
-                                <!-- <option *ngFor="let esp of especialidades" [ngValue]="esp._id">{{esp.strEspecialidad}}</option> -->
-                                <!-- </select> -->
-
-                            </div>
-
-
-                            <div class=" mt-2">
-                                <label style="font-weight:  bolder;">Ultimo acceso</label>
-                                <!-- <select [class.is-invalid]="idEstatus.invalid && idEstatus.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione un estatus" name="idEstatus" [(ngModel)]="userManag.idEstatus" required #idEstatus="ngModel"> -->
-
-                                <!-- <option *ngFor="let esp of especialidades" [ngValue]="esp._id">{{esp.strEspecialidad}}</option> -->
-                                <!-- </select> -->
-
-                            </div>
-
-                            <div class=" mt-1">
-                                <label style="margin-left: 50px;">{{user.updatedAt | date }} hrs</label>
-                                <!-- <select [class.is-invalid]="idEstatus.invalid && idEstatus.touched" class="custom-select selectpicker form-control form-control-sm" type="text" title="Seleccione un estatus" name="idEstatus" [(ngModel)]="userManag.idEstatus" required #idEstatus="ngModel"> -->
-                                <!-- <option *ngFor="let esp of especialidades" [ngValue]="esp._id">{{esp.strEspecialidad}}</option> -->
-                                <!-- </select> -->
-                            </div>
-
-
-                            <div class="list-inline mt-3 text-right">
-                                <div class="list-inline-item">
-                                    <div class="form-group row">
-                                        <div class="mr-3">
-                                            <button [disabled]="forma.invalid" type="submit " class="btn btn-outline-info btn-sm "><i class="fa fa-save mr-2 "></i>Actualizar</button>
+                                        <div class="col-sm-12 text-center">
+                                            <label style="margin-left: 50px;">{{user.updatedAt | date }}</label>
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="container mt-3 text-center" *ngIf="seleccionado == false">
+                                    <h5>¡Seleccione a un Usuario para mostrar su informacion!</h5>
+                                </div>
+
+
+                                <div class="list-inline mt-3 text-right">
+                                    <div class="list-inline-item">
+                                        <div class="form-group row">
+                                            <div class="mr-3">
+                                                <button [disabled]="forma.invalid" type="submit " class="btn btn-outline-info btn-sm "><i class="fa fa-save mr-2 "></i>Actualizar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-
                         </div>
-                    </div>
 
-                </div>
-            </form>
+                    </div>
+                </form>
+            </div>
             <!-- <div class="container mt-4" *ngIf="actualizar">
                 <app-update-user (optionCancel)="updateCanceled($event)" ></app-update-user>
             </div> -->
