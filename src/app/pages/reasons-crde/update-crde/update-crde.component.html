@@ -10,7 +10,7 @@
             <div class="form-group col-md-12">
 
                 <div>
-                    <input [class.is-invalid]="strCategoria.invalid && strCategoria.touched" class="form-control form-control-sm" type="text " placeholder="Nombre de carrera" name="strCategoria" [(ngModel)]="reasons.strCategoria" required #strCategoria="ngModel">
+                    <input [class.is-invalid]="strCategoria.invalid && strCategoria.touched" class="form-control form-control-sm" type="text " placeholder="Nombre de categoria" name="strCategoria" [(ngModel)]="reasons.strCategoria" required #strCategoria="ngModel">
                     <div class="invalid-feedback" *ngIf="strCategoria.errors?.required">
                         <small>
                             Es necesario ingresar una categoria.

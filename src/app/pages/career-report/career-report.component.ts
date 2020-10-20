@@ -109,8 +109,8 @@ export class CareerReportComponent implements OnInit {
       const jsonobject2 = JSON.parse(jsonobject);
       const count = Object.keys(jsonobject2).length;
       for (let i = 0; i < count; i++) {
-        delete jsonobject2[i].created_at;
-        delete jsonobject2[i].updated_at;
+        delete jsonobject2[i].createdAt;
+        delete jsonobject2[i].updatedAt;
         delete jsonobject2[i].blnStatus;
         delete jsonobject2[i].aJsnEspecialidad;
         delete jsonobject2[i]._id;

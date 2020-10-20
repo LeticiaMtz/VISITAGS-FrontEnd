@@ -38,9 +38,10 @@ export class RegisterReasonsComponent implements OnInit {
       form.controls['blnStatus'].setValue(true);
       this.refresh.emit(true);
     }).catch(err => {
+      console.log(err);
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error.msg 
       });
     });
   }
