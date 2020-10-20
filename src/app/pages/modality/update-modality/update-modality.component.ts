@@ -44,18 +44,15 @@ const Toast = Swal.mixin({
         icon: 'success',
         title: `¡La Modalidad ${this.mod.strModalidad} se actualizó exitosamente!`
       });
-      form.reset();
       this.optionCancel.emit(false);
       this.refresh.emit(true);
  
     }).catch(err => {
-     
       Toast.fire({
         icon: 'error',
         title: err.error.msg
    
       });
-      form.reset();
     });
   }
  

@@ -48,7 +48,7 @@ rol = environment.roles;
     },
   { titulo: 'Configuración', icono: 'fa fa-cogs' ,
     submenu: [
-      { titulo: 'Gestión de Usuarios', icono: 'fa fa-user-o', url: '/user-management', roles: [this.rol.coordinador] },
+      { titulo: 'Gestión de Usuarios', icono: 'fa fa-user-o', url: '/user-management', roles: [this.rol.coordinador, this.rol.administrador] },
     ]},
   ];
 
