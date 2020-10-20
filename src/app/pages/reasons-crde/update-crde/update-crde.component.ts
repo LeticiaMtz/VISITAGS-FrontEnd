@@ -41,8 +41,6 @@ export class UpdateCrdeComponent implements OnInit {
         icon: 'success',
         title: `¡La categoria ${this.reasons.strCategoria} se actualizó exitosamente!`
       });
-
-      form.reset();
       this.optionCancel.emit(false);
       this.refresh.emit(true);
 
@@ -51,7 +49,6 @@ export class UpdateCrdeComponent implements OnInit {
         icon: 'error',
         title: err.error.msg
       });
-      form.reset();
     });
   }
 
