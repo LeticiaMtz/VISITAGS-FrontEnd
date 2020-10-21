@@ -66,13 +66,7 @@ export class FileUploaderComponent implements OnInit {
   }
 
   fnRemove(event) {
-    for (let i = 0; i < this.pondFiles.length; i++) {
-      let archivo = this.pondFiles;
-      if (event.file.id == archivo[i].id) {
-        this.pondFiles = this.pondFiles;
-        this.archivoEliminado.emit(i);
-      }
-    }
+    this.archivoEliminado.emit(event.file.source);
   }
 }
 

@@ -173,9 +173,9 @@ export class TrackingAlertsComponent implements OnInit {
     console.log(this.documento);
   }
 
-  eliminarArchivo(valor: any) {
-    this.documento.splice(valor, 1);
-    this.documento = this.documento;
+  eliminarArchivo(archivo: any) {
+    const index = this.documento.indexOf(archivo);
+    this.documento.splice(index, 1);
   }
 
   comentarAlerta(form: NgForm) {
@@ -212,7 +212,7 @@ export class TrackingAlertsComponent implements OnInit {
         .RegistrarSeguimiento(this.idAlert, fd)
         .then((res: any) => {
           this.arrColaboradores = [];
-          this.getPersonas();
+          // this.getPersonas();
           setTimeout(() => {
             this.resetImage = false;
             this.documento = [];
@@ -262,7 +262,7 @@ export class TrackingAlertsComponent implements OnInit {
       title: `¡El campo fué eliminado!`,
     });
     this.ngAfterViewInit();
-    this.getPersonas();
+    // this.getPersonas();
   }
 
   addColaborador(formaColaborador: NgForm) {

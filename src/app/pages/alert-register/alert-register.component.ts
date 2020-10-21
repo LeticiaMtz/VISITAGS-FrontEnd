@@ -126,6 +126,8 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   eliminarColaborador(formaColaborador: NgForm,index: number) {
+    console.log('Hols');
+    console.log(this.arrColaboradores, index)
     formaColaborador.form.removeControl( `_id${index}`);
     this.arrColaboradores.splice(index, 1);
     Toast.fire({
@@ -144,6 +146,7 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   getPersonas() {
+    // this.personas = [];
     this._userService.getUsuarios().then((data: any) => {
       for (const persona of data.cnt) {
         this.personas.push({
@@ -243,12 +246,9 @@ export class AlertRegisterComponent implements OnInit {
     this.documentos.push(archivos);
   }
 
-  eliminararchivo(valor: number) {
-    console.log(valor);
-  }
-
-  eliminarArchivo() {
-    this.documentos = [];
+  eliminarArchivo(archivo: any) {
+    const index = this.documentos.indexOf(archivo);
+    this.documentos.splice(index, 1);
   }
 
   getCarreras() {
