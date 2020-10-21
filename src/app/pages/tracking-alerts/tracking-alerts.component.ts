@@ -168,12 +168,14 @@ export class TrackingAlertsComponent implements OnInit {
   }
 
   obtenerArchivos(archivos: any) {
-    this.documento.push(archivos);
-    // this.documento = archivos;
+    let archivo = archivos;
+    this.documento.push(archivo);
+    console.log(this.documento);
   }
 
   eliminarArchivo(valor: any) {
-    this.documento = [];
+    this.documento.splice(valor, 1);
+    this.documento = this.documento;
   }
 
   comentarAlerta(form: NgForm) {

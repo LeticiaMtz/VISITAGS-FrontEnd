@@ -243,6 +243,10 @@ export class AlertRegisterComponent implements OnInit {
     this.documentos.push(archivos);
   }
 
+  eliminararchivo(valor: number) {
+    console.log(valor);
+  }
+
   eliminarArchivo() {
     this.documentos = [];
   }

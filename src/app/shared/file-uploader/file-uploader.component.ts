@@ -54,17 +54,25 @@ export class FileUploaderComponent implements OnInit {
   }
 
   // tslint:disable-next-line: member-ordering
-  pondFiles = [];
+  pondFiles: any[] = [];
 
   pondHandleInit() {
     // console.log('FilePond has initialised', this.myPond);
   }
 
   pondHandleAddFile(event: any) {
+    this.pondFiles.push(event.file);
     this.archivosObtenidos.emit(event.file.source);
   }
 
-  fnRemove() {
-    this.archivoEliminado.emit(true);
+  fnRemove(event) {
+    for (let i = 0; i < this.pondFiles.length; i++) {
+      let archivo = this.pondFiles;
+      if (event.file.id == archivo[i].id) {
+        this.pondFiles = this.pondFiles;
+        this.archivoEliminado.emit(i);
+      }
+    }
   }
 }
+
