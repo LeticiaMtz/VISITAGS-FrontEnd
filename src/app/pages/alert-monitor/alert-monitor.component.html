@@ -1,14 +1,15 @@
 <div class="row animated fadeIn fast">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-body container">
+            <div class="card-body container-fluid">
                 <div class="row">
                     <div class="col-12">
                         <h4><i class="fa fa-filter mr-2"></i>Filtros</h4>
                         <hr style="margin-top: 0px;">
                     </div>
-
-                    <div class="col-12 col-md-4 mt-2">
+                </div>
+                <div class="row">
+                    <div class="col-4">
                         <label class="small"><strong>Por Carrera</strong></label>
                         <select class="custom-select selectpicker selectpicker-down form-control btn-outline-light ops" data-size="4" data-dropup-auto=false title="Carreras" type="text" data-live-search="true" name="idCarrera" [(ngModel)]="alerta.idCarrera" #idCarrera="ngModel"
                             (ngModelChange)="getEspecialidades($event)">
@@ -16,7 +17,7 @@
                         </select>
                     </div>
 
-                    <div class="col-12 col-md-4 mt-2">
+                    <div class="col-4">
                         <label class="small"><strong>Por Especialidad</strong></label>
                         <select class="custom-select selectpicker selectpicker-down form-control btn-outline-light ops" data-size="4" data-dropup-auto=false title="Especialidades" type="text" data-live-search="true" name="idEspecialidad" [(ngModel)]="alerta.idEspecialidad" #idEspecialidad="ngModel"
                             (ngModelChange)="getAlertas()">
@@ -24,15 +25,16 @@
                         </select>
                     </div>
 
-                    <div class="col-12 col-md-4 mt-2">
+                    <div class="col-4">
                         <label class="small"><strong>Por Asignatura</strong></label>
                         <select class="custom-select selectpicker selectpicker-down form-control btn-outline-light ops" data-size="4" data-dropup-auto=false title="Asignaturas" type="text" data-live-search="true" name="idAsignatura" [(ngModel)]="alerta.idAsignatura" #idAsignatura="ngModel"
                             (ngModelChange)="getAlertas()">
                             <option *ngFor="let asig of asignaturas" [ngValue]="asig._id">{{asig.strNombre}}</option>
                         </select>
                     </div>
-
-                    <div class="col-12 col-md-4 mt-2">
+                </div>
+                <div class="row">
+                    <div class="col-4">
                         <label class="small"><strong>Por Profesor</strong></label>
                         <select class="custom-select selectpicker selectpicker-down form-control btn-outline-light ops" data-size="4" data-dropup-auto=false title="Profesores" type="text" data-live-search="true" name="idUser" [(ngModel)]="alerta.idUser" #idEstatus="ngModel"
                             (ngModelChange)="getAlertas()">
@@ -40,14 +42,14 @@
                         </select>
                     </div>
 
-                    <div class="col-12 col-md-4 mt-2">
+                    <div class="col-4">
                         <label class="small"><strong>Por Estatus</strong></label>
                         <select class="form-control custom-select selectpicker btn-outline-light" data-size="4" data-dropup-auto=false title="Estatus" type="text" data-live-search="true" name="idEstatus" [(ngModel)]="alerta.idEstatus" #idEstatus="ngModel" (ngModelChange)="getAlertas()">
                             <option *ngFor="let estatus of arrEstatus" [ngValue]="estatus._id">{{estatus.strNombre}}</option>
                         </select>
                     </div>
 
-                    <div class="col-12 col-md-4 mt-2">
+                    <div class="col-4">
                         <label class="small"><strong>Por Fecha</strong></label>
                         <div class="input-group input-daterange">
                             <input type="date" class="form-control form-control-sm btn-outline-secondary" name="createdAt" [(ngModel)]="alerta.createdAt" #createdAt="ngModel" (ngModelChange)="getAlertas()">
@@ -55,12 +57,13 @@
                             <input type="date" class="form-control form-control-sm btn-outline-secondary ops" name="createdAt1" [(ngModel)]="alerta.createdAt1" #createdAt1="ngModel" (ngModelChange)="getAlertas()">
                         </div>
                     </div>
-
-                    <div class="col-8 col-md-10 mt-4">
+                </div>
+                <div class="row">
+                    <div class="col-11 mt-3">
                         <input [(ngModel)]="searchText" type="text" name="searchText" class="form-control form-control-sm btn-outline-secondary ops mt-2 p-1" placeholder=" Buscar...">
                     </div>
 
-                    <div class="col-md-1 mt-1 text-right mt-4">
+                    <div class="col-1 mt-3 text-right">
                         <div>
                             <button type="button" class="btn btn-info btn-sm mt-2" id="dropdownReports" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h "></i></button>
                             <div class="dropdown-menu dropdown-menu-right shadow-lg " aria-labelledby="dropdownReports">
@@ -72,86 +75,83 @@
                         </div>
                     </div>
                 </div>
+                <div class="row fadeIn mt-4">
+                    <div class="col-12">
+                        <table id="PDFTable" class="table table-sm table-responsive" [ngClass]="{'table-hover': (!cargando && alertas.length &gt; 0) }">
+                            <thead class="text-center">
+                                <tr class="small">
+                                    <th>MATRICULA</th>
+                                    <th>ALUMNO</th>
+                                    <th>CARRERA</th>
+                                    <th>ESPECIALIDAD</th>
+                                    <th>ASIGNATURA</th>
+                                    <th>GRADO/GRUPO</th>
+                                    <th>PROFESOR</th>
+                                    <th>MOTIVO</th>
+                                    <th>FECHA</th>
+                                    <th>ESTATUS</th>
+                                    <th>SEGUIMIENTO</th>
+                                </tr>
+                            </thead>
 
-                <div class="container small mt-4">
-                    <div class="row fadeIn">
-                        <div class="col-12">
-                            <table id="PDFTable" class="table table-sm table-responsive" [ngClass]="{'table-hover': (!cargando && alertas.length &gt; 0) }">
-                                <thead>
-                                    <tr>
-                                        <th>MATRICULA</th>
-                                        <th>ALUMNO</th>
-                                        <th>CARRERA</th>
-                                        <th>ESPECIALIDAD</th>
-                                        <th>ASIGNATURA</th>
-                                        <th>GRADO/GRUPO</th>
-                                        <th>PROFESOR</th>
-                                        <th>MOTIVO</th>
-                                        <th>FECHA</th>
-                                        <th>ESTATUS</th>
-                                        <th>SEGUIMIENTO</th>
-                                    </tr>
-                                </thead>
+                            <!-- SE MUESTRA CUANDO HAY REGISTROS -->
+                            <tbody *ngIf="alertas.length > 0 && !cargando">
+                                <tr class="animated fadeIn fast" *ngFor="let alerta of alertas | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
 
-                                <!-- SE MUESTRA CUANDO HAY REGISTROS -->
-                                <tbody *ngIf="alertas.length > 0 && !cargando">
-                                    <tr class="animated fadeIn fast" *ngFor="let alerta of alertas | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
+                                    <td>{{alerta.strMatricula}}</td>
+                                    <td>{{alerta.strNombreAlumno}}</td>
+                                    <td>{{alerta.idCarrera.strCarrera}}</td>
+                                    <td>{{specialty.strEspecialidad}}</td>
+                                    <td>{{alerta.idAsignatura.strAsignatura}}</td>
+                                    <td>{{alerta.strGrupo}}</td>
+                                    <td>{{alerta.idUser.strName}}</td>
+                                    <td><span class="badge badge-danger" *ngFor="let motivo of alerta.arrCrde">{{motivo.strNombre}}</span></td>
+                                    <td>{{alerta.createdAt | date}}</td>
+                                    <td>
+                                        <span class="badge badge-info" *ngIf="nuevo == alerta.idEstatus._id"> <i class="fa fa-star"></i> {{alerta.idEstatus.strNombre}}</span>
+                                        <span class="badge badge-warning" *ngIf="enProgreso == alerta.idEstatus._id"><i class="fa fa-cog fa-spin fa fa-fw"></i> {{alerta.idEstatus.strNombre}}</span>
+                                        <span class="badge badge-danger" *ngIf="cerrado == alerta.idEstatus._id"> <i class="fa fa-times"></i> {{alerta.idEstatus.strNombre}}</span>
+                                        <span class="badge badge-success" *ngIf="finalizado == alerta.idEstatus._id"> <i class="fa fa-check"></i> {{alerta.idEstatus.strNombre}}</span>
+                                    </td>
 
-                                        <td>{{alerta.strMatricula}}</td>
-                                        <td>{{alerta.strNombreAlumno}}</td>
-                                        <td>{{alerta.idCarrera.strCarrera}}</td>
-                                        <td>{{specialty.strEspecialidad}}</td>
-                                        <td>{{alerta.idAsignatura.strAsignatura}}</td>
-                                        <td>{{alerta.strGrupo}}</td>
-                                        <td>{{alerta.idUser.strName}}</td>
-                                        <td><span class="badge badge-danger" *ngFor="let motivo of alerta.arrCrde">{{motivo.strNombre}}</span></td>
-                                        <td>{{alerta.createdAt | date}}</td>
-                                        <td>
-                                            <span class="badge badge-info" *ngIf="nuevo == alerta.idEstatus._id"> <i class="fa fa-star"></i> {{alerta.idEstatus.strNombre}}</span>
-                                            <span class="badge badge-warning" *ngIf="enProgreso == alerta.idEstatus._id"><i class="fa fa-cog fa-spin fa fa-fw"></i> {{alerta.idEstatus.strNombre}}</span>
-                                            <span class="badge badge-danger" *ngIf="cerrado == alerta.idEstatus._id"> <i class="fa fa-times"></i> {{alerta.idEstatus.strNombre}}</span>
-                                            <span class="badge badge-success" *ngIf="finalizado == alerta.idEstatus._id"> <i class="fa fa-check"></i> {{alerta.idEstatus.strNombre}}</span>
-                                        </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-sm btn-info" (click)="verAlerta(alerta._id)"><i class="fa fa-eye"></i></button>
+                                    </td>
 
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-sm btn-info" (click)="verAlerta(alerta._id)"><i class="fa fa-eye"></i></button>
-                                        </td>
+                                </tr>
+                            </tbody>
 
-                                    </tr>
-                                </tbody>
+                            <!-- SE MUESTRA CUANDO NO SE HA SELECCIONADO NINGUN FILTRO -->
+                            <tbody *ngIf="alertas.length == 0 && filtro == false">
+                                <tr>
+                                    <td colspan="14">
+                                        <div class="alert-dismissible text-center" style="padding: .75rem 1.25rem;">
+                                            <h5 style="height: 100%;width: 100%;"><strong><i class="fa fa-filter" aria-hidden="true"></i> ¡Seleccione un filtro para encontrar resultados!</strong></h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
 
-                                <!-- SE MUESTRA CUANDO NO SE HA SELECCIONADO NINGUN FILTRO -->
-                                <tbody *ngIf="alertas.length == 0 && filtro == false">
-                                    <tr>
-                                        <td colspan="14">
-                                            <div class="alert-dismissible text-center" style="padding: .75rem 1.25rem;">
-                                                <h5 style="height: 100%;width: 100%;"><strong><i class="fa fa-filter" aria-hidden="true"></i> ¡Seleccione un filtro para encontrar resultados!</strong></h5>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                            <!-- SE MUESTRA CUANDO NO HAY REGISTROS QUE COINCIDAN CON LOS FILTROS -->
+                            <tbody *ngIf="alertas.length == 0 && filtro == true">
+                                <tr>
+                                    <td colspan="14">
+                                        <div class="alert-dismissible text-center" style="padding: .75rem 1.25rem;">
+                                            <h5 style="height: 100%;width: 100%;"><strong><i class="fa fa-sad-cry" aria-hidden="true"></i> ¡No hay registros con esas especificaciones!</strong></h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                                <!-- SE MUESTRA CUANDO NO HAY REGISTROS QUE COINCIDAN CON LOS FILTROS -->
-                                <tbody *ngIf="alertas.length == 0 && filtro == true">
-                                    <tr>
-                                        <td colspan="14">
-                                            <div class="alert-dismissible text-center" style="padding: .75rem 1.25rem;">
-                                                <h5 style="height: 100%;width: 100%;"><strong><i class="fa fa-sad-cry" aria-hidden="true"></i> ¡No hay registros con esas especificaciones!</strong></h5>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <div class="mt-4 float-right fadeIn ">
-                                <pagination-controls (pageChange)="pageActual=$event " previousLabel="Anterior " nextLabel="Siguiente "></pagination-controls>
-                            </div>
-
+                        <div class="mt-4 float-right fadeIn ">
+                            <pagination-controls (pageChange)="pageActual=$event " previousLabel="Anterior " nextLabel="Siguiente "></pagination-controls>
                         </div>
+
                     </div>
                 </div>
-
             </div>
+
         </div>
     </div>
 </div>
