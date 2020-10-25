@@ -28,7 +28,7 @@ rol = environment.roles;
   menu: any = [
     { titulo: 'Alertas', icono: 'fa fa-exclamation-circle' ,
     submenu: [
-      { titulo: 'Registro de Alertas', icono: 'fa fa-file', url: '/registro-alerta', roles: [this.rol.administrador, this.rol.coordinador, this.rol.director, this.rol.profesor]},
+      { titulo: 'Registro de Alertas', icono: 'fa fa-edit', url: '/registro-alerta', roles: [this.rol.administrador, this.rol.coordinador, this.rol.director, this.rol.profesor]},
       { titulo: 'Mis Alertas', icono: 'fa fa-exclamation-triangle', url: '/dashboard', roles: [this.rol.administrador, this.rol.coordinador, this.rol.director, this.rol.profesor] },
       { titulo: 'Monitor de Seguimiento', icono: 'fa fa-desktop', roles: [] },
       { titulo: 'Monitor de Alertas', icono: 'fa fa-line-chart', url: '/monitor-alertas', roles: [this.rol.administrador, this.rol.coordinador, this.rol.director, this.rol.profesor] },

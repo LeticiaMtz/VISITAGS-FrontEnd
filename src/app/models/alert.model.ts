@@ -11,6 +11,7 @@ export class AlertModel {
     strNombreAlumno: string;
     idAsignatura: string;
     idCarrera?: string;
+    strCarrera: string;
     idEspecialidad: string;
     strGrupo: string;
     idConductaRiesgo: string;

@@ -55,6 +55,7 @@ export class TrackingAlertsComponent implements OnInit {
   objSubject: SubjectModel = new SubjectModel();
   objAlert: AlertModel = new AlertModel();
   objUser: User = new User();
+  strCarrera: string;
   asignatura: string;
   tokenDecoded: any;
   idPersona: string;
@@ -111,6 +112,7 @@ export class TrackingAlertsComponent implements OnInit {
       .getAlertData(idAlert)
       .then((res: any) => {
         this.objAlert = res.cnt[0];
+        this.strCarrera = res.cnt[0].idCarrera.strCarrera;
         this.objUser = res.cnt[0].idUser;
         this.objSubject = res.cnt[0].idAsignatura;
         this.objModality = res.cnt[0].idModalidad;

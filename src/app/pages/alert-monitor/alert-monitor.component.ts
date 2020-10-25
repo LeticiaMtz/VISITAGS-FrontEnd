@@ -151,7 +151,7 @@ export class AlertMonitorComponent implements OnInit {
 
   getAlertas() {
     this._alertService.getMonitorAlerts(this.alerta.idCarrera, this.alerta.idEspecialidad, this.alerta.idUser, this.alerta.idAsignatura, this.alerta.idEstatus, this.alerta.createdAt, this.alerta.createdAt1).then((data: any) => {
-      this.alertas = data.cnt;
+      this.alertas = data.cont.resultados;
       this.filtro = true;
       this.cargando = false;
       this.arrAlerta = [];
@@ -180,6 +180,7 @@ export class AlertMonitorComponent implements OnInit {
           ];
           this.arrAlerta.push(element);
         }).catch((err) => {
+          console.log('1');
           Toast.fire({
             icon: 'warning',
             title: `¡${err.error.msg}!`
@@ -187,9 +188,10 @@ export class AlertMonitorComponent implements OnInit {
         });
       }
     }).catch((err) => {
+      console.log(err);
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error.cont.error
       });
       this.alertas = [];
     });

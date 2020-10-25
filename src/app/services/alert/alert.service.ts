@@ -20,8 +20,25 @@ export class AlertService {
     return this.http.get(`${this.URL}/alerts/obtenerAlertas/${idRol}/${idUser}`).toPromise();
   }
 
-  getMonitorAlerts(idCarrera: string, idEspecialidad: string, idUser: string, idAsignatura: string, idEstatus: string, createdAt: Date, createdAt1: Date) {
-    return this.http.get(`${this.URL}/alerts/obtenerAlertasMonitor/${idCarrera}/${idEspecialidad}/${idUser}/${idAsignatura}/${idEstatus}/${createdAt}/${createdAt1}`).toPromise();
+  // tslint:disable-next-line: max-line-length
+  getMonitorAlerts(idCarrera: string, idEspecialidad: string, idUser: string, idAsignatura: string, idEstatus: string, createdAt: any, createdAt1: any) {
+    const parametros: any = {};
+    if (typeof idCarrera !== 'undefined' && idCarrera !== '') { parametros.idCarrera = idCarrera; }
+    if (typeof idEspecialidad !== 'undefined' && idEspecialidad !== '') { parametros.idEspecialidad = idEspecialidad; }
+    if (typeof idUser !== 'undefined' && idUser !== '') { parametros.idProfesor = idUser; }
+    if (typeof idAsignatura !== 'undefined' && idAsignatura !== '') { parametros.idAsignatura = idAsignatura; }
+    if (typeof idEstatus !== 'undefined' && idEstatus !== '') { parametros.idEstatus = idEstatus; }
+    if (typeof createdAt !== 'undefined' && createdAt !== '') { parametros.dteFechaInicio = createdAt; }
+    if (typeof createdAt1 !== 'undefined' && createdAt1 !== '') { parametros.dteFechaFin = createdAt1; }
+
+    console.log(idEspecialidad);
+
+    return this.http
+    .get(
+      `${this.URL}/alerts/reporteMonitor`,
+      {
+        params: parametros
+      }).toPromise();
     // /${createdAt}/${createdAt1}
   }
 }
