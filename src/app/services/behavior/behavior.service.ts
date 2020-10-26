@@ -3,8 +3,6 @@ import { environment } from '../../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorModel } from '../../models/behavior.model';
 
-
-
 @Injectable({
   providedIn: 'root'
 })

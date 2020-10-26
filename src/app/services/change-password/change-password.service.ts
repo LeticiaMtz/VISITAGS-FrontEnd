@@ -11,7 +11,6 @@ export class ChangePasswordService {
   constructor(private http: HttpClient) { }
 
   readonly URL = environment.urlGlobal;
-  
  
   sendemail(email:string){
     return this.http.get(`${this.URL}/Users/forgot/${email}`).toPromise();
