@@ -1,0 +1,234 @@
+<div class="card animated fadeIn fast">
+    <form #forma="ngForm" novalidate="" enctype="multipart/form-data" class="mt-3 mb-3" (ngSubmit)="registrarAlerta(forma)">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="container">
+
+                    <h4><i class="fa fa-address-card mr-2" aria-hidden="true"></i>Registro de Datos Generales</h4>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-6 mt-2">
+                            <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#alumnos-modal"><i class="fa fa-graduation-cap"></i>
+                                Agregar Alumnos
+                            </button>
+                        </div>
+
+                        <div class="col-md-6 mt-2">
+                            <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#colaborador-modal">
+                                <i class="fa fa-user-plus mr-2"></i>
+                                Invitar Colaborador
+                            </button>
+                        </div>
+
+                        <div class="col-md-6 mt-2">
+                            <label class="small"><strong>Carrera</strong></label>
+                            <app-bootstrap-select (ngModelChange)="getEspecialidad($event)" [ngForm]="forma" [name]="'idCarrera'" [datos]="carreras" (model)="alerta.idCarrera = $event" [titulo]="'Seleccione una Carrera'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una carrera"
+                                [required]="true"></app-bootstrap-select>
+                        </div>
+
+                        <div class="col-md-6 mt-2">
+                            <label class="small"><strong>Especialidade</strong></label>
+                            <app-bootstrap-select [ngForm]="forma" [name]="'idEspecialidad'" [datos]="especialidades" (model)="alerta.idEspecialidad = $event" [titulo]="'Seleccione una Especialidad'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una especialidad"
+                                [required]="true"></app-bootstrap-select>
+                        </div>
+
+                        <div class="col-md-6 mt-2">
+                            <label class="small"><strong>Modalidad</strong></label>
+                            <app-bootstrap-select [ngForm]="forma" [name]="'idModalidad'" [datos]="modalidades" (model)="alerta.idModalidad = $event" [titulo]="'Seleccione una Modalidad'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una modalidad"
+                                [required]="true"></app-bootstrap-select>
+                        </div>
+
+                        <div class="col-md-6 mt-2">
+                            <label class="small"><strong>Grado y Grupo</strong></label>
+                            <input [class.is-invalid]="strGrupo.invalid && strGrupo.touched" class="form-control form-control-sm" type="text" placeholder="Grado y Grupo" name="strGrupo" [(ngModel)]="alerta.strGrupo" required #strGrupo="ngModel">
+                            <div class="invalid-feedback" *ngIf="strGrupo.errors?.required">
+                                <small>
+                                    Es necesario ingresar un grado y grupo.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-2">
+                            <label class="small"><strong>Asignatura</strong></label>
+                            <app-bootstrap-select [ngForm]="forma" [name]="'idAsignatura'" [datos]="asignaturas" (model)="alerta.idAsignatura = $event" [titulo]="'Seleccione una Asignatura'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una asignatura"
+                                [required]="true"></app-bootstrap-select>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <div class="row container">
+                                <div class="col-sm-4">
+                                    <label><strong>Turno:</strong></label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input id="turnoM" name="chrTurno" class="info" [(ngModel)]="alerta.chrTurno" #chrTurno="ngModel" [value]="'M'" type="radio" aria-label="Radio button for following text input" (ngModelChange)="seleccionarTurno($event)">
+                                    <label for="turnoM">Matutino</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input id="turnoV" name="chrTurno" [(ngModel)]="alerta.chrTurno" #chrTurno="ngModel" [value]="'V'" type="radio" aria-label="Radio button for following text input" (ngModelChange)="seleccionarTurno($event)">
+                                    <label for="turnoV">Vespertino</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-2 mb-4">
+                            <label class="small"><strong>Motivo</strong></label>
+                            <app-bootstrap-select [ngForm]="forma" [name]="'arrCrde'" [datos]="motivos" (model)="alerta.arrCrde = $event" [titulo]="'Seleccione los motivos'" [multiple]="true" [dataLiveSearch]="false" mensajeValidacion="Es necesario seleccinar al menos un motivo"
+                                [required]="true"></app-bootstrap-select>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="container mb-2">
+                    <div class="row">
+                        <div class="col-6 mt-1">
+                            <button class="btn btn-block btn-sm btn-outline-danger"><i class="fa fa-times mr-2"></i>Cancelar</button>
+                        </div>
+                        <div class="col-6 mt-1">
+                            <button type="submit " class="btn btn-block btn-sm btn-outline-info "><i class="fa fa-save mr-2 "></i>Registrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="container">
+                    <h4><i class="fa fa-file-text mr-2" aria-hidden="true"></i>Registro de Detalles</h4>
+                    <hr>
+
+                    <label class="small"><strong>Detalles</strong></label>
+                    <div class="row">
+                        <div class="col-md-12 mt-2 ">
+                            <textarea [class.is-invalid]="strDescripcion.invalid && strDescripcion.touched" class="form-control form-control-sm " rows="3 " maxlength="300 " placeholder="Detalles de la Alerta" name="strDescripcion" [(ngModel)]="alerta.strDescripcion" required #strDescripcion="ngModel"></textarea>
+                            <div class="invalid-feedback" *ngIf="strDescripcion.errors?.required">
+                                <small>
+                                    Por favor, ingrese los detalles.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="mt-3"><i class="fa fa-upload mr-2"></i>Registro de Evidencias (opcional)</h4>
+                    <hr>
+
+                    <app-file-uploader (archivosObtenidos)="getArchivos($event)" (archivoEliminado)="eliminarArchivo($event)"></app-file-uploader>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- Modal Alumnos-->
+<div class="modal fade" id="alumnos-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-info" id="staticBackdropLabel"><i class="fa fa-graduation-cap"></i> Agregar Alumnos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <div class="container">
+                        <span aria-hidden="true">&times;</span>
+                    </div>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #formaAlumno="ngForm">
+                    <div class="container p-20">
+
+                        <div class="row" *ngIf="arrAlumnos.length == 0">
+                            <div class="col-md-12">
+                                <div class="container text-center">
+                                    <h4>No hay Alumnos Agregados. <strong class="text-info" style="cursor: pointer;" (click)="addAlumno(formaAlumno)">Agregar Uno <i class="fa fa-plus-circle"></i></strong></h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2" *ngFor="let alumno of arrAlumnos; let i = index;">
+                            <div class="col-sm-4">
+                                <input [class.is-invalid]="strMatricula.invalid && strMatricula.touched" class="form-control form-control-sm" type="number" name="strMatricula{{i}}" placeholder="Matricula" [(ngModel)]="alumno.strMatricula" required #strMatricula="ngModel">
+                                <div class="invalid-feedback" *ngIf="strMatricula.errors?.required">
+                                    <small>
+                                        Es necesario ingresar una matricula.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-7">
+                                <input [class.is-invalid]="strNombreAlumno.invalid && strNombreAlumno.touched" class="form-control form-control-sm" type="text" name="strNombreAlumno{{i}}" placeholder="Nombre del Alumno" [(ngModel)]="alumno.strNombreAlumno" required #strNombreAlumno="ngModel">
+                                <div class="invalid-feedback" *ngIf="strNombreAlumno.errors?.required">
+                                    <small>
+                                        Es necesario ingresar el nombre del alumno.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-outline-danger btn-sm btn-block" (click)="eliminarAlumno(i)"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-outline-success btn-sm btn-block" (click)="addAlumno(formaAlumno)"><i class="fa fa-plus"></i> Agregar Alumno</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info btn-block" data-dismiss="modal">¡Listo!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Colaboradores-->
+<div class="modal fade" id="colaborador-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-info" id="staticBackdropLabel"><i class="fa fa-user-plus"></i> Invitar Colaboradores</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <div class="container">
+                        <span aria-hidden="true">&times;</span>
+                    </div>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form #formaColaboradores="ngForm">
+                        <div class="container p-20">
+
+                            <div class="row" *ngIf="arrColaboradores.length == 0">
+                                <div class="col-md-12">
+                                    <div class="container text-center">
+                                        <h4>No Hay Colaboradores Agregados. <strong class="text-info" style="cursor: pointer;" (click)="addColaborador(formaColaboradores, $event)">Agregar Uno <i class="fa fa-plus-circle"></i></strong></h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2" *ngFor="let colaborador of arrColaboradores; let ind = index;">
+                                <div class="col-md-11">
+                                    <app-bootstrap-select [ngForm]="formaColaboradores" [name]="'_id'+ind" [datos]="personas" (model)="colaborador._id = $event" [titulo]="'Seleccione un Colaborador'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar un colaborador"
+                                        [required]="true"></app-bootstrap-select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-outline-danger btn-sm btn-block" (click)="eliminarColaborador(formaColaboradores, ind)"><i class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-outline-success btn-sm btn-block" (click)="addColaborador(formaColaboradores, $event)"><i class="fa fa-plus"></i> Nuevo Colaborador</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <i class="fa fa-send mr-2"></i> -->
+                <button type="button" class="btn btn-info btn-block" data-dismiss="modal">¡Listo!</button>
+            </div>
+        </div>
+    </div>
+</div>

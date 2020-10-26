@@ -1,11 +1,20 @@
-import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { LoginComponent } from './login/login.component';
+import { NopagefoundComponent } from './nopagefound/nopagefound.component';
+import { RegisterComponent } from './login/register.component';
+import { SendEmailComponent } from './restore-password/send-email/send-email.component';
+import { ChangePasswordComponent } from './restore-password/change-password/change-password.component';
+import { NoAuthGuard } from './guards/no-auth.guard';
+import { ObtenerUrlComponent } from './obtener-url/obtener-url.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
+  { path: 'obtener-url/:token', component: ObtenerUrlComponent},
+  { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] },
+  { path: 'sendemail', component: SendEmailComponent, canActivate: [NoAuthGuard] },
+  { path: 'reset-password/:token', component: ChangePasswordComponent, canActivate: [NoAuthGuard]},
+  { path: '**', component: NopagefoundComponent }
+];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+export const AppRoutingModule = RouterModule.forRoot ( routes,  { useHash: true });
