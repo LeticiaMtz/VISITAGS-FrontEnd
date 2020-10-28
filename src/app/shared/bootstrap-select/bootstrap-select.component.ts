@@ -74,7 +74,7 @@ export class BootstrapSelectComponent implements OnInit {
   }
 
   getButton() {
-    const select = document.querySelectorAll(`[ng-reflect-name="${this.name}"]`)[0];
+    const select = document.querySelectorAll(`[id="${this.name}"]`)[0];
     const padre = select.closest('div');
     return  padre.getElementsByTagName('button')[0];
   }
