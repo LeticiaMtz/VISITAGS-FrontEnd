@@ -1,22 +1,9 @@
-<div class="container animated fadeIn fast">
-    <h4>Editar Categoria</h4>
-    <hr>
-</div>
+<div class="container">
 
-<form (ngSubmit)="updateCategoria(forma)" #forma="ngForm" novalidate="" enctype="multipart/form-data">
-    <div class="form-group-sm small">
-
-        <div class="row">
-            <div class="form-group col-md-12">
-
-                <div>
-                    <input [class.is-invalid]="strCategoria.invalid && strCategoria.touched" class="form-control form-control-sm" type="text " placeholder="Nombre de categoria" name="strCategoria" [(ngModel)]="reasons.strCategoria" required #strCategoria="ngModel">
-                    <div class="invalid-feedback" *ngIf="strCategoria.errors?.required">
-                        <small>
-                            Es necesario ingresar una categoria.
-                        </small>
-                    </div>
-                </div>
+    <div class="animated fadeIn fast">
+        <h4>Editar Categoria</h4>
+        <hr>
+    </div>
 
     <form (ngSubmit)="updateCategoria(forma)" #forma="ngForm" novalidate="" enctype="multipart/form-data">
         <div class="form-group-sm small">
@@ -29,17 +16,17 @@
                         <input [class.is-invalid]="strCategoria.invalid && strCategoria.touched" class="form-control form-control-sm" type="text " placeholder="Nombre de carrera" name="strCategoria" [(ngModel)]="reasons.strCategoria" required #strCategoria="ngModel">
                         <div class="invalid-feedback" *ngIf="strCategoria.errors?.required">
                             <small>
-                                Es necesario ingresar una categoría.
-                            </small>
+                                    Es necesario ingresar una categoría.
+                                </small>
                         </div>
                     </div>
 
                     <div class="mt-2">
                         <label class=""><strong>Estatus</strong></label>
                         <select [class.is-invalid]="blnStatus.invalid && blnStatus.touched" class="custom-select form-control form-control-sm" type="text" name="blnStatus" [(ngModel)]="reasons.blnStatus" required #blnStatus="ngModel">
-                            <option [ngValue]="true">Activo</option>
-                            <option [ngValue]="false">Inactivo</option>
-                          </select>
+                                <option [ngValue]="true">Activo</option>
+                                <option [ngValue]="false">Inactivo</option>
+                              </select>
                     </div>
 
                     <div class="list-inline mt-3 text-right">
