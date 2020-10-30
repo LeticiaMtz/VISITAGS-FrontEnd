@@ -210,13 +210,12 @@ export class AlertRegisterComponent implements OnInit {
       let nombresAlumnos = '';
 
       for (const alumno of this.arrAlumnos) {
-
         matriculas += alumno.strMatricula + ',';
         nombresAlumnos += alumno.strNombreAlumno + ',';
+      }
 
-        for (let i = 0; i < this.documentos.length; i++) {
-          fd.append('strFileEvidencia', this.documentos[i]);
-        }
+      for (let i = 0; i < this.documentos.length; i++) {
+        fd.append('strFileEvidencia', this.documentos[i]);
       }
 
       fd.append('strMatricula', matriculas.slice(0,-1));
@@ -238,7 +237,7 @@ export class AlertRegisterComponent implements OnInit {
 
       setTimeout(() => {
         this.router.navigate(['/dashboard']);
-      }, 500);
+      }, 1000);
     }
   }
 
