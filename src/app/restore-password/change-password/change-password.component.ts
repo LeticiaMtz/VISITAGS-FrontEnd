@@ -50,7 +50,7 @@ export class ChangePasswordComponent implements OnInit {
    }).catch(err => {
     Toast.fire({
       icon: 'warning',
-      title: `¡${err.msg}!`
+      title: `¡${err.error.msg}!`
     });
    });
   }
