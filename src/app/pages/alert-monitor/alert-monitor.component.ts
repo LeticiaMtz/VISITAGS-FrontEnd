@@ -70,9 +70,11 @@ export class AlertMonitorComponent implements OnInit {
   especi: SpecialtyModel[] = [];
   idSpecialty: string;
   specialty: SpecialtyModel = new SpecialtyModel();
-  
+  jsnObject: any[] = [];
+  especialidad: SpecialtyModel = new SpecialtyModel();
+  arrAlertasFinal: any[] = [];
 
-  constructor( private router: Router, private _carrerasService: CareersService, private _alertService: AlertService, private _espService: SpecialtyService, private _asigService: SubjectsService, private _userService: UserManagementService, private _estatusService: AlertStatusService, private _PdfService: PdfServiceService, private excelService: ExportDataService, private _specialityService: SpecialtyService) { }
+  constructor(private router: Router, private _carrerasService: CareersService, private _alertService: AlertService, private _espService: SpecialtyService, private _asigService: SubjectsService, private _userService: UserManagementService, private _estatusService: AlertStatusService, private _PdfService: PdfServiceService, private excelService: ExportDataService, private _specialityService: SpecialtyService) { }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -149,43 +151,46 @@ export class AlertMonitorComponent implements OnInit {
     });
   }
 
-  getAlertas() {
-    this._alertService.getMonitorAlerts(this.alerta.idCarrera, this.alerta.idEspecialidad, this.alerta.idUser, this.alerta.idAsignatura, this.alerta.idEstatus, this.alerta.createdAt, this.alerta.createdAt1).then((data: any) => {
+  async getAlertas() {
+    this.arrAlertasFinal = [];
+
+    this._alertService.getMonitorAlerts(this.alerta.idCarrera, this.alerta.idEspecialidad, this.alerta.idUser, this.alerta.idAsignatura, this.alerta.idEstatus, this.alerta.createdAt, this.alerta.createdAt1).then(async (data: any) => {
       this.alertas = data.cont.resultados;
       this.filtro = true;
       this.cargando = false;
       this.arrAlerta = [];
 
+      let carreras = await this._carrerasService.getCareers();
+
       for (const alert of this.alertas) {
 
-        this._carrerasService.getCarrerByid(alert.idCarrera['_id']).then((data: any) => {
-          this.especi = data.cnt[0].aJsnEspecialidad;
-          this.especi.forEach(element => {
-            if (element._id === alert.idEspecialidad){
-              this.specialty.strEspecialidad = element.strEspecialidad;
-            }
-          });
+        let strEspecialidad = '';
+        for (const carrera of this.carreras) {
+          let encontrado = await carrera.aJsnEspecialidad.find(especialidad => especialidad._id.toString() === alert.idEspecialidad.toString());
+          if (encontrado) {
+            strEspecialidad = encontrado.strEspecialidad;
+            let alerta = {
+              alert,
+              strEspecialidad
+            };
+            this.arrAlertasFinal.push(alerta);
+          }
+        }
 
-          let element = [
-            alert.strMatricula,
-            alert.strNombreAlumno,
-            alert.idCarrera['strCarrera'],
-            this.specialty.strEspecialidad,
-            alert.idAsignatura['strAsignatura'],
-            alert.strGrupo,
-            alert.idUser['strName'],
-            alert.arrCrde.map(motivo => motivo.strNombre),
-            this.getFecha(alert.createdAt),
-            alert.idEstatus['strNombre']
-          ];
-          this.arrAlerta.push(element);
-        }).catch((err) => {
-          console.log('1');
-          Toast.fire({
-            icon: 'warning',
-            title: `¡${err.error.msg}!`
-          });
-        });
+        let element = [
+          alert.strMatricula,
+          alert.strNombreAlumno,
+          alert.idCarrera['strCarrera'],
+          strEspecialidad,
+          alert.idAsignatura['strAsignatura'],
+          alert.strGrupo,
+          alert.idUser['strName'],
+          alert.arrCrde.map(motivo => motivo.strNombre),
+          this.getFecha(alert.createdAt),
+          alert.idEstatus['strNombre']
+        ];
+        this.arrAlerta.push(element);
+
       }
     }).catch((err) => {
       console.log(err);
@@ -193,7 +198,7 @@ export class AlertMonitorComponent implements OnInit {
         icon: 'error',
         title: err.error.cont.error
       });
-      this.alertas = [];
+      this.arrAlertasFinal = [];
     });
   }
 
@@ -313,10 +318,11 @@ export class AlertMonitorComponent implements OnInit {
 
   }
 
-  exportAsXLSX() {
+  async exportAsXLSX() {
     let jsnInfo = {};
-    const jsnObject = [];
-  
+
+    let carreras = await this._carrerasService.getCareers();
+
     if (this.alertas.length !== 0) {
 
       for (const alerta of this.alertas) {
@@ -326,30 +332,32 @@ export class AlertMonitorComponent implements OnInit {
           motivo += iterator.strNombre + ', ';
         }
 
-        jsnInfo = {};
-        jsnInfo = {
+        let strNombre = '';
+        for (const carrera of this.carreras) {
+          let encontrado = await carrera.aJsnEspecialidad.find(especialidad => especialidad._id.toString() === alerta.idEspecialidad.toString());
+          if(encontrado) {
+            strNombre = encontrado.strEspecialidad;
+          }
+        }
+
+        await this.jsnObject.push({
           Matricula: alerta.strMatricula,
           Alumno: alerta.strNombreAlumno,
           Carrera: alerta.idCarrera['strCarrera'],
-          Especialidad: alerta.idEspecialidad,
+          Especialidad: strNombre,
           Asignatura: alerta.idAsignatura['strAsignatura'],
           Grupo: alerta.strGrupo,
           Profesor: alerta.idUser['strName'],
           Motivo: motivo,
           Fecha: this.getFecha(alerta.createdAt),
           Estatus: alerta.idEstatus['strNombre']
-        };
-
-        if (jsnInfo !== '') {
-          jsnObject.push(jsnInfo);
-        }
-
+        });
       }
-        this.excelService.exportAsExcelFile(jsnObject, `${this.title}`);
-    }
-    }
-
-    getFecha(value){
-      return value ? moment(value).format('DD/MM/YYYY') : '';
+      this.excelService.exportAsExcelFile(JSON.parse(JSON.stringify(this.jsnObject)), `${this.title}`);
     }
   }
+
+  getFecha(value) {
+    return value ? moment(value).format('DD/MM/YYYY') : '';
+  }
+}

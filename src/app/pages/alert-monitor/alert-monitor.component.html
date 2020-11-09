@@ -96,22 +96,22 @@
 
                             <!-- SE MUESTRA CUANDO HAY REGISTROS -->
                             <tbody *ngIf="alertas.length > 0 && !cargando">
-                                <tr class="animated fadeIn fast" *ngFor="let alerta of alertas | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
+                                <tr class="animated fadeIn fast" *ngFor="let alerta of arrAlertasFinal | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
 
-                                    <td>{{alerta.strMatricula}}</td>
-                                    <td>{{alerta.strNombreAlumno}}</td>
-                                    <td>{{alerta.idCarrera.strCarrera}}</td>
-                                    <td>{{specialty.strEspecialidad}}</td>
-                                    <td>{{alerta.idAsignatura.strAsignatura}}</td>
-                                    <td>{{alerta.strGrupo}}</td>
-                                    <td>{{alerta.idUser.strName}}</td>
-                                    <td><span class="badge badge-danger" *ngFor="let motivo of alerta.arrCrde">{{motivo.strNombre}}</span></td>
-                                    <td>{{alerta.createdAt | date}}</td>
+                                    <td>{{alerta.alert.strMatricula}}</td>
+                                    <td>{{alerta.alert.strNombreAlumno}}</td>
+                                    <td>{{alerta.alert.idCarrera.strCarrera}}</td>
+                                    <td>{{alerta.strEspecialidad}}</td>
+                                    <td>{{alerta.alert.idAsignatura.strAsignatura}}</td>
+                                    <td>{{alerta.alert.strGrupo}}</td>
+                                    <td>{{alerta.alert.idUser.strName}}</td>
+                                    <td><span class="badge badge-danger" *ngFor="let motivo of alerta.alert.arrCrde">{{motivo.strNombre}}</span></td>
+                                    <td>{{alerta.alert.createdAt | date}}</td>
                                     <td>
-                                        <span class="badge badge-info" *ngIf="nuevo == alerta.idEstatus._id"> <i class="fa fa-star"></i> {{alerta.idEstatus.strNombre}}</span>
-                                        <span class="badge badge-warning" *ngIf="enProgreso == alerta.idEstatus._id"><i class="fa fa-cog fa-spin fa fa-fw"></i> {{alerta.idEstatus.strNombre}}</span>
-                                        <span class="badge badge-danger" *ngIf="cerrado == alerta.idEstatus._id"> <i class="fa fa-times"></i> {{alerta.idEstatus.strNombre}}</span>
-                                        <span class="badge badge-success" *ngIf="finalizado == alerta.idEstatus._id"> <i class="fa fa-check"></i> {{alerta.idEstatus.strNombre}}</span>
+                                        <span class="badge badge-info" *ngIf="nuevo == alerta.alert.idEstatus._id"> <i class="fa fa-star"></i> {{alerta.alert.idEstatus.strNombre}}</span>
+                                        <span class="badge badge-warning" *ngIf="enProgreso == alerta.alert.idEstatus._id"><i class="fa fa-cog fa-spin fa fa-fw"></i> {{alerta.alert.idEstatus.strNombre}}</span>
+                                        <span class="badge badge-danger" *ngIf="cerrado == alerta.alert.idEstatus._id"> <i class="fa fa-times"></i> {{alerta.alert.idEstatus.strNombre}}</span>
+                                        <span class="badge badge-success" *ngIf="finalizado == alerta.alert.idEstatus._id"> <i class="fa fa-check"></i> {{alerta.alert.idEstatus.strNombre}}</span>
                                     </td>
 
                                     <td class="text-center">
