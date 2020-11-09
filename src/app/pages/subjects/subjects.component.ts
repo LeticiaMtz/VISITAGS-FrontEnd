@@ -141,6 +141,7 @@ export class SubjectsComponent implements OnInit {
     if (this.subs.length !== 0) {
       let jsonobject = JSON.stringify(this.subs);
       jsonobject = jsonobject.replace(/strAsignatura/gi, 'Nombre');
+      jsonobject = jsonobject.replace(/strSiglas/gi, 'Siglas');
       const jsonobject2 = JSON.parse(jsonobject);
       const count = Object.keys(jsonobject2).length;
       for (let i = 0; i < count; i++) {

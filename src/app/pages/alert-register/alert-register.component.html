@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="col-md-6 mt-2">
-                            <label class="small"><strong>Especialidade</strong></label>
+                            <label class="small"><strong>Especialidades</strong></label>
                             <app-bootstrap-select [ngForm]="forma" [name]="'idEspecialidad'" [datos]="especialidades" (model)="alerta.idEspecialidad = $event" [titulo]="'Seleccione una Especialidad'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una especialidad"
                                 [required]="true"></app-bootstrap-select>
                         </div>

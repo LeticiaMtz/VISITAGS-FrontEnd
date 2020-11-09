@@ -82,7 +82,7 @@ export class StatusReportComponent implements OnInit {
   exportAsXLSX() {
     if (this.estatus.length !== 0) {
       let jsonobject = JSON.stringify(this.estatus);
-      jsonobject = jsonobject.replace(/strNombre/gi, 'Nombre');
+      jsonobject = jsonobject.replace(/strNombre/gi, 'Nombre del Estatus');
       jsonobject = jsonobject.replace(/strDescripcion/gi, 'Descripción');
       const jsonobject2 = JSON.parse(jsonobject);
       const count = Object.keys(jsonobject2).length;
@@ -100,7 +100,7 @@ export class StatusReportComponent implements OnInit {
   exportPDF() {
     let header = [
       {
-        text: "Estatus",
+        text: "Nombre del Estatus",
         style: "tableHeader",
         bold: true,
         fillColor: "#2a3e52",

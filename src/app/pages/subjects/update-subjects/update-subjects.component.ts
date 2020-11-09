@@ -39,19 +39,14 @@ export class UpdateSubjectsComponent implements OnInit {
         icon: 'success',
         title: `¡La Asignatura ${this.sub.strAsignatura} se actualizó exitosamente!`
       });
-
-      form.reset();
       this.optionCancel.emit(false);
       this.refresh.emit(true);
 
     }).catch(err => {
-    
       Toast.fire({
         icon: 'error',
         title: err.error.msg
-   
       });
-      form.reset();
     });
   }
 
