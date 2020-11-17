@@ -104,7 +104,9 @@
                                     <td>{{alerta.strEspecialidad}}</td>
                                     <td>{{alerta.alert.idAsignatura.strAsignatura}}</td>
                                     <td>{{alerta.alert.strGrupo}}</td>
-                                    <td>{{alerta.alert.idUser.strName}}</td>
+                                    <td>{{alerta.alert.idUser.strName}} 
+                                        {{alerta.alert.idUser.strLastName}}
+                                    </td>
                                     <td><span class="badge badge-danger" *ngFor="let motivo of alerta.alert.arrCrde">{{motivo.strNombre}}</span></td>
                                     <td>{{alerta.alert.createdAt | date}}</td>
                                     <td>

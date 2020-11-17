@@ -177,6 +177,7 @@ export class AlertMonitorComponent implements OnInit {
           }
         }
 
+
         let element = [
           alert.strMatricula,
           alert.strNombreAlumno,
@@ -185,6 +186,7 @@ export class AlertMonitorComponent implements OnInit {
           alert.idAsignatura['strAsignatura'],
           alert.strGrupo,
           alert.idUser['strName'],
+          alert.idUser['strLastName'],
           alert.arrCrde.map(motivo => motivo.strNombre),
           this.getFecha(alert.createdAt),
           alert.idEstatus['strNombre']

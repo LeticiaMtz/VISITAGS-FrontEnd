@@ -143,6 +143,7 @@ export class StatusReportComponent implements OnInit {
   }
   deleteStatus(id: string){
     this._estatusService.deleteStatus(id).then((data) => {
+      this.arrayEstatus = [];
       this.getEstatus();
       Toast.fire({
         icon: 'success',
