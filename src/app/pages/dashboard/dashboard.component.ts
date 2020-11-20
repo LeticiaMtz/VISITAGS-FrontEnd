@@ -40,7 +40,8 @@ export class DashboardComponent implements OnInit {
   idPersona: any;
   idRol: any;
   strCarrera: string;
-  alert: AlertModel =new AlertModel();
+  alert: AlertModel = new AlertModel();
+  alumnosLength: number = 0;
 
 
   constructor(private alertService: AlertService, private router: Router, private _PdfService: PdfServiceService, private _excelService: ExportDataService, private carreraService: CareersService) { }
@@ -66,12 +67,7 @@ export class DashboardComponent implements OnInit {
     this.idRol = this.tokenDecoded.user.idRole;
     this.alertService.getAlerts(this.idRol, this.idPersona).then((res: any) => {
       this.cargando = false;
-      /* if(res.cnt.length>1){
-        this.alerts = res.cnt[0];
-      }else{ */
-
-        this.alerts = res.cnt;
-      /* } */
+      this.alerts = res.cnt;
     }).catch(err => {
       Toast.fire({
         icon: 'error',

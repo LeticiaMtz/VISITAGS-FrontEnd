@@ -77,6 +77,8 @@ export class TrackingAlertsComponent implements OnInit {
   arrColaboradores: any[] = [];
   arrColabFinal: any[] = [];
   personas: any[] = [];
+  arrMatriculas: any[] = [];
+  arrAlumnos: any[] = [];
 
   constructor(
     private trackingAlertsService: TrackingAlertsService,
@@ -108,28 +110,27 @@ export class TrackingAlertsComponent implements OnInit {
   }
 
   obtenerAlerta(idAlert: string) {
-    this.trackingAlertsService
-      .getAlertData(idAlert)
-      .then((res: any) => {
-        this.objAlert = res.cnt[0];
-        this.strCarrera = res.cnt[0].idCarrera.strCarrera;
-        this.objUser = res.cnt[0].idUser;
-        this.objSubject = res.cnt[0].idAsignatura;
-        this.objModality = res.cnt[0].idModalidad;
-        this.arrReasons = res.cnt[0].arrCrde;
-        this.arrFiles = res.cnt[0].aJsnEvidencias;
-        this.principalStatus = res.cnt[0].idEstatus._id;
-        if (this.objUser.strMotherLastName) {
-          this.surName = this.objUser.strMotherLastName;
-        }
-        this.userName = `${this.objUser.strName} ${this.objUser.strLastName} ${this.surName}`;
-      })
-      .catch((err) => {
-        Toast.fire({
-          icon: "error",
-          title: err.error.msg,
-        });
+    this.trackingAlertsService.getAlertData(idAlert).then((res: any) => {
+      this.arrMatriculas = res.cnt[0].strMatricula;
+      this.arrAlumnos = res.cnt[0].strNombreAlumno;
+      this.objAlert = res.cnt[0];
+      this.strCarrera = res.cnt[0].idCarrera.strCarrera;
+      this.objUser = res.cnt[0].idUser;
+      this.objSubject = res.cnt[0].idAsignatura;
+      this.objModality = res.cnt[0].idModalidad;
+      this.arrReasons = res.cnt[0].arrCrde;
+      this.arrFiles = res.cnt[0].aJsnEvidencias;
+      this.principalStatus = res.cnt[0].idEstatus._id;
+      if (this.objUser.strMotherLastName) {
+        this.surName = this.objUser.strMotherLastName;
+      }
+      this.userName = `${this.objUser.strName} ${this.objUser.strLastName} ${this.surName}`;
+    }).catch((err) => {
+      Toast.fire({
+        icon: "error",
+        title: err.error.msg,
       });
+    });
   }
 
   obtenerEstatus() {
