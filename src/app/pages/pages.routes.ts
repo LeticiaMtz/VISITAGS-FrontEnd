@@ -22,6 +22,7 @@ import { AlertRegisterComponent } from './alert-register/alert-register.componen
 import { TrackingAlertsComponent } from './tracking-alerts/tracking-alerts.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { AlertMonitorComponent } from './alert-monitor/alert-monitor.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 const pagesRoutes: Routes = [
@@ -41,6 +42,7 @@ const pagesRoutes: Routes = [
           { path: 'modality', component: ModalityComponent, data: { titulo: 'Gestión de Modalidades' }, canActivate: [AuthGuard]},
           { path: 'Tracking-alerts/:id/:idR', component: TrackingAlertsComponent, data: { titulo: 'Seguimiento Alerta' }, canActivate: [AuthGuard]},
           { path: 'user-management', component: UserManagementComponent, data: { titulo:  'Gestion de Usuarios'  }, canActivate: [AuthGuard]},
+          { path: 'notification/:id', component: NotificationComponent, data: { titulo:  'Gestion de Usuarios'  }, canActivate: [AuthGuard]},
           { path: 'monitor-alertas', component: AlertMonitorComponent, data: { titulo:  'Monitor de Alertas'  }, canActivate: [AuthGuard]},         
           { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ]

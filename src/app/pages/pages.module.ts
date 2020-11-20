@@ -43,6 +43,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { AlertMonitorComponent } from './alert-monitor/alert-monitor.component';
 import { ShowUserManagementComponent } from './user-management/show-user-management/show-user-management.component';
 import { UpdateUserManagementComponent } from './user-management/update-user-management/update-user-management.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 
@@ -77,6 +78,7 @@ import { UpdateUserManagementComponent } from './user-management/update-user-man
         AlertRegisterComponent,
         TrackingAlertsComponent,
         UserManagementComponent,
+        NotificationComponent,
         AlertMonitorComponent,
         ShowUserManagementComponent,
         UpdateUserManagementComponent
