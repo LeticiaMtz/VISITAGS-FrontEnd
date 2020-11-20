@@ -7,8 +7,8 @@ export class AlertModel {
     _id?: string;
     idUser: string;
     idEstatus: string;
-    strMatricula: string;
-    strNombreAlumno: string;
+    strMatricula: [];
+    strNombreAlumno: [];
     idAsignatura: string;
     idCarrera?: string;
     strCarrera: string;
