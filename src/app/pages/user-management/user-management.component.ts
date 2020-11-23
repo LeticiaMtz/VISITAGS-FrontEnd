@@ -43,7 +43,6 @@ export class UserManagementComponent implements OnInit {
     this.userManagementService.getUsuarios().then((res: any) => {
       this.cargando=false;
       this.users = res.cnt;
-      console.log(this.users, 'USERS PDF');
       for (const c of this.users) {
         let element = [
           c.strName.replace(/\:null/gi,':""'),
@@ -52,7 +51,6 @@ export class UserManagementComponent implements OnInit {
         ];
         this.arrayUser.push(element);
       }
-      console.log(res, 'RESS');
     }).catch(err => {
       Toast.fire({
         icon: 'warning',
@@ -75,7 +73,6 @@ export class UserManagementComponent implements OnInit {
 
   updateCanceled(e) {
     this.actualizar = e;
-    console.log('SIIIIIII');
   }
 
 

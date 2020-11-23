@@ -43,7 +43,6 @@ export class UpdateUserManagementComponent implements OnInit {
   getRole(idRol: string) {
     this.rolesService.getRolByid(idRol).then((data: any) => {
       this.role = data.cnt[0]._id;
-      console.log(this.role, 'Rol por Id');
     }).then((err) => {
       console.log(err);
     });
@@ -52,14 +51,6 @@ export class UpdateUserManagementComponent implements OnInit {
   getRoles(){
     this.rolesService.getRoles().then((res: any) => {
       this.roles = res.cnt;
-
-      console.log(this.roles, 'ROLES');
-
-      // for (const rol of this.roles) {
-        
-      //    this.roles = rol.strRole;
-      //   console.log(this.roles, 'ROL');
-      // }
       
     }).catch(err => {
       Toast.fire({
@@ -86,7 +77,6 @@ export class UpdateUserManagementComponent implements OnInit {
   
   updateUser(form: NgForm){
     this.userManagementService.putUsuarios(this.idUsuario, this.usuario).then(res => {
-      console.log('ENTRE');
       Toast.fire({
         icon: 'success',
         title: `¡El usuario ${this.usuario.strName} se actualizó exitosamente!`
