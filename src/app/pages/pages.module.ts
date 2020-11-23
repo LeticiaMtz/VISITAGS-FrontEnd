@@ -41,6 +41,9 @@ import { AlertRegisterComponent } from './alert-register/alert-register.componen
 import { TrackingAlertsComponent } from './tracking-alerts/tracking-alerts.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { AlertMonitorComponent } from './alert-monitor/alert-monitor.component';
+import { ShowUserManagementComponent } from './user-management/show-user-management/show-user-management.component';
+import { UpdateUserManagementComponent } from './user-management/update-user-management/update-user-management.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 
@@ -75,7 +78,10 @@ import { AlertMonitorComponent } from './alert-monitor/alert-monitor.component';
         AlertRegisterComponent,
         TrackingAlertsComponent,
         UserManagementComponent,
-        AlertMonitorComponent
+        NotificationComponent,
+        AlertMonitorComponent,
+        ShowUserManagementComponent,
+        UpdateUserManagementComponent
     ],
     exports: [
         DashboardComponent,
