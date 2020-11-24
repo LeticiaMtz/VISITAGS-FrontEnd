@@ -218,6 +218,26 @@ export class AlertMonitorComponent implements OnInit {
     });
   }
 
+  resetFiltros() {
+    setTimeout(() => {
+      $('.selectpicker').val(this.ngOnInit()).selectpicker('refresh');
+    }, 0);
+    this.alerta.idCarrera = undefined;
+    this.alerta.idEspecialidad = undefined;
+    this.alerta.idAsignatura = undefined;
+    this.alerta.idUser = undefined;
+    this.alerta.createdAt = undefined;
+    this.alerta.createdAt1 = undefined;
+    this.alerta.idEstatus = undefined;
+    this.ngOnInit();
+    Toast.fire({
+      icon: 'success',
+      title: `¡Filtros Reiniciados!`
+    });
+    this.alertas = [];
+    this.filtro = false;
+  }
+
   verAlerta(idAlerta: string) {
     // falta ponerle el id del rol del usuario
     this.router.navigate([`/Tracking-alerts/${idAlerta}/${this.tokenDecoded.user._id}`]);

@@ -43,19 +43,25 @@
                     </div>
 
                     <div class="col-4">
-                        <label class="small"><strong>Por Estatus</strong></label>
-                        <select class="form-control custom-select selectpicker btn-outline-light" data-size="4" data-dropup-auto=false title="Estatus" type="text" data-live-search="true" name="idEstatus" [(ngModel)]="alerta.idEstatus" #idEstatus="ngModel" (ngModelChange)="getAlertas()">
-                            <option *ngFor="let estatus of arrEstatus" [ngValue]="estatus._id">{{estatus.strNombre}}</option>
-                        </select>
-                    </div>
-
-                    <div class="col-4">
                         <label class="small"><strong>Por Fecha</strong></label>
                         <div class="input-group input-daterange">
                             <input type="date" class="form-control form-control-sm btn-outline-secondary" name="createdAt" [(ngModel)]="alerta.createdAt" #createdAt="ngModel" (ngModelChange)="getAlertas()">
                             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                             <input type="date" class="form-control form-control-sm btn-outline-secondary ops" name="createdAt1" [(ngModel)]="alerta.createdAt1" #createdAt1="ngModel" (ngModelChange)="getAlertas()">
                         </div>
+                    </div>
+
+                    <div class="col-3">
+                        <label class="small"><strong>Por Estatus</strong></label>
+                        <select class="form-control custom-select selectpicker btn-outline-light" data-size="4" data-dropup-auto=false title="Estatus" type="text" data-live-search="true" name="idEstatus" [(ngModel)]="alerta.idEstatus" #idEstatus="ngModel" (ngModelChange)="getAlertas()">
+                            <option *ngFor="let estatus of arrEstatus" [ngValue]="estatus._id">{{estatus.strNombre}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-1">
+                        <button class="btn btn-warning btn-block mt-4" (click)="resetFiltros()">
+                            <i class="fa fa-trash"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="row">
@@ -104,8 +110,7 @@
                                     <td>{{alerta.strEspecialidad}}</td>
                                     <td>{{alerta.alert.idAsignatura.strAsignatura}}</td>
                                     <td>{{alerta.alert.strGrupo}}</td>
-                                    <td>{{alerta.alert.idUser.strName}} 
-                                        {{alerta.alert.idUser.strLastName}}
+                                    <td>{{alerta.alert.idUser.strName}} {{alerta.alert.idUser.strLastName}}
                                     </td>
                                     <td><span class="badge badge-danger" *ngFor="let motivo of alerta.alert.arrCrde">{{motivo.strNombre}}</span></td>
                                     <td>{{alerta.alert.createdAt | date}}</td>
@@ -127,7 +132,7 @@
                             <tbody *ngIf="alertas.length == 0 && filtro == false">
                                 <tr>
                                     <td colspan="14">
-                                        <div class="alert-dismissible text-center" style="padding: .75rem 1.25rem;">
+                                        <div class="alert-dismissible text-center animated fadeIn faster" style="padding: .75rem 1.25rem;">
                                             <h5 style="height: 100%;width: 100%;"><strong><i class="fa fa-filter" aria-hidden="true"></i> ¡Seleccione un filtro para encontrar resultados!</strong></h5>
                                         </div>
                                     </td>
@@ -138,7 +143,7 @@
                             <tbody *ngIf="alertas.length == 0 && filtro == true">
                                 <tr>
                                     <td colspan="14">
-                                        <div class="alert-dismissible text-center" style="padding: .75rem 1.25rem;">
+                                        <div class="alert-dismissible text-center animated fadeIn faster" style="padding: .75rem 1.25rem;">
                                             <h5 style="height: 100%;width: 100%;"><strong><i class="fa fa-sad-cry" aria-hidden="true"></i> ¡No hay registros con esas especificaciones!</strong></h5>
                                         </div>
                                     </td>
