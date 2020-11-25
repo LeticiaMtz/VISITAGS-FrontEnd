@@ -50,7 +50,7 @@ export class AccountSettingsComponent implements OnInit {
       this.notificaciones = this.usuario.blnNotificaciones;
       Toast.fire({
         icon: 'success',
-        title: `¡El usuario ${this.usuario.strName} sus notificaciónes!`
+        title: `¡Se actualizo correctamente el estatus de las notificaciónes!`
       });
     }).catch(err => {
       Toast.fire({
