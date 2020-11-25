@@ -35,7 +35,7 @@ const pagesRoutes: Routes = [
           { path: 'specialty-report/:id', component: SpecialtyReportComponent, data: { titulo: 'Gestión de Especialidades' }, canActivate: [AuthGuard] },
           { path: 'reasons-crde', component: ReasonsCRDEComponent, data: { titulo: 'Gestión de CRDE' }, canActivate: [AuthGuard] },
           { path: 'behavior/:id', component: BehaviorComponent, data: { titulo: 'Gestión de Condutas' }, canActivate: [AuthGuard] },
-          { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes del Tema' }, canActivate: [AuthGuard]},
+          { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes de Usuario' }, canActivate: [AuthGuard]},
           { path: 'estatus-alerta', component: StatusReportComponent, data: { titulo: 'Catalogo de Estatus de Alertas' }, canActivate: [AuthGuard] },
           { path: 'registro-alerta', component: AlertRegisterComponent, data: { titulo: 'Registro de Alertas' }, canActivate: [AuthGuard] },
           { path: 'subjects', component: SubjectsComponent, data: { titulo: 'Gestión de Asignaturas' }, canActivate: [AuthGuard]},

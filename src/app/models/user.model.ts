@@ -1,3 +1,5 @@
+import { takeUntil } from 'rxjs/operators';
+
 export class User  {
 
     _id: string;
@@ -10,6 +12,7 @@ export class User  {
     strDirection:string;
     strValidatePass:string; 
     blnStatus: boolean = true; 
+    blnNotificaciones: boolean = true;
     arrEspecialidadPermiso?: [{
       
       
