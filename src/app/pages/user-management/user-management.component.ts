@@ -116,7 +116,9 @@ export class UserManagementComponent implements OnInit {
 exportAsXLSX() {
   if (this.users.length !== 0) {
     let jsonobject = JSON.stringify(this.users);
-    //jsonobject = jsonobject.replace(//gi, 'Nombre');
+    jsonobject = jsonobject.replace(/strName/gi, 'Nombre');
+    jsonobject = jsonobject.replace(/strLastName/gi, 'Primer Apellido');
+    jsonobject = jsonobject.replace(/strMotherLastName/gi, 'Segundo Apellido');
     const jsonobject2 = JSON.parse(jsonobject);
     const count = Object.keys(jsonobject2).length;
     for (let i = 0; i < count; i++) {
@@ -130,6 +132,8 @@ exportAsXLSX() {
       delete jsonobject2[i].aJsnEspecialidad;
       delete jsonobject2[i]._id;
       delete jsonobject2[i].__v;
+      delete jsonobject2[i].blnNotificaciones;
+      
     }
     this._excelService.exportAsExcelFile(jsonobject2, `${this.title}`);
   }
