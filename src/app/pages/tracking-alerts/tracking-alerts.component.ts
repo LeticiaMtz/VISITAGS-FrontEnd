@@ -79,6 +79,7 @@ export class TrackingAlertsComponent implements OnInit {
   personas: any[] = [];
   arrMatriculas: any[] = [];
   arrAlumnos: any[] = [];
+  nmbSemana: any;
 
   constructor(
     private trackingAlertsService: TrackingAlertsService,
@@ -121,6 +122,7 @@ export class TrackingAlertsComponent implements OnInit {
       this.arrReasons = res.cnt[0].arrCrde;
       this.arrFiles = res.cnt[0].aJsnEvidencias;
       this.principalStatus = res.cnt[0].idEstatus._id;
+      this.nmbSemana = res.cnt[0].nmbSemana;
       if (this.objUser.strMotherLastName) {
         this.surName = this.objUser.strMotherLastName;
       }

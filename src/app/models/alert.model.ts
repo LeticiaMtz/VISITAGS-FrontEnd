@@ -29,6 +29,7 @@ export class AlertModel {
         SeguimientoModel
     }];
     blnAvtivo?: boolean = true;
+    nmbSemana: number;
     createdAt: Date;
     createdAt1?: Date;
 }

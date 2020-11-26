@@ -31,8 +31,6 @@ export class AlertService {
     if (typeof createdAt !== 'undefined' && createdAt !== '') { parametros.dteFechaInicio = createdAt; }
     if (typeof createdAt1 !== 'undefined' && createdAt1 !== '') { parametros.dteFechaFin = createdAt1; }
 
-    console.log(idEspecialidad);
-
     return this.http
     .get(
       `${this.URL}/alerts/reporteMonitor`,

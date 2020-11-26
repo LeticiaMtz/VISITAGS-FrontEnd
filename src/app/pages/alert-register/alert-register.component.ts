@@ -60,6 +60,7 @@ export class AlertRegisterComponent implements OnInit {
   arrColabFInal: any[] = [];
   personas: any[] = [];
   arrAlertas: any[] = [];
+  semanas: any[] = [];
 
   // tslint:disable-next-line: max-line-length
   constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, private _userService: UserManagementService, private cdr: ChangeDetectorRef ) { }
@@ -73,10 +74,16 @@ export class AlertRegisterComponent implements OnInit {
     this.alerta.idUser = tokenDecoded.user._id;
     this.alerta.idEstatus = environment.nuevo;
     this.getAll();
+    for (let i = 1; i <= 16; i++) {
+      this.semanas.push({
+        _id: i,
+        strNombre: `Semana ${i}`,
+      });
+    }
   }
 
   ngAfterViewInit() {
-   this.ngAfterContentChecked(); 
+   this.ngAfterContentChecked();
   }
 
   ngAfterContentChecked(): void {
@@ -126,8 +133,6 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   eliminarColaborador(formaColaborador: NgForm,index: number) {
-    console.log('Hols');
-    console.log(this.arrColaboradores, index)
     formaColaborador.form.removeControl( `_id${index}`);
     this.arrColaboradores.splice(index, 1);
     Toast.fire({
@@ -187,6 +192,7 @@ export class AlertRegisterComponent implements OnInit {
       fd.append('chrTurno', this.alerta.chrTurno);
       fd.append('idModalidad', this.alerta.idModalidad);
       fd.append('strDescripcion', this.alerta.strDescripcion);
+      fd.append('nmbSemana', this.alerta.nmbSemana.toString());
 
       let crdes = '';
 
@@ -268,7 +274,6 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   getEspecialidad(idEspecialidad: string) {
-    console.log(idEspecialidad);
     this.especialidades = [];
 
     this.especialidadService.getSpecialties(idEspecialidad).then((especialidades: any) => {
