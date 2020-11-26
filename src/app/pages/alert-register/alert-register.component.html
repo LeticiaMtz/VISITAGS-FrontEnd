@@ -23,19 +23,19 @@
 
                         <div class="col-md-6 mt-2">
                             <label class="small"><strong>Carrera</strong></label>
-                            <app-bootstrap-select (ngModelChange)="getEspecialidad($event)" [ngForm]="forma" [name]="'idCarrera'" [datos]="carreras" (model)="alerta.idCarrera = $event" [titulo]="'Seleccione una Carrera'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una carrera"
+                            <app-bootstrap-select (ngModelChange)="getEspecialidad($event)" [ngForm]="forma" [name]="'idCarrera'" [datos]="carreras" (model)="alerta.idCarrera = $event" [titulo]="'Seleccione una Carrera'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccionar una carrera"
                                 [required]="true"></app-bootstrap-select>
                         </div>
 
                         <div class="col-md-6 mt-2">
                             <label class="small"><strong>Especialidad</strong></label>
-                            <app-bootstrap-select [ngForm]="forma" [name]="'idEspecialidad'" [datos]="especialidades" (model)="alerta.idEspecialidad = $event" [titulo]="'Seleccione una Especialidad'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una especialidad"
+                            <app-bootstrap-select [ngForm]="forma" [name]="'idEspecialidad'" [datos]="especialidades" (model)="alerta.idEspecialidad = $event" [titulo]="'Seleccione una Especialidad'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccionar una especialidad"
                                 [required]="true"></app-bootstrap-select>
                         </div>
 
                         <div class="col-md-6 mt-2">
                             <label class="small"><strong>Modalidad</strong></label>
-                            <app-bootstrap-select [ngForm]="forma" [name]="'idModalidad'" [datos]="modalidades" (model)="alerta.idModalidad = $event" [titulo]="'Seleccione una Modalidad'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una modalidad"
+                            <app-bootstrap-select [ngForm]="forma" [name]="'idModalidad'" [datos]="modalidades" (model)="alerta.idModalidad = $event" [titulo]="'Seleccione una Modalidad'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccionar una modalidad"
                                 [required]="true"></app-bootstrap-select>
                         </div>
 
@@ -51,13 +51,13 @@
 
                         <div class="col-md-6 mt-2">
                             <label class="small"><strong>Asignatura</strong></label>
-                            <app-bootstrap-select [ngForm]="forma" [name]="'idAsignatura'" [datos]="asignaturas" (model)="alerta.idAsignatura = $event" [titulo]="'Seleccione una Asignatura'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una asignatura"
+                            <app-bootstrap-select [ngForm]="forma" [name]="'idAsignatura'" [datos]="asignaturas" (model)="alerta.idAsignatura = $event" [titulo]="'Seleccione una Asignatura'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccionar una asignatura"
                                 [required]="true"></app-bootstrap-select>
                         </div>
 
                         <div class="col-md-6 mt-2">
                             <label class="small"><strong>Semana</strong></label>
-                            <app-bootstrap-select [ngForm]="forma" [name]="'nmbSemana'" [datos]="semanas" (model)="alerta.nmbSemana = $event" [titulo]="'Seleccione una Semana'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccinar una semana" [required]="true"></app-bootstrap-select>
+                            <app-bootstrap-select [ngForm]="forma" [name]="'nmbSemana'" [datos]="semanas" (model)="alerta.nmbSemana = $event" [titulo]="'Seleccione una Semana'" [multiple]="false" [dataLiveSearch]="true" mensajeValidacion="Es necesario seleccionar una semana" [required]="true"></app-bootstrap-select>
                         </div>
 
                         <div class="col-md-12 mt-3">
@@ -78,7 +78,7 @@
 
                         <div class="col-md-12 mt-2 mb-4">
                             <label class="small"><strong>Motivo</strong></label>
-                            <app-bootstrap-select [ngForm]="forma" [name]="'arrCrde'" [datos]="motivos" (model)="alerta.arrCrde = $event" [titulo]="'Seleccione los motivos'" [multiple]="true" [dataLiveSearch]="false" mensajeValidacion="Es necesario seleccinar al menos un motivo"
+                            <app-bootstrap-select [ngForm]="forma" [name]="'arrCrde'" [datos]="motivos" (model)="alerta.arrCrde = $event" [titulo]="'Seleccione los motivos'" [multiple]="true" [dataLiveSearch]="false" mensajeValidacion="Es necesario seleccionar al menos un motivo"
                                 [required]="true"></app-bootstrap-select>
 
                         </div>

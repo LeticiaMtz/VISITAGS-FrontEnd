@@ -86,7 +86,6 @@
                         <table id="PDFTable" class="table table-sm table-responsive" [ngClass]="{'table-hover': (!cargando && alertas.length &gt; 0) }">
                             <thead class="text-center">
                                 <tr>
-                                    <th>MATRICULA</th>
                                     <th>ALUMNO</th>
                                     <th>CARRERA</th>
                                     <th>ESPECIALIDAD</th>
@@ -95,6 +94,7 @@
                                     <th>PROFESOR</th>
                                     <th>MOTIVO</th>
                                     <th>FECHA</th>
+                                    <th>SEMANA</th>
                                     <th>ESTATUS</th>
                                     <th>SEGUIMIENTO</th>
                                 </tr>
@@ -104,16 +104,22 @@
                             <tbody *ngIf="alertas.length > 0 && !cargando">
                                 <tr class="animated fadeIn fast" *ngFor="let alerta of arrAlertasFinal | filter:searchText | paginate:{itemsPerPage: 10, currentPage: pageActual}">
 
-                                    <td>{{alerta.alert.strMatricula}}</td>
-                                    <td>{{alerta.alert.strNombreAlumno}}</td>
+                                    <td *ngIf="alerta.alert.strMatricula.length > 1" class="text-center">
+                                        <button type="button" class="btn btn-sm btn-info" (click)="verAlumno(alerta.alert._id)" data-toggle="modal" data-target="#alumnos-modal"><i class="fa fa-users"></i></button>
+                                    </td>
+                                    <td *ngIf="alerta.alert.strMatricula.length == 1" class="text-center">
+                                        <button type="button" class="btn btn-sm btn-info" (click)="verAlumno(alerta.alert._id)" data-toggle="modal" data-target="#alumnos-modal"><i class="fa fa-user"></i></button>
+                                    </td>
                                     <td>{{alerta.alert.idCarrera.strCarrera}}</td>
                                     <td>{{alerta.strEspecialidad}}</td>
                                     <td>{{alerta.alert.idAsignatura.strAsignatura}}</td>
-                                    <td>{{alerta.alert.strGrupo}}</td>
-                                    <td>{{alerta.alert.idUser.strName}} {{alerta.alert.idUser.strLastName}}
+                                    <td class="text-center">{{alerta.alert.strGrupo}}</td>
+                                    <td>
+                                        {{alerta.alert.idUser.strName}} {{alerta.alert.idUser.strLastName}}
                                     </td>
                                     <td><span class="badge badge-danger" *ngFor="let motivo of alerta.alert.arrCrde">{{motivo.strNombre}}</span></td>
                                     <td>{{alerta.alert.createdAt | date}}</td>
+                                    <td class="text-center">{{alerta.alert.nmbSemana}}</td>
                                     <td>
                                         <span class="badge badge-info" *ngIf="nuevo == alerta.alert.idEstatus._id"> <i class="fa fa-star"></i> {{alerta.alert.idEstatus.strNombre}}</span>
                                         <span class="badge badge-warning" *ngIf="enProgreso == alerta.alert.idEstatus._id"><i class="fa fa-cog fa-spin fa fa-fw"></i> {{alerta.alert.idEstatus.strNombre}}</span>
@@ -159,6 +165,40 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ALUMNOS-->
+<div class="modal fade" id="alumnos-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 *ngIf="arrAlumno.length > 1" class="modal-title text-info" id="staticBackdropLabel"><i class="fa fa-users"></i> Alumnos </h5>
+                <h5 *ngIf="arrAlumno.length == 1" class="modal-title text-info" id="staticBackdropLabel"><i class="fa fa-user"></i> Alumno </h5>
+            </div>
+            <div class="modal-body text-center">
+                <div class="container ">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th class="text-center">MATRICULA</th>
+                                <th class="text-center">ALUMNO</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr *ngFor="let alumno of arrAlumno; let i = index;">
+                                <td>{{arrMatricula[i]}}</td>
+                                <td>{{arrAlumno[i]}}</td>
+                            </tr>
+                        </tbody>
+                  </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <i class="fa fa-send mr-2"></i> -->
+                <button type="button" class="btn btn-info btn-block" data-dismiss="modal">ok</button>
+            </div>
         </div>
     </div>
 </div>
