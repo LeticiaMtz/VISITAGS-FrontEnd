@@ -45,6 +45,7 @@ export class AlertMonitorComponent implements OnInit {
   especialidades: any[] = [];
   asignaturas: any[] = [];
   alertas: AlertModel[] = [];
+  todasLasAlertas: AlertModel[] = [];
   cargando: boolean = true;
   searchText: any;
   pageActual: number;
@@ -73,6 +74,8 @@ export class AlertMonitorComponent implements OnInit {
   jsnObject: any[] = [];
   especialidad: SpecialtyModel = new SpecialtyModel();
   arrAlertasFinal: any[] = [];
+  arrMatricula: any[] = [];
+  arrAlumno: any[] = [];
 
   constructor(private router: Router, private _carrerasService: CareersService, private _alertService: AlertService, private _espService: SpecialtyService, private _asigService: SubjectsService, private _userService: UserManagementService, private _estatusService: AlertStatusService, private _PdfService: PdfServiceService, private excelService: ExportDataService, private _specialityService: SpecialtyService) { }
 
@@ -153,6 +156,7 @@ export class AlertMonitorComponent implements OnInit {
 
   async getAlertas() {
     this.arrAlertasFinal = [];
+    this.ejecutarServicioMonitor();
 
     this._alertService.getMonitorAlerts(this.alerta.idCarrera, this.alerta.idEspecialidad, this.alerta.idUser, this.alerta.idAsignatura, this.alerta.idEstatus, this.alerta.createdAt, this.alerta.createdAt1).then(async (data: any) => {
       this.alertas = data.cont.resultados;
@@ -177,18 +181,17 @@ export class AlertMonitorComponent implements OnInit {
           }
         }
 
-
         let element = [
-          alert.strMatricula,
-          alert.strNombreAlumno,
+          alert.strMatricula.map(matricula => matricula + ','),
+          alert.strNombreAlumno.map(alumno => alumno + ','),
           alert.idCarrera['strCarrera'],
           strEspecialidad,
           alert.idAsignatura['strAsignatura'],
           alert.strGrupo,
-          alert.idUser['strName'],
-          alert.idUser['strLastName'],
-          alert.arrCrde.map(motivo => motivo.strNombre),
+          alert.idUser['strName'] + ' ' + alert.idUser['strLastName'],
+          alert.arrCrde.map(motivo => motivo.strNombre + ','),
           this.getFecha(alert.createdAt),
+          alert.nmbSemana,
           alert.idEstatus['strNombre']
         ];
         this.arrAlerta.push(element);
@@ -241,6 +244,15 @@ export class AlertMonitorComponent implements OnInit {
   verAlerta(idAlerta: string) {
     // falta ponerle el id del rol del usuario
     this.router.navigate([`/Tracking-alerts/${idAlerta}/${this.tokenDecoded.user._id}`]);
+  }
+
+  verAlumno(alertaId){
+    for (const cadaAlerta of this.todasLasAlertas){     
+      if(cadaAlerta._id == alertaId){
+        this.arrMatricula = cadaAlerta.strMatricula;
+        this.arrAlumno = cadaAlerta.strNombreAlumno;
+      }
+    } 
   }
 
   exportPDF() {
@@ -321,6 +333,14 @@ export class AlertMonitorComponent implements OnInit {
         size: 13,
       },
       {
+        text: "Semana",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      },
+      {
         text: "Estatus",
         style: "tableHeader",
         alignment: "center",
@@ -345,9 +365,19 @@ export class AlertMonitorComponent implements OnInit {
 
     let carreras = await this._carrerasService.getCareers();
 
-    if (this.alertas.length !== 0) {
+    if (this.todasLasAlertas.length !== 0) {
 
-      for (const alerta of this.alertas) {
+      for (const alerta of this.todasLasAlertas) {
+
+        let matricula = '';
+        for (const iterator of alerta.strMatricula) {
+          matricula  += iterator + ', ';
+        }
+
+        let alumno = '';
+        for (const iterator of alerta.strNombreAlumno) {
+          alumno += iterator + ', ';
+        }
 
         let motivo = '';
         for (const iterator of alerta.arrCrde) {
@@ -363,8 +393,8 @@ export class AlertMonitorComponent implements OnInit {
         }
 
         await this.jsnObject.push({
-          Matricula: alerta.strMatricula,
-          Alumno: alerta.strNombreAlumno,
+          Matricula: matricula,
+          Alumno: alumno,
           Carrera: alerta.idCarrera['strCarrera'],
           Especialidad: strNombre,
           Asignatura: alerta.idAsignatura['strAsignatura'],
@@ -372,14 +402,22 @@ export class AlertMonitorComponent implements OnInit {
           Profesor: alerta.idUser['strName'],
           Motivo: motivo,
           Fecha: this.getFecha(alerta.createdAt),
+          Semana: alerta.nmbSemana,
           Estatus: alerta.idEstatus['strNombre']
         });
       }
       this.excelService.exportAsExcelFile(JSON.parse(JSON.stringify(this.jsnObject)), `${this.title}`);
+      this.jsnObject = [];
     }
   }
 
   getFecha(value) {
     return value ? moment(value).format('DD/MM/YYYY') : '';
+  }
+
+  ejecutarServicioMonitor(){
+    this._alertService.getMonitorAlerts(this.alerta.idCarrera, this.alerta.idEspecialidad, this.alerta.idUser, this.alerta.idAsignatura, this.alerta.idEstatus, this.alerta.createdAt, this.alerta.createdAt1).then( (data: any) => {
+      this.todasLasAlertas = data.cont.resultados;
+    });
   }
 }
