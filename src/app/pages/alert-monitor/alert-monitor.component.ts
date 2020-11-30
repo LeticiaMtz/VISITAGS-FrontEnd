@@ -399,7 +399,7 @@ export class AlertMonitorComponent implements OnInit {
           Especialidad: strNombre,
           Asignatura: alerta.idAsignatura['strAsignatura'],
           Grupo: alerta.strGrupo,
-          Profesor: alerta.idUser['strName'],
+          Profesor: alerta.idUser['strName'] + ' ' + alerta.idUser['strLastName'],
           Motivo: motivo,
           Fecha: this.getFecha(alerta.createdAt),
           Semana: alerta.nmbSemana,
