@@ -62,14 +62,7 @@
                                                         <span class="text-xs text-uppercase ">opciones</span>
                                                     </div>
                                                     <a type="button" (click)="actualizarUsuario(true, user._id)" class="dropdown-item drop-options-text excel "><i class="fa fa-edit mr-2 "></i>Actualizar</a>
-                                                    <!-- (click)="actualizarCarrera(true, career._id)" -->
-
-                                                    <a type="button" [routerLink]="['/notification', user._id]" class="dropdown-item drop-options-text blue"><i class="fa fa-book mr-2 "></i>Notificaciones</a>
-                                                    <!-- [routerLink]="['/notification', usuario._id]" -->
-                                                    <!-- <a *ngIf="user.blnStatus === false" type="button" class="dropdown-item drop-options-text blue"><i class="fa fa-check mr-2"></i>Activar</a> -->
-                                                    <!-- (click)="updateCarrer(career._id)" -->
-                                                    <!-- <a *ngIf="user.blnStatus === true" type="button" class="dropdown-item drop-options-text pdf "><i class="fa fa-ban mr-2"  ></i>Desactivar</a> -->
-                                                    <!-- (click)="deleteCarrer(career._id)" -->
+                                                    <a *ngIf="user.idRole._id !== rolUsuario" type="button" [routerLink]="['/notification', user._id]" class="dropdown-item drop-options-text blue"><i class="fa fa-book mr-2 "></i>Notificaciones</a>
                                                 </div>
                                             </td>
                                         </tr>

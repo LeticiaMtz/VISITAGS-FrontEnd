@@ -4,6 +4,7 @@ import { ExportDataService } from 'src/app/services/excel/export-to-excel.servic
 import { PdfServiceService } from 'src/app/services/PDF/pdf-service.service';
 import { UserManagementService } from 'src/app/services/user-manegement/user-management.service';
 import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment.prod';
 
 const Toast = Swal.mixin({
   toast: true,
@@ -19,6 +20,7 @@ const Toast = Swal.mixin({
 })
 export class UserManagementComponent implements OnInit {
 
+  rolUsuario = environment.roles.profesor;
   users: User[] = [];
   searchText: any;
   pageActual: number;
