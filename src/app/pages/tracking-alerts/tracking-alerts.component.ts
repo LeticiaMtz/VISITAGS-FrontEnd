@@ -130,7 +130,7 @@ export class TrackingAlertsComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: "error",
-        title: err.error.msg,
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -147,7 +147,7 @@ export class TrackingAlertsComponent implements OnInit {
       .catch((err) => {
         Toast.fire({
           icon: "error",
-          title: err.error.msg,
+          title: err.error ? err.error.msg : err,
         });
       });
   }
@@ -167,7 +167,7 @@ export class TrackingAlertsComponent implements OnInit {
       .catch((err) => {
         Toast.fire({
           icon: "error",
-          title: err.error.msg,
+          title: err.error ? err.error.msg : err,
         });
       });
   }
@@ -175,7 +175,6 @@ export class TrackingAlertsComponent implements OnInit {
   obtenerArchivos(archivos: any) {
     let archivo = archivos;
     this.documento.push(archivo);
-    console.log(this.documento);
   }
 
   eliminarArchivo(archivo: any) {
@@ -231,7 +230,7 @@ export class TrackingAlertsComponent implements OnInit {
           }, 0);
           Toast.fire({
             icon: "error",
-            title: err.error.msg,
+            title: err.error ? err.error.msg : err,
           });
         });
       form.reset();
@@ -312,7 +311,7 @@ export class TrackingAlertsComponent implements OnInit {
       .catch((err) => {
         Toast.fire({
           icon: "warning",
-          title: `¡${err.msg}!`,
+          title: err.error ? err.error.msg : err,
         });
       });
   }

@@ -56,7 +56,7 @@ export class SpecialtyReportComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.msg
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -82,7 +82,10 @@ export class SpecialtyReportComponent implements OnInit {
     this.specialtyService.cambiarEstatus(this.idCareer, idEspecialidad).then((resp: any) => {
       console.log(resp.cnt);
     }).catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error ? err.error.msg : err
+      });
     });
   }
 
@@ -90,7 +93,10 @@ export class SpecialtyReportComponent implements OnInit {
     this.specialtyService.cambiarEstatus(this.idCareer, idEspecialidad).then((resp: any) => {
       console.log(resp.cnt);
     }).catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error ? err.error.msg : err
+      });
     });
   }
 
@@ -130,5 +136,4 @@ export class SpecialtyReportComponent implements OnInit {
       this._excelService.exportAsExcelFile(jsonobject2, `${this.title}`);
     }
   }
-
 }

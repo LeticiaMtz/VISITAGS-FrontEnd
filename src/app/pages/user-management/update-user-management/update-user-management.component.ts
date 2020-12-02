@@ -33,7 +33,6 @@ export class UpdateUserManagementComponent implements OnInit {
   ngOnInit(): void {
     this.getUser();
     this.getRoles();
-
   }
 
   updateCanceled(){
@@ -43,23 +42,25 @@ export class UpdateUserManagementComponent implements OnInit {
   getRole(idRol: string) {
     this.rolesService.getRolByid(idRol).then((data: any) => {
       this.role = data.cnt[0]._id;
-    }).then((err) => {
-      console.log(err);
+    }).catch((err) => {
+      Toast.fire({
+        icon: 'error',
+        title: err.error ? err.error.msg : err
+      });
     });
   }
 
   getRoles(){
     this.rolesService.getRoles().then((res: any) => {
       this.roles = res.cnt;
-      
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
-      })
-    })
-
+        title: err.error ? err.error.msg : err
+      });
+    });
   }
+
   getUser() {
     this.userManagementService.getUsuariosByid(this.idUsuario).then((res: any) => {
       this.usuario = res.cnt[0];
@@ -69,12 +70,11 @@ export class UpdateUserManagementComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error ? err.error.msg : err
       });
     });
   }
 
-  
   updateUser(form: NgForm){
     this.userManagementService.putUsuarios(this.idUsuario, this.usuario).then(res => {
       Toast.fire({
@@ -86,10 +86,9 @@ export class UpdateUserManagementComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error ? err.error.msg : err
       });
     });
   }
-
 }
 

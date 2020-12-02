@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { AlertStatusModel } from '../../../models/alert-status.model';
 import { AlertStatusService } from '../../../services/alert-status/alert-status.service';
 import Swal from 'sweetalert2';
-import { Title } from '@angular/platform-browser';
 
 const Toast = Swal.mixin({
   toast: true,
@@ -24,8 +23,7 @@ export class RegisterStatusComponent implements OnInit {
 
   constructor(private _estatusService: AlertStatusService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   saveStatus(forma: NgForm) {
     this._estatusService.postStatus(this.estatus).then((data: any) => {
@@ -38,7 +36,7 @@ export class RegisterStatusComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.error.msg}!`
+        title: err.error ? err.error.msg : err
       });
       forma.reset();
     });

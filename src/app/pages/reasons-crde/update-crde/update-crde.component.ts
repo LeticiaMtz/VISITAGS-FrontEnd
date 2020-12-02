@@ -43,11 +43,10 @@ export class UpdateCrdeComponent implements OnInit {
       });
       this.optionCancel.emit(false);
       this.refresh.emit(true);
-
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -58,8 +57,7 @@ export class UpdateCrdeComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
-              
+        title: err.error ? err.error.msg : err       
       });
     });
   }

@@ -1,6 +1,4 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { CareersService } from '../../../services/careers/careers.service';
-import { CareerModel } from '../../../models/career';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { SubjectModel } from 'src/app/models/subjects.model';
@@ -28,8 +26,7 @@ export class RegisterSubjectsComponent implements OnInit {
 
   constructor(private subjectsService: SubjectsService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   saveAgignatura(form: NgForm) {
     this.subjectsService.postAsignatura(this.sub).then(res => {
@@ -41,13 +38,10 @@ export class RegisterSubjectsComponent implements OnInit {
       form.controls['blnStatus'].setValue(true);
       this.refresh.emit(true);
     }).catch(err => {
-    
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
-       
+        title: err.error ? err.error.msg : err 
       });
     });
   }
-
 }

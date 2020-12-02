@@ -56,7 +56,7 @@ export class UserManagementComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'warning',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }

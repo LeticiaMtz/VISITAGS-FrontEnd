@@ -16,9 +16,10 @@ export class NoAuthGuard implements CanActivate {
       if( !this.auth.isAuthenticated() ) {
         return true;
       } else {
-        this.router.navigateByUrl('/dashboard');
-        return false;
+          this.router.navigateByUrl('/dashboard');
+          return false;
+        }
       }
   }
   
-}
+

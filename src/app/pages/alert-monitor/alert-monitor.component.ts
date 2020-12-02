@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CareersService } from '../../services/careers/careers.service';
-import { CareerModel } from '../../models/career';
 import { AlertModel } from '../../models/alert.model';
 import { AlertService } from '../../services/alert/alert.service';
 import { SpecialtyService } from '../../services/specialties/specialty.service';
@@ -16,8 +15,6 @@ import { ExportDataService } from 'src/app/services/excel/export-to-excel.servic
 import Swal from 'sweetalert2';
 import { SpecialtyModel } from 'src/app/models/specialty';
 import * as moment from 'moment';
-import { BehaviorModel } from '../../models/behavior.model';
-import { element } from 'protractor';
 import { environment } from 'src/environments/environment.prod';
 
 declare var $: any;
@@ -58,7 +55,6 @@ export class AlertMonitorComponent implements OnInit {
   idEspecialidad: string;
   idUser: string;
   idEstatus: string;
-  // createdAt: Date;
   fecha2: Date;
   arrAlerta: any[] = [];
   token: any;
@@ -101,7 +97,7 @@ export class AlertMonitorComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'warning',
-        title: `¡${err.error.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -116,7 +112,7 @@ export class AlertMonitorComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'warning',
-        title: `¡${err.error.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -135,7 +131,7 @@ export class AlertMonitorComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'warning',
-        title: `¡${err.error.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -149,7 +145,7 @@ export class AlertMonitorComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'warning',
-        title: `¡${err.error.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -167,7 +163,6 @@ export class AlertMonitorComponent implements OnInit {
       let carreras = await this._carrerasService.getCareers();
 
       for (const alert of this.alertas) {
-
         let strEspecialidad = '';
         for (const carrera of this.carreras) {
           let encontrado = await carrera.aJsnEspecialidad.find(especialidad => especialidad._id.toString() === alert.idEspecialidad.toString());
@@ -195,13 +190,11 @@ export class AlertMonitorComponent implements OnInit {
           alert.idEstatus['strNombre']
         ];
         this.arrAlerta.push(element);
-
       }
     }).catch((err) => {
-      console.log(err);
       Toast.fire({
         icon: 'error',
-        title: err.error.cont.error
+        title: err.error ? err.error.msg : err
       });
       this.arrAlertasFinal = [];
     });
@@ -216,7 +209,7 @@ export class AlertMonitorComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'warning',
-        title: `¡${err.error.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -419,5 +412,7 @@ export class AlertMonitorComponent implements OnInit {
     this._alertService.getMonitorAlerts(this.alerta.idCarrera, this.alerta.idEspecialidad, this.alerta.idUser, this.alerta.idAsignatura, this.alerta.idEstatus, this.alerta.createdAt, this.alerta.createdAt1).then( (data: any) => {
       this.todasLasAlertas = data.cont.resultados;
     });
+    //No poner el catch(), no necesario porque este servico ya se esta ejecutando en el metodo getAlertas()
+    //este servicio se esta ejecutando para llenar arreglos importantes para mostrar información en el monitor.
   }
 }

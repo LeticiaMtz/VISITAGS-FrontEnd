@@ -73,9 +73,6 @@ export class NotificationComponent implements OnInit {
     private carreraService: CareersService) { 
       //obtener por params el idUsuario
       let idUser = activatedRoute.snapshot.params.idUsuario
-    // this.idUser = '5fb436bb68e2a20a907094d4';
-    //obtener datos de ese usuario
-    // this.getUsuario(this.idUser);
     }
   ngOnInit(): void {
     setTimeout(() => {
@@ -92,7 +89,12 @@ export class NotificationComponent implements OnInit {
   getCarreras() {
     this.carreraService.getCareers().then((res: any) => {
       this.carreras = res['cnt'];
-    })
+    }).catch(err => {
+      Toast.fire({
+        icon: 'error',
+        title: err.error ? err.error.msg : err
+      });
+    });
   }
   getCarrerasByUser() {
     this.carreraService.getCareers().then((res: any) => {
@@ -112,6 +114,11 @@ export class NotificationComponent implements OnInit {
           }
         }
 
+      });
+    }).catch(err => {
+      Toast.fire({
+        icon: 'error',
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -134,7 +141,7 @@ export class NotificationComponent implements OnInit {
                     espe.push(subcategorias.strEspecialidad);
                   }
                 }
-            }
+              }
             } 
             const excelUsu = this.usuarios.map(item => item.strName).indexOf(this.name);
             this.usuarios[excelUsu].arrEspecialidadPermiso = [{}];
@@ -152,7 +159,7 @@ export class NotificationComponent implements OnInit {
                 espe.push(subcategorias.strEspecialidad);
               }
             }
-        }
+          }
         }
         carrera.check = true;
         carrera.aJsnEspecialidad.forEach(especialidad => {
@@ -163,17 +170,11 @@ export class NotificationComponent implements OnInit {
           }
         });
 
-        // const updae = this.arrayUser.map(item => item[0]).indexOf(this.name);
-        // this.arrayUser[updae][3] = espe; 
-
         const excelUsu = this.usuarios.map(item => item.strName).indexOf(this.name);
         this.usuarios[excelUsu].arrEspecialidadPermiso = [{}];
         this.arrEspecialidadPermiso.forEach(per =>{
           this.usuarios[excelUsu].arrEspecialidadPermiso.push(per);
         });
-
-       
-
       }
     }
   }
@@ -196,9 +197,8 @@ export class NotificationComponent implements OnInit {
                 espe.push(subcategorias.strEspecialidad);
               }
             }
-    
-        }
-      } 
+          }
+        } 
         const excelUsu = this.usuarios.map(item => item.strName).indexOf(this.name);
         this.usuarios[excelUsu].arrEspecialidadPermiso = [{}];
         this.arrEspecialidadPermiso.forEach(per =>{
@@ -218,8 +218,6 @@ export class NotificationComponent implements OnInit {
           }
         }
         especialidad.check = true;
-        // const updae = this.arrayUser.map(item => item[0]).indexOf(this.name);
-        // this.arrayUser[updae][3] = espe; 
         const excelUsu = this.usuarios.map(item => item.strName).indexOf(this.name);
         this.usuarios[excelUsu].arrEspecialidadPermiso = [{}];
         this.arrEspecialidadPermiso.forEach(per =>{
@@ -283,8 +281,11 @@ export class NotificationComponent implements OnInit {
         espe.length > 0 ? espe : []
       ];
        this.arrayUser.push(element);
-    }).then((err) => {
-      console.log(err);
+    }).catch((err) => {
+      Toast.fire({
+        icon: 'error',
+        title: err.error ? err.error.msg : err
+      });
     });
   }
   actexportPDF() {
@@ -403,17 +404,10 @@ data = [this.arrayUser];
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error ? err.error.msg : err
       });
     });
   }
-
-      // Toast.fire({
-      //   icon: 'success',
-      //   title: 'Usuario actualizado correctamente!'
-      // });
-  cancecelar(){
-
-  }
-
+  
+  cancecelar(){}
 }

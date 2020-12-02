@@ -60,7 +60,7 @@ export class CareerReportComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'warning',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -132,7 +132,7 @@ export class CareerReportComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -146,7 +146,7 @@ export class CareerReportComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error ? err.error.msg : err
     });
   });
   }

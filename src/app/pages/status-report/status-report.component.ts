@@ -55,7 +55,7 @@ export class StatusReportComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -133,11 +133,9 @@ export class StatusReportComponent implements OnInit {
         title: `¡El estatus se actualizó exitosamente!`
       });
     }).catch(err => {
-    
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
-   
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -152,9 +150,8 @@ export class StatusReportComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error ? err.error.msg : err
       });
     });
   }
-
 }

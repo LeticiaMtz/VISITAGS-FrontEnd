@@ -58,7 +58,7 @@ export class BehaviorComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }

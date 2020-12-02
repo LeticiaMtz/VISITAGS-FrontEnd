@@ -41,11 +41,10 @@ export class UpdateSubjectsComponent implements OnInit {
       });
       this.optionCancel.emit(false);
       this.refresh.emit(true);
-
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -56,7 +55,7 @@ export class UpdateSubjectsComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -64,5 +63,4 @@ export class UpdateSubjectsComponent implements OnInit {
   updateCanceled(){
     this.optionCancel.emit(false);
   }
-
 }

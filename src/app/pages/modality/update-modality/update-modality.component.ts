@@ -50,8 +50,7 @@ const Toast = Swal.mixin({
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
-   
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -62,8 +61,7 @@ const Toast = Swal.mixin({
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
-       
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -71,5 +69,4 @@ const Toast = Swal.mixin({
   updateCanceled(){
     this.optionCancel.emit(false);
   }
-
 }

@@ -62,7 +62,6 @@ export class AlertRegisterComponent implements OnInit {
   arrAlertas: any[] = [];
   semanas: any[] = [];
 
-  // tslint:disable-next-line: max-line-length
   constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, private _userService: UserManagementService, private cdr: ChangeDetectorRef ) { }
 
   ngOnInit(): void {
@@ -151,7 +150,6 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   getPersonas() {
-    // this.personas = [];
     this._userService.getUsuarios().then((data: any) => {
       for (const persona of data.cnt) {
         this.personas.push({
@@ -162,7 +160,7 @@ export class AlertRegisterComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'warning',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -236,7 +234,7 @@ export class AlertRegisterComponent implements OnInit {
       }).catch((err) => {
         Toast.fire({
           icon: 'error',
-          title: err.error.msg
+          title: err.error ? err.error.msg : err
         });
         forma.reset();
       });
@@ -268,7 +266,7 @@ export class AlertRegisterComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -286,7 +284,7 @@ export class AlertRegisterComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -308,7 +306,7 @@ export class AlertRegisterComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -325,7 +323,7 @@ export class AlertRegisterComponent implements OnInit {
     }).catch((err)=> {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -341,7 +339,7 @@ export class AlertRegisterComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
