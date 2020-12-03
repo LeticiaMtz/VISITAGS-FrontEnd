@@ -49,6 +49,7 @@ export class UserManagementComponent implements OnInit {
         let element = [
           c.strName.replace(/\:null/gi,':""'),
           c.strLastName.replace(/\:null/gi,':""'),
+          c.strMotherLastName.replace(/\:null/gi,':""'),
           c.idRole['strRole'].replace(/\:null/gi,':""'),
         ];
         this.arrayUser.push(element);
@@ -89,7 +90,15 @@ export class UserManagementComponent implements OnInit {
       size: 13,
     },
     {
-      text: "Apellido",
+      text: "Primer Apellido",
+      style: "tableHeader",
+      bold: true,
+      fillColor: "#2a3e52",
+      color: "#ffffff",
+      size: 13,
+    },
+    {
+      text: "Segundo Apellido",
       style: "tableHeader",
       bold: true,
       fillColor: "#2a3e52",
@@ -117,27 +126,23 @@ export class UserManagementComponent implements OnInit {
 
 exportAsXLSX() {
   if (this.users.length !== 0) {
-    let jsonobject = JSON.stringify(this.users);
+    let data=[];
+    this.users.forEach( (res:any)=>{
+      data.push({
+        strName: res.strName ? res.strName: '',
+        strLastName: res.strLastName ? res.strLastName: '',
+        strMotherLastName: res.strMotherLastName ? res.strMotherLastName:'',
+        idRole: res.idRole.strRole ? res.idRole.strRole: '' 
+      })
+    })
+    
+    let jsonobject = JSON.stringify(data);
     jsonobject = jsonobject.replace(/strName/gi, 'Nombre');
     jsonobject = jsonobject.replace(/strLastName/gi, 'Primer Apellido');
     jsonobject = jsonobject.replace(/strMotherLastName/gi, 'Segundo Apellido');
-    const jsonobject2 = JSON.parse(jsonobject);
-    const count = Object.keys(jsonobject2).length;
-    for (let i = 0; i < count; i++) {
-      delete jsonobject2[i].arrEspecialidadPermiso;
-      delete jsonobject2[i].idRole;
-      delete jsonobject2[i].strEmail;
-      delete jsonobject2[i].strPassword;
-      delete jsonobject2[i].createdAt;
-      delete jsonobject2[i].updatedAt;
-      delete jsonobject2[i].blnStatus;
-      delete jsonobject2[i].aJsnEspecialidad;
-      delete jsonobject2[i]._id;
-      delete jsonobject2[i].__v;
-      delete jsonobject2[i].blnNotificaciones;
-      
-    }
-    this._excelService.exportAsExcelFile(jsonobject2, `${this.title}`);
+    jsonobject = jsonobject.replace(/idRole/gi, 'Rol');
+
+    this._excelService.exportAsExcelFile(JSON.parse(jsonobject), `${this.title}`);
   }
 
 }
