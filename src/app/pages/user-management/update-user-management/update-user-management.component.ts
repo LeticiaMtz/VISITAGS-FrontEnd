@@ -64,7 +64,6 @@ export class UpdateUserManagementComponent implements OnInit {
   getUser() {
     this.userManagementService.getUsuariosByid(this.idUsuario).then((res: any) => {
       this.usuario = res.cnt[0];
-      console.log(this.usuario.idRole); 
       this.idRolUser=this.usuario.idRole['_id'];
       this.role = this.usuario.idRole['strRole'];
     }).catch(err => {

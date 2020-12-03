@@ -74,10 +74,9 @@ export class SidebarComponent implements OnInit {
       this.objUser = res.cnt[0];
       this.userName = `${this.objUser.strName} ${this.objUser.strLastName}`;
     }).catch(err => {
-      console.log(err);
       Toast.fire({
         icon: 'warning',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
