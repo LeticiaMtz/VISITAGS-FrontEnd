@@ -32,16 +32,24 @@ export class RegisterComponent implements OnInit {
 
   addUser(form: NgForm){
 
-    if(form.invalid){
+    this.user.strName = this.capitalizarTexto(this.user.strName);
+    this.user.strLastName = this.capitalizarTexto(this.user.strLastName);
+    if (this.user.strMotherLastName) {
+      this.user.strMotherLastName = this.capitalizarTexto(this.user.strMotherLastName);
+    } else {
+      this.user.strMotherLastName = '';
+    }
+
+    this.user.strEmail = this.correoToLowerCase(this.user.strEmail);
+
+    if ( form.invalid) {
       Swal.fire({
         title: 'Error!',
         text: `Faltan campos por llenar en el formulario`,
         icon: 'error',
         confirmButtonText: 'Aceptar'
-      })
-    }
-    else if (this.repetPassword != this.user.strPassword) {
-     
+      });
+    } else if (this.repetPassword != this.user.strPassword) {
       Swal.fire({
         title: 'Error!',
         text: 'Error las contraseñas no son iguales, no creamos tu usuario',
@@ -49,8 +57,9 @@ export class RegisterComponent implements OnInit {
         confirmButtonText: 'Aceptar'
       })
       this.router.navigate(['/register'])
-    }else if (this.regexp.test(this.user.strEmail)) {
-      this.registerService.postUser(form.value)
+    } else if (this.regexp.test(this.user.strEmail)) {
+
+      this.registerService.postUser(this.user)
       .then(res => {
         // let data = JSON.stringify(res);
         // let dataJson = JSON.parse(data);
@@ -82,4 +91,18 @@ export class RegisterComponent implements OnInit {
       });
     }
   }
+
+  capitalizarTexto(texto) {
+    let palabras = texto.split(' ');
+    let textoCapitalizado = '';
+    for (const palabra of palabras) {
+      textoCapitalizado += palabra.substr(0,1).toUpperCase() + palabra.substr(1).toLowerCase() + ' ';
+    }
+    return textoCapitalizado;
+  }
+
+  correoToLowerCase(correo: string) {
+    return correo.toLowerCase();
+  }
 }
+
