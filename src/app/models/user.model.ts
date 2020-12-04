@@ -11,7 +11,7 @@ export class User  {
     idRole:string;
     strDirection:string;
     strValidatePass:string; 
-    blnStatus: boolean = true; 
+    blnStatus: boolean = false; 
     blnNotificaciones: boolean = true;
     arrEspecialidadPermiso?: [{
       

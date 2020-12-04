@@ -43,8 +43,8 @@
                     <div class="form-group m-2 ">
                         <div class="col-xs-0">
                             <label class="small"><strong>Correo Electrónico</strong></label>
-                            <input type="email" [ngClass]="{'is-invalid': strEmail.errors?.required && forma.controls['strEmail'].touched }" pattern=".+@utags.edu.mx" class="form-control lowercase" type="text" name="strEmail" placeholder="Correo Electrónico" #email="ngModel" #strEmail="ngModel"
-                                [(ngModel)]="user.strEmail" required>
+                            <input [value]="user.strEmail" type="email" [ngClass]="{'is-invalid': strEmail.errors?.required && forma.controls['strEmail'].touched }" pattern=".+(utags\.edu.mx|UTAGS\.EDU.MX)" class="form-control" type="text" name="strEmail" placeholder="Correo Electrónico"
+                                #strEmail="ngModel" [(ngModel)]="user.strEmail" required (ngModelChange)="correoToLowerCase($event)">
                             <div class="text-danger" *ngIf="strEmail.errors?.pattern">
                                 <small>Es necesario ingresar un correo electrónico institucional (ejemplo@utags.edu.mx)</small>
                             </div>

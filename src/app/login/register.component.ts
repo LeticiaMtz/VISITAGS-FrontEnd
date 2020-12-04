@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
   regexp = new RegExp('^[_A-Za-z\\+]+(\\.[_A-Za-z]+)*@utags.edu.mx$');
 
   check(event){
-    this.checkB = event.explicitOriginalTarget.checked
+    this.checkB = event.explicitOriginalTarget.checked;
   }
 
   addUser(form: NgForm){
@@ -39,8 +39,6 @@ export class RegisterComponent implements OnInit {
     } else {
       this.user.strMotherLastName = '';
     }
-
-    this.user.strEmail = this.correoToLowerCase(this.user.strEmail);
 
     if ( form.invalid) {
       Swal.fire({
@@ -102,7 +100,7 @@ export class RegisterComponent implements OnInit {
   }
 
   correoToLowerCase(correo: string) {
-    return correo.toLowerCase();
+    this.user.strEmail = correo.toLowerCase();
   }
 }
 
