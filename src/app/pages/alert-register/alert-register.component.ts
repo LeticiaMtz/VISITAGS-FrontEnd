@@ -333,7 +333,7 @@ export class AlertRegisterComponent implements OnInit {
       this.razones = razones.cnt;
       for (const razon of this.razones) {
         for (const motivo of razon.aJsnMotivo) {
-          this.motivos.push(motivo);
+          motivo['blnStatus'] && this.motivos.push(motivo);
         }
       }
     }).catch((err) => {
