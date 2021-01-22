@@ -152,10 +152,12 @@ export class AlertRegisterComponent implements OnInit {
   getPersonas() {
     this._userService.getUsuarios().then((data: any) => {
       for (const persona of data.cnt) {
-        this.personas.push({
-          _id: persona._id,
-          strNombre: `${persona.strName} ${persona.strLastName}`
-        });
+        // if (persona.blnStatus !== false) {
+        persona.blnStatus && this.personas.push({
+            _id: persona._id,
+            strNombre: `${persona.strName} ${persona.strLastName}`
+          });
+        // }
       }
     }).catch((err) => {
       Toast.fire({

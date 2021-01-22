@@ -302,7 +302,7 @@ export class TrackingAlertsComponent implements OnInit {
       .getUsuarios()
       .then((data: any) => {
         for (const persona of data.cnt) {
-          this.personas.push({
+          persona.blnStatus && this.personas.push({
             _id: persona._id,
             strNombre: `${persona.strName} ${persona.strLastName}`,
           });
