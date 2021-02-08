@@ -41,7 +41,8 @@
 
                         <div class="col-md-6 mt-2">
                             <label class="small"><strong>Grado y Grupo</strong></label>
-                            <input [class.is-invalid]="strGrupo.invalid && strGrupo.touched" class="form-control form-control-sm" type="text" placeholder="Grado y Grupo" name="strGrupo" [(ngModel)]="alerta.strGrupo" required #strGrupo="ngModel">
+                            <input [class.is-invalid]="strGrupo.invalid && strGrupo.touched" autocomplete="off" onkeyup="javascript:this.value=this.value.toUpperCase();" onkeypress="return event.charCode >= 48" class="form-control form-control-sm" type="text" placeholder="Grado y Grupo"
+                                name="strGrupo" [(ngModel)]="alerta.strGrupo" required #strGrupo="ngModel">
                             <div class="invalid-feedback" *ngIf="strGrupo.errors?.required">
                                 <small>
                                     Es necesario ingresar un grado y grupo.
@@ -66,11 +67,11 @@
                                     <label><strong>Turno:</strong></label>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input id="turnoM" name="chrTurno" class="info" [(ngModel)]="alerta.chrTurno" #chrTurno="ngModel" [value]="'M'" type="radio" aria-label="Radio button for following text input" (ngModelChange)="seleccionarTurno($event)">
+                                    <input id="turnoM" name="chrTurno" class="info" [(ngModel)]="alerta.chrTurno" #chrTurno="ngModel" [value]="'Matutino'" type="radio" aria-label="Radio button for following text input" (ngModelChange)="seleccionarTurno($event)">
                                     <label for="turnoM">Matutino</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input id="turnoV" name="chrTurno" [(ngModel)]="alerta.chrTurno" #chrTurno="ngModel" [value]="'V'" type="radio" aria-label="Radio button for following text input" (ngModelChange)="seleccionarTurno($event)">
+                                    <input id="turnoV" name="chrTurno" [(ngModel)]="alerta.chrTurno" #chrTurno="ngModel" [value]="'Vespertino'" type="radio" aria-label="Radio button for following text input" (ngModelChange)="seleccionarTurno($event)">
                                     <label for="turnoV">Vespertino</label>
                                 </div>
                             </div>
@@ -150,7 +151,8 @@
 
                         <div class="row mt-2" *ngFor="let alumno of arrAlumnos; let i = index;">
                             <div class="col-sm-4">
-                                <input [class.is-invalid]="strMatricula.invalid && strMatricula.touched" class="form-control form-control-sm" type="number" name="strMatricula{{i}}" placeholder="Matricula" [(ngModel)]="alumno.strMatricula" required #strMatricula="ngModel">
+                                <input [class.is-invalid]="strMatricula.invalid && strMatricula.touched" class="form-control form-control-sm" type="number" name="strMatricula{{i}}" maxlength="6" onkeypress="return event.charCode >= 48" min="0" placeholder="Matricula" [(ngModel)]="alumno.strMatricula"
+                                    required #strMatricula="ngModel">
                                 <div class="invalid-feedback" *ngIf="strMatricula.errors?.required">
                                     <small>
                                         Es necesario ingresar una matricula.
@@ -173,14 +175,14 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-outline-success btn-sm btn-block" (click)="addAlumno(formaAlumno)"><i class="fa fa-plus"></i> Agregar Alumno</button>
+                                <button type="button" class="btn btn-outline-success btn-sm btn-block" (click)="addAlumno(formaAlumno)"><i class="fa fa-plus"></i> Nuevo Alumno</button>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info btn-block" data-dismiss="modal">¡Listo!</button>
+                <button type="button" class="btn btn-info btn-block" (click)="closeModal()">¡Listo!</button>
             </div>
         </div>
     </div>
