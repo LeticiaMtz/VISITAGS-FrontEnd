@@ -42,8 +42,8 @@ export class NotificationComponent implements OnInit {
   idUser: string;
 
   name: string;
-  strLastName: String;
-  strMotherLastName: String;
+  strLastName: string;
+  strMotherLastName: string;
   title: string;
   regTerm: boolean = false;
   activo: boolean = true;
@@ -401,6 +401,7 @@ data = [this.arrayUser];
       this.getUsuario(this.idUser);
       this.optionCancel.emit(false);
       this.refresh.emit(true);
+      this.route.navigateByUrl('/user-management')
     }).catch(err => {
       Toast.fire({
         icon: 'error',
