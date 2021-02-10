@@ -1,7 +1,7 @@
 <div class="container">
 
     <div class="animated fadeIn fast">
-        <h4>Editar Categoria</h4>
+        <h4>Editar Categoría</h4>
         <hr>
     </div>
 
@@ -13,7 +13,7 @@
 
                     <div>
                         <label class=""><strong>Nombre de la Categoría</strong></label>
-                        <input [class.is-invalid]="strCategoria.invalid && strCategoria.touched" class="form-control form-control-sm" type="text " placeholder="Nombre de carrera" name="strCategoria" [(ngModel)]="reasons.strCategoria" required #strCategoria="ngModel">
+                        <input [class.is-invalid]="strCategoria.invalid && strCategoria.touched" class="form-control form-control-sm" type="text " placeholder="Nombre de categoría" name="strCategoria" [(ngModel)]="reasons.strCategoria" required #strCategoria="ngModel">
                         <div class="invalid-feedback" *ngIf="strCategoria.errors?.required">
                             <small>
                                     Es necesario ingresar una categoría.

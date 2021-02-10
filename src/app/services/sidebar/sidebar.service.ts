@@ -35,7 +35,7 @@ rol = environment.roles;
     ]
   },
     {
-      titulo: 'Catalogos',
+      titulo: 'Catálogos',
       icono: 'mdi mdi-folder-multiple-outline',
       submenu: [
 
