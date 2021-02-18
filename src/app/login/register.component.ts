@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
   checkB: Boolean;
   user: User = new User();
   repetPassword: String;
+  clickRegistro: boolean = true;
 
   constructor(private registerService: RegisterService, private router: Router) { }
 
@@ -31,7 +32,7 @@ export class RegisterComponent implements OnInit {
   }
 
   addUser(form: NgForm){
-
+    this.clickRegistro = false;
     this.user.strName = this.capitalizarTexto(this.user.strName);
     this.user.strLastName = this.capitalizarTexto(this.user.strLastName);
     if (this.user.strMotherLastName) {
@@ -59,9 +60,6 @@ export class RegisterComponent implements OnInit {
 
       this.registerService.postUser(this.user)
       .then(res => {
-        // let data = JSON.stringify(res);
-        // let dataJson = JSON.parse(data);
-        // localStorage.setItem('token', dataJson.token);
         Swal.fire({
           title: '¡Correcto!',
           text: 'Usuario registrado correctamente',
@@ -69,6 +67,7 @@ export class RegisterComponent implements OnInit {
           confirmButtonText: 'Aceptar'
         });
 
+        this.clickRegistro = true;
         this.router.navigate(['/login']);
       })
       .catch(err => {

@@ -81,3 +81,9 @@
 .lowercase {
     text-transform: lowercase;
 }
+
+.btn-dis {
+    cursor: default;
+    pointer-events: none;
+    filter: grayscale(50%);
+}
