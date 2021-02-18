@@ -63,6 +63,7 @@ export class AlertRegisterComponent implements OnInit {
   personas: any[] = [];
   arrAlertas: any[] = [];
   semanas: any[] = [];
+  clickRegistro: boolean = true;
 
 
   constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, private _userService: UserManagementService, private cdr: ChangeDetectorRef ) { }
@@ -173,6 +174,7 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   registrarAlerta(forma: NgForm) {
+    this.clickRegistro = false;
     if ( forma.invalid ) {
       Toast.fire({
         icon: 'error',
@@ -244,6 +246,7 @@ export class AlertRegisterComponent implements OnInit {
             icon: 'success',
             title: data.msg
           });
+          this.clickRegistro = true;
           setTimeout(() => {
             this.router.navigate(['/dashboard']);
           }, 1000);
