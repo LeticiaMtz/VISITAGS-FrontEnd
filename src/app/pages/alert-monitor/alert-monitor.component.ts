@@ -42,7 +42,7 @@ export class AlertMonitorComponent implements OnInit {
   especialidades: any[] = [];
   asignaturas: any[] = [];
   alertas: AlertModel[] = [];
-  todasLasAlertas: AlertModel[] = [];
+  // todasLasAlertas: AlertModel[] = [];
   cargando: boolean = true;
   searchText: any;
   pageActual: number;
@@ -72,6 +72,16 @@ export class AlertMonitorComponent implements OnInit {
   arrAlertasFinal: any[] = [];
   arrMatricula: any[] = [];
   arrAlumno: any[] = [];
+  idCarreraMonitor: string;
+  idEspecialidadMonitor: string;
+  idAsignaturaMonitor: string;
+  idUserMonitor: string;
+  idEstatusMonitor: string; 
+  mostrarCarreras: boolean = false;
+  mostrarProfesor: boolean = false;
+  mostrarEspecialidad: boolean = false;
+  mostrarEstatus: boolean = false;
+  mostrarAsignatura: boolean = false;
 
   constructor(private router: Router, private _carrerasService: CareersService, private _alertService: AlertService, private _espService: SpecialtyService, private _asigService: SubjectsService, private _userService: UserManagementService, private _estatusService: AlertStatusService, private _PdfService: PdfServiceService, private excelService: ExportDataService, private _specialityService: SpecialtyService) { }
 
@@ -85,15 +95,18 @@ export class AlertMonitorComponent implements OnInit {
     this.getAsignaturas();
     this.getProfesores();
     this.getEstatus();
-
+    this.getValoresFiltro();
   }
 
   getCarreras() {
     this._carrerasService.getCareers().then((carreras: any) => {
-      setTimeout(() => {
-        $('.selectpicker').selectpicker('refresh');
-      }, 0);
-      this.carreras = carreras.cnt;
+      let carrers = carreras.cnt;
+      this.carreras = carrers.map(carrera => carrera = {
+        _id: carrera._id,
+        strNombre: carrera.strCarrera,
+        aJsnEspecialidad: carrera.aJsnEspecialidad
+      });
+      this.mostrarCarreras = true;
     }).catch((err) => {
       Toast.fire({
         icon: 'warning',
@@ -103,11 +116,14 @@ export class AlertMonitorComponent implements OnInit {
   }
 
   getEspecialidades(idCarrera: string) {
+    localStorage.setItem('aa_carreraMonitor', idCarrera);
     this._espService.getSpecialties(idCarrera).then((data: any) => {
-      setTimeout(() => {
-        $('.selectpicker').selectpicker('refresh');
-      }, 0);
-      this.especialidades = data.cnt.rutas;
+      let especialidades = data.cnt.rutas;
+      this.especialidades = especialidades.map(esp => esp = {
+        _id: esp._id,
+        strNombre: esp.strEspecialidad
+      });
+      this.mostrarEspecialidad = true;
       this.getAlertas();
     }).catch((err) => {
       Toast.fire({
@@ -119,15 +135,15 @@ export class AlertMonitorComponent implements OnInit {
 
   getAsignaturas() {
     this._asigService.getAsignatura().then((data: any) => {
-      setTimeout(() => {
-        $('.selectpicker').selectpicker('refresh');
-      }, 0);
       for (const asignatura of data.cnt) {
         this.asignaturas.push({
           _id: asignatura._id,
           strNombre: asignatura.strAsignatura
         });
       }
+      setTimeout(() => {
+        this.mostrarAsignatura = true;
+      }, 500);
     }).catch((err) => {
       Toast.fire({
         icon: 'warning',
@@ -138,10 +154,12 @@ export class AlertMonitorComponent implements OnInit {
 
   getProfesores() {
     this._userService.getUsuarios().then((data: any) => {
-      setTimeout(() => {
-        $('.selectpicker').selectpicker('refresh');
-      }, 0);
-      this.profesores = data.cnt;
+      let profes = data.cnt;
+      this.profesores = profes.map( prof => prof = {
+        _id: prof._id,
+        strNombre: prof.strName + ' ' + prof.strLastName + ' ' + prof.strMotherLastName 
+      })
+      this.mostrarProfesor = true;
     }).catch((err) => {
       Toast.fire({
         icon: 'warning',
@@ -151,11 +169,37 @@ export class AlertMonitorComponent implements OnInit {
   }
 
   async getAlertas() {
+    this.cargando = true;
     this.arrAlertasFinal = [];
-    this.ejecutarServicioMonitor();
+    // this.ejecutarServicioMonitor();
+
+    if (this.alerta.idEspecialidad === null) {
+      this.alerta.idEspecialidad = undefined
+    }
+
+    if (this.alerta.idUser === null) {
+      this.alerta.idUser = undefined
+    }
+
+    if (this.alerta.idAsignatura === null) {
+      this.alerta.idAsignatura = undefined
+    }
+
+    if (this.alerta.idEstatus === null) {
+      this.alerta.idEstatus = undefined
+    }
+
+    if (this.alerta.createdAt === null || this.alerta.createdAt === undefined) {
+      this.alerta.createdAt = undefined;
+    }
+
+    if (this.alerta.createdAt1 === null) {
+      this.alerta.createdAt1 = undefined
+    }
 
     this._alertService.getMonitorAlerts(this.alerta.idCarrera, this.alerta.idEspecialidad, this.alerta.idUser, this.alerta.idAsignatura, this.alerta.idEstatus, this.alerta.createdAt, this.alerta.createdAt1).then(async (data: any) => {
       this.alertas = data.cont.resultados;
+      // this.todasLasAlertas = data.cont.resultados;
       this.filtro = true;
       this.cargando = false;
       this.arrAlerta = [];
@@ -206,6 +250,7 @@ export class AlertMonitorComponent implements OnInit {
         $('.selectpicker').selectpicker('refresh');
       }, 0);
       this.arrEstatus = data.cnt;
+      this.mostrarEstatus = true;
     }).catch((err) => {
       Toast.fire({
         icon: 'warning',
@@ -214,10 +259,77 @@ export class AlertMonitorComponent implements OnInit {
     });
   }
 
+  guardarEspecialidad() {
+    localStorage.setItem('aa_especialidadMonitor', this.alerta.idEspecialidad);
+    this.getAlertas();
+  }
+
+  guardarAsignatura() {
+    localStorage.setItem('aa_asignaturaMonitor', this.alerta.idAsignatura);
+    this.getAlertas();
+  }
+
+  guardarProfesor() {
+    localStorage.setItem('aa_profesorMonitor', this.alerta.idUser);
+    this.getAlertas();
+  }
+
+  guardarEstatus() {
+    localStorage.setItem('aa_estatusMonitor', this.alerta.idEstatus);
+    this.getAlertas();
+  }
+
+  guardarFechaDesde() {
+    localStorage.setItem('aa_fechaDesde', this.alerta.createdAt.toString());
+    this.getAlertas();
+  }
+
+  guardarFechaHasta() {
+    localStorage.setItem('aa_fechaHasta', this.alerta.createdAt1.toString());
+    this.getAlertas();
+  }
+
+  getValoresFiltro() {
+    if (localStorage.getItem('aa_carreraMonitor')) {
+      this.alerta.idCarrera = localStorage.getItem('aa_carreraMonitor');
+      this.alerta.idEspecialidad = localStorage.getItem('aa_especialidadMonitor');
+      this.alerta.idAsignatura = localStorage.getItem('aa_asignaturaMonitor');
+      this.alerta.idUser = localStorage.getItem('aa_profesorMonitor');
+      this.alerta.idEstatus = localStorage.getItem('aa_estatusMonitor');
+
+      if (localStorage.getItem('aa_fechaDesde') === null) {
+        this.alerta.createdAt = undefined
+      } else {
+        this.alerta.createdAt = new Date(localStorage.getItem('aa_fechaDesde'));
+      }
+
+      if (localStorage.getItem('aa_fechaHasta') === null) {
+        this.alerta.createdAt1 = undefined
+      } else {
+        this.alerta.createdAt1 = new Date(localStorage.getItem('aa_fechaHasta'));
+      }
+
+      this.idCarreraMonitor = this.alerta.idCarrera;
+      this.idAsignaturaMonitor = this.alerta.idAsignatura;
+      this.idEspecialidadMonitor = this.alerta.idEspecialidad;
+      this.idUserMonitor = this.alerta.idUser;
+      this.idEstatusMonitor = this.alerta.idEstatus;
+  
+      setTimeout(() => {
+        this.getEspecialidades(this.alerta.idCarrera);
+      }, 500);
+    }
+  }
+
   resetFiltros() {
-    setTimeout(() => {
-      $('.selectpicker').val(this.ngOnInit()).selectpicker('refresh');
-    }, 0);
+    localStorage.removeItem('aa_carreraMonitor');
+    localStorage.removeItem('aa_especialidadMonitor');
+    localStorage.removeItem('aa_asignaturaMonitor');
+    localStorage.removeItem('aa_profesorMonitor');
+    localStorage.removeItem('aa_estatusMonitor');
+    localStorage.removeItem('aa_fechaDesde');
+    localStorage.removeItem('aa_fechaHasta');
+
     this.alerta.idCarrera = undefined;
     this.alerta.idEspecialidad = undefined;
     this.alerta.idAsignatura = undefined;
@@ -225,6 +337,27 @@ export class AlertMonitorComponent implements OnInit {
     this.alerta.createdAt = undefined;
     this.alerta.createdAt1 = undefined;
     this.alerta.idEstatus = undefined;
+
+    this.idCarreraMonitor = undefined;
+    this.idEspecialidadMonitor = undefined;
+    this.idAsignaturaMonitor = undefined;
+    this.idUserMonitor = undefined;
+    this.idEstatusMonitor = undefined;
+
+    this.mostrarCarreras = false;
+    this.mostrarProfesor = false;
+    this.mostrarEspecialidad = false;
+    this.mostrarEstatus = false;
+    this.mostrarAsignatura= false;
+
+    setTimeout(() => {
+      this.mostrarCarreras = true;
+      this.mostrarProfesor = true;
+      this.mostrarEspecialidad = true;
+      this.mostrarEstatus = true;
+      this.mostrarAsignatura = true;
+    }, 0);
+
     this.ngOnInit();
     Toast.fire({
       icon: 'success',
@@ -240,7 +373,7 @@ export class AlertMonitorComponent implements OnInit {
   }
 
   verAlumno(alertaId){
-    for (const cadaAlerta of this.todasLasAlertas){     
+    for (const cadaAlerta of this.alertas){     
       if(cadaAlerta._id == alertaId){
         this.arrMatricula = cadaAlerta.strMatricula;
         this.arrAlumno = cadaAlerta.strNombreAlumno;
@@ -358,9 +491,9 @@ export class AlertMonitorComponent implements OnInit {
 
     let carreras = await this._carrerasService.getCareers();
 
-    if (this.todasLasAlertas.length !== 0) {
+    if (this.alertas.length !== 0) {
 
-      for (const alerta of this.todasLasAlertas) {
+      for (const alerta of this.alertas) {
 
         let matricula = '';
         for (const iterator of alerta.strMatricula) {
@@ -408,11 +541,11 @@ export class AlertMonitorComponent implements OnInit {
     return value ? moment(value).format('DD/MM/YYYY') : '';
   }
 
-  ejecutarServicioMonitor(){
-    this._alertService.getMonitorAlerts(this.alerta.idCarrera, this.alerta.idEspecialidad, this.alerta.idUser, this.alerta.idAsignatura, this.alerta.idEstatus, this.alerta.createdAt, this.alerta.createdAt1).then( (data: any) => {
-      this.todasLasAlertas = data.cont.resultados;
-    });
+  // ejecutarServicioMonitor(){
+  //   this._alertService.getMonitorAlerts(this.alerta.idCarrera, this.alerta.idEspecialidad, this.alerta.idUser, this.alerta.idAsignatura, this.alerta.idEstatus, this.alerta.createdAt, this.alerta.createdAt1).then( (data: any) => {
+  //     this.todasLasAlertas = data.cont.resultados;
+  //   });
     //No poner el catch(), no necesario porque este servico ya se esta ejecutando en el metodo getAlertas()
     //este servicio se esta ejecutando para llenar arreglos importantes para mostrar información en el monitor.
-  }
+  // }
 }
