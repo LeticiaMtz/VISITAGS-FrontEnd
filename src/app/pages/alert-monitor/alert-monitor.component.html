@@ -63,11 +63,11 @@
                         <div class="col-4">
                             <label class="small"><strong>Por Fecha</strong></label>
                             <div class="input-group input-daterange">
-                                <input type="date" class="form-control form-control-sm btn-outline-secondary" name="createdAt" min="2018-01-01" [ngModel]="alerta.createdAt | date:'yyyy-MM-dd' : 'UTC'" (ngModelChange)="alerta.createdAt = $event" (ngModelChange)="guardarFechaDesde()"
+                                <input type="date" class="form-control form-control-sm btn-outline-secondary input-cursor" name="createdAt" min="2018-01-01" [ngModel]="alerta.createdAt | date:'yyyy-MM-dd' : 'UTC'" (ngModelChange)="alerta.createdAt = $event" (ngModelChange)="guardarFechaDesde()"
                                     #createdAt="ngModel" [value]="alerta.createdAt">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                <input type="date" class="form-control form-control-sm btn-outline-secondary ops" name="createdAt1" min="2018-01-01" [ngModel]="alerta.createdAt1 | date:'yyyy-MM-dd' : 'UTC'" #createdAt1="ngModel" (ngModelChange)="alerta.createdAt1 = $event" (ngModelChange)="guardarFechaHasta()"
-                                    [value]="alerta.createdAt1">
+                                <input type="date" class="form-control form-control-sm btn-outline-secondary input-cursor" name="createdAt1" min="2018-01-01" [ngModel]="alerta.createdAt1 | date:'yyyy-MM-dd' : 'UTC'" #createdAt1="ngModel" (ngModelChange)="alerta.createdAt1 = $event"
+                                    (ngModelChange)="guardarFechaHasta()" [value]="alerta.createdAt1">
                             </div>
                         </div>
 

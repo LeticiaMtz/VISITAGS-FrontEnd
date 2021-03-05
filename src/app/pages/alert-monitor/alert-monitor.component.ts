@@ -173,75 +173,90 @@ export class AlertMonitorComponent implements OnInit {
     this.arrAlertasFinal = [];
     // this.ejecutarServicioMonitor();
 
-    if (this.alerta.idEspecialidad === null) {
-      this.alerta.idEspecialidad = undefined
-    }
-
-    if (this.alerta.idUser === null) {
-      this.alerta.idUser = undefined
-    }
-
-    if (this.alerta.idAsignatura === null) {
-      this.alerta.idAsignatura = undefined
-    }
-
-    if (this.alerta.idEstatus === null) {
-      this.alerta.idEstatus = undefined
-    }
-
-    if (this.alerta.createdAt === null || this.alerta.createdAt === undefined) {
-      this.alerta.createdAt = undefined;
-    }
-
-    if (this.alerta.createdAt1 === null) {
-      this.alerta.createdAt1 = undefined
-    }
-
-    this._alertService.getMonitorAlerts(this.alerta.idCarrera, this.alerta.idEspecialidad, this.alerta.idUser, this.alerta.idAsignatura, this.alerta.idEstatus, this.alerta.createdAt, this.alerta.createdAt1).then(async (data: any) => {
-      this.alertas = data.cont.resultados;
-      // this.todasLasAlertas = data.cont.resultados;
-      this.filtro = true;
-      this.cargando = false;
-      this.arrAlerta = [];
-
-      let carreras = await this._carrerasService.getCareers();
-
-      for (const alert of this.alertas) {
-        let strEspecialidad = '';
-        for (const carrera of this.carreras) {
-          let encontrado = await carrera.aJsnEspecialidad.find(especialidad => especialidad._id.toString() === alert.idEspecialidad.toString());
-          if (encontrado) {
-            strEspecialidad = encontrado.strEspecialidad;
-            let alerta = {
-              alert,
-              strEspecialidad
-            };
-            this.arrAlertasFinal.push(alerta);
-          }
-        }
-
-        let element = [
-          alert.strMatricula.map(matricula => matricula + ','),
-          alert.strNombreAlumno.map(alumno => alumno + ','),
-          alert.idCarrera['strCarrera'],
-          strEspecialidad,
-          alert.idAsignatura['strAsignatura'],
-          alert.strGrupo,
-          alert.idUser['strName'] + ' ' + alert.idUser['strLastName'],
-          alert.arrCrde.map(motivo => motivo.strNombre + ','),
-          this.getFecha(alert.createdAt),
-          alert.nmbSemana,
-          alert.idEstatus['strNombre']
-        ];
-        this.arrAlerta.push(element);
-      }
-    }).catch((err) => {
+    if (this.alerta.idCarrera === null || this.alerta.idCarrera === undefined) {
+      this.alerta.idCarrera = undefined
       Toast.fire({
-        icon: 'error',
-        title: err.error ? err.error.msg : err
+        icon: 'warning',
+        title: 'Selecciona una carrera'
       });
-      this.arrAlertasFinal = [];
-    });
+    } else {
+      if (this.alerta.idEspecialidad === null) {
+        this.alerta.idEspecialidad = undefined
+      }
+  
+      if (this.alerta.idUser === null) {
+        this.alerta.idUser = undefined
+      }
+  
+      if (this.alerta.idAsignatura === null) {
+        this.alerta.idAsignatura = undefined
+      }
+  
+      if (this.alerta.idEstatus === null) {
+        this.alerta.idEstatus = undefined
+      }
+  
+      if (this.alerta.createdAt === null || this.alerta.createdAt === undefined) {
+        this.alerta.createdAt = undefined;
+      }
+  
+      if (this.alerta.createdAt1 === null) {
+        this.alerta.createdAt1 = undefined
+      }
+  
+      this._alertService.getMonitorAlerts(this.alerta.idCarrera, this.alerta.idEspecialidad, this.alerta.idUser, this.alerta.idAsignatura, this.alerta.idEstatus, this.alerta.createdAt, this.alerta.createdAt1).then(async (data: any) => {
+        this.alertas = data.cont.resultados;
+        // this.todasLasAlertas = data.cont.resultados;
+        this.filtro = true;
+        this.cargando = false;
+        this.arrAlerta = [];
+        
+        let carreras = await this._carrerasService.getCareers();
+  
+        for (const alert of this.alertas) {
+          let strEspecialidad = '';
+          for (const carrera of this.carreras) {
+            let encontrado = await carrera.aJsnEspecialidad.find(especialidad => especialidad._id.toString() === alert.idEspecialidad.toString());
+            if (encontrado) {
+              strEspecialidad = encontrado.strEspecialidad;
+              let alerta = {
+                alert,
+                strEspecialidad
+              };
+              this.arrAlertasFinal.push(alerta);
+            }
+          }
+  
+          let nombre: string;
+          let arrayAlumnosCapitalizados = []
+          for (nombre of alert.strNombreAlumno) {
+            nombre = this.capitalizarNombre(nombre)
+            arrayAlumnosCapitalizados.push(nombre);
+          }
+  
+          let element = [
+            alert.strMatricula.map(matricula => matricula + ','),
+            arrayAlumnosCapitalizados.map(alumno => alumno + ','),
+            alert.idCarrera['strCarrera'],
+            strEspecialidad,
+            alert.idAsignatura['strAsignatura'],
+            alert.strGrupo,
+            alert.idUser['strName'] + ' ' + alert.idUser['strLastName'],
+            alert.arrCrde.map(motivo => motivo.strNombre + ','),
+            this.getFecha(alert.createdAt),
+            alert.nmbSemana,
+            alert.idEstatus['strNombre']
+          ];
+          this.arrAlerta.push(element);
+        }
+      }).catch((err) => {
+        Toast.fire({
+          icon: 'error',
+          title: err.error ? err.error.msg : err
+        });
+        this.arrAlertasFinal = [];
+      });
+    }
   }
 
   getEstatus() {
@@ -344,6 +359,8 @@ export class AlertMonitorComponent implements OnInit {
     this.idUserMonitor = undefined;
     this.idEstatusMonitor = undefined;
 
+    this.especialidades = [];
+
     this.mostrarCarreras = false;
     this.mostrarProfesor = false;
     this.mostrarEspecialidad = false;
@@ -381,6 +398,15 @@ export class AlertMonitorComponent implements OnInit {
     } 
   }
 
+  capitalizarNombre(nombre: string) {
+    let palabras = nombre.split(' ');
+    let textoCapitalizado = '';
+    for (const palabra of palabras) {
+      textoCapitalizado += palabra.substr(0,1).toUpperCase() + palabra.substr(1).toLowerCase() + ' ';
+    }
+    return textoCapitalizado;
+  }
+
   exportPDF() {
     let header = [
       {
@@ -392,7 +418,7 @@ export class AlertMonitorComponent implements OnInit {
         size: 13,
       },
       {
-        text: "Alumno",
+        text: "Alumno(s)",
         style: "tableHeader",
         bold: true,
         fillColor: "#2a3e52",
