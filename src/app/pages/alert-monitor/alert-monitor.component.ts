@@ -48,7 +48,7 @@ export class AlertMonitorComponent implements OnInit {
   pageActual: number;
   carrera: any;
   alerta: AlertModel = new AlertModel();
-  profesores: User[] = [];
+  profesores: any[] = [];
   arrEstatus: AlertStatusModel[] = [];
   idCarrera: string;
   idAsignatura: string;
@@ -101,11 +101,13 @@ export class AlertMonitorComponent implements OnInit {
   getCarreras() {
     this._carrerasService.getCareers().then((carreras: any) => {
       let carrers = carreras.cnt;
-      this.carreras = carrers.map(carrera => carrera = {
-        _id: carrera._id,
-        strNombre: carrera.strCarrera,
-        aJsnEspecialidad: carrera.aJsnEspecialidad
-      });
+      for (const carrera of carrers) {
+        carrera.blnStatus && this.carreras.push({
+          _id: carrera._id,
+          strNombre: carrera.strCarrera,
+          aJsnEspecialidad: carrera.aJsnEspecialidad
+        })
+      }
       this.mostrarCarreras = true;
     }).catch((err) => {
       Toast.fire({
@@ -119,10 +121,13 @@ export class AlertMonitorComponent implements OnInit {
     localStorage.setItem('aa_carreraMonitor', idCarrera);
     this._espService.getSpecialties(idCarrera).then((data: any) => {
       let especialidades = data.cnt.rutas;
-      this.especialidades = especialidades.map(esp => esp = {
-        _id: esp._id,
-        strNombre: esp.strEspecialidad
-      });
+
+      for (const especialidad of especialidades) {
+        especialidad.blnStatus && this.especialidades.push({
+          _id: especialidad._id,
+          strNombre: especialidad.strEspecialidad
+        });
+      }
       this.mostrarEspecialidad = true;
       this.getAlertas();
     }).catch((err) => {
@@ -136,7 +141,7 @@ export class AlertMonitorComponent implements OnInit {
   getAsignaturas() {
     this._asigService.getAsignatura().then((data: any) => {
       for (const asignatura of data.cnt) {
-        this.asignaturas.push({
+        asignatura.blnStatus && this.asignaturas.push({
           _id: asignatura._id,
           strNombre: asignatura.strAsignatura
         });
@@ -155,10 +160,12 @@ export class AlertMonitorComponent implements OnInit {
   getProfesores() {
     this._userService.getUsuarios().then((data: any) => {
       let profes = data.cnt;
-      this.profesores = profes.map( prof => prof = {
-        _id: prof._id,
-        strNombre: prof.strName + ' ' + prof.strLastName + ' ' + prof.strMotherLastName 
-      })
+      for (const profesor of profes) {
+        profesor.blnStatus && this.profesores.push({
+          _id: profesor._id,
+          strNombre: `${profesor.strName} ${profesor.strLastName} ${profesor.strMotherLastName ? profesor.strMotherLastName : ''}`
+        });
+      }
       this.mostrarProfesor = true;
     }).catch((err) => {
       Toast.fire({
@@ -261,10 +268,10 @@ export class AlertMonitorComponent implements OnInit {
 
   getEstatus() {
     this._estatusService.getAllStatus().then((data: any) => {
-      setTimeout(() => {
-        $('.selectpicker').selectpicker('refresh');
-      }, 0);
       this.arrEstatus = data.cnt;
+      for (const estatus of data.cnt) {
+        estatus.blnStatus && this.arrEstatus.push(estatus);
+      }
       this.mostrarEstatus = true;
     }).catch((err) => {
       Toast.fire({

@@ -115,7 +115,7 @@ export class AlertRegisterComponent implements OnInit {
     this.arrAlumnos.splice(index, 1);
     Toast.fire({
       icon: 'warning',
-      title: `¡El campo fué eliminado!`
+      title: `¡Los campos fuerón eliminados!`
     });
   }
 
@@ -180,13 +180,17 @@ export class AlertRegisterComponent implements OnInit {
         icon: 'error',
         title: 'No es posible registrar una alerta con uno o mas campos vacíos'
       });
+      this.clickRegistro = true;
       return false;
     } else {
-      if (this.formaAlumno.invalid) {
+      if (this.formaAlumno.invalid || this.arrAlumnos.length === 0) {
         Toast.fire({
           icon: 'error',
-          title: 'Hay campos de alumnos sin llenar'
+          title: 'Hay campos en "Agregar Alumnos" sin llenar'
         });
+        console.log(this.arrAlumnos.length);
+        this.clickRegistro = true;
+        $('#alumnos-modal').modal('show');
       } else {
 
         let fd = new FormData();
@@ -258,6 +262,7 @@ export class AlertRegisterComponent implements OnInit {
           forma.reset();
           this.formaAlumno.reset();
           this.formaColaboradores.reset();
+          this.clickRegistro = true;
         });
       }
     }
@@ -276,10 +281,10 @@ export class AlertRegisterComponent implements OnInit {
     this.carrerasService.getCareers().then((carreras: any) => {
 
       for (const carrera of carreras.cnt) {
-        this.carreras.push({
-          _id: carrera._id,
-          strNombre: carrera.strCarrera
-        });
+        carrera.blnStatus && this.carreras.push({
+            _id: carrera._id,
+            strNombre: carrera.strCarrera
+          });
       }
     }).catch((err) => {
       Toast.fire({
@@ -363,13 +368,45 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   closeModal() {
-    if (this.formaAlumno.valid) {
-      $('#alumnos-modal').modal('hide');
-    } else {
-      Toast.fire({
-        icon: 'error',
-        title: 'Hay campos de alumnos sin llenar'
+
+    if (this.arrAlumnos.length === 0) {
+      Swal.fire({
+        title: '¡No agregaste alumnos!',
+        text: "Asegúrate de agregar al menos un alumno a esta alerta",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cerrar',
+        confirmButtonText: 'Ok'
+      }).then((result) => {
+        if (!result.isConfirmed) {
+          setTimeout(() => {
+            $('#alumnos-modal').modal('hide');
+          }, 200);
+        }
       });
+    } else {
+      if (this.formaAlumno.valid) {
+        $('#alumnos-modal').modal('hide');
+      } else {
+        Swal.fire({
+          title: '¡Hay campos vacíos!',
+          text: "Asegúrate de no dejar campos de alumno vacíos",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Cerrar',
+          confirmButtonText: 'Ok'
+        }).then((result) => {
+          if (!result.isConfirmed) {
+            setTimeout(() => {
+              $('#alumnos-modal').modal('hide');
+            }, 200);
+          }
+        });
+      }
     }
   }
 
