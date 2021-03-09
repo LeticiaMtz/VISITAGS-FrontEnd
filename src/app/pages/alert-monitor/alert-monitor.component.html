@@ -19,7 +19,7 @@
                             <app-bootstrap-select *ngIf="mostrarCarreras" (ngModelChange)="getEspecialidades($event)" [ngForm]="forma" [name]="'idCarrera'" [datos]="carreras" (model)="alerta.idCarrera = $event" [titulo]="'Seleccione una Carrera'" [multiple]="false" [dataLiveSearch]="true"
                                 [required]="false" [default]="[idCarreraMonitor]"></app-bootstrap-select>
 
-                            <app-bootstrap-select *ngIf="!mostrarCarreras" [ngForm]="forma" [name]="'idCarrera'" (model)="alerta.idCarrera = $event" [titulo]="'Seleccione una Carrera'" [multiple]="false" [dataLiveSearch]="true" [required]="false"></app-bootstrap-select>
+                            <app-bootstrap-select *ngIf="!mostrarCarreras" [ngForm]="forma" [name]="'idCarrera'" (model)="alerta.idCarrera = $event" [titulo]="'Seleccione una Carrera'" [multiple]="false" [dataLiveSearch]="true" [required]="false" [disabled]="disabled"></app-bootstrap-select>
                         </div>
 
                         <div class="col-4">
@@ -30,9 +30,9 @@
                             </select> -->
 
                             <app-bootstrap-select *ngIf="mostrarEspecialidad" (ngModelChange)="guardarEspecialidad()" [ngForm]="forma" [name]="'idEspecialidad'" [datos]="especialidades" (model)="alerta.idEspecialidad = $event" [titulo]="'Seleccione una Especialidad'" [multiple]="false"
-                                [dataLiveSearch]="true" [required]="false" [default]="[idEspecialidadMonitor]"></app-bootstrap-select>
+                                [dataLiveSearch]="true" [required]="false" [default]="[idEspecialidadMonitor]" [disabled]="disabled"></app-bootstrap-select>
 
-                            <app-bootstrap-select *ngIf="!mostrarEspecialidad" [ngForm]="forma" [name]="'idEspecialidad'" (model)="alerta.idEspecialidad = $event" [titulo]="'Seleccione una Especialidad'" [multiple]="false" [dataLiveSearch]="true" [required]="false"></app-bootstrap-select>
+                            <app-bootstrap-select *ngIf="!mostrarEspecialidad" [ngForm]="forma" [name]="'idEspecialidad'" (model)="alerta.idEspecialidad = $event" [titulo]="'Seleccione una Especialidad'" [multiple]="false" [dataLiveSearch]="true" [required]="false" [disabled]="true"></app-bootstrap-select>
                         </div>
 
                         <div class="col-4">
@@ -42,9 +42,9 @@
                                 <option *ngFor="let asig of asignaturas" [ngValue]="asig._id">{{asig.strNombre}}</option>
                             </select> -->
                             <app-bootstrap-select *ngIf="mostrarAsignatura" (ngModelChange)="guardarAsignatura()" [ngForm]="forma" [name]="'idAsignatura'" [datos]="asignaturas" (model)="alerta.idAsignatura = $event" [titulo]="'Seleccione una Asignatura'" [multiple]="false" [dataLiveSearch]="true"
-                                [required]="false" [default]="[idAsignaturaMonitor]"></app-bootstrap-select>
+                                [required]="false" [default]="[idAsignaturaMonitor]" [disabled]="disabled"></app-bootstrap-select>
 
-                            <app-bootstrap-select *ngIf="!mostrarAsignatura" [ngForm]="forma" [name]="'idAsignatura'" (model)="alerta.idAsignatura = $event" [titulo]="'Seleccione una Asignatura'" [multiple]="false" [dataLiveSearch]="true" [required]="false"></app-bootstrap-select>
+                            <app-bootstrap-select *ngIf="!mostrarAsignatura" [ngForm]="forma" [name]="'idAsignatura'" (model)="alerta.idAsignatura = $event" [titulo]="'Seleccione una Asignatura'" [multiple]="false" [dataLiveSearch]="true" [required]="false" [disabled]="disabled"></app-bootstrap-select>
                         </div>
                     </div>
                     <div class="row">
@@ -55,19 +55,19 @@
                                 <option *ngFor="let prof of profesores" [ngValue]="prof._id">{{prof.strName}} {{prof.strLastName}}</option>
                             </select> -->
                             <app-bootstrap-select *ngIf="mostrarProfesor" (ngModelChange)="guardarProfesor()" [ngForm]="forma" [name]="'idUser'" [datos]="profesores" (model)="alerta.idUser = $event" [titulo]="'Seleccione un Profesor'" [multiple]="false" [dataLiveSearch]="true" [required]="false"
-                                [default]="[idUserMonitor]"></app-bootstrap-select>
+                                [default]="[idUserMonitor]" [disabled]="disabled"></app-bootstrap-select>
 
-                            <app-bootstrap-select *ngIf="!mostrarProfesor" [ngForm]="forma" [name]="'idUser'" (model)="alerta.idUser = $event" [titulo]="'Seleccione un Profesor'" [multiple]="false" [dataLiveSearch]="true" [required]="false"></app-bootstrap-select>
+                            <app-bootstrap-select *ngIf="!mostrarProfesor" [ngForm]="forma" [name]="'idUser'" (model)="alerta.idUser = $event" [titulo]="'Seleccione un Profesor'" [multiple]="false" [dataLiveSearch]="true" [required]="false" [disabled]="disabled"></app-bootstrap-select>
                         </div>
 
                         <div class="col-4">
                             <label class="small"><strong>Por Fecha</strong></label>
                             <div class="input-group input-daterange">
                                 <input type="date" class="form-control form-control-sm btn-outline-secondary input-cursor" name="createdAt" min="2018-01-01" [ngModel]="alerta.createdAt | date:'yyyy-MM-dd' : 'UTC'" (ngModelChange)="alerta.createdAt = $event" (ngModelChange)="guardarFechaDesde()"
-                                    #createdAt="ngModel" [value]="alerta.createdAt">
+                                    #createdAt="ngModel" [value]="alerta.createdAt" [disabled]="disabled">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                 <input type="date" class="form-control form-control-sm btn-outline-secondary input-cursor" name="createdAt1" min="2018-01-01" [ngModel]="alerta.createdAt1 | date:'yyyy-MM-dd' : 'UTC'" #createdAt1="ngModel" (ngModelChange)="alerta.createdAt1 = $event"
-                                    (ngModelChange)="guardarFechaHasta()" [value]="alerta.createdAt1">
+                                    (ngModelChange)="guardarFechaHasta()" [value]="alerta.createdAt1" [disabled]="disabled">
                             </div>
                         </div>
 
@@ -77,9 +77,9 @@
                                 <option *ngFor="let estatus of arrEstatus" [ngValue]="estatus._id">{{estatus.strNombre}}</option>
                             </select> -->
                             <app-bootstrap-select *ngIf="mostrarEstatus" (ngModelChange)="guardarEstatus()" [ngForm]="forma" [name]="'idEstatus'" [datos]="arrEstatus" (model)="alerta.idEstatus = $event" [titulo]="'Seleccione un Estatus'" [multiple]="false" [dataLiveSearch]="true"
-                                [required]="false" [default]="[idEstatusMonitor]"></app-bootstrap-select>
+                                [required]="false" [default]="[idEstatusMonitor]" [disabled]="disabled"></app-bootstrap-select>
 
-                            <app-bootstrap-select *ngIf="!mostrarEstatus" [ngForm]="forma" [name]="'idEstatus'" (model)="alerta.idEstatus = $event" [titulo]="'Seleccione un Estatus'" [multiple]="false" [dataLiveSearch]="true" [required]="false"></app-bootstrap-select>
+                            <app-bootstrap-select *ngIf="!mostrarEstatus" [ngForm]="forma" [name]="'idEstatus'" (model)="alerta.idEstatus = $event" [titulo]="'Seleccione un Estatus'" [multiple]="false" [dataLiveSearch]="true" [required]="false" [disabled]="disabled"></app-bootstrap-select>
                         </div>
 
                         <div class="col-1 mt-1">

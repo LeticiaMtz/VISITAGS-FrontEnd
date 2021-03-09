@@ -16,6 +16,8 @@ import Swal from 'sweetalert2';
 import { SpecialtyModel } from 'src/app/models/specialty';
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment.prod';
+import { async } from '@angular/core/testing';
+import { map } from 'rxjs/operators';
 
 declare var $: any;
 
@@ -82,15 +84,14 @@ export class AlertMonitorComponent implements OnInit {
   mostrarEspecialidad: boolean = false;
   mostrarEstatus: boolean = false;
   mostrarAsignatura: boolean = false;
+  disabled: boolean = false;
 
   constructor(private router: Router, private _carrerasService: CareersService, private _alertService: AlertService, private _espService: SpecialtyService, private _asigService: SubjectsService, private _userService: UserManagementService, private _estatusService: AlertStatusService, private _PdfService: PdfServiceService, private excelService: ExportDataService, private _specialityService: SpecialtyService) { }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      $('.selectpicker').selectpicker('refresh');
-    }, 0);
     this.token = localStorage.aa_token;
     this.tokenDecoded = jwt_decode(this.token);
+    this.disabled = true;
     this.getCarreras();
     this.getAsignaturas();
     this.getProfesores();
@@ -118,16 +119,34 @@ export class AlertMonitorComponent implements OnInit {
   }
 
   getEspecialidades(idCarrera: string) {
-    localStorage.setItem('aa_carreraMonitor', idCarrera);
-    this._espService.getSpecialties(idCarrera).then((data: any) => {
-      let especialidades = data.cnt.rutas;
+    this.disabled = false;
 
-      for (const especialidad of especialidades) {
-        especialidad.blnStatus && this.especialidades.push({
-          _id: especialidad._id,
-          strNombre: especialidad.strEspecialidad
-        });
-      }
+    localStorage.removeItem('aa_especialidadMonitor');
+    localStorage.removeItem('aa_asignaturaMonitor');
+    localStorage.removeItem('aa_profesorMonitor');
+    localStorage.removeItem('aa_estatusMonitor');
+    localStorage.removeItem('aa_fechaDesde');
+    localStorage.removeItem('aa_fechaHasta');
+
+    this.alerta.idEspecialidad = undefined;
+    this.alerta.idAsignatura = undefined;
+    this.alerta.idUser = undefined;
+    this.alerta.createdAt = undefined;
+    this.alerta.createdAt1 = undefined;
+    this.alerta.idEstatus = undefined;
+
+    this.idEspecialidadMonitor = undefined;
+    this.idAsignaturaMonitor = undefined;
+    this.idUserMonitor = undefined;
+    this.idEstatusMonitor = undefined;
+    // this.especialidades = [];
+    localStorage.setItem('aa_carreraMonitor', idCarrera);
+    this._espService.getSpecialties(idCarrera).then(async(data: any) => {
+      let especialidades = data.cnt.rutas;
+      this.especialidades = especialidades.map(esp => esp = {
+        _id: esp._id,
+        strNombre: esp.strEspecialidad
+      });
       this.mostrarEspecialidad = true;
       this.getAlertas();
     }).catch((err) => {
@@ -146,9 +165,9 @@ export class AlertMonitorComponent implements OnInit {
           strNombre: asignatura.strAsignatura
         });
       }
-      setTimeout(() => {
+      // setTimeout(() => {
         this.mostrarAsignatura = true;
-      }, 500);
+      // }, 500);
     }).catch((err) => {
       Toast.fire({
         icon: 'warning',
@@ -220,6 +239,7 @@ export class AlertMonitorComponent implements OnInit {
         
         let carreras = await this._carrerasService.getCareers();
   
+        this.arrAlertasFinal = [];
         for (const alert of this.alertas) {
           let strEspecialidad = '';
           for (const carrera of this.carreras) {
@@ -262,6 +282,8 @@ export class AlertMonitorComponent implements OnInit {
           title: err.error ? err.error.msg : err
         });
         this.arrAlertasFinal = [];
+        this.cargando = false;
+        this.filtro = true;
       });
     }
   }
@@ -344,6 +366,8 @@ export class AlertMonitorComponent implements OnInit {
   }
 
   resetFiltros() {
+    this.disabled = true;
+
     localStorage.removeItem('aa_carreraMonitor');
     localStorage.removeItem('aa_especialidadMonitor');
     localStorage.removeItem('aa_asignaturaMonitor');
@@ -381,6 +405,9 @@ export class AlertMonitorComponent implements OnInit {
       this.mostrarEstatus = true;
       this.mostrarAsignatura = true;
     }, 0);
+
+    
+    this.arrAlertasFinal = [];
 
     this.ngOnInit();
     Toast.fire({
