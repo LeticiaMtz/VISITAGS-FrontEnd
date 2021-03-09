@@ -188,7 +188,6 @@ export class AlertRegisterComponent implements OnInit {
           icon: 'error',
           title: 'Hay campos en "Agregar Alumnos" sin llenar'
         });
-        console.log(this.arrAlumnos.length);
         this.clickRegistro = true;
         $('#alumnos-modal').modal('show');
       } else {

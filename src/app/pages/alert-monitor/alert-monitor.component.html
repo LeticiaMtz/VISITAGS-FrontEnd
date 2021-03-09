@@ -19,7 +19,7 @@
                             <app-bootstrap-select *ngIf="mostrarCarreras" (ngModelChange)="getEspecialidades($event)" [ngForm]="forma" [name]="'idCarrera'" [datos]="carreras" (model)="alerta.idCarrera = $event" [titulo]="'Seleccione una Carrera'" [multiple]="false" [dataLiveSearch]="true"
                                 [required]="false" [default]="[idCarreraMonitor]"></app-bootstrap-select>
 
-                            <app-bootstrap-select *ngIf="!mostrarCarreras" [ngForm]="forma" [name]="'idCarrera'" (model)="alerta.idCarrera = $event" [titulo]="'Seleccione una Carrera'" [multiple]="false" [dataLiveSearch]="true" [required]="false" [disabled]="disabled"></app-bootstrap-select>
+                            <app-bootstrap-select *ngIf="!mostrarCarreras" [ngForm]="forma" [name]="'idCarrera'" (model)="alerta.idCarrera = $event" [titulo]="'Seleccione una Carrera'" [multiple]="false" [dataLiveSearch]="true" [required]="false"></app-bootstrap-select>
                         </div>
 
                         <div class="col-4">
@@ -44,7 +44,7 @@
                             <app-bootstrap-select *ngIf="mostrarAsignatura" (ngModelChange)="guardarAsignatura()" [ngForm]="forma" [name]="'idAsignatura'" [datos]="asignaturas" (model)="alerta.idAsignatura = $event" [titulo]="'Seleccione una Asignatura'" [multiple]="false" [dataLiveSearch]="true"
                                 [required]="false" [default]="[idAsignaturaMonitor]" [disabled]="disabled"></app-bootstrap-select>
 
-                            <app-bootstrap-select *ngIf="!mostrarAsignatura" [ngForm]="forma" [name]="'idAsignatura'" (model)="alerta.idAsignatura = $event" [titulo]="'Seleccione una Asignatura'" [multiple]="false" [dataLiveSearch]="true" [required]="false" [disabled]="disabled"></app-bootstrap-select>
+                            <app-bootstrap-select *ngIf="!mostrarAsignatura" [ngForm]="forma" [name]="'idAsignatura'" (model)="alerta.idAsignatura = $event" [titulo]="'Seleccione una Asignatura'" [multiple]="false" [dataLiveSearch]="true" [required]="false" [disabled]="true"></app-bootstrap-select>
                         </div>
                     </div>
                     <div class="row">
@@ -57,7 +57,7 @@
                             <app-bootstrap-select *ngIf="mostrarProfesor" (ngModelChange)="guardarProfesor()" [ngForm]="forma" [name]="'idUser'" [datos]="profesores" (model)="alerta.idUser = $event" [titulo]="'Seleccione un Profesor'" [multiple]="false" [dataLiveSearch]="true" [required]="false"
                                 [default]="[idUserMonitor]" [disabled]="disabled"></app-bootstrap-select>
 
-                            <app-bootstrap-select *ngIf="!mostrarProfesor" [ngForm]="forma" [name]="'idUser'" (model)="alerta.idUser = $event" [titulo]="'Seleccione un Profesor'" [multiple]="false" [dataLiveSearch]="true" [required]="false" [disabled]="disabled"></app-bootstrap-select>
+                            <app-bootstrap-select *ngIf="!mostrarProfesor" [ngForm]="forma" [name]="'idUser'" (model)="alerta.idUser = $event" [titulo]="'Seleccione un Profesor'" [multiple]="false" [dataLiveSearch]="true" [required]="false" [disabled]="true"></app-bootstrap-select>
                         </div>
 
                         <div class="col-4">
@@ -79,7 +79,7 @@
                             <app-bootstrap-select *ngIf="mostrarEstatus" (ngModelChange)="guardarEstatus()" [ngForm]="forma" [name]="'idEstatus'" [datos]="arrEstatus" (model)="alerta.idEstatus = $event" [titulo]="'Seleccione un Estatus'" [multiple]="false" [dataLiveSearch]="true"
                                 [required]="false" [default]="[idEstatusMonitor]" [disabled]="disabled"></app-bootstrap-select>
 
-                            <app-bootstrap-select *ngIf="!mostrarEstatus" [ngForm]="forma" [name]="'idEstatus'" (model)="alerta.idEstatus = $event" [titulo]="'Seleccione un Estatus'" [multiple]="false" [dataLiveSearch]="true" [required]="false" [disabled]="disabled"></app-bootstrap-select>
+                            <app-bootstrap-select *ngIf="!mostrarEstatus" [ngForm]="forma" [name]="'idEstatus'" (model)="alerta.idEstatus = $event" [titulo]="'Seleccione un Estatus'" [multiple]="false" [dataLiveSearch]="true" [required]="false" [disabled]="true"></app-bootstrap-select>
                         </div>
 
                         <div class="col-1 mt-1">
@@ -193,7 +193,7 @@
                             </tbody>
                         </table>
 
-                        <div class="mt-4 float-right fadeIn ">
+                        <div *ngIf="arrAlertasFinal.length > 0" class="mt-4 float-right fadeIn ">
                             <pagination-controls (pageChange)="pageActual=$event " previousLabel="Anterior " nextLabel="Siguiente "></pagination-controls>
                         </div>
 

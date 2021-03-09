@@ -197,6 +197,7 @@ export class AlertMonitorComponent implements OnInit {
   async getAlertas() {
     this.cargando = true;
     this.arrAlertasFinal = [];
+    this.alertas = [];
     // this.ejecutarServicioMonitor();
 
     if (this.alerta.idCarrera === null || this.alerta.idCarrera === undefined) {
@@ -367,6 +368,9 @@ export class AlertMonitorComponent implements OnInit {
 
   resetFiltros() {
     this.disabled = true;
+    this.alertas = [];
+    this.arrAlertasFinal = [];
+    this.especialidades = [];
 
     localStorage.removeItem('aa_carreraMonitor');
     localStorage.removeItem('aa_especialidadMonitor');
@@ -390,8 +394,6 @@ export class AlertMonitorComponent implements OnInit {
     this.idUserMonitor = undefined;
     this.idEstatusMonitor = undefined;
 
-    this.especialidades = [];
-
     this.mostrarCarreras = false;
     this.mostrarProfesor = false;
     this.mostrarEspecialidad = false;
@@ -406,15 +408,10 @@ export class AlertMonitorComponent implements OnInit {
       this.mostrarAsignatura = true;
     }, 0);
 
-    
-    this.arrAlertasFinal = [];
-
-    this.ngOnInit();
     Toast.fire({
       icon: 'success',
       title: `¡Filtros Reiniciados!`
     });
-    this.alertas = [];
     this.filtro = false;
   }
 
