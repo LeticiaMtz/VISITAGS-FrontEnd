@@ -121,25 +121,28 @@ export class AlertMonitorComponent implements OnInit {
   getEspecialidades(idCarrera: string) {
     this.disabled = false;
 
-    localStorage.removeItem('aa_especialidadMonitor');
-    localStorage.removeItem('aa_asignaturaMonitor');
-    localStorage.removeItem('aa_profesorMonitor');
-    localStorage.removeItem('aa_estatusMonitor');
-    localStorage.removeItem('aa_fechaDesde');
-    localStorage.removeItem('aa_fechaHasta');
 
-    this.alerta.idEspecialidad = undefined;
-    this.alerta.idAsignatura = undefined;
-    this.alerta.idUser = undefined;
-    this.alerta.createdAt = undefined;
-    this.alerta.createdAt1 = undefined;
-    this.alerta.idEstatus = undefined;
-
-    this.idEspecialidadMonitor = undefined;
-    this.idAsignaturaMonitor = undefined;
-    this.idUserMonitor = undefined;
-    this.idEstatusMonitor = undefined;
-    // this.especialidades = [];
+    if (idCarrera !== localStorage.getItem('aa_carreraMonitor')) {
+      localStorage.removeItem('aa_especialidadMonitor');
+      localStorage.removeItem('aa_asignaturaMonitor');
+      localStorage.removeItem('aa_profesorMonitor');
+      localStorage.removeItem('aa_estatusMonitor');
+      localStorage.removeItem('aa_fechaDesde');
+      localStorage.removeItem('aa_fechaHasta');
+    
+      this.alerta.idEspecialidad = undefined;
+      this.alerta.idAsignatura = undefined;
+      this.alerta.idUser = undefined;
+      this.alerta.createdAt = undefined;
+      this.alerta.createdAt1 = undefined;
+      this.alerta.idEstatus = undefined;
+    
+      this.idEspecialidadMonitor = undefined;
+      this.idAsignaturaMonitor = undefined;
+      this.idUserMonitor = undefined;
+      this.idEstatusMonitor = undefined;
+    }
+    
     localStorage.setItem('aa_carreraMonitor', idCarrera);
     this._espService.getSpecialties(idCarrera).then(async(data: any) => {
       let especialidades = data.cnt.rutas;
