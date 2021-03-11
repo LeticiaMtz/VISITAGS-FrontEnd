@@ -141,6 +141,18 @@ export class AlertMonitorComponent implements OnInit {
       this.idAsignaturaMonitor = undefined;
       this.idUserMonitor = undefined;
       this.idEstatusMonitor = undefined;
+      
+      this.mostrarProfesor = false;
+      this.mostrarEspecialidad = false;
+      this.mostrarEstatus = false;
+      this.mostrarAsignatura= false;
+  
+      setTimeout(() => {
+        this.mostrarProfesor = true;
+        this.mostrarEspecialidad = true;
+        this.mostrarEstatus = true;
+        this.mostrarAsignatura = true;
+      }, 0);
     }
     
     localStorage.setItem('aa_carreraMonitor', idCarrera);
