@@ -79,9 +79,13 @@
                     </div>
 
 
-                    <a class="text-center">
-                        <button type="submit" [ngClass]="{'btn-dis': !clickRegistro}" class="btn btn-info btn-lg btn-block btn-rounded text-uppercase mt-3 mb-5">Crear mi cuenta</button>
+                    <a class="text-center mb-5">
+                        <button type="submit" [ngClass]="{'btn-dis': !clickRegistro}" class="btn btn-info btn-lg btn-block btn-rounded text-uppercase mt-3">Crear mi cuenta</button>
+                        <div class="text-center mt-3">
+                            ¿Ya tienes una cuenta? <a [routerLink]="['/login']" class="text-info m-l-5"><b>Iniciar Sesión</b></a>
+                        </div>
                     </a>
+
                 </form>
             </div>
         </div>
