@@ -292,7 +292,7 @@ export class AlertMonitorComponent implements OnInit {
             this.getFecha(alert.createdAt),
             alert.nmbSemana,
             alert.idEstatus['strNombre'],
-            seguimiento['strComentario']
+            seguimiento ? seguimiento['strComentario'] : 'No se han realizado comentarios sobre esta alerta.'
           ];
           this.arrAlerta.push(element);
         }
@@ -552,7 +552,7 @@ export class AlertMonitorComponent implements OnInit {
         size: 13,
       },
       {
-        text: "Ultimo Comentario",
+        text: "Último Comentario",
         style: "tableHeader",
         alignment: "center",
         bold: true,
@@ -618,7 +618,7 @@ export class AlertMonitorComponent implements OnInit {
           Fecha: this.getFecha(alerta.createdAt),
           Semana: alerta.nmbSemana,
           Estatus: alerta.idEstatus['strNombre'],
-          'Ultimo Comentario': seguimiento['strComentario']
+          'Último Comentario': seguimiento ? seguimiento['strComentario'] : 'No se han realizado comentarios sobre esta alerta.'
         });
       }
       this.excelService.exportAsExcelFile(JSON.parse(JSON.stringify(this.jsnObject)), `${this.title}`);
