@@ -276,6 +276,9 @@ export class AlertMonitorComponent implements OnInit {
             nombre = this.capitalizarNombre(nombre)
             arrayAlumnosCapitalizados.push(nombre);
           }
+
+          let indexSeguimiento = alert.aJsnSeguimiento.length - 1;
+          let seguimiento = alert.aJsnSeguimiento[indexSeguimiento];
   
           let element = [
             alert.strMatricula.map(matricula => matricula + ','),
@@ -288,7 +291,8 @@ export class AlertMonitorComponent implements OnInit {
             alert.arrCrde.map(motivo => motivo.strNombre + ','),
             this.getFecha(alert.createdAt),
             alert.nmbSemana,
-            alert.idEstatus['strNombre']
+            alert.idEstatus['strNombre'],
+            seguimiento['strComentario']
           ];
           this.arrAlerta.push(element);
         }
@@ -546,6 +550,15 @@ export class AlertMonitorComponent implements OnInit {
         fillColor: "#2a3e52",
         color: "#ffffff",
         size: 13,
+      },
+      {
+        text: "Ultimo Comentario",
+        style: "tableHeader",
+        alignment: "center",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
       }
     ];
     this._PdfService.generatePdf(
@@ -590,6 +603,9 @@ export class AlertMonitorComponent implements OnInit {
           }
         }
 
+        let indexSeguimiento = alerta.aJsnSeguimiento.length - 1;
+        let seguimiento = alerta.aJsnSeguimiento[indexSeguimiento];
+
         await this.jsnObject.push({
           Matricula: matricula,
           Alumno: alumno,
@@ -601,7 +617,8 @@ export class AlertMonitorComponent implements OnInit {
           Motivo: motivo,
           Fecha: this.getFecha(alerta.createdAt),
           Semana: alerta.nmbSemana,
-          Estatus: alerta.idEstatus['strNombre']
+          Estatus: alerta.idEstatus['strNombre'],
+          'Ultimo Comentario': seguimiento['strComentario']
         });
       }
       this.excelService.exportAsExcelFile(JSON.parse(JSON.stringify(this.jsnObject)), `${this.title}`);
