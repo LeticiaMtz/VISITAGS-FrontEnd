@@ -62,7 +62,7 @@ export class BootstrapSelectComponent implements OnInit {
 
   retornarValor(event): void {
 
-    this.getButton().classList.remove('invalido');
+    this.getButton().classList.remove('invalido'); 
     this.refrescarSelect();
     this.model.emit(event);
     this.ngModelChange.emit(event);
