@@ -84,6 +84,10 @@ input:hover::-webkit-input-placeholder {
     color: #212529
 }
 
+.input-cursor {
+    cursor: pointer;
+}
+
 .pdf {
     cursor: pointer;
 }

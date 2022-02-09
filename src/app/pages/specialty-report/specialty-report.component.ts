@@ -56,7 +56,7 @@ export class SpecialtyReportComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.msg
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -82,7 +82,10 @@ export class SpecialtyReportComponent implements OnInit {
     this.specialtyService.cambiarEstatus(this.idCareer, idEspecialidad).then((resp: any) => {
       console.log(resp.cnt);
     }).catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error ? err.error.msg : err
+      });
     });
   }
 
@@ -90,7 +93,10 @@ export class SpecialtyReportComponent implements OnInit {
     this.specialtyService.cambiarEstatus(this.idCareer, idEspecialidad).then((resp: any) => {
       console.log(resp.cnt);
     }).catch((err) => {
-      console.log(err);
+      Toast.fire({
+        icon: 'error',
+        title: err.error ? err.error.msg : err
+      });
     });
   }
 
@@ -117,12 +123,12 @@ export class SpecialtyReportComponent implements OnInit {
   exportAsXLSX(){
     if (this.specialties.length !== 0) {
       let jsonobject = JSON.stringify(this.specialties);
-      jsonobject = jsonobject.replace(/strEspecialidad/gi, 'Nombre');
+      jsonobject = jsonobject.replace(/strEspecialidad/gi, 'Nombre de la Especialidad');
       const jsonobject2 = JSON.parse(jsonobject);
       const count = Object.keys(jsonobject2).length;
       for (let i = 0; i < count; i++) {
-        delete jsonobject2[i].created_at;
-        delete jsonobject2[i].updated_at;
+        delete jsonobject2[i].createdAt;
+        delete jsonobject2[i].updatedAt;
         delete jsonobject2[i].blnStatus;
         delete jsonobject2[i]._id;
         delete jsonobject2[i].__v;
@@ -130,5 +136,4 @@ export class SpecialtyReportComponent implements OnInit {
       this._excelService.exportAsExcelFile(jsonobject2, `${this.title}`);
     }
   }
-
 }

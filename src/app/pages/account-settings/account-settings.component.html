@@ -34,6 +34,47 @@
             </div>
 
         </div>
+
+        <div class="col-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Notificaciones</h4>
+                    <hr>
+
+                    <div class="r-panel-body">
+
+                        <div style="text-align: justify;">
+                            <b>Haga click en el siguiente boton para activar o desactivar las notificaciones por correo electronico,
+                                este le notificara cuando se registre una nueva alerta o cuando se le de seguimiento a alguna.
+                            </b>
+                        </div>
+
+
+                        <!-- <div class="form-group center">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <label class="form-check-label" for="gridCheck">
+                                Check me out
+                              </label>
+                            </div>
+                        </div> -->
+
+                        <div style="margin-top: 33px; margin-bottom: 33px;">
+                            <button type="button" (click)="statusNotification()" *ngIf="notificaciones === false" class="btn btn-info btn-lg btn-block animated fadeInDown fast"><i class="fa fa-check-circle" aria-hidden="true"></i> Activar</button>
+                        </div>
+
+                        <div style="margin-top: 33px; margin-bottom: 33px;">
+                            <button type="button" (click)="statusNotification()" *ngIf="notificaciones === true" class="btn btn-info btn-lg btn-block animated fadeInDown fast"><i class="fa fa-times-circle" aria-hidden="true"></i> Desactivar</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
     </div>
 
 </div>

@@ -7,8 +7,8 @@ export class AlertModel {
     _id?: string;
     idUser: string;
     idEstatus: string;
-    strMatricula: string;
-    strNombreAlumno: string;
+    strMatricula: [];
+    strNombreAlumno: [];
     idAsignatura: string;
     idCarrera?: string;
     strCarrera: string;
@@ -29,6 +29,7 @@ export class AlertModel {
         SeguimientoModel
     }];
     blnAvtivo?: boolean = true;
+    nmbSemana: number;
     createdAt: Date;
     createdAt1?: Date;
 }

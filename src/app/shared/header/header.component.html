@@ -40,22 +40,25 @@
             <!-- ============================================================== -->
             <ul class="navbar-nav my-lg-0">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="mr-3"><b>Seguimiento Tutoral</b></span><img src="../assets/images/users/profile2.png" alt="user" class="profile-pic" /></a>
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="mr-3"><b>Seguimiento Tutoral</b></span><img src="assets/images/users/profile2.png" alt="user" class="profile-pic" /></a>
                     <div class="dropdown-menu dropdown-menu-right animated flipInY">
                         <ul class="dropdown-user">
                             <li>
                                 <div class="dw-user-box">
-                                    <div class="u-img"><img src="../assets/images/users/profile2.png" alt="user"></div>
-                                    <!-- <i class="fa fa-user-circle-o"></i> -->
-                                    <div class="u-text">
-                                        <h4> {{userName}} </h4>
-                                        <p class="text-muted" style="font-size:xx-small;"> {{userEmail}} </p>
-                                        <a [routerLink]="['/registro-alerta']" class="btn btn-rounded btn-info btn-sm">Nueva alerta</a>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div style="max-width: 50px;" class="u-img"><img src="assets/images/users/profile2.png" alt="user"></div>
+                                        </div>
+                                        <div class="u-text text-center">
+                                            <h4> {{userName}} </h4>
+                                            <p class="text-muted" style="font-size:x-small;"> {{userEmail}} </p>
+                                            <a [routerLink]="['/registro-alerta']" class="btn btn-block btn-rounded btn-info btn-sm"><i class="fa fa-plus"></i> Nueva Alerta</a>
+                                        </div>
                                     </div>
                                 </div>
                             </li>
                             <li role="separator" class="divider"></li>
-                            <li><a [routerLink]="['/account-settings']"><i class="ti-settings mr-1"></i> Tema</a></li>
+                            <li><a [routerLink]="['/account-settings']"><i class="ti-settings mr-1"></i> Ajustes del Usuario</a></li>
                             <div class="container">
                                 <li role="separator" class="divider"></li>
                             </div>

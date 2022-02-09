@@ -21,6 +21,7 @@ export class BootstrapSelectComponent implements OnInit {
   @Input() mensajeValidacion = 'Es necesario seleccionar un valor.';
   @Input() required: boolean = true;
   @Input() multiple: boolean = false;
+  @Input() disabled?: boolean;
   @Input() set default(value: string) {
     if ( value ) {
       this.modelo = value;

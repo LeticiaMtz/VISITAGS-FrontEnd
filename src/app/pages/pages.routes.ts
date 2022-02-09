@@ -22,6 +22,7 @@ import { AlertRegisterComponent } from './alert-register/alert-register.componen
 import { TrackingAlertsComponent } from './tracking-alerts/tracking-alerts.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { AlertMonitorComponent } from './alert-monitor/alert-monitor.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 const pagesRoutes: Routes = [
@@ -34,13 +35,14 @@ const pagesRoutes: Routes = [
           { path: 'specialty-report/:id', component: SpecialtyReportComponent, data: { titulo: 'Gestión de Especialidades' }, canActivate: [AuthGuard] },
           { path: 'reasons-crde', component: ReasonsCRDEComponent, data: { titulo: 'Gestión de CRDE' }, canActivate: [AuthGuard] },
           { path: 'behavior/:id', component: BehaviorComponent, data: { titulo: 'Gestión de Condutas' }, canActivate: [AuthGuard] },
-          { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes del Tema' }, canActivate: [AuthGuard]},
-          { path: 'estatus-alerta', component: StatusReportComponent, data: { titulo: 'Catalogo de Estatus de Alertas' }, canActivate: [AuthGuard] },
+          { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes de Usuario' }, canActivate: [AuthGuard]},
+          { path: 'estatus-alerta', component: StatusReportComponent, data: { titulo: 'Catálogo de Estatus de Alertas' }, canActivate: [AuthGuard] },
           { path: 'registro-alerta', component: AlertRegisterComponent, data: { titulo: 'Registro de Alertas' }, canActivate: [AuthGuard] },
           { path: 'subjects', component: SubjectsComponent, data: { titulo: 'Gestión de Asignaturas' }, canActivate: [AuthGuard]},
           { path: 'modality', component: ModalityComponent, data: { titulo: 'Gestión de Modalidades' }, canActivate: [AuthGuard]},
           { path: 'Tracking-alerts/:id/:idR', component: TrackingAlertsComponent, data: { titulo: 'Seguimiento Alerta' }, canActivate: [AuthGuard]},
-          { path: 'user-management', component: UserManagementComponent, data: { titulo:  'Gestion de Usuarios'  }, canActivate: [AuthGuard]},
+          { path: 'user-management', component: UserManagementComponent, data: { titulo:  'Gestión de Usuarios'  }, canActivate: [AuthGuard]},
+          { path: 'notification/:id', component: NotificationComponent, data: { titulo:  'Gestión de Usuarios'  }, canActivate: [AuthGuard]},
           { path: 'monitor-alertas', component: AlertMonitorComponent, data: { titulo:  'Monitor de Alertas'  }, canActivate: [AuthGuard]},         
           { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ]

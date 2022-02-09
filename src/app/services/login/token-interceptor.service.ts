@@ -5,6 +5,13 @@ import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});
+
 @Injectable({
   providedIn: 'root'
 })
@@ -29,29 +36,26 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
-
+        
         if (err.status === 401) {
-          Swal.fire(
-            'Opsss!',
-            'Lo sentimos su sesion ha caducado, por favor vuelva a iniciar sesion',
-            'error'
-          );
+          Toast.fire({
+            icon: 'error',
+            title: 'Lo sentimos su sesion ha expirado, por favor vuelva a iniciar sesion'
+          });
+          localStorage.removeItem('aa_token');
           this.router.navigateByUrl('/login');
         }
 
         if (err.status === 403) {
-          Swal.fire(
-            'Opsss!',
-            'No cuentas con los permisos necesarios para acceder a este menú.',
-            'error'
-          );
+          Toast.fire({
+            icon: 'error',
+            title: 'No cuentas con los permisos necesarios para acceder a este menú.'
+          });
           this.router.navigateByUrl('/dashboard');
         }
 
         return throwError( err );
-
       })
     );
   }
-
 }

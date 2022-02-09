@@ -59,7 +59,7 @@ export class ReasonsCRDEComponent implements OnInit {
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -127,14 +127,13 @@ export class ReasonsCRDEComponent implements OnInit {
         title: `¡La categoria crde se actualizó exitosamente!`
       });
     }).catch(err => {
-    
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
-   
+        title: err.error ? err.error.msg : err
       });
     });
   }
+  
   deleteCategoria(id: string){
     this.ReasonsService.deleteReasons(id).then((data) => {
       this.getReasons();
@@ -145,7 +144,7 @@ export class ReasonsCRDEComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error ? err.error.msg : err
       });
     });
   }

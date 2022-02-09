@@ -41,7 +41,7 @@ export class RegisterReasonsComponent implements OnInit {
       console.log(err);
       Toast.fire({
         icon: 'error',
-        title: err.error.msg 
+        title: err.error ? err.error.msg : err 
       });
     });
   }

@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
   checkB: Boolean;
   user: User = new User();
   repetPassword: String;
+  clickRegistro: boolean = true;
 
   constructor(private registerService: RegisterService, private router: Router) { }
 
@@ -27,21 +28,27 @@ export class RegisterComponent implements OnInit {
   regexp = new RegExp('^[_A-Za-z\\+]+(\\.[_A-Za-z]+)*@utags.edu.mx$');
 
   check(event){
-    this.checkB = event.explicitOriginalTarget.checked
+    this.checkB = event.explicitOriginalTarget.checked;
   }
 
   addUser(form: NgForm){
+    this.clickRegistro = false;
+    this.user.strName = this.capitalizarTexto(this.user.strName);
+    this.user.strLastName = this.capitalizarTexto(this.user.strLastName);
+    if (this.user.strMotherLastName) {
+      this.user.strMotherLastName = this.capitalizarTexto(this.user.strMotherLastName);
+    } else {
+      this.user.strMotherLastName = '';
+    }
 
-    if(form.invalid){
+    if ( form.invalid) {
       Swal.fire({
         title: 'Error!',
         text: `Faltan campos por llenar en el formulario`,
         icon: 'error',
         confirmButtonText: 'Aceptar'
-      })
-    }
-    else if (this.repetPassword != this.user.strPassword) {
-     
+      });
+    } else if (this.repetPassword != this.user.strPassword) {
       Swal.fire({
         title: 'Error!',
         text: 'Error las contraseñas no son iguales, no creamos tu usuario',
@@ -49,12 +56,10 @@ export class RegisterComponent implements OnInit {
         confirmButtonText: 'Aceptar'
       })
       this.router.navigate(['/register'])
-    }else if (this.regexp.test(this.user.strEmail)) {
-      this.registerService.postUser(form.value)
+    } else if (this.regexp.test(this.user.strEmail)) {
+
+      this.registerService.postUser(this.user)
       .then(res => {
-        // let data = JSON.stringify(res);
-        // let dataJson = JSON.parse(data);
-        // localStorage.setItem('token', dataJson.token);
         Swal.fire({
           title: '¡Correcto!',
           text: 'Usuario registrado correctamente',
@@ -62,6 +67,7 @@ export class RegisterComponent implements OnInit {
           confirmButtonText: 'Aceptar'
         });
 
+        this.clickRegistro = true;
         this.router.navigate(['/login']);
       })
       .catch(err => {
@@ -82,4 +88,18 @@ export class RegisterComponent implements OnInit {
       });
     }
   }
+
+  capitalizarTexto(texto) {
+    let palabras = texto.split(' ');
+    let textoCapitalizado = '';
+    for (const palabra of palabras) {
+      textoCapitalizado += palabra.substr(0,1).toUpperCase() + palabra.substr(1).toLowerCase() + ' ';
+    }
+    return textoCapitalizado;
+  }
+
+  correoToLowerCase(correo: string) {
+    this.user.strEmail = correo.toLowerCase();
+  }
 }
+

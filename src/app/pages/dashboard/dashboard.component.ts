@@ -40,7 +40,8 @@ export class DashboardComponent implements OnInit {
   idPersona: any;
   idRol: any;
   strCarrera: string;
-  alert: AlertModel =new AlertModel();
+  alert: AlertModel = new AlertModel();
+  alumnosLength: number = 0;
 
 
   constructor(private alertService: AlertService, private router: Router, private _PdfService: PdfServiceService, private _excelService: ExportDataService, private carreraService: CareersService) { }
@@ -50,10 +51,6 @@ export class DashboardComponent implements OnInit {
     this.token = localStorage.aa_token;
     this.tokenDecoded = jwt_decode(this.token);
     this.getAlert();
-    // nuevo: string = environment.nuevo;
-    // enProgreso: string = environment.seguimiento;
-    // cerrado: string = environment.cerrado;
-    // finalizado: string = environment.finalizado;
   }
 
   redirigir() {
@@ -66,16 +63,11 @@ export class DashboardComponent implements OnInit {
     this.idRol = this.tokenDecoded.user.idRole;
     this.alertService.getAlerts(this.idRol, this.idPersona).then((res: any) => {
       this.cargando = false;
-      /* if(res.cnt.length>1){
-        this.alerts = res.cnt[0];
-      }else{ */
-
-        this.alerts = res.cnt;
-      /* } */
+      this.alerts = res.cnt;
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -109,7 +101,6 @@ export class DashboardComponent implements OnInit {
         delete jsonobject2[i].created_at;
         delete jsonobject2[i].updated_at;
         delete jsonobject2[i].blnStatus;
-        //delete jsonobject2[i].aJsnEspecialidad;
         delete jsonobject2[i]._id;
         delete jsonobject2[i].__v;
       }

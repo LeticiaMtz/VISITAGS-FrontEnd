@@ -30,7 +30,7 @@ export class FileUploaderComponent implements OnInit {
     this.pondOptions = {
       class: 'my-filepond',
       multiple: true,
-      labelIdle: 'Arrastra tus documentos <span>aqui</span>',
+      labelIdle: 'Arrastra tus documentos <span>aquí</span>.',
       FilePondPluginImagePreview: true,
       server: {
         process: (fieldName, file, metadata, load) => {

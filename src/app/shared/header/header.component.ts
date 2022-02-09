@@ -46,10 +46,9 @@ export class HeaderComponent implements OnInit {
       this.userName = `${this.objUser.strName} ${this.objUser.strLastName}`;
       this.userEmail = this.objUser.strEmail;
     }).catch(err => {
-      console.log(err);
       Toast.fire({
         icon: 'warning',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }

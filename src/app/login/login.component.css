@@ -73,3 +73,17 @@
 ::-webkit-scrollbar-thumb:hover {
     background: rgb(134, 134, 134);
 }
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.lowercase {
+    text-transform: lowercase;
+}
+
+.btn-dis {
+    cursor: default;
+    pointer-events: none;
+    filter: grayscale(50%);
+}

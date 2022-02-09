@@ -50,14 +50,15 @@ export class BehaviorComponent implements OnInit {
       this.behavior = res.cnt[0].aJsnMotivo;
       for (const behavior of this.behavior) {
         let element = [
-          behavior.strNombre.replace(/\:null/gi,':""')
+          behavior.strNombre.replace(/\:null/gi,':""'),
+          behavior.strClave.replace(/\:null/gi,':""')
         ];
         this.arrayBehavior.push(element);
       }
     }).catch(err => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -83,6 +84,14 @@ export class BehaviorComponent implements OnInit {
     let header = [
       {
         text: "Nombre de la Conducta",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      },
+      {
+        text: "Clave",
         style: "tableHeader",
         bold: true,
         fillColor: "#2a3e52",

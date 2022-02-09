@@ -1,5 +1,8 @@
 export const environment = {
   urlGlobal: 'https://seguimiento-tutoral.api.fs.utags.edu.mx/api',
+  //urlGlobal: 'http://172.16.50.41:3000/api',
+//  urlGlobal: 'http://localhost:3000/api',
+              
   production: true,
 
   nuevo:       '5f186c5de9475240bc59e4a7',

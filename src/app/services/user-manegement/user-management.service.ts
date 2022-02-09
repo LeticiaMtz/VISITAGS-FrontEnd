@@ -39,6 +39,11 @@ export class UserManagementService {
 
    
   }
+
+  putActualizarNotificacionUsuario(idUser: string, usuario: User){
+    return this.http.put(`${this.URL}/Users/actualizarNotificaciones/${idUser}`, usuario).toPromise();
+  }
+
   postUsuarios(idUsers: User ){
     return this.http.post(`${this.URL}/Users/asignar-especialidad`, idUsers).toPromise();
   }

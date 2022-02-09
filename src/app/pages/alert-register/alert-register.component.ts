@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ViewChildren } from '@angular/core';
 import { AlertModel } from '../../models/alert.model';
 import { FormArray, FormBuilder, NgForm } from '@angular/forms';
 import { FileModel } from '../../models/file.model';
@@ -39,7 +39,9 @@ const Toast = Swal.mixin({
   styleUrls: ['./alert-register.component.css']
 })
 export class AlertRegisterComponent implements OnInit {
-
+  
+  @ViewChild('formaAlumno', {static: false}) formaAlumno: NgForm;
+  @ViewChild('formaColaboradores', {static: false}) formaColaboradores: NgForm;
   alerta: AlertModel = new AlertModel();
   cacharTurno: string;
   archivos: [] = [];
@@ -60,8 +62,10 @@ export class AlertRegisterComponent implements OnInit {
   arrColabFInal: any[] = [];
   personas: any[] = [];
   arrAlertas: any[] = [];
+  semanas: any[] = [];
+  clickRegistro: boolean = true;
 
-  // tslint:disable-next-line: max-line-length
+
   constructor(private alertaService: AlertService, private carrerasService: CareersService, private especialidadService: SpecialtyService, private asignaturaService: SubjectsService, private reasonsService: ReasonsService, private modalityService: ModalityService, private router: Router, private _userService: UserManagementService, private cdr: ChangeDetectorRef ) { }
 
   ngOnInit(): void {
@@ -73,10 +77,16 @@ export class AlertRegisterComponent implements OnInit {
     this.alerta.idUser = tokenDecoded.user._id;
     this.alerta.idEstatus = environment.nuevo;
     this.getAll();
+    for (let i = 1; i <= 16; i++) {
+      this.semanas.push({
+        _id: i,
+        strNombre: `Semana ${i}`,
+      });
+    }
   }
 
   ngAfterViewInit() {
-   this.ngAfterContentChecked(); 
+    this.ngAfterContentChecked();
   }
 
   ngAfterContentChecked(): void {
@@ -105,7 +115,7 @@ export class AlertRegisterComponent implements OnInit {
     this.arrAlumnos.splice(index, 1);
     Toast.fire({
       icon: 'warning',
-      title: `¡El campo fué eliminado!`
+      title: `¡Los campos fuerón eliminados!`
     });
   }
 
@@ -126,8 +136,6 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   eliminarColaborador(formaColaborador: NgForm,index: number) {
-    console.log('Hols');
-    console.log(this.arrColaboradores, index)
     formaColaborador.form.removeControl( `_id${index}`);
     this.arrColaboradores.splice(index, 1);
     Toast.fire({
@@ -146,18 +154,17 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   getPersonas() {
-    // this.personas = [];
     this._userService.getUsuarios().then((data: any) => {
       for (const persona of data.cnt) {
-        this.personas.push({
-          _id: persona._id,
-          strNombre: `${persona.strName} ${persona.strLastName}`
-        });
+        persona.blnStatus && this.personas.push({
+            _id: persona._id,
+            strNombre: `${persona.strName} ${persona.strLastName}`
+          });
       }
     }).catch((err) => {
       Toast.fire({
         icon: 'warning',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -167,78 +174,96 @@ export class AlertRegisterComponent implements OnInit {
   }
 
   registrarAlerta(forma: NgForm) {
-
+    this.clickRegistro = false;
     if ( forma.invalid ) {
       Toast.fire({
         icon: 'error',
         title: 'No es posible registrar una alerta con uno o mas campos vacíos'
       });
+      this.clickRegistro = true;
       return false;
     } else {
+      if (this.formaAlumno.invalid || this.arrAlumnos.length === 0) {
+        Toast.fire({
+          icon: 'error',
+          title: 'Hay campos en "Agregar Alumnos" sin llenar'
+        });
+        this.clickRegistro = true;
+        $('#alumnos-modal').modal('show');
+      } else {
 
-      let fd = new FormData();
+        let fd = new FormData();
 
-      fd.append('idUser', this.alerta.idUser);
-      fd.append('idEstatus', this.alerta.idEstatus);
-      fd.append('idAsignatura', this.alerta.idAsignatura);
-      fd.append('idCarrera', this.alerta.idCarrera);
-      fd.append('idEspecialidad', this.alerta.idEspecialidad);
-      fd.append('strGrupo', this.alerta.strGrupo);
-      fd.append('chrTurno', this.alerta.chrTurno);
-      fd.append('idModalidad', this.alerta.idModalidad);
-      fd.append('strDescripcion', this.alerta.strDescripcion);
+        this.alerta.strGrupo = this.toUpperAndTrimCase(this.alerta.strGrupo);
 
-      let crdes = '';
+        fd.append('idUser', this.alerta.idUser);
+        fd.append('idEstatus', this.alerta.idEstatus);
+        fd.append('idAsignatura', this.alerta.idAsignatura);
+        fd.append('idCarrera', this.alerta.idCarrera);
+        fd.append('idEspecialidad', this.alerta.idEspecialidad);
+        fd.append('strGrupo', this.alerta.strGrupo);
+        fd.append('chrTurno', this.alerta.chrTurno);
+        fd.append('idModalidad', this.alerta.idModalidad);
+        fd.append('strDescripcion', this.alerta.strDescripcion);
+        fd.append('nmbSemana', this.alerta.nmbSemana.toString());
 
-      if (this.alerta.arrCrde !== null) {
-        for (let crde = 0; crde < this.alerta.arrCrde.length; crde++) {
-          crdes +=  this.alerta.arrCrde[crde] + ',';
+        let crdes = '';
+
+        if (this.alerta.arrCrde !== null) {
+          for (let crde = 0; crde < this.alerta.arrCrde.length; crde++) {
+            crdes +=  this.alerta.arrCrde[crde] + ',';
+          }
         }
-      }
 
-      fd.append('arrCrde', crdes.slice(0,-1));
+        fd.append('arrCrde', crdes.slice(0,-1));
 
-      let colaboradores = '';
-      
-      for (const colaborador of this.arrColaboradores) {
-        let id = colaborador._id[0];
-        if (id !== '' && typeof id !== 'undefined') colaboradores += id + ',';
-      }
-      if(colaboradores !== '' && typeof colaboradores !== 'undefined' && colaboradores.length > 23) fd.append('arrInvitados', colaboradores.slice(0,-1));
+        let colaboradores = '';
 
-      let matriculas = '';
-      let nombresAlumnos = '';
+        for (const colaborador of this.arrColaboradores) {
+          let id = colaborador._id[0];
+          if (id !== '' && typeof id !== 'undefined') colaboradores += id + ',';
+        }
+        if(colaboradores !== '' && typeof colaboradores !== 'undefined' && colaboradores.length > 23) fd.append('arrInvitados', colaboradores.slice(0,-1));
 
-      for (const alumno of this.arrAlumnos) {
+        let matriculas = '';
+        let nombresAlumnos = '';
 
-        matriculas += alumno.strMatricula + ',';
-        nombresAlumnos += alumno.strNombreAlumno + ',';
+        for (const alumno of this.arrAlumnos) {
+
+          if (alumno.strMatricula != "" && alumno.strNombreAlumno != "") {
+            matriculas += alumno.strMatricula + ',';
+            nombresAlumnos += alumno.strNombreAlumno + ',';
+          }
+        }
 
         for (let i = 0; i < this.documentos.length; i++) {
           fd.append('strFileEvidencia', this.documentos[i]);
         }
+
+        fd.append('strMatricula', matriculas.slice(0,-1));
+        fd.append('strNombreAlumno', nombresAlumnos.slice(0,-1));
+
+        this.alertaService.postAlerta(fd).then((data: any) => {
+
+          Toast.fire({
+            icon: 'success',
+            title: data.msg
+          });
+          this.clickRegistro = true;
+          setTimeout(() => {
+            this.router.navigate(['/dashboard']);
+          }, 1000);
+        }).catch((err) => {
+          Toast.fire({
+            icon: 'error',
+            title: err.error ? err.error.msg : err
+          });
+          forma.reset();
+          this.formaAlumno.reset();
+          this.formaColaboradores.reset();
+          this.clickRegistro = true;
+        });
       }
-
-      fd.append('strMatricula', matriculas.slice(0,-1));
-      fd.append('strNombreAlumno', nombresAlumnos.slice(0,-1));
-
-      this.alertaService.postAlerta(fd).then((data: any) => {
-
-        Toast.fire({
-          icon: 'success',
-          title: data.msg
-        });
-      }).catch((err) => {
-        Toast.fire({
-          icon: 'error',
-          title: err.error.msg
-        });
-        forma.reset();
-      });
-
-      setTimeout(() => {
-        this.router.navigate(['/dashboard']);
-      }, 500);
     }
   }
 
@@ -255,21 +280,20 @@ export class AlertRegisterComponent implements OnInit {
     this.carrerasService.getCareers().then((carreras: any) => {
 
       for (const carrera of carreras.cnt) {
-        this.carreras.push({
-          _id: carrera._id,
-          strNombre: carrera.strCarrera
-        });
+        carrera.blnStatus && this.carreras.push({
+            _id: carrera._id,
+            strNombre: carrera.strCarrera
+          });
       }
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
 
   getEspecialidad(idEspecialidad: string) {
-    console.log(idEspecialidad);
     this.especialidades = [];
 
     this.especialidadService.getSpecialties(idEspecialidad).then((especialidades: any) => {
@@ -282,7 +306,7 @@ export class AlertRegisterComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -304,7 +328,7 @@ export class AlertRegisterComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -312,7 +336,7 @@ export class AlertRegisterComponent implements OnInit {
   getAsignaturas() {
     this.asignaturaService.getAsignatura().then((asign: any) => {
 
-       for (const asignatura of  asign.cnt) {
+      for (const asignatura of asign.cnt) {
         this.asignaturas.push({
           _id: asignatura._id,
           strNombre: asignatura.strAsignatura
@@ -321,7 +345,7 @@ export class AlertRegisterComponent implements OnInit {
     }).catch((err)=> {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -331,15 +355,63 @@ export class AlertRegisterComponent implements OnInit {
       this.razones = razones.cnt;
       for (const razon of this.razones) {
         for (const motivo of razon.aJsnMotivo) {
-          this.motivos.push(motivo);
+          motivo['blnStatus'] && this.motivos.push(motivo);
         }
       }
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
+  }
+
+  closeModal() {
+
+    if (this.arrAlumnos.length === 0) {
+      Swal.fire({
+        title: '¡No agregaste alumnos!',
+        text: "Asegúrate de agregar al menos un alumno a esta alerta",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cerrar',
+        confirmButtonText: 'Ok'
+      }).then((result) => {
+        if (!result.isConfirmed) {
+          setTimeout(() => {
+            $('#alumnos-modal').modal('hide');
+          }, 200);
+        }
+      });
+    } else {
+      if (this.formaAlumno.valid) {
+        $('#alumnos-modal').modal('hide');
+      } else {
+        Swal.fire({
+          title: '¡Hay campos vacíos!',
+          text: "Asegúrate de no dejar campos de alumno vacíos",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Cerrar',
+          confirmButtonText: 'Ok'
+        }).then((result) => {
+          if (!result.isConfirmed) {
+            setTimeout(() => {
+              $('#alumnos-modal').modal('hide');
+            }, 200);
+          }
+        });
+      }
+    }
+  }
+
+  toUpperAndTrimCase(texto: string) {
+    texto = texto.toUpperCase();
+    return texto.trim();
   }
 
 }

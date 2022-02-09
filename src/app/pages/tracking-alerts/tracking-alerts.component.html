@@ -52,16 +52,18 @@
                                                 <th>Carerra</th>
                                                 <th>Turno</th>
                                                 <th>Modalidad</th>
+                                                <th>Semana</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>{{objAlert.strMatricula}}</td>
-                                                <td>{{objAlert.strNombreAlumno}}</td>
+                                            <tr *ngFor="let matricula of arrMatriculas; let i = index;">
+                                                <td>{{arrMatriculas[i]}}</td>
+                                                <td>{{arrAlumnos[i]}}</td>
                                                 <td>{{objAlert.strGrupo}}</td>
                                                 <td>{{ strCarrera }}</td>
                                                 <td>{{objAlert.chrTurno}}</td>
                                                 <td>{{objModality.strModalidad}}</td>
+                                                <td class="text-center">{{nmbSemana}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -91,8 +93,12 @@
                                 </h5>
                             </div>
                             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                                <div class="card-body">
-                                    <button *ngFor="let doc of arrFiles" type="button" (click)="descargarArchivoE(doc.strNombre)" class="btn btn-link" style="cursor: pointer;"><i class="fa fa-download mr-1"></i> {{doc.strNombre}} </button>
+                                <div class="card-body text-center" *ngIf="arrFiles.length === 0">
+                                    <h3 class="text-info">¡No se agregaron documentos como evidencia!</h3>
+
+                                </div>
+                                <div class="card-body" *ngIf="arrFiles.length >= 0">
+                                    <button *ngFor="let doc of arrFiles" type="button" (click)="descargarArchivoE(doc.strNombre)" class="btn btn-link" style="cursor: pointer;"><i class="fa fa-download mr-1"></i> Descargar Evidencia</button>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +153,7 @@
                     <div class="row mt-1">
                         <div class="col-12">
                             <button type="button" *ngFor="let archivos of data.aJsnEvidencias" (click)="descargarArchivoE(archivos.strNombre)" class="btn btn-link" style="font-size: x-small; cursor: pointer;">
-                                &nbsp;&nbsp;&nbsp;<i class="fa fa-download"></i> {{archivos.strNombre}}
+                                &nbsp;&nbsp;&nbsp;<i class="fa fa-download"></i> Descargar Evidencia
                             </button>
                         </div>
                     </div>
@@ -193,14 +199,14 @@
                                 <!-- Button trigger modal -->
                                 <div class="col-4 mt-2">
                                     <button type="button" class="btn btn-outline-info btn-sm btn-block float-right" data-toggle="modal" data-target="#colaborador-modal">
-                                        <!-- <i class="fa fa-user-plus mr-2"></i> -->
+                                        <i class="fa fa-user-plus mr-2"></i>
                                         Invitar Colaborador
                                     </button>
                                 </div>
 
 
                                 <div class="col-4 mt-2">
-                                    <button type="submit" class="btn btn-outline-success btn-sm btn-block float-right">Comentar</button>
+                                    <button type="submit" class="btn btn-outline-success btn-sm btn-block float-right"><i class="fa fa-send mr-2"></i> Comentar</button>
                                 </div>
                             </div>
                         </div>

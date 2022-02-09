@@ -43,7 +43,7 @@ export class RegisterModalityComponent implements OnInit {
     
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error ? err.error.msg : err
        
       });
     });

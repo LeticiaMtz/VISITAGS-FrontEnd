@@ -55,7 +55,7 @@ export class StatusReportComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: `¡${err.msg}!`
+        title: err.error ? err.error.msg : err
       });
     });
   }
@@ -82,7 +82,7 @@ export class StatusReportComponent implements OnInit {
   exportAsXLSX() {
     if (this.estatus.length !== 0) {
       let jsonobject = JSON.stringify(this.estatus);
-      jsonobject = jsonobject.replace(/strNombre/gi, 'Nombre');
+      jsonobject = jsonobject.replace(/strNombre/gi, 'Nombre del Estatus');
       jsonobject = jsonobject.replace(/strDescripcion/gi, 'Descripción');
       const jsonobject2 = JSON.parse(jsonobject);
       const count = Object.keys(jsonobject2).length;
@@ -100,7 +100,7 @@ export class StatusReportComponent implements OnInit {
   exportPDF() {
     let header = [
       {
-        text: "Estatus",
+        text: "Nombre del Estatus",
         style: "tableHeader",
         bold: true,
         fillColor: "#2a3e52",
@@ -133,16 +133,15 @@ export class StatusReportComponent implements OnInit {
         title: `¡El estatus se actualizó exitosamente!`
       });
     }).catch(err => {
-    
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
-   
+        title: err.error ? err.error.msg : err
       });
     });
   }
   deleteStatus(id: string){
     this._estatusService.deleteStatus(id).then((data) => {
+      this.arrayEstatus = [];
       this.getEstatus();
       Toast.fire({
         icon: 'success',
@@ -151,9 +150,8 @@ export class StatusReportComponent implements OnInit {
     }).catch((err) => {
       Toast.fire({
         icon: 'error',
-        title: err.error.msg
+        title: err.error ? err.error.msg : err
       });
     });
   }
-
 }
