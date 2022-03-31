@@ -19,11 +19,11 @@ const Toast = Swal.mixin({
 })
 export class AccountSettingsComponent implements OnInit {
 
-  usuario:  User = new User();
-  notificaciones: boolean; 
+  usuario: User = new User();
+  notificaciones: boolean;
   tokenDecoded: any;
 
-  constructor( private _settings: SettingsService, private userManagementService: UserManagementService ) { }
+  constructor(private _settings: SettingsService, private userManagementService: UserManagementService) { }
 
   ngOnInit() {
     this.selectTheme();
@@ -34,8 +34,6 @@ export class AccountSettingsComponent implements OnInit {
 
   getUser() {
     this.userManagementService.getUsuariosByid(this.tokenDecoded.user._id).then((res: any) => {
-      this.usuario.blnNotificaciones = res.cnt[0].blnNotificaciones;
-      this.notificaciones = this.usuario.blnNotificaciones; 
     }).catch(err => {
       Toast.fire({
         icon: 'error',
@@ -44,10 +42,8 @@ export class AccountSettingsComponent implements OnInit {
     });
   }
 
-  statusNotification(){
-    this.usuario.blnNotificaciones = !this.usuario.blnNotificaciones;
+  statusNotification() {
     this.userManagementService.putActualizarNotificacionUsuario(this.tokenDecoded.user._id, this.usuario).then((res: any) => {
-      this.notificaciones = this.usuario.blnNotificaciones;
       Toast.fire({
         icon: 'success',
         title: `¡Se actualizo correctamente el estatus de las notificaciónes!`
@@ -60,14 +56,14 @@ export class AccountSettingsComponent implements OnInit {
     });
   }
 
-  onChangeTheme( theme: string, link: any ) {
+  onChangeTheme(theme: string, link: any) {
 
     this.selectedTheme(link);
 
-    this._settings.aplicarTema( theme );
+    this._settings.aplicarTema(theme);
   }
 
-  selectedTheme( link: any ) {
+  selectedTheme(link: any) {
     let selects: any = document.getElementsByClassName('selector');
 
     for (let ref of selects) {
@@ -83,12 +79,12 @@ export class AccountSettingsComponent implements OnInit {
     let tema = this._settings.ajustes.theme;
 
     for (let ref of selects) {
-      if ( ref.getAttribute('data-theme') === tema ) {
+      if (ref.getAttribute('data-theme') === tema) {
         ref.classList.add('working');
         break;
       }
     }
   }
 
-  
+
 }

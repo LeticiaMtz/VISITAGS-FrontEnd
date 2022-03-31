@@ -11,7 +11,7 @@ const Toast = Swal.mixin({
   position: 'top-end',
   showConfirmButton: false,
   timer: 3000
- });
+});
 
 @Component({
   selector: 'app-user-management',
@@ -20,7 +20,7 @@ const Toast = Swal.mixin({
 })
 export class UserManagementComponent implements OnInit {
 
-  rolUsuario = environment.roles.profesor;
+
   users: User[] = [];
   searchText: any;
   pageActual: number;
@@ -32,7 +32,7 @@ export class UserManagementComponent implements OnInit {
   arrayUser = [];
   activo: boolean = true;
 
-  constructor(private userManagementService: UserManagementService,private _PdfService: PdfServiceService, private _excelService: ExportDataService) {}
+  constructor(private userManagementService: UserManagementService, private _PdfService: PdfServiceService, private _excelService: ExportDataService) { }
 
   ngOnInit(): void {
     this.getUsuarios();
@@ -40,17 +40,16 @@ export class UserManagementComponent implements OnInit {
   }
 
   getUsuarios() {
-    this.cargando=true;
+    this.cargando = true;
     this.arrayUser = [];
     this.userManagementService.getUsuarios().then((res: any) => {
-      this.cargando=false;
+      this.cargando = false;
       this.users = res.cnt;
       for (const c of this.users) {
         let element = [
-          c.strName.replace(/\:null/gi,':""'),
-          c.strLastName.replace(/\:null/gi,':""'),
-          c.strMotherLastName.replace(/\:null/gi,':""'),
-          c.idRole['strRole'].replace(/\:null/gi,':""'),
+          c.strName.replace(/\:null/gi, ':""'),
+          c.strLastName.replace(/\:null/gi, ':""'),
+          c.strMotherLastName.replace(/\:null/gi, ':""'),
         ];
         this.arrayUser.push(element);
       }
@@ -62,14 +61,14 @@ export class UserManagementComponent implements OnInit {
     });
   }
 
-  actualizarUsuario(valueUpdate: boolean, _id: string){
+  actualizarUsuario(valueUpdate: boolean, _id: string) {
     this.actualizar = valueUpdate;
     this.idUsuario = _id;
   }
 
   refreshTable(e) {
     this.refresh = e;
-    if (this.refresh){
+    if (this.refresh) {
       this.ngOnInit();
     }
   }
@@ -80,70 +79,70 @@ export class UserManagementComponent implements OnInit {
 
 
   exportPDF() {
-  let header = [
-    {
-      text: "Nombre",
-      style: "tableHeader",
-      bold: true,
-      fillColor: "#2a3e52",
-      color: "#ffffff",
-      size: 13,
-    },
-    {
-      text: "Primer Apellido",
-      style: "tableHeader",
-      bold: true,
-      fillColor: "#2a3e52",
-      color: "#ffffff",
-      size: 13,
-    },
-    {
-      text: "Segundo Apellido",
-      style: "tableHeader",
-      bold: true,
-      fillColor: "#2a3e52",
-      color: "#ffffff",
-      size: 13,
-    },
-    {
-      text: "Rol",
-      style: "tableHeader",
-      bold: true,
-      fillColor: "#2a3e52",
-      color: "#ffffff",
-      size: 13,
-    }
-  ];
-  this._PdfService.generatePdf(
-    this.title,
-    header,
-    this.arrayUser,
-    "center"
-    
-  );
+    let header = [
+      {
+        text: "Nombre",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      },
+      {
+        text: "Primer Apellido",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      },
+      {
+        text: "Segundo Apellido",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      },
+      {
+        text: "Rol",
+        style: "tableHeader",
+        bold: true,
+        fillColor: "#2a3e52",
+        color: "#ffffff",
+        size: 13,
+      }
+    ];
+    this._PdfService.generatePdf(
+      this.title,
+      header,
+      this.arrayUser,
+      "center"
 
-}
+    );
 
-exportAsXLSX() {
-  if (this.users.length !== 0) {
-    let data=[];
-    this.users.forEach( (res:any)=>{
-      data.push({
-        strName: res.strName ? res.strName: '',
-        strLastName: res.strLastName ? res.strLastName: '',
-        strMotherLastName: res.strMotherLastName ? res.strMotherLastName:'',
-        idRole: res.idRole.strRole ? res.idRole.strRole: '' 
-      })
-    })
-    
-    let jsonobject = JSON.stringify(data);
-    jsonobject = jsonobject.replace(/strName/gi, 'Nombre');
-    jsonobject = jsonobject.replace(/strLastName/gi, 'Primer Apellido');
-    jsonobject = jsonobject.replace(/strMotherLastName/gi, 'Segundo Apellido');
-    jsonobject = jsonobject.replace(/idRole/gi, 'Rol');
-
-    this._excelService.exportAsExcelFile(JSON.parse(jsonobject), `${this.title}`);
   }
 
+  exportAsXLSX() {
+    if (this.users.length !== 0) {
+      let data = [];
+      this.users.forEach((res: any) => {
+        data.push({
+          strName: res.strName ? res.strName : '',
+          strLastName: res.strLastName ? res.strLastName : '',
+          strMotherLastName: res.strMotherLastName ? res.strMotherLastName : '',
+          idRole: res.idRole.strRole ? res.idRole.strRole : ''
+        })
+      })
+
+      let jsonobject = JSON.stringify(data);
+      jsonobject = jsonobject.replace(/strName/gi, 'Nombre');
+      jsonobject = jsonobject.replace(/strLastName/gi, 'Primer Apellido');
+      jsonobject = jsonobject.replace(/strMotherLastName/gi, 'Segundo Apellido');
+      jsonobject = jsonobject.replace(/idRole/gi, 'Rol');
+
+      this._excelService.exportAsExcelFile(JSON.parse(jsonobject), `${this.title}`);
+    }
+
+  }
 }
- }

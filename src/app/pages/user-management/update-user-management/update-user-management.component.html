@@ -11,7 +11,9 @@
                         <div class="form-group col-md-12">
                             <div class="">
                                 <label class=""><strong>Nombre</strong></label>
-                                <input [class.is-invalid]="strName.invalid && strName.touched" type="text" class="form-control form-control-sm" placeholder="Nombres" name="strName" [(ngModel)]="usuario.strName" required #strName="ngModel">
+                                <input [class.is-invalid]="strName.invalid && strName.touched" type="text"
+                                    class="form-control form-control-sm" placeholder="Nombres" name="strName"
+                                    [(ngModel)]="usuario.strName" required #strName="ngModel">
                                 <div class="invalid-feedback" *ngIf="strName.errors?.required">
                                     <small>
                                         Es necesario ingresar un nombre.
@@ -25,36 +27,31 @@
                         <div class="form-group col-md-6">
                             <div class="">
                                 <label class=""><strong>Primer Apellido</strong></label>
-                                <input type="text" class="form-control form-control-sm" placeholder="Primer Apellido" name="strLastName" [(ngModel)]="usuario.strLastName" required #strLastName="ngModel">
+                                <input type="text" class="form-control form-control-sm" placeholder="Primer Apellido"
+                                    name="strLastName" [(ngModel)]="usuario.strLastName" required
+                                    #strLastName="ngModel">
                             </div>
                         </div>
 
                         <div class="form-group col-md-6">
                             <div class="">
                                 <label class=""><strong>Segundo Apellido</strong></label>
-                                <input type="text" class="form-control form-control-sm" placeholder="Segundo Apellido" name="strMotherLastName" [(ngModel)]="usuario.strMotherLastName" required #strMotherLastName="ngModel">
+                                <input type="text" class="form-control form-control-sm" placeholder="Segundo Apellido"
+                                    name="strMotherLastName" [(ngModel)]="usuario.strMotherLastName" required
+                                    #strMotherLastName="ngModel">
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <div class="">
-                                <label class=""><strong>Rol del Usuario</strong></label>
-                                <!-- <select class="custom-select form-control form-control-sm" name="idRole" [(ngModel)]="usuario.idRole._id" required #idRole="ngModel">   
-                                    <option *ngFor="let rol of roles" [ngValue]="rol._id">{{rol.strRole}}</option>
-                                </select> -->
-
-                                <select class="custom-select form-control form-control-sm" name="idRole" type="text" title="Seleccione un rol" name="idRole" [(ngModel)]="usuario.idRole" required (ngModelChange)="getRole($event)" #idRole="ngModel">
-                                    <option [ngValue]="usuario.idRole" disabled selected hidden>{{role == ''? 'Seleccionar rol': role}}</option>  
-                                    <option *ngFor="let rol of roles" [ngValue]="rol._id" [selected]="role == rol._id">{{rol.strRole}}</option> 
-                                </select>
-                            </div>
 
 
                             <div class="mt-2">
                                 <label class=""><strong>Estatus</strong></label>
-                                <select [class.is-invalid]="blnStatus.invalid && blnStatus.touched" class="custom-select form-control form-control-sm" name="blnStatus" [(ngModel)]="usuario.blnStatus" required #blnStatus="ngModel">
+                                <select [class.is-invalid]="blnStatus.invalid && blnStatus.touched"
+                                    class="custom-select form-control form-control-sm" name="blnStatus"
+                                    [(ngModel)]="usuario.blnStatus" required #blnStatus="ngModel">
                                     <option [ngValue]="true">Activo</option>
                                     <option [ngValue]="false">Inactivo</option>
                                 </select>
@@ -68,8 +65,11 @@
                 <div class="list-inline-item">
                     <div class="form-group row">
                         <div class="mr-3">
-                            <button type="button" (click)="updateCanceled()" class="btn btn-outline-danger btn-sm mr-2 "><i class="fa fa-times mr-2"></i>Cancelar</button>
-                            <button type="button" (click)="updateUser(forma)" class="btn btn-outline-info btn-sm "><i class="fa fa-save mr-2 "></i>Actualizar</button>
+                            <button type="button" (click)="updateCanceled()"
+                                class="btn btn-outline-danger btn-sm mr-2 "><i
+                                    class="fa fa-times mr-2"></i>Cancelar</button>
+                            <button type="button" (click)="updateUser(forma)" class="btn btn-outline-info btn-sm "><i
+                                    class="fa fa-save mr-2 "></i>Actualizar</button>
                         </div>
                     </div>
                 </div>

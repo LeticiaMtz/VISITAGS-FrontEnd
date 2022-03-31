@@ -1,22 +1,15 @@
 import { takeUntil } from 'rxjs/operators';
 
-export class User  {
+export class User {
 
     _id: string;
     strName: string;
     strLastName: string;
-    strMotherLastName:string;
-    strEmail:string;
-    strPassword:string;
-    idRole:string;
-    strDirection:string;
-    strValidatePass:string; 
-    blnStatus: boolean = false; 
-    blnNotificaciones: boolean = true;
-    arrEspecialidadPermiso?: [{
-      
-      
-    }];
+    strMotherLastName: string;
+    strEmail: string;
+    strPassword: string;
+    strValidatePass: string;
+    blnStatus?: boolean;
     updatedAt: Date;
     cratedAt: Date;
 }

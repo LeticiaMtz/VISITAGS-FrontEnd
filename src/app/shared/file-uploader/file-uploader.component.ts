@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import Swal from 'sweetalert2';
-import { FileModel } from 'src/app/models/file.model';
 
 const Toast = Swal.mixin({
   toast: true,
@@ -20,11 +19,10 @@ export class FileUploaderComponent implements OnInit {
   @Output() archivosObtenidos = new EventEmitter();
   @Output() archivoEliminado = new EventEmitter();
   evidencias: Array<any> = [];
-  evidencia: FileModel;
   pondOptions: any;
   archivo: any;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.pondOptions = {
@@ -45,7 +43,8 @@ export class FileUploaderComponent implements OnInit {
         }, revert: (uniqueFileId, load, error) => {
           error('oh my goodness');
           load();
-      }},
+        }
+      },
       instantUpload: true,
       imagePreviewTransparencyIndicator: 'grid'
     };

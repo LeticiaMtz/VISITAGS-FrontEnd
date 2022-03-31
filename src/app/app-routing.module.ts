@@ -6,15 +6,13 @@ import { RegisterComponent } from './login/register.component';
 import { SendEmailComponent } from './restore-password/send-email/send-email.component';
 import { ChangePasswordComponent } from './restore-password/change-password/change-password.component';
 import { NoAuthGuard } from './guards/no-auth.guard';
-import { ObtenerUrlComponent } from './obtener-url/obtener-url.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
-  { path: 'obtener-url/:token', component: ObtenerUrlComponent},
   { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] },
   { path: 'sendemail', component: SendEmailComponent, canActivate: [NoAuthGuard] },
-  { path: 'reset-password/:token', component: ChangePasswordComponent, canActivate: [NoAuthGuard]},
+  { path: 'reset-password/:token', component: ChangePasswordComponent, canActivate: [NoAuthGuard] },
   { path: '**', component: NopagefoundComponent }
 ];
 
-export const AppRoutingModule = RouterModule.forRoot ( routes,  { useHash: true });
+export const AppRoutingModule = RouterModule.forRoot(routes, { useHash: true });

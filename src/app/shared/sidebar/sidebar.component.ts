@@ -26,9 +26,9 @@ export class SidebarComponent implements OnInit {
   userId: any;
   userName: string;
   surName: string = '';
-  dashboard = {icono: '', roles: '', titulo: '', url: ''};
+  dashboard = { icono: '', roles: '', titulo: '', url: '' };
 
-  constructor( public _sidebarService: SidebarService, private user: UserManagementService) { }
+  constructor(public _sidebarService: SidebarService, private user: UserManagementService) { }
 
   ngOnInit() {
     const tokenDecoded = jwt_decode(localStorage.getItem('aa_token'));
@@ -39,17 +39,18 @@ export class SidebarComponent implements OnInit {
     let m = {};
     for (let menu of this._sidebarService.menu) {
       let sub = [];
-      if(menu.submenu){
+      if (menu.submenu) {
         for (let subMenu of menu.submenu) {
-          //   console.log(subMenu.roles);
-            if (subMenu.roles.indexOf(this.rol) > -1) {
-              let subm = {
-                icono: subMenu.icono,
-                titulo: subMenu.titulo,
-                url: subMenu.url
-              }
-              sub.push(subm);
+          console.log(subMenu);
+          if (menu.submenu.length >= 1) {
+            let subm = {
+              icono: subMenu.icono,
+              titulo: subMenu.titulo,
+              url: subMenu.url
             }
+            sub.push(subm);
+
+          }
         }
         m = {
           titulo: menu.titulo,
@@ -57,21 +58,23 @@ export class SidebarComponent implements OnInit {
           submenus: sub,
           numSub: sub.length
         }
-      }else{
-        if (menu.roles.indexOf(this.rol) > -1){
+      } else {
+        if (menu.roles.indexOf(this.rol) > -1) {
           this.dashboard = menu
         }
       }
- 
-      if(sub.length>0){
+
+      if (sub.length > 0) {
         this.arrFinal.push(m);
       }
     }
   }
 
-  getUser(id){
-    this.user.getUsuariosByid(id).then((res:any)=>{
+  getUser(id) {
+    this.user.getUsuariosByid(id).then((res: any) => {
+      console.log(res, 'EAAAAAAA')
       this.objUser = res.cnt[0];
+
       this.userName = `${this.objUser.strName} ${this.objUser.strLastName}`;
     }).catch(err => {
       Toast.fire({

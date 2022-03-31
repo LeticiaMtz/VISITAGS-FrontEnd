@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { Router } from '@angular/router';
 import { Login } from '../../models/login';
-import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -16,31 +15,31 @@ export class LoginService {
 
   readonly URL_API = `${environment.urlGlobal}/Users/login`;
 
-  constructor(private http: HttpClient, private router: Router) { 
+  constructor(private http: HttpClient, private router: Router) {
     this.selectedLogin = new Login();
   }
 
-  postLogin(user){
+  postLogin(user) {
     return this.http.post(this.URL_API, user);
   }
 
-  loggedIn(){
+  loggedIn() {
     if (localStorage.getItem('aa_token')) {
       return true
-    }else{
+    } else {
       return false
     }
   }
 
-  getToken(){
+  getToken() {
     return localStorage.getItem('aa_token');
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('aa_token');
   }
 
-  isAuthenticated(): boolean{
+  isAuthenticated(): boolean {
     this.usrToken = localStorage.getItem('aa_token');
     return this.usrToken !== null && this.usrToken !== undefined;
   }

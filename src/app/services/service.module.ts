@@ -6,7 +6,7 @@ import { SettingsService, SharedService, SidebarService } from './service.index'
 
 
 @NgModule({
-  providers: [ SettingsService, SharedService, SidebarService ],
+  providers: [SettingsService, SharedService, SidebarService],
   declarations: [],
   imports: [
     CommonModule

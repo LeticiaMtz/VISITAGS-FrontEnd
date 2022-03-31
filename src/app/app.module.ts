@@ -18,7 +18,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './services/login/token-interceptor.service';
 import { ChangePasswordComponent } from './restore-password/change-password/change-password.component';
 import { SendEmailComponent } from './restore-password/send-email/send-email.component';
-import { ObtenerUrlComponent } from './obtener-url/obtener-url.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +26,6 @@ import { ObtenerUrlComponent } from './obtener-url/obtener-url.component';
     LoginComponent,
     ChangePasswordComponent,
     SendEmailComponent,
-    ObtenerUrlComponent,
 
   ],
   imports: [
@@ -40,7 +38,7 @@ import { ObtenerUrlComponent } from './obtener-url/obtener-url.component';
     FormsModule,
     FilePondModule
   ],
-  providers: [AuthGuard, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
+  providers: [AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
