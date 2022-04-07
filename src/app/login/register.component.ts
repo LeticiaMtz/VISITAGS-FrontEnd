@@ -25,13 +25,13 @@ export class RegisterComponent implements OnInit {
     init_plugins();
   }
 
-  regexp = new RegExp('^[_A-Za-z\\+]+(\\.[_A-Za-z]+)*@utags.edu.mx$');
+  regexp = new RegExp('^[A-Za-z0-9!@#$%^&*]*@gmail.com$');
 
-  check(event){
+  check(event) {
     this.checkB = event.explicitOriginalTarget.checked;
   }
 
-  addUser(form: NgForm){
+  addUser(form: NgForm) {
     this.clickRegistro = false;
     this.user.strName = this.capitalizarTexto(this.user.strName);
     this.user.strLastName = this.capitalizarTexto(this.user.strLastName);
@@ -41,13 +41,14 @@ export class RegisterComponent implements OnInit {
       this.user.strMotherLastName = '';
     }
 
-    if ( form.invalid) {
+    if (form.invalid) {
       Swal.fire({
         title: 'Error!',
         text: `Faltan campos por llenar en el formulario`,
         icon: 'error',
         confirmButtonText: 'Aceptar'
       });
+      this.clickRegistro = true;
     } else if (this.repetPassword != this.user.strPassword) {
       Swal.fire({
         title: 'Error!',
@@ -55,30 +56,32 @@ export class RegisterComponent implements OnInit {
         icon: 'error',
         confirmButtonText: 'Aceptar'
       })
+      this.clickRegistro = true;
       this.router.navigate(['/register'])
     } else if (this.regexp.test(this.user.strEmail)) {
 
       this.registerService.postUser(this.user)
-      .then(res => {
-        Swal.fire({
-          title: '¡Correcto!',
-          text: 'Usuario registrado correctamente',
-          icon: 'success',
-          confirmButtonText: 'Aceptar'
-        });
+        .then(res => {
+          Swal.fire({
+            title: '¡Correcto!',
+            text: 'Usuario registrado correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
 
-        this.clickRegistro = true;
-        this.router.navigate(['/login']);
-      })
-      .catch(err => {
-        Swal.fire({
-          title: 'Error!',
-          text: err.error.msg,
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
+          this.clickRegistro = true;
+          this.router.navigate(['/login']);
+        })
+        .catch(err => {
+          Swal.fire({
+            title: 'Error!',
+            text: err.error.msg,
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+          this.clickRegistro = true;
+          this.router.navigate(['/register']);
         });
-        this.router.navigate(['/register']);
-      });
     } else if (!this.regexp.test(this.user.strEmail)) {
       Swal.fire({
         title: 'Error!',
@@ -86,6 +89,7 @@ export class RegisterComponent implements OnInit {
         icon: 'error',
         confirmButtonText: 'Aceptar'
       });
+      this.clickRegistro = true;
     }
   }
 
@@ -93,7 +97,7 @@ export class RegisterComponent implements OnInit {
     let palabras = texto.split(' ');
     let textoCapitalizado = '';
     for (const palabra of palabras) {
-      textoCapitalizado += palabra.substr(0,1).toUpperCase() + palabra.substr(1).toLowerCase() + ' ';
+      textoCapitalizado += palabra.substr(0, 1).toUpperCase() + palabra.substr(1).toLowerCase() + ' ';
     }
     return textoCapitalizado;
   }

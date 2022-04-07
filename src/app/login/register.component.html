@@ -47,10 +47,13 @@
                             <label class="small"><strong>Apellido Materno</strong></label>
                             <input
                                 [ngClass]="{'is-invalid': strMotherLastName.errors?.required && forma.controls['strMotherLastName'].touched }"
-                                class="form-control capitalize"
-                                onkeyup="javascript:this.value=this.value.toLowerCase();" type="text"
-                                name="strMotherLastName" #motherlastname="ngModel" [(ngModel)]="user.strMotherLastName"
+                                class="form-control ng-untouched ng-pristine ng-valid capitalize"
+                                onkeyup="javascript:this.value=this.value.toLowerCase();" type="text" required=""
+                                name="strMotherLastName" #lastname="ngModel" [(ngModel)]="user.strMotherLastName"
                                 #strMotherLastName="ngModel" placeholder="Apellido Materno">
+                            <div class="invalid-feedback" *ngIf="strMotherLastName.errors?.required">
+                                Es necesario ingresar el apellido materno del usuario
+                            </div>
                         </div>
                     </div>
 
@@ -59,15 +62,11 @@
                             <label class="small"><strong>Correo Electrónico</strong></label>
                             <input [value]="user.strEmail" type="email"
                                 [ngClass]="{'is-invalid': strEmail.errors?.required && forma.controls['strEmail'].touched }"
-                                pattern=".+(utags\.edu.mx|UTAGS\.EDU.MX)" class="form-control" type="text"
-                                name="strEmail" placeholder="Correo Electrónico" #strEmail="ngModel"
-                                [(ngModel)]="user.strEmail" required (ngModelChange)="correoToLowerCase($event)">
-                            <div class="text-danger" *ngIf="strEmail.errors?.pattern">
-                                <small>Es necesario ingresar un correo electrónico institucional
-                                    (ejemplo@utags.edu.mx)</small>
-                            </div>
+                                class="form-control" type="text" name="strEmail" placeholder="Correo Electrónico"
+                                #strEmail="ngModel" [(ngModel)]="user.strEmail" required
+                                (ngModelChange)="correoToLowerCase($event)">
                             <div class="invalid-feedback" *ngIf="strEmail.errors?.required">
-                                Es necesario ingresar el email del usuario
+                                Es necesario ingresar el email del usuario (ejemplo@gmail.com)
                             </div>
                         </div>
                     </div>
